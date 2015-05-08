@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title" id="panel-title"><%= nombreOficial%><a class="anchorjs-link" href="#panel-title"><span class="anchorjs-icon"></span></a></h3>
+            </div>
+            <div class="panel-body">
+                <div id="hotel-general" class="row">
+                    <div class="col-md-6">
+                        <p class="list-group-item-text"><%= direccion%> <%= noExt%> <%= noInt%> <%= colonia%></p>
+                        <p class="list-group-item-text"><%= municipio%></p>
+                        <p class="list-group-item-text"><%= estado%></p>
+                        <p class="list-group-item-text"><%= pais%></p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-toolbar btn-toolbar-separator" role="toolbar" aria-label="...">
+                            <label class="btn btn-default btn-sm">
+                                <input type="checkbox" name="options" value="sinestilo" autocomplete="off" checked> Atendida
+                            </label>
+                            <label class="btn btn-success btn-sm">
+                                <input type="checkbox" name="options" value="success" autocomplete="off" checked> Solicitada
+                            </label>
+                            <label class="btn btn-warning btn-sm">
+                                <input type="checkbox" name="options" value="warning" autocomplete="off" checked> En proceso
+                            </label>
+                            <label class="btn btn-danger btn-sm">
+                                <input type="checkbox" name="options" value="danger" autocomplete="off" checked> Pendiente
+                            </label>
+                            <label class="btn btn-active btn-sm">
+                                <input type="checkbox" name="options" value="active" autocomplete="off" checked> Cancelada
+                            </label>
+                        </div>
+                        <div class="btn-toolbar btn-toolbar-separator" role="toolbar" aria-label="...">
+                            <button id="hotel-solicitar" type="button" class="btn btn-primary btn-sm">Solicitar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 separator-bottom"><h4>Solicitudes</h4></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="hotel-solicitudes" class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>No Hab</th>
+                                <th>Servicio</th>
+                                <th>Fecha Solicitud</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="detail-solicitud" class="col-md-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="id-modal-solicitud">
+
+</div>
