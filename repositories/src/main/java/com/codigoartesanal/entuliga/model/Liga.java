@@ -15,11 +15,12 @@ public class Liga {
     private String nombre;
     @Column(name = "nombre_completo")
     private String nombreCompleto;
-    private String calle;
-    @Column(name = "no_exterior")
-    private String noExterior;
-    private Colonia colonia;
     private String telefono;
+    @ManyToOne
+    @JoinColumn(name = "geoLocation_id", nullable = false)
+    private GeoLocation geoLocation;
+    @ManyToOne
+    @JoinColumn(name = "admin_id", nullable = false)
     private User admin;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "liga")
@@ -49,36 +50,20 @@ public class Liga {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public String getCalle() {
-        return calle;
-    }
-
-    public void setCalle(String calle) {
-        this.calle = calle;
-    }
-
-    public String getNoExterior() {
-        return noExterior;
-    }
-
-    public void setNoExterior(String noExterior) {
-        this.noExterior = noExterior;
-    }
-
-    public Colonia getColonia() {
-        return colonia;
-    }
-
-    public void setColonia(Colonia colonia) {
-        this.colonia = colonia;
-    }
-
     public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public GeoLocation getGeoLocation() {
+        return geoLocation;
+    }
+
+    public void setGeoLocation(GeoLocation geoLocation) {
+        this.geoLocation = geoLocation;
     }
 
     public User getAdmin() {
@@ -101,12 +86,10 @@ public class Liga {
     public String toString() {
         return "Liga{" +
                 "telefono='" + telefono + '\'' +
-                ", colonia=" + colonia +
-                ", noExterior='" + noExterior + '\'' +
-                ", calle='" + calle + '\'' +
                 ", nombreCompleto='" + nombreCompleto + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", id=" + id +
+                ", geoLocation=" + geoLocation +
                 '}';
     }
 }

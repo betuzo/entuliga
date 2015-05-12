@@ -1,0 +1,95 @@
+package com.codigoartesanal.entuliga.model;
+
+import javax.persistence.*;
+
+/**
+ * Created by betuzo on 11/05/15.
+ */
+@Entity
+public class Movimiento {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "partido_id", nullable = false)
+    private Partido partido;
+    private Integer minuto;
+    private Integer segundo;
+    @Enumerated(EnumType.STRING)
+    private TipoMovimiento tipo;
+    @ManyToOne
+    @JoinColumn(name = "entra_id", nullable = false)
+    private Jugador entra;
+    @ManyToOne
+    @JoinColumn(name = "sale_id", nullable = false)
+    private Jugador sale;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Partido getPartido() {
+        return partido;
+    }
+
+    public void setPartido(Partido partido) {
+        this.partido = partido;
+    }
+
+    public Integer getMinuto() {
+        return minuto;
+    }
+
+    public void setMinuto(Integer minuto) {
+        this.minuto = minuto;
+    }
+
+    public Integer getSegundo() {
+        return segundo;
+    }
+
+    public void setSegundo(Integer segundo) {
+        this.segundo = segundo;
+    }
+
+    public TipoMovimiento getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoMovimiento tipo) {
+        this.tipo = tipo;
+    }
+
+    public Jugador getEntra() {
+        return entra;
+    }
+
+    public void setEntra(Jugador entra) {
+        this.entra = entra;
+    }
+
+    public Jugador getSale() {
+        return sale;
+    }
+
+    public void setSale(Jugador sale) {
+        this.sale = sale;
+    }
+
+    @Override
+    public String toString() {
+        return "Movimiento{" +
+                "id=" + id +
+                ", partido=" + partido +
+                ", minuto=" + minuto +
+                ", segundo=" + segundo +
+                ", tipo=" + tipo +
+                ", entra=" + entra +
+                ", sale=" + sale +
+                '}';
+    }
+}

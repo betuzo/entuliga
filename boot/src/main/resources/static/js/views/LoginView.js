@@ -1,10 +1,9 @@
 define([
 	'jquery',
-	'bootstrap',
 	'core/BaseView',
 	'text!templates/tplLogin.html',
 	'Session'
-], function($, bootstrap, BaseView, tplLogin, Session){
+], function($, BaseView, tplLogin, Session){
 
 	var LoginView = BaseView.extend({
         template: _.template(tplLogin),

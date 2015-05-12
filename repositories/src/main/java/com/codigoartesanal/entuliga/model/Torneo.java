@@ -26,7 +26,7 @@ public class Torneo {
     private StatusTorneo status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "torneo")
-    private Set<Fase> fases;
+    private Set<Jornada> jornadas;
 
     public Long getId() {
         return id;
@@ -84,12 +84,12 @@ public class Torneo {
         this.status = status;
     }
 
-    public Set<Fase> getFases() {
-        return fases;
+    public Set<Jornada> getJornadas() {
+        return jornadas;
     }
 
-    public void setFases(Set<Fase> fases) {
-        this.fases = fases;
+    public void setJornadas(Set<Jornada> jornadas) {
+        this.jornadas = jornadas;
     }
 
     @Override

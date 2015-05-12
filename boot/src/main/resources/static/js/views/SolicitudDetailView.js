@@ -1,9 +1,6 @@
 define([
 	'jquery',
 	'underscore',
-	'bootstrap',
-	'moment',
-	'momentes',
 	'core/BaseView',
 	'text!templates/tplResumenSolicitud.html',
 	'models/ComentarioModel',
@@ -11,7 +8,7 @@ define([
 	'collections/EstadoSolicitudCollection',
 	'views/SolicitudComentarioView',
 	'Session'
-], function($, _, bootstrap, moment, momentes, BaseView, tplResumenSolicitud, ComentarioModel,
+], function($, _, BaseView, tplResumenSolicitud, ComentarioModel,
             ComentariosCollection, EstadoSolicitudCollection, SolicitudComentarioView, Session){
 
 	var SolicitudDetailView = BaseView.extend({
@@ -50,8 +47,7 @@ define([
         },
 
         agregarComentario: function(modelo){
-            moment.locale('es');
-            var fechaComentario = moment(new Date(modelo.get('fechaComentario'))).fromNow();
+            var fechaComentario = new Date(modelo.get('fechaComentario'));
             var target = this.getTarget(modelo.get('tipoComentario'));
             var avatar = this.getAvatar(modelo.get('tipoComentario'));
 

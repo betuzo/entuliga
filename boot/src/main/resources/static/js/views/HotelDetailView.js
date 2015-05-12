@@ -2,14 +2,12 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'moment',
-	'momentes',
 	'core/BaseView',
 	'views/HotelRowSolicitudView',
 	'views/SolicitudNuevaView',
 	'text!templates/tplHotelDetail.html',
 	'collections/SolicitudesCollection'
-], function($, _, Backbone, moment, momentes, BaseView, HotelRowSolicitudView, SolicitudNuevaView, tplHotelDetail, SolicitudesCollection){
+], function($, _, Backbone, BaseView, HotelRowSolicitudView, SolicitudNuevaView, tplHotelDetail, SolicitudesCollection){
 
 	var HotelDetailView = BaseView.extend({
         template: _.template(tplHotelDetail),
@@ -36,8 +34,7 @@ define([
         agregarSolicitud: function(modelo){
             var classSolicitud = this.generateClassByEstadoSolicitud(modelo.get('estadoSolicitud'));
 
-            moment.locale('es');
-            var fechaSolicitud = moment(new Date(modelo.get('fechaSolicitud'))).fromNow();
+            var fechaSolicitud = new Date(modelo.get('fechaSolicitud'));
 
             modelo.set({classSolicitud: classSolicitud});
             modelo.set({fechaSolicitud: fechaSolicitud});

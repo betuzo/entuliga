@@ -2,7 +2,6 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'bootstrapselect',
 	'core/BaseView',
 	'models/SolicitudModel',
 	'collections/HabitacionesCollection',
@@ -10,7 +9,7 @@ define([
 	'collections/HotelServiciosCollection',
 	'text!templates/tplSolicitudNueva.html',
 	'Session'
-], function($, _, Backbone, bootstrapselect, BaseView, SolicitudModel, HabitacionesCollection,
+], function($, _, Backbone, BaseView, SolicitudModel, HabitacionesCollection,
             CategoriasCollection, HotelServiciosCollection, tplSolicitudNueva, Session){
 
 	var SolicitudNuevaView = BaseView.extend({
