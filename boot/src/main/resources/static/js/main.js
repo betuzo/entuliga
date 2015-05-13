@@ -16,7 +16,8 @@ require.config({
         jquery: 'vendor/jquery/jquery',
         text : 'vendor/requirejs-text/text',
         underscore: 'vendor/underscore/underscore-min',
-        bootflat: 'vendor/bootflat/site.min'
+        bootflat: 'vendor/bootflat/site.min',
+        selecter: 'vendor/bootflat/jquery.fs.selecter.min'
     }
 });
 
