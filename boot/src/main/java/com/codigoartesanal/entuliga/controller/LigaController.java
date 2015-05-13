@@ -3,7 +3,9 @@ package com.codigoartesanal.entuliga.controller;
 import com.codigoartesanal.entuliga.config.security.AuthenticationWithToken;
 import com.codigoartesanal.entuliga.model.Liga;
 import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.services.LigaService;
 import com.codigoartesanal.entuliga.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -22,13 +24,17 @@ import java.util.Map;
 @Controller
 @RequestMapping("/liga")
 public class LigaController {
+
+    @Autowired
+    LigaService ligaService;
+
     @ResponseBody
     @RequestMapping(
             value = { "" },
             method = {RequestMethod.POST},
             produces = {"application/json;charset=UTF-8"})
-    public Liga createLiga(@RequestBody Map<String, Object> liga, User user) {
+    public Liga createLiga(@RequestBody Map<String, String> liga, User user) {
 
-        return null;
+        return ligaService.createLiga(liga, user);
     }
 }

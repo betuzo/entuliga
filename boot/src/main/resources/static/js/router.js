@@ -5,16 +5,18 @@ define([
 	'core/BaseRouter',
 	'views/HotelAdnView',
 	'views/LoginView',
-	'views/HotelDetailView',
-	'views/HotelNavView'
-], function($, _, Backbone, BaseRouter, HotelAdnView, LoginView, HotelDetailView, HotelNavView){
+	'views/public/MainView',
+	'views/public/MainNavView',
+	'views/private/MainAdminView',
+	'views/private/MainAdminNavView'
+], function($, _, Backbone, BaseRouter, HotelAdnView, LoginView, MainView, MainNavView, MainAdminView, MainAdminNavView){
         var Router = BaseRouter.extend({
 
         routes: {
-            '': 'hotel',
-            '/': 'hotel',
+            '': 'main',
+            '/': 'main',
             'login': 'login',
-            'hotel/:id/detail': 'detalle'
+            'admin': 'admin'
         },
 
         before : function(params, next){
@@ -27,10 +29,6 @@ define([
         },
 
         changeView : function(view){
-            //Close is a method in BaseView
-            //that check for childViews and
-            //close them before closing the
-            //parentView
             function setView(view){
                 if(this.currentView){
                     this.currentView.close();
@@ -43,16 +41,16 @@ define([
         },
 
         initialize: function () {
-            this.hotel();
-            this.hotelNav();
+            this.main();
+            this.mainNav();
         },
 
-        hotelNav: function(){
-            new HotelNavView();
+        mainNav: function(){
+            new MainNavView();
         },
 
-        hotel: function(){
-            var view = new HotelAdnView();
+        main: function(){
+            var view = new MainView();
             this.changeView(view);
         },
 
@@ -61,10 +59,14 @@ define([
             this.changeView(view);
         },
 
-        detalle: function(id){
-            var modelo = app.hoteles.get(id);
-            var view = new HotelDetailView({model: modelo});
+        mainAdminNav: function(){
+            new MainAdminNavView();
+        },
+
+        admin: function(){
+            var view = new MainAdminView();
             this.changeView(view);
+            this.mainAdminNav();
         }
 	});
 

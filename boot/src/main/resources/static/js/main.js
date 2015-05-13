@@ -15,7 +15,8 @@ require.config({
         backbone: 'vendor/backbone/backbone-min',
         jquery: 'vendor/jquery/jquery',
         text : 'vendor/requirejs-text/text',
-        underscore: 'vendor/underscore/underscore-min'
+        underscore: 'vendor/underscore/underscore-min',
+        bootflat: 'vendor/bootflat/site.min'
     }
 });
 

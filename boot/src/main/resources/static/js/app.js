@@ -6,20 +6,11 @@ define([
 	'Session'
 ], function($, Backbone, Router, Session){
 
-
-
 	var ApplicationModel = Backbone.Model.extend({
 
 	    start : function(){
 	    	Backbone.history.start();
             var router = new Router();
-
-	    	var isAuthenticated = Session.get('authenticated');
-	    	if (isAuthenticated) {
-	    		Backbone.history.navigate('', { trigger : true });
-	    	} else {
-	    		Backbone.history.navigate('login', { trigger : true });
-	    	}
 
 			$.ajaxSetup({
 				statusCode: {

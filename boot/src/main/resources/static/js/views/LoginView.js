@@ -24,8 +24,7 @@ define([
             var user = $("#j_username").val();
             var pass = $("#j_password").val();
             Session.login(function(response){
-                $("#logout-hotel").show();
-                Backbone.history.navigate('', { trigger : true });
+                Backbone.history.navigate('admin', { trigger : true });
             }, user, pass);
         }
 
