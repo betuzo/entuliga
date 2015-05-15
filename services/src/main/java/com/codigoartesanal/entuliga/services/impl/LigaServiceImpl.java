@@ -31,7 +31,9 @@ public class LigaServiceImpl implements LigaService {
         Liga liga = convertMapToLiga(ligaMap);
         liga.setAdmin(admin);
         geoLocationRepository.save(liga.getGeoLocation());
-        return ligaRepository.save(liga);
+        liga = ligaRepository.save(liga);
+        liga.getAdmin().setUserRole(null);
+        return liga;
     }
 
     private Liga convertMapToLiga(Map<String, String> ligaMap) {
@@ -45,9 +47,14 @@ public class LigaServiceImpl implements LigaService {
         geoLocation.setNoExterior(ligaMap.get(PROPERTY_NO_EXTERIOR));
         geoLocation.setNoInterior(ligaMap.get(PROPERTY_NO_INTERIOR));
         geoLocation.setCodigoPostal(ligaMap.get(PROPERTY_CODIGO_POSTAL));
-        geoLocation.setLatitude(Double.parseDouble(ligaMap.get(PROPERTY_LATITUDE)));
-        geoLocation.setLongitude(Double.parseDouble(ligaMap.get(PROPERTY_LONGITUDE)));
-
+        String latitude = ligaMap.get(PROPERTY_LATITUDE);
+        if (latitude != null && !latitude.isEmpty()) {
+            geoLocation.setLatitude(Double.parseDouble(latitude));
+        }
+        String longitude = ligaMap.get(PROPERTY_LONGITUDE);
+        if (longitude != null && !longitude.isEmpty()) {
+            geoLocation.setLongitude(Double.parseDouble(longitude));
+        }
         Colonia colonia = new Colonia();
         colonia.setId(Long.valueOf(ligaMap.get(PROPERTY_COLONIA_ID)));
         geoLocation.setColonia(colonia);

@@ -10,14 +10,26 @@ require.config({
             ],
             exports: 'Backbone'
         },
+        backboneValidation: {
+            deps: [
+                'backbone'
+            ]
+        },
+        jquerySerializeObject: {
+            deps: [
+                'jquery'
+            ]
+        }
     },
     paths: {
         backbone: 'vendor/backbone/backbone-min',
         jquery: 'vendor/jquery/jquery',
+        jquerySerializeObject: 'vendor/jquery/jquery.serializeObject/jquery.serializeObject.min',
+        backboneValidation: 'vendor/backbone/backbone-validation/backbone-validation-min',
         text : 'vendor/requirejs-text/text',
         underscore: 'vendor/underscore/underscore-min',
-        bootflat: 'vendor/bootflat/site.min',
-        selecter: 'vendor/bootflat/jquery.fs.selecter.min'
+        bootstrap: 'vendor/bootstrap/bootstrap',
+        selecter: 'vendor/bootstrap/select/bootstrap-select.min'
     }
 });
 

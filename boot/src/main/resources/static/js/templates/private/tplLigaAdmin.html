@@ -6,83 +6,31 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-3">
-                        <select name="selecter_basic" class="selecter_liga"  data-selecter-options='{"cover":"true"}'>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                            <option value="4">Four</option>
-                            <option value="5">Five</option>
-                        </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select class="form-control" id="select-liga" placeholder="Liga...">
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="5">Five</option>
+                            </select>
+                        </div>
+                        <div class="panel panel-default">
+                            <div id="liga-detail" class="panel-body">
+                            </div>
+                        </div>
+                        <div class="btn-group-horizontal" role="group" aria-label="...">
+                            <button id="liga-nuevo" type="button" class="btn btn-primary">Nuevo</button>
+                            <button id="liga-editar" type="button" class="btn btn-primary">Editar</button>
+                        </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Liga</h3>
                             </div>
-                            <div class="panel-body">
-                                <p>Detalle Liga.</p>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <label>Nombre</label>
-                                        <input class="form-control" placeholder="Nombre" type="text">
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <label>Nombre Oficial</label>
-                                        <input class="form-control" placeholder="Nombre Oficial" type="text">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <label>Telefono</label>
-                                        <input class="form-control" placeholder="Telefono" type="text">
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <label>Calle</label>
-                                        <input class="form-control" placeholder="Calle" type="text">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <label>No Exterior</label>
-                                        <input class="form-control" placeholder="No Exterior" type="text">
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <label>No Interior</label>
-                                        <input class="form-control" placeholder="No Interior" type="text">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <label>Codigo Postal</label>
-                                        <input class="form-control" placeholder="Codigo Postal" type="text">
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <label>Colonia</label>
-                                        <div class="input-group">
-                                            <input class="form-control" placeholder="Colonia" type="text">
-                                            <div class="input-group-btn">
-                                                <button id="colonia-buscar" type="button" class="btn btn-primary">Buscar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <label>Latitude</label>
-                                        <input class="form-control" placeholder="Latitude" type="text">
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <label>Longitude</label>
-                                        <input class="form-control" placeholder="Longitude" type="text">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                        <button type="button" class="btn btn-success">Editar</button>
-                                    </div>
-                                </div>
+                            <div id="liga-edit" class="panel-body">
                             </div>
                         </div>
                     </div>
@@ -90,7 +38,4 @@
             </div>
         </div>
     </div>
-</div>
-<div id="modal-colonia">
-
 </div>

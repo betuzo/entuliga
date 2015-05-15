@@ -1,9 +1,9 @@
 define([
 	'jquery',
-	'bootflat',
+	'bootstrap',
 	'core/BaseView',
 	'text!templates/private/tplMainAdmin.html'
-], function($, bootflat, BaseView, tplMainAdmin){
+], function($, bootstrap, BaseView, tplMainAdmin){
 
 	var MainAdminView = BaseView.extend({
         template: _.template(tplMainAdmin),
