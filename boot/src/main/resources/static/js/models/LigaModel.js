@@ -9,6 +9,20 @@ define([
         },
 
         defaults: {
+            nombre: '',
+            nombreCompleto: '',
+            telefono: '',
+            calle: '',
+            noExterior: '',
+            noInterior: '',
+            codigoPostal: '',
+            coloniaId: '',
+            coloniaDesc: '',
+            municipioDesc: '',
+            estadoDesc: '',
+            paisDesc: '',
+            longitude: '',
+            latitude: ''
         },
 
         initialize: function() {

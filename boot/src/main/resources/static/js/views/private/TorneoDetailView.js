@@ -2,11 +2,11 @@ define([
 	'jquery',
 	'backbone',
 	'core/BaseView',
-	'text!templates/private/tplLigaDetail.html'
-], function($, Backbone, BaseView, tplLigaDetail){
+	'text!templates/private/tplTorneoDetail.html'
+], function($, Backbone, BaseView, tplTorneoDetail){
 
-	var LigaDetailView = BaseView.extend({
-        template: _.template(tplLigaDetail),
+	var TorneoDetailView = BaseView.extend({
+        template: _.template(tplTorneoDetail),
 
         events: {
         },
@@ -20,6 +20,6 @@ define([
         }
 	});
 
-	return LigaDetailView;
+	return TorneoDetailView;
 
 });

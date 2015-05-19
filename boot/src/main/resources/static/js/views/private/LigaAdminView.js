@@ -4,10 +4,11 @@ define([
 	'bootstrap',
 	'selecter',
 	'core/BaseView',
+	'collections/LigasCollection',
 	'views/private/LigaDetailView',
 	'views/private/LigaEditView',
 	'text!templates/private/tplLigaAdmin.html'
-], function($, Backbone, bootstrap, selecter, BaseView, LigaDetailView, LigaEditView, tplLigaAdmin){
+], function($, Backbone, bootstrap, selecter, BaseView, LigasCollection, LigaDetailView, LigaEditView, tplLigaAdmin){
 
 	var LigaAdminView = BaseView.extend({
         template: _.template(tplLigaAdmin),
@@ -19,7 +20,11 @@ define([
         },
 
         initialize: function() {
+            this.ligas = new LigasCollection();
+            this.listenTo(this.ligas, 'add', this.agregarLiga);
+            this.listenTo(this.ligas, 'sync', this.syncLigas);
 
+            this.ligas.fetch();
         },
 
         render: function() {
@@ -29,7 +34,14 @@ define([
         },
 
         changeLiga: function(event) {
-
+            var modelo = this.ligas.get($(event.target).val());
+            if (typeof modelo != 'undefined') {
+                this.ligaDetailView = new LigaDetailView({model: modelo});
+                $('#liga-detail').html(this.ligaDetailView.render().$el);
+                $('#liga-editar').removeAttr("disabled");
+            } else {
+                $('#liga-editar').attr("disabled", true);
+            }
         },
 
         newLiga: function() {
@@ -38,7 +50,20 @@ define([
         },
 
         editLiga: function() {
+            var modelo = this.ligas.get($("#select-liga").val());
+            this.ligaEditView = new LigaEditView({tipo: 'edit', modelo: modelo});
+            $('#liga-edit').html(this.ligaEditView.render().$el);
+        },
 
+        agregarLiga: function(modelo) {
+            $('#select-liga').append($('<option>', {
+                value: modelo.get('id'),
+                text : modelo.get('nombre')
+            }));
+        },
+
+        syncLigas: function() {
+            $('#select-liga').change();
         }
 	});
 

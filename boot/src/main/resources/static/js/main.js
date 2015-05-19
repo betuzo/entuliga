@@ -19,6 +19,11 @@ require.config({
             deps: [
                 'jquery'
             ]
+        },
+        datepicker: {
+            deps: [
+                'jquery'
+            ]
         }
     },
     paths: {
@@ -29,7 +34,8 @@ require.config({
         text : 'vendor/requirejs-text/text',
         underscore: 'vendor/underscore/underscore-min',
         bootstrap: 'vendor/bootstrap/bootstrap',
-        selecter: 'vendor/bootstrap/select/bootstrap-select.min'
+        selecter: 'vendor/bootstrap/select/bootstrap-select.min',
+        datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker'
     }
 });
 

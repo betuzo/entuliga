@@ -1,0 +1,52 @@
+<form id="form-torneo" role="form">
+    <p>Detalle Torneo.</p>
+    <input id="torneo-liga-id" type="hidden" name="ligaId" value="<%= ligaId %>">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input class="form-control" placeholder="Nombre" type="text" name="nombre" value="<%= nombre %>">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Descripcion</label>
+                <input class="form-control" placeholder="Descripcion" type="text" name="descripcion" value="<%= descripcion %>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Fecha Inicio</label>
+                <div class="input-append date" id="dp-fecha-inicio" data-date="<%= fechaInicio %>" data-date-format="dd-mm-yyyy">
+                    <input class="span2" size="16" type="text" name="fechaInicio" value="<%= fechaInicio %>">
+                    <span class="add-on"><i class="icon-th"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Fecha Fin</label>
+                <div class="input-append date" id="dp-fecha-fin" data-date="<%= fechaFin %>" data-date-format="dd-mm-yyyy">
+                    <input class="span2" size="16" type="text" name="fechaFin" value="<%= fechaFin %>">
+                    <span class="add-on"><i class="icon-th"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Status</label>
+                <input class="form-control" placeholder="Status" type="text" name="status" value="<%= status %>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button id="btn-ok" type="button" class="btn btn-success">Guardar</button>
+        </div>
+    </div>
+</form>

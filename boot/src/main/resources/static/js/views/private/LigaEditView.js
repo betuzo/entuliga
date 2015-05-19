@@ -1,25 +1,74 @@
 define([
 	'jquery',
 	'backbone',
+	'backboneValidation',
+	'jquerySerializeObject',
+	'models/LigaModel',
 	'core/BaseView',
-	'text!templates/private/tplLigaDetail.html'
-], function($, Backbone, BaseView, tplLigaDetail){
+	'views/private/MainColoniaAdminView',
+	'text!templates/private/tplLigaEdit.html'
+], function($, Backbone, backboneValidation, jquerySerializeObject,
+            LigaModel, BaseView, MainColoniaAdminView, tplLigaEdit){
 
-	var LigaDetailEdit = BaseView.extend({
-        template: _.template(tplLigaDetail),
+	var LigaEditView = BaseView.extend({
+        template: _.template(tplLigaEdit),
 
         events: {
+            'click #colonia-buscar': 'buscarColonia',
+            'click #btn-ok': 'saveLiga'
         },
 
-        initialize: function() {
+        initialize: function(opts) {
+            if (opts.tipo == 'new') {
+                this.model = new LigaModel();
+            } else {
+                this.model = opts.modelo;
+            }
+
+            this.model.once("sync", this.saveLigaSuccess);
+            this.model.once("error", this.saveLigaError);
+            Backbone.Validation.bind(this);
+        },
+
+        remove: function() {
+            Backbone.Validation.unbind(this);
+            return Backbone.View.prototype.remove.apply(this, arguments);
         },
 
         render: function() {
-            this.$el.html(this.template());
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        buscarColonia: function() {
+            new MainColoniaAdminView(this.selectColonia);
+        },
+
+        selectColonia: function(colonia) {
+            $('#liga-colonia-id').val(colonia.get('id'));
+            $('#liga-colonia-desc').val(colonia.get('nombre'));
+        },
+
+        saveLiga: function(){
+            var data = this.$el.find("#form-liga").serializeObject();
+            this.model.set(data);
+
+            if(this.model.isValid(true)){
+                this.model.save();
+            }
+        },
+
+        saveLigaSuccess: function(model, response, options){
+            console.log('Successfully saved!');
+            alert('Great Success!');
+        },
+
+        saveLigaError: function(model, response, options){
+            console.log(model.toJSON());
+            console.log('error.responseText');
         }
 	});
 
-	return LigaDetailEdit;
+	return LigaEditView;
 
 });

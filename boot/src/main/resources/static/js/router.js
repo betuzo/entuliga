@@ -9,22 +9,24 @@ define([
 	'views/public/MainNavView',
 	'views/private/MainAdminView',
 	'views/private/MainAdminNavView',
-	'views/private/LigaAdminView'
+	'views/private/LigaAdminView',
+	'views/private/TorneoAdminView'
 ], function($, _, Backbone, BaseRouter, HotelAdnView, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
-            LigaAdminView){
+            LigaAdminView, TorneoAdminView){
         var Router = BaseRouter.extend({
 
         routes: {
-            '': 'main',
-            '/': 'main',
-            'login': 'login',
-            'admin': 'admin',
-            'admin/perfil': 'adminPerfil',
-            'admin/ligas': 'adminLigas',
-            'admin/torneos': 'adminTorneos',
-            'admin/equipos': 'adminEquipos',
-            'admin/jugadores': 'adminJugadores'
+            '':                     'main',
+            '/':                    'main',
+            'login':                'login',
+            'admin':                'admin',
+            'admin/perfil':         'adminPerfil',
+            'admin/ligas':          'adminLigas',
+            'admin/torneos':        'adminTorneos',
+            'admin/torneos/:liga':  'adminTorneos',
+            'admin/equipos':        'adminEquipos',
+            'admin/jugadores':      'adminJugadores'
         },
 
         before : function(params, next){
@@ -79,6 +81,11 @@ define([
 
         adminLigas: function(){
             var view = new LigaAdminView();
+            this.changeView(view);
+        },
+
+        adminTorneos: function(){
+            var view = new TorneoAdminView();
             this.changeView(view);
         }
 	});
