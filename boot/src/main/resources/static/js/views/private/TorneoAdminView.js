@@ -48,7 +48,11 @@ define([
                 $('#liga-detail').html(this.ligaDetailView.render().$el);
                 this.torneos.setLiga(modelo);
                 this.torneos.fetch();
+                $('#torneo-nuevo').removeAttr("disabled");
+                $('#torneo-editar').removeAttr("disabled");
             } else {
+                $('#torneo-nuevo').attr("disabled", true);
+                $('#torneo-editar').attr("disabled", true);
             }
         },
 
@@ -56,8 +60,10 @@ define([
             var modelo = this.torneos.get($(event.target).val());
             if (typeof modelo != 'undefined') {
                 this.torneoDetailView = new TorneoDetailView({model: modelo});
-                $('#liga-detail').html(this.torneoDetailView.render().$el);
+                $('#torneo-detail').html(this.torneoDetailView.render().$el);
+                $('#torneo-editar').removeAttr("disabled");
             } else {
+                $('#torneo-editar').attr("disabled", true);
             }
         },
 
@@ -84,7 +90,8 @@ define([
         },
 
         newTorneo: function() {
-            this.torneoEditView = new TorneoEditView({tipo: 'new', modelo: null});
+            var ligaId = this.ligas.get($("#select-liga").val()).get('id');
+            this.torneoEditView = new TorneoEditView({tipo: 'new', idLiga: ligaId});
             $('#torneo-edit').html(this.torneoEditView.render().$el);
         },
 

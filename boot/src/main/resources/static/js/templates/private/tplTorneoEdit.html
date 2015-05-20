@@ -19,18 +19,18 @@
         <div class="col-xs-6">
             <div class="form-group">
                 <label>Fecha Inicio</label>
-                <div class="input-append date" id="dp-fecha-inicio" data-date="<%= fechaInicio %>" data-date-format="dd-mm-yyyy">
-                    <input class="span2" size="16" type="text" name="fechaInicio" value="<%= fechaInicio %>">
-                    <span class="add-on"><i class="icon-th"></i></span>
+                <div class="input-append date" id="dp-fecha-inicio" data-date="<%= fechaInicioDes %>" data-date-format="mm/dd/yyyy">
+                    <span class="add-on glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    <input class="span2 form-control" size="16" type="text" name="fechaInicioDes" value="<%= fechaInicioDes %>">
                 </div>
             </div>
         </div>
         <div class="col-xs-6">
             <div class="form-group">
                 <label>Fecha Fin</label>
-                <div class="input-append date" id="dp-fecha-fin" data-date="<%= fechaFin %>" data-date-format="dd-mm-yyyy">
-                    <input class="span2" size="16" type="text" name="fechaFin" value="<%= fechaFin %>">
-                    <span class="add-on"><i class="icon-th"></i></span>
+                <div class="input-append date" id="dp-fecha-fin" data-date="<%= fechaFinDes %>" data-date-format="mm/dd/yyyy">
+                    <span class="add-on glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    <input class="span2 form-control" size="16" type="text" name="fechaFinDes" value="<%= fechaFinDes %>">
                 </div>
             </div>
         </div>
@@ -39,7 +39,11 @@
         <div class="col-xs-6">
             <div class="form-group">
                 <label>Status</label>
-                <input class="form-control" placeholder="Status" type="text" name="status" value="<%= status %>">
+                <select class="form-control" id="select-status" placeholder="Status..." name="status">
+                    <option value="ENPROCESO" <% print( status == 'ENPROCESO' ? 'selected' : '') %>>En Proceso</option>
+                    <option value="FINALIZADO" <% print( status == 'FINALIZADO' ? 'selected' : '') %>>Finalizado</option>
+                    <option value="CANCELADO" <% print( status == 'CANCELADO' ? 'selected' : '') %>>Cancelado</option>
+                </select>
             </div>
         </div>
     </div>

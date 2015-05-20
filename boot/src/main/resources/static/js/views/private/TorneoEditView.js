@@ -20,6 +20,7 @@ define([
         initialize: function(opts) {
             if (opts.tipo == 'new') {
                 this.model = new TorneoModel();
+                this.model.set({ligaId: opts.idLiga});
             } else {
                 this.model = opts.modelo;
             }
@@ -36,15 +37,17 @@ define([
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
-            $('#dp-fecha-inicio').datepicker();
-            $('#dp-fecha-fin').datepicker();
+            this.$el.find('#dp-fecha-inicio').datepicker({format: "mm/dd/yyyy"});
+            this.$el.find('#dp-fecha-fin').datepicker({format: "mm/dd/yyyy"});
             return this;
         },
 
         saveTorneo: function(){
             var data = this.$el.find("#form-torneo").serializeObject();
             this.model.set(data);
-
+            var fechaInicio = new Date(this.model.get('fechaInicioDes'));
+            var fechaFin = new Date(this.model.get('fechaFinDes'));
+            this.model.set({fechaInicio: fechaInicio.getTime(), fechaFin: fechaFin.getTime()});
             if(this.model.isValid(true)){
                 this.model.save();
             }

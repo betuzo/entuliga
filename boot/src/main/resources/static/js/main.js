@@ -35,7 +35,8 @@ require.config({
         underscore: 'vendor/underscore/underscore-min',
         bootstrap: 'vendor/bootstrap/bootstrap',
         selecter: 'vendor/bootstrap/select/bootstrap-select.min',
-        datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker'
+        datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker',
+        dateformat: 'vendor/date-format/date.format'
     }
 });
 
