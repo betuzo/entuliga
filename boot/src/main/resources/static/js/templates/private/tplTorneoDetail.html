@@ -1,4 +1,19 @@
-<h4 class="list-group-item-heading"><%= nombre %></h4>
-<p class="list-group-item-text"><%= descripcion %></p>
-<p class="list-group-item-text"><%= fechaInicio %> - <%= fechaFin %></p>
-<p class="list-group-item-text"><%= status %></p>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h4 class="list-group-item-heading"><%= nombre %></h4>
+        <p class="list-group-item-text"><%= descripcion %></p>
+        <p class="list-group-item-text"><%= fechaInicio %> - <%= fechaFin %></p>
+        <p class="list-group-item-text"><%= status %></p>
+    </div>
+</div>
+<ul class="list-group">
+    <li id="toreno-equipo" class="list-group-item list-group-item-success">
+        <span class="badge"><%= totalEquipos %></span>
+        Equipos
+    </li>
+    <li id="torneo-jornada" class="list-group-item list-group-item-info">
+        <span class="badge"><%= totalJornadas %></span>
+        Jornadas
+    </li>
+</ul>

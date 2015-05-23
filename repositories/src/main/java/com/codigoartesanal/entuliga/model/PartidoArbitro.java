@@ -14,8 +14,8 @@ public class PartidoArbitro {
     @JoinColumn(name = "partido_id", nullable = false)
     private Partido partido;
     @ManyToOne
-    @JoinColumn(name = "arbitro_id", nullable = false)
-    private Arbitro arbitro;
+    @JoinColumn(name = "torneo_arbitro_id", nullable = false)
+    private TorneoArbitro arbitro;
     @Column(name = "tipo_arbitro")
     @Enumerated(EnumType.STRING)
     private TipoArbitro tipoArbitro;
@@ -36,11 +36,11 @@ public class PartidoArbitro {
         this.partido = partido;
     }
 
-    public Arbitro getArbitro() {
+    public TorneoArbitro getArbitro() {
         return arbitro;
     }
 
-    public void setArbitro(Arbitro arbitro) {
+    public void setArbitro(TorneoArbitro arbitro) {
         this.arbitro = arbitro;
     }
 

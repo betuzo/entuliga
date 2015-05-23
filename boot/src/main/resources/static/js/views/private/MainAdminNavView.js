@@ -11,8 +11,9 @@ define([
         template: _.template(tplMainAdminNav),
 
         events: {
-            'click #logout': 'logout',
-            'click #home': 'homeAdmin'
+            'click #logout'             : 'logout',
+            'click #home'               : 'homeAdmin',
+            'click .nav-item-entuliga'  : 'activeMenu'
         },
 
         initialize: function() {
@@ -32,7 +33,12 @@ define([
 
         homeAdmin: function(){
             Backbone.history.navigate('admin', { trigger : true });
-        }
+        },
+
+        activeMenu: function(event){
+            $('.nav-item-entuliga').removeClass('active');
+            $(event.target).parent().addClass('active');
+        },
 	});
 
 	return MainAdminNavView;

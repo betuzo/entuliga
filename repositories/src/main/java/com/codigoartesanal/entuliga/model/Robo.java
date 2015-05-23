@@ -17,10 +17,10 @@ public class Robo {
     private Integer segundo;
     @ManyToOne
     @JoinColumn(name = "robador_id", nullable = false)
-    private Jugador robador;
+    private TorneoJugador robador;
     @ManyToOne
     @JoinColumn(name = "perdedor_id", nullable = false)
-    private Jugador perdedor;
+    private TorneoJugador perdedor;
 
     public Long getId() {
         return id;
@@ -54,19 +54,19 @@ public class Robo {
         this.segundo = segundo;
     }
 
-    public Jugador getRobador() {
+    public TorneoJugador getRobador() {
         return robador;
     }
 
-    public void setRobador(Jugador robador) {
+    public void setRobador(TorneoJugador robador) {
         this.robador = robador;
     }
 
-    public Jugador getPerdedor() {
+    public TorneoJugador getPerdedor() {
         return perdedor;
     }
 
-    public void setPerdedor(Jugador perdedor) {
+    public void setPerdedor(TorneoJugador perdedor) {
         this.perdedor = perdedor;
     }
 

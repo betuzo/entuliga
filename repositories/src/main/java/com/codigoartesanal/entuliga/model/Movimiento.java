@@ -19,10 +19,10 @@ public class Movimiento {
     private TipoMovimiento tipo;
     @ManyToOne
     @JoinColumn(name = "entra_id", nullable = false)
-    private Jugador entra;
+    private TorneoJugador entra;
     @ManyToOne
     @JoinColumn(name = "sale_id", nullable = false)
-    private Jugador sale;
+    private TorneoJugador sale;
 
     public Long getId() {
         return id;
@@ -64,19 +64,19 @@ public class Movimiento {
         this.tipo = tipo;
     }
 
-    public Jugador getEntra() {
+    public TorneoJugador getEntra() {
         return entra;
     }
 
-    public void setEntra(Jugador entra) {
+    public void setEntra(TorneoJugador entra) {
         this.entra = entra;
     }
 
-    public Jugador getSale() {
+    public TorneoJugador getSale() {
         return sale;
     }
 
-    public void setSale(Jugador sale) {
+    public void setSale(TorneoJugador sale) {
         this.sale = sale;
     }
 

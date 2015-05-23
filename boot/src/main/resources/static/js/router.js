@@ -10,10 +10,14 @@ define([
 	'views/private/MainAdminView',
 	'views/private/MainAdminNavView',
 	'views/private/LigaAdminView',
-	'views/private/TorneoAdminView'
+	'views/private/TorneoAdminView',
+	'views/private/EquipoAdminView',
+	'views/private/JugadorAdminView',
+	'views/private/ArbitroAdminView'
 ], function($, _, Backbone, BaseRouter, HotelAdnView, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
-            LigaAdminView, TorneoAdminView){
+            LigaAdminView, TorneoAdminView, EquipoAdminView,
+            JugadorAdminView, ArbitroAdminView){
         var Router = BaseRouter.extend({
 
         routes: {
@@ -26,19 +30,20 @@ define([
             'admin/torneos':        'adminTorneos',
             'admin/torneos/:liga':  'adminTorneos',
             'admin/equipos':        'adminEquipos',
-            'admin/jugadores':      'adminJugadores'
+            'admin/jugadores':      'adminJugadores',
+            'admin/arbitros':       'adminArbitros'
         },
 
-        before : function(params, next){
+        before : function(params, next) {
             console.log('before');
             return next();
         },
 
-        after : function(){
+        after : function() {
             console.log('after');
         },
 
-        changeView : function(view){
+        changeView : function(view) {
             function setView(view){
                 if(this.currentView){
                     this.currentView.close();
@@ -55,37 +60,52 @@ define([
             this.mainNav();
         },
 
-        mainNav: function(){
+        mainNav: function() {
             new MainNavView();
         },
 
-        main: function(){
+        main: function() {
             var view = new MainView();
             this.changeView(view);
         },
 
-        login: function(){
+        login: function() {
             var view = new LoginView();
             this.changeView(view);
         },
 
-        mainAdminNav: function(){
+        mainAdminNav: function() {
             new MainAdminNavView();
         },
 
-        admin: function(){
+        admin: function() {
             var view = new MainAdminView();
             this.changeView(view);
             this.mainAdminNav();
         },
 
-        adminLigas: function(){
+        adminLigas: function() {
             var view = new LigaAdminView();
             this.changeView(view);
         },
 
-        adminTorneos: function(){
+        adminTorneos: function() {
             var view = new TorneoAdminView();
+            this.changeView(view);
+        },
+
+        adminEquipos: function() {
+            var view = new EquipoAdminView();
+            this.changeView(view);
+        },
+
+        adminJugadores: function() {
+            var view = new JugadorAdminView();
+            this.changeView(view);
+        },
+
+        adminArbitros: function() {
+            var view = new ArbitroAdminView();
             this.changeView(view);
         }
 	});

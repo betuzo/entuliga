@@ -17,10 +17,10 @@ public class Asistencia {
     private Integer segundo;
     @ManyToOne
     @JoinColumn(name = "asiste_id", nullable = false)
-    private Jugador asiste;
+    private TorneoJugador asiste;
     @ManyToOne
     @JoinColumn(name = "asistido_id", nullable = false)
-    private Jugador asistido;
+    private TorneoJugador asistido;
 
     public Long getId() {
         return id;
@@ -54,19 +54,19 @@ public class Asistencia {
         this.segundo = segundo;
     }
 
-    public Jugador getAsiste() {
+    public TorneoJugador getAsiste() {
         return asiste;
     }
 
-    public void setAsiste(Jugador asiste) {
+    public void setAsiste(TorneoJugador asiste) {
         this.asiste = asiste;
     }
 
-    public Jugador getAsistido() {
+    public TorneoJugador getAsistido() {
         return asistido;
     }
 
-    public void setAsistido(Jugador asistido) {
+    public void setAsistido(TorneoJugador asistido) {
         this.asistido = asistido;
     }
 

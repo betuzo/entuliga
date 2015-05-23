@@ -17,10 +17,10 @@ public class Bloqueo {
     private Integer segundo;
     @ManyToOne
     @JoinColumn(name = "bloquea_id", nullable = false)
-    private Jugador bloquea;
+    private TorneoJugador bloquea;
     @ManyToOne
     @JoinColumn(name = "bloqueado_id", nullable = false)
-    private Jugador bloqueado;
+    private TorneoJugador bloqueado;
 
     public Long getId() {
         return id;
@@ -54,19 +54,19 @@ public class Bloqueo {
         this.segundo = segundo;
     }
 
-    public Jugador getBloquea() {
+    public TorneoJugador getBloquea() {
         return bloquea;
     }
 
-    public void setBloquea(Jugador bloquea) {
+    public void setBloquea(TorneoJugador bloquea) {
         this.bloquea = bloquea;
     }
 
-    public Jugador getBloqueado() {
+    public TorneoJugador getBloqueado() {
         return bloqueado;
     }
 
-    public void setBloqueado(Jugador bloqueado) {
+    public void setBloqueado(TorneoJugador bloqueado) {
         this.bloqueado = bloqueado;
     }
 

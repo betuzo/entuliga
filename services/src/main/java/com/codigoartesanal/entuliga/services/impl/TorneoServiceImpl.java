@@ -21,7 +21,7 @@ public class TorneoServiceImpl implements TorneoService {
     TorneoRepository torneoRepository;
 
     @Override
-    public Map<String, Object> createLiga(Map<String, String> torneoMap, User user) {
+    public Map<String, Object> createTorneo(Map<String, String> torneoMap, User user) {
         Torneo torneo = convertMapToToneo(torneoMap);
         return convertTorneoToMap(torneoRepository.save(torneo));
     }

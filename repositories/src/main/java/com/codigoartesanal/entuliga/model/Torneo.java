@@ -28,6 +28,9 @@ public class Torneo {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "torneo")
     private Set<Jornada> jornadas;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "torneo")
+    private Set<TorneoEquipo> equipos;
+
     public Long getId() {
         return id;
     }
@@ -90,6 +93,14 @@ public class Torneo {
 
     public void setJornadas(Set<Jornada> jornadas) {
         this.jornadas = jornadas;
+    }
+
+    public Set<TorneoEquipo> getEquipos() {
+        return equipos;
+    }
+
+    public void setEquipos(Set<TorneoEquipo> equipos) {
+        this.equipos = equipos;
     }
 
     @Override

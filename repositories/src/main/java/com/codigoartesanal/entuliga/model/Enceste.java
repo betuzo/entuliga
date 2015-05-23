@@ -19,7 +19,7 @@ public class Enceste {
     private TipoEnceste tipo;
     @ManyToOne
     @JoinColumn(name = "tirador_id", nullable = false)
-    private Jugador tirador;
+    private TorneoJugador tirador;
 
     public Long getId() {
         return id;
@@ -61,11 +61,11 @@ public class Enceste {
         this.tipo = tipo;
     }
 
-    public Jugador getTirador() {
+    public TorneoJugador getTirador() {
         return tirador;
     }
 
-    public void setTirador(Jugador tirador) {
+    public void setTirador(TorneoJugador tirador) {
         this.tirador = tirador;
     }
 

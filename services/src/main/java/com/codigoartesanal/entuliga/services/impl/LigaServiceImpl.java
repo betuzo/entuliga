@@ -54,21 +54,32 @@ public class LigaServiceImpl implements LigaService {
         map.put(PROPERTY_NOMBRE, liga.getNombre());
         map.put(PROPERTY_NOMBRE_COMPLETO, liga.getNombreCompleto());
         map.put(PROPERTY_TELEFONO, liga.getTelefono());
+        if (liga.getGeoLocation() == null)
+            return map;
         map.put(PROPERTY_GEO_LOCATION_ID, liga.getGeoLocation().getId());
         map.put(PROPERTY_CALLE, liga.getGeoLocation().getCalle());
         map.put(PROPERTY_NO_EXTERIOR, liga.getGeoLocation().getNoExterior());
         map.put(PROPERTY_NO_INTERIOR, liga.getGeoLocation().getNoInterior());
-        map.put(PROPERTY_COLONIA_ID, liga.getGeoLocation().getColonia().getId());
-        map.put(PROPERTY_COLONIA_DESC, liga.getGeoLocation().getColonia().getNombre());
-        map.put(PROPERTY_MUNICIPIO_ID, liga.getGeoLocation().getColonia().getMunicipio().getId());
-        map.put(PROPERTY_MUNICIPIO_DESC, liga.getGeoLocation().getColonia().getMunicipio().getNombre());
-        map.put(PROPERTY_ESTADO_ID, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getId());
-        map.put(PROPERTY_ESTADO_DESC, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getNombre());
-        map.put(PROPERTY_PAIS_ID, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getPais().getId());
-        map.put(PROPERTY_PAIS_DESC, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getPais().getNombre());
         map.put(PROPERTY_CODIGO_POSTAL, liga.getGeoLocation().getCodigoPostal());
         map.put(PROPERTY_LATITUDE, liga.getGeoLocation().getLatitude());
         map.put(PROPERTY_LONGITUDE, liga.getGeoLocation().getLongitude());
+        if (liga.getGeoLocation().getColonia() == null)
+            return map;
+        map.put(PROPERTY_COLONIA_ID, liga.getGeoLocation().getColonia().getId());
+        map.put(PROPERTY_COLONIA_DESC, liga.getGeoLocation().getColonia().getNombre());
+        if (liga.getGeoLocation().getColonia().getMunicipio() == null)
+            return map;
+        map.put(PROPERTY_MUNICIPIO_ID, liga.getGeoLocation().getColonia().getMunicipio().getId());
+        map.put(PROPERTY_MUNICIPIO_DESC, liga.getGeoLocation().getColonia().getMunicipio().getNombre());
+        if (liga.getGeoLocation().getColonia().getMunicipio().getEstado() == null)
+            return map;
+        map.put(PROPERTY_ESTADO_ID, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getId());
+        map.put(PROPERTY_ESTADO_DESC, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getNombre());
+        if (liga.getGeoLocation().getColonia().getMunicipio().getEstado().getPais() == null)
+            return map;
+        map.put(PROPERTY_PAIS_ID, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getPais().getId());
+        map.put(PROPERTY_PAIS_DESC, liga.getGeoLocation().getColonia().getMunicipio().getEstado().getPais().getNombre());
+
         return map;
     }
 

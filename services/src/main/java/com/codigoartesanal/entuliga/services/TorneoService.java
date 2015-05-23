@@ -17,6 +17,6 @@ public interface TorneoService {
     public static final String PROPERTY_FECHA_FIN       = "fechaFin";
     public static final String PROPERTY_STATUS          = "status";
 
-    Map<String,Object> createLiga(Map<String, String> torneo, User user);
+    Map<String,Object> createTorneo(Map<String, String> torneo, User user);
     List<Map<String,Object>> listTorneoByLiga(Long idLiga);
 }
