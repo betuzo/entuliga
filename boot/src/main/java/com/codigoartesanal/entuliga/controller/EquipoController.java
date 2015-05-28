@@ -48,10 +48,17 @@ public class EquipoController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/likename/{likename}" },
+            value = { "/search/{criterio}" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
-    public List<Map<String, Object>> listEquipoByName(@PathVariable(value = "likename") String likeName) {
-        return equipoService.listEquipoByName(likeName);
+    public List<Map<String, Object>> listEquipoByName(
+            @PathVariable("criterio") String criterio,
+            @RequestParam(value = "tipo") String tipo,
+            @RequestParam(value = "idTorneo") Long idTorneo) {
+        switch (tipo) {
+            case "notInTorneoAndContainName":
+                return equipoService.listEquipoByTorneoAndContainName(idTorneo, "%" + criterio + "%");
+        }
+        return null;
     }
 }

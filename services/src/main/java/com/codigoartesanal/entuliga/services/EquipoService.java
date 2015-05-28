@@ -18,5 +18,5 @@ public interface EquipoService {
 
     List<Map<String, Object>> listEquipoByAdmin(User user);
 
-    List<Map<String,Object>> listEquipoByName(String likeName);
+    List<Map<String,Object>> listEquipoByTorneoAndContainName(Long idTorneo, String likeName);
 }

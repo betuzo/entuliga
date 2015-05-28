@@ -7,16 +7,16 @@ define([
         model: EquipoModel,
         url: function() {
             if (this.tipo == 'like') {
-                return 'equipo/likename/' + this.likename;
+                return 'equipo/search/' + this.criterio;
             } else {
                 return 'equipo';
             }
         },
-        setLiga: function(likename){
-            this.likename = likename;
-        },
         setTipo: function(tipo){
             this.tipo = tipo;
+        },
+        setCriterio: function(criterio){
+            this.criterio = criterio;
         }
     });
 

@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.Equipo;
+import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.repositories.EquipoRepository;
 import com.codigoartesanal.entuliga.services.EquipoService;
@@ -38,8 +39,11 @@ public class EquipoServiceImpl implements EquipoService {
     }
 
     @Override
-    public List<Map<String, Object>> listEquipoByName(String likeName) {
-        Iterator<Equipo> itEquipo = equipoRepository.findAllByNombreContaining(likeName).iterator();
+    public List<Map<String, Object>> listEquipoByTorneoAndContainName(Long idTorneo, String likeName) {
+        Torneo torneo = new Torneo();
+        torneo.setId(idTorneo);
+        Iterator<Equipo> itEquipo =
+                equipoRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName).iterator();
         List<Map<String, Object>> copy = new ArrayList<>();
         while (itEquipo.hasNext()) {
             Equipo equipo = itEquipo.next();

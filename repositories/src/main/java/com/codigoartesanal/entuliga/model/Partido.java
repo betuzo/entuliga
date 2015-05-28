@@ -17,12 +17,12 @@ public class Partido {
     private Jornada jornada;
     @ManyToOne
     @JoinColumn(name = "local_id", nullable = false)
-    private Equipo local;
+    private TorneoEquipo local;
     @Column(name = "puntos_local")
     private Long puntosLocal;
     @ManyToOne
     @JoinColumn(name = "visitante_id", nullable = false)
-    private Equipo visitante;
+    private TorneoEquipo visitante;
     @Column(name = "puntos_visitante")
     private Long puntosVisitante;
     @ManyToOne
@@ -72,11 +72,11 @@ public class Partido {
         this.jornada = jornada;
     }
 
-    public Equipo getLocal() {
+    public TorneoEquipo getLocal() {
         return local;
     }
 
-    public void setLocal(Equipo local) {
+    public void setLocal(TorneoEquipo local) {
         this.local = local;
     }
 
@@ -88,11 +88,11 @@ public class Partido {
         this.puntosLocal = puntosLocal;
     }
 
-    public Equipo getVisitante() {
+    public TorneoEquipo getVisitante() {
         return visitante;
     }
 
-    public void setVisitante(Equipo visitante) {
+    public void setVisitante(TorneoEquipo visitante) {
         this.visitante = visitante;
     }
 
