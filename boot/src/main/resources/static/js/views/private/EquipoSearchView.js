@@ -12,11 +12,13 @@ define([
 
         events: {
             'click #btn-buscar': 'clickBuscar',
-            'click #btn-aceptar': 'clickAceptar'
+            'click #btn-aceptar': 'clickAceptar',
+            'click .list-group-item': 'clickItemSearch'
         },
 
-        initialize: function(callbackAceptar) {
-            this.callbackAceptar = callbackAceptar;
+        initialize: function(opts) {
+            this.callbackAceptar = opts.callbackAceptar;
+            this.model = opts.modelo;
             this.render();
             this.equipos = new EquiposCollection();
             this.listenTo(this.equipos, 'add', this.agregarEquipo);
@@ -26,6 +28,7 @@ define([
         render: function() {
             this.$el.html(this.template());
             this.$('#equipo-search-dialog').modal('show');
+            this.$('.alert-danger').hide();
         },
 
         agregarEquipo: function(modelo) {
@@ -33,8 +36,9 @@ define([
         },
 
         syncEquipos: function() {
+            $("#result-search").html('');
             this.equipos.forEach(function(equipo) {
-                var liitem = "<li class='list-group-item' value='" + equipo.get('id') + "'>" + equipo.get('nombre') +"</li>";
+                var liitem = "<a class='list-group-item' id='" + equipo.get('id') + "'>" + equipo.get('nombre') +"</a>";
                 $(liitem).appendTo("#result-search");
             });
         },
@@ -54,15 +58,20 @@ define([
         },
 
         clickAceptar: function(event) {
-            var coloniaId = $('#input-colonia').val();
-            if (coloniaId == 'undefined' || coloniaId == ''){
+            var equipoId = $('.list-group-item.active').attr('id');
+            if (equipoId == 'undefined' || equipoId == undefined || equipoId == ''){
                 this.$('.alert-danger').show();
-                this.$('.alert-danger').html('Debe seleccionar una colonia');
+                this.$('.alert-danger').html('Debe seleccionar un equipo');
             } else {
-                var modelo = this.colonias.get(coloniaId);
+                var modelo = this.equipos.get(equipoId);
                 this.callbackAceptar(modelo);
-                this.$('#colonia-dialog').modal('hide');
+                this.$('#equipo-search-dialog').modal('hide');
             }
+        },
+
+        clickItemSearch: function(event) {
+            $('.list-group-item').removeClass('active');
+            $(event.target).addClass('active');
         }
 	});
 

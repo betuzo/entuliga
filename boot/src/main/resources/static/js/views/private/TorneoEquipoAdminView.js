@@ -22,10 +22,11 @@ define([
         },
 
         agregarEquipo: function() {
-            this.equipoSearchView = new EquipoSearchView({model: this.model, callback: this.selectEquipo});
+            this.equipoSearchView = new EquipoSearchView({modelo: this.model, callbackAceptar: this.selectEquipo});
         },
 
-        selectEquipo: function() {
+        selectEquipo: function(equipo) {
+            alert(equipo);
         }
 	});
 
