@@ -9,8 +9,7 @@ import com.codigoartesanal.entuliga.services.TorneoEquipoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 1/06/15.
@@ -22,13 +21,23 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
     TorneoEquipoRepository torneoEquipoRepository;
 
     @Override
-    public Map<String, Object> createTorneoEquipo(Long idTorneo, Map<String, String> equipo) {
+    public Map<String, Object> createTorneoEquipo(Map<String, String> equipo) {
+        TorneoEquipo torneoEquipo = convertMapToTorneoEquipo(equipo);
+        return convertTorneoEquipoToMap(torneoEquipoRepository.save(torneoEquipo));
+    }
+
+    @Override
+    public List<Map<String, Object>> listTorneoEquipoByTorneo(Long idTorneo) {
         Torneo torneo = new Torneo();
         torneo.setId(idTorneo);
-        TorneoEquipo torneoEquipo = convertMapToTorneoEquipo(equipo);
-        torneoEquipo.setTorneo(torneo);
-        torneoEquipo.setStatusEquipo(StatusEquipo.INSCRITO);
-        return convertTorneoEquipoToMap(torneoEquipoRepository.save(torneoEquipo));
+        Iterator<TorneoEquipo> itTorneoEquipo = torneoEquipoRepository.findAllByTorneo(torneo).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itTorneoEquipo.hasNext()) {
+            TorneoEquipo torneoEquipo = itTorneoEquipo.next();
+            Map<String, Object> dto = convertTorneoEquipoToMap(torneoEquipo);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private TorneoEquipo convertMapToTorneoEquipo(Map<String, String> torneoEquipoMap) {
@@ -37,6 +46,12 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
         equipo.setId(Long.valueOf(torneoEquipoMap.get(PROPERTY_EQUIPO_ID)));
 
         torneoEquipo.setEquipo(equipo);
+
+        Torneo torneo = new Torneo();
+        torneo.setId(Long.valueOf(torneoEquipoMap.get(PROPERTY_TORNEO_ID)));
+
+        torneoEquipo.setTorneo(torneo);
+        torneoEquipo.setStatusEquipo(StatusEquipo.valueOf(torneoEquipoMap.get(PROPERTY_STATUS_EQUIPO)));
 
         return torneoEquipo;
     }

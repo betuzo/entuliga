@@ -1,5 +1,6 @@
 package com.codigoartesanal.entuliga.services;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,5 +14,7 @@ public interface TorneoEquipoService {
     public static final String PROPERTY_EQUIPO_NOMBRE   = "equipoNombre";
     public static final String PROPERTY_STATUS_EQUIPO   = "statusEquipo";
 
-    Map<String,Object> createTorneoEquipo(Long idTorneo, Map<String, String> equipo);
+    Map<String,Object> createTorneoEquipo(Map<String, String> equipo);
+
+    List<Map<String,Object>> listTorneoEquipoByTorneo(Long idTorneo);
 }

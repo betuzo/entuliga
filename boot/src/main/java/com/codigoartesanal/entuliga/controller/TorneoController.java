@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,10 +44,9 @@ public class TorneoController {
     @ResponseBody
     @RequestMapping(
             value = { "/{torneo}/equipo" },
-            method = {RequestMethod.POST},
+            method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
-    public Map<String, Object> listTorneoByLiga(
-            @PathVariable("torneo") Long idTorneo, @RequestBody Map<String, String> torneoEquipo) {
-        return torneoEquipoService.createTorneoEquipo(idTorneo, torneoEquipo);
+    public List<Map<String, Object>> listTorneoEquipoByLiga(@PathVariable("torneo") Long idTorneo) {
+        return torneoEquipoService.listTorneoEquipoByTorneo(idTorneo);
     }
 }

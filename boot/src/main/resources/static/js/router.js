@@ -3,7 +3,6 @@ define([
 	'underscore',
 	'backbone',
 	'core/BaseRouter',
-	'views/HotelAdnView',
 	'views/LoginView',
 	'views/public/MainView',
 	'views/public/MainNavView',
@@ -14,7 +13,7 @@ define([
 	'views/private/EquipoAdminView',
 	'views/private/JugadorAdminView',
 	'views/private/ArbitroAdminView'
-], function($, _, Backbone, BaseRouter, HotelAdnView, LoginView,
+], function($, _, Backbone, BaseRouter, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
             LigaAdminView, TorneoAdminView, EquipoAdminView,
             JugadorAdminView, ArbitroAdminView){
