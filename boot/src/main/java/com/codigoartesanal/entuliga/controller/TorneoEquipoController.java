@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,20 @@ public class TorneoEquipoController {
     public Map<String, Object> createTorneoEquipoByTorneo(
             @RequestBody Map<String, String> torneoEquipo) {
         return torneoEquipoService.createTorneoEquipo(torneoEquipo);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneoequipo}" },
+            method = RequestMethod.DELETE,
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> deleteTorneoEquipo(@PathVariable("torneoequipo") Long idTorneoEquipo) {
+        Map<String, Object> response = new HashMap<>();
+        response.put(TorneoEquipoService.PROPERTY_ID, idTorneoEquipo);
+        torneoEquipoService.deleteTorneoEquipo(idTorneoEquipo);
+        response.put(TorneoEquipoService.PROPERTY_RESULT, true);
+        response.put(TorneoEquipoService.PROPERTY_MESSAGE, "Equipo eliminado");
+        return response;
     }
 
     @ResponseBody

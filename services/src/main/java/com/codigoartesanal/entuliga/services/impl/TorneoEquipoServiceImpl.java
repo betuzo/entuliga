@@ -51,6 +51,11 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
         return copy;
     }
 
+    @Override
+    public void deleteTorneoEquipo(Long idTorneoEquipo) {
+        torneoEquipoRepository.delete(idTorneoEquipo);
+    }
+
     private TorneoEquipo convertMapToTorneoEquipo(Map<String, String> torneoEquipoMap) {
         TorneoEquipo torneoEquipo = new TorneoEquipo();
         Equipo equipo = new Equipo();

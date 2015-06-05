@@ -33,8 +33,6 @@ define([
             this.listenTo(this.posiciones, 'sync', this.syncPosiciones);
             this.posiciones.fetch();
 
-            this.model.once("sync", this.saveTorneoJugadorSuccess);
-            this.model.once("error", this.saveTorneoJugadorError);
             Backbone.Validation.bind(this);
         },
 
@@ -85,28 +83,28 @@ define([
         clickAceptar: function(event) {
             var data = this.$el.find("#form-torneo-jugador").serializeObject();
             this.model.set(data);
-
+            that = this;
             if(this.model.isValid(true)){
-                this.model.save();
+                this.model.save({}, {
+                    wait:true,
+                    success:function(model, response) {
+                        console.log('Successfully saved!');
+                        alert('Great Success!');
+                        that.callbackAceptar(model);
+                    },
+                    error: function(model, error) {
+                        console.log(model.toJSON());
+                        console.log('error.responseText');
+                    }
+                });
             }
-        },
-
-        saveTorneoJugadorSuccess: function(model, response, options){
-            console.log('Successfully saved!');
-            alert('Great Success!');
-            this.callbackAceptar(modelo);
-        },
-
-        saveTorneoJugadorError: function(model, response, options){
-            console.log(model.toJSON());
-            console.log('error.responseText');
         },
 
         clickItemSearch: function(event) {
             $('.list-group-item').removeClass('active');
             $(event.target).addClass('active');
             var jugadorId = $('.list-group-item.active').attr('id');
-            this.$('#torneo-liga-id').val(jugadorId);
+            this.$('#jugador-id').val(jugadorId);
         },
 
         destroyView: function() {

@@ -23,6 +23,27 @@ define([
         },
 
         deleteEquipo: function() {
+            that = this;
+            this.model.destroy({
+                contentType: 'application/json',
+                wait:true,
+                success: function(model, response) {
+                    that.destroyView();
+                    alert(response.message);
+                },
+                error: function(model, error) {
+                    alert(error);
+                }
+            });
+        },
+
+        destroyView: function() {
+            // COMPLETELY UNBIND THE VIEW
+            this.undelegateEvents();
+            this.$el.removeData().unbind();
+            // Remove view from DOM
+            this.remove();
+            Backbone.View.prototype.remove.call(this);
         }
 	});
 

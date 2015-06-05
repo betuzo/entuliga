@@ -15,7 +15,12 @@ public interface TorneoJugadorService {
     public static final String PROPERTY_POSICION_JUGADOR    = "posicionJugador";
     public static final String PROPERTY_NUMERO_JUGADOR      = "numeroJugador";
 
+    public static final String PROPERTY_RESULT              = "result";
+    public static final String PROPERTY_MESSAGE             = "message";
+
     List<Map<String,Object>> listTorneoJugadorByTorneoEquipo(Long idTorneoEquipo);
 
     Map<String, Object> createTorneoJugador(Map<String, String> jugador);
+
+    void deleteTorneoJugador(Long idTorneoJugador);
 }

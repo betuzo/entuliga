@@ -43,6 +43,11 @@ public class TorneoJugadorServiceImpl implements TorneoJugadorService {
         return convertTorneoJugadorToMap(torneoJugador);
     }
 
+    @Override
+    public void deleteTorneoJugador(Long idTorneoJugador) {
+        torneoJugadorRepository.delete(idTorneoJugador);
+    }
+
     private TorneoJugador convertMapToTorneoJugador(Map<String, String> torneoJugadorMap) {
         TorneoJugador torneoJugador = new TorneoJugador();
         Jugador jugador = new Jugador();

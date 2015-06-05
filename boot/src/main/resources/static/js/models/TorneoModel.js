@@ -20,7 +20,8 @@ define([
             status: 'ENPROCESO',
             totalJornadas: 0,
             totalEquipos: 0,
-            totalJugadores: 0
+            totalJugadores: 0,
+            totalPartidos: 0
         },
 
         initialize: function() {

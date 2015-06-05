@@ -60,7 +60,7 @@ define([
         },
 
         agregarTorneoJugador: function(modelo) {
-            var vista = new RowTorneoEquipoView(modelo);
+            var vista = new RowTorneoJugadorView(modelo);
             $("#torneo-jugadores").find('tbody:last').append(vista.render().$el);
         },
 

@@ -14,6 +14,7 @@ define([
             'click #torneo-jornada'     :   'viewJornada',
             'click #torneo-equipo'      :   'viewEquipo',
             'click #torneo-jugador'     :   'viewJugador',
+            'click #torneo-partido'     :   'viewPartido',
             'click .list-group-item'    :   'clickOptionDetail'
         },
 
@@ -30,6 +31,13 @@ define([
             if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
                 || this.tipo != 'jornada'){
                 this.tipo = 'jornada';
+            }
+        },
+
+        viewPartido: function() {
+            if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
+                || this.tipo != 'partido'){
+                this.tipo = 'partido';
             }
         },
 
