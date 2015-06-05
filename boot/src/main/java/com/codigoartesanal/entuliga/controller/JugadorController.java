@@ -4,10 +4,7 @@ import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.services.JugadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -49,4 +46,19 @@ public class JugadorController {
         return jugadorService.listJugadorByAdmin(user);
     }
 
+    @ResponseBody
+    @RequestMapping(
+            value = { "/search/{criterio}" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> listEquipoByName(
+            @PathVariable("criterio") String criterio,
+            @RequestParam(value = "tipo") String tipo,
+            @RequestParam(value = "idTorneo") Long idTorneo) {
+        switch (tipo) {
+            case "notInTorneoAndContainName":
+                return jugadorService.listJugadorByTorneoAndContainName(idTorneo, "%" + criterio + "%");
+        }
+        return null;
+    }
 }

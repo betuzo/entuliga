@@ -36,4 +36,6 @@ public interface JugadorService {
     Map<String,Object> createJugador(Map<String, String> jugador, User user);
 
     List<Map<String,Object>> listJugadorByAdmin(User user);
+
+    List<Map<String,Object>> listJugadorByTorneoAndContainName(Long idTorneo, String criterio);
 }

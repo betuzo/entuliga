@@ -4,7 +4,9 @@ import com.codigoartesanal.entuliga.model.Equipo;
 import com.codigoartesanal.entuliga.model.StatusEquipo;
 import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.TorneoEquipo;
+import com.codigoartesanal.entuliga.repositories.EquipoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
+import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.TorneoEquipoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +22,19 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
     @Autowired
     TorneoEquipoRepository torneoEquipoRepository;
 
+    @Autowired
+    EquipoRepository equipoRepository;
+
+    @Autowired
+    TorneoRepository torneoRepository;
+
     @Override
     public Map<String, Object> createTorneoEquipo(Map<String, String> equipo) {
         TorneoEquipo torneoEquipo = convertMapToTorneoEquipo(equipo);
-        return convertTorneoEquipoToMap(torneoEquipoRepository.save(torneoEquipo));
+        torneoEquipo = torneoEquipoRepository.save(torneoEquipo);
+        torneoEquipo.setEquipo(equipoRepository.findOne(torneoEquipo.getEquipo().getId()));
+        torneoEquipo.setTorneo(torneoRepository.findOne(torneoEquipo.getTorneo().getId()));
+        return convertTorneoEquipoToMap(torneoEquipo);
     }
 
     @Override

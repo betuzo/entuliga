@@ -7,6 +7,8 @@ import java.util.Set;
  * Created by betuzo on 20/05/15.
  */
 @Entity
+@Table(	name = "TORNEO_EQUIPO",
+        uniqueConstraints = @UniqueConstraint(columnNames = { "torneo_id", "equipo_id" }))
 public class TorneoEquipo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -19,6 +19,10 @@ public class TorneoJugador {
     @Column(name = "status_jugador")
     @Enumerated(EnumType.STRING)
     private StatusJugador statusJugador;
+    @Column(name = "posicion_jugador")
+    @Enumerated(EnumType.STRING)
+    private PosicionJugador posicionJugador;
+    private String numero;
 
     public Long getId() {
         return id;
@@ -52,6 +56,22 @@ public class TorneoJugador {
         this.statusJugador = statusJugador;
     }
 
+    public PosicionJugador getPosicionJugador() {
+        return posicionJugador;
+    }
+
+    public void setPosicionJugador(PosicionJugador posicionJugador) {
+        this.posicionJugador = posicionJugador;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
     @Override
     public String toString() {
         return "TorneoJugador{" +
@@ -59,6 +79,8 @@ public class TorneoJugador {
                 ", torneoEquipo=" + torneoEquipo +
                 ", jugador=" + jugador +
                 ", statusJugador=" + statusJugador +
+                ", posicionJugador=" + posicionJugador +
+                ", numero=" + numero +
                 '}';
     }
 }

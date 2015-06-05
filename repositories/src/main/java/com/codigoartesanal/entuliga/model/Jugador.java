@@ -99,6 +99,10 @@ public class Jugador {
         this.geoLocation = geoLocation;
     }
 
+    public String getNombreCompleto() {
+        return this.nombre + " " + this.paterno + " " + this.materno;
+    }
+
     @Override
     public String toString() {
         return "Jugador{" +

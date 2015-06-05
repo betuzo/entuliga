@@ -19,7 +19,8 @@ define([
             fechaFinDes: (new Date()).format("mm/dd/yyyy"),
             status: 'ENPROCESO',
             totalJornadas: 0,
-            totalEquipos: 0
+            totalEquipos: 0,
+            totalJugadores: 0
         },
 
         initialize: function() {

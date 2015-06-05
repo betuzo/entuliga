@@ -21,6 +21,7 @@ define([
 
         initialize: function() {
             this.jugadores = new JugadoresCollection();
+            this.jugadores.setTipo('none');
             this.listenTo(this.jugadores, 'add', this.agregarJugador);
             this.listenTo(this.jugadores, 'sync', this.syncJugadores);
 

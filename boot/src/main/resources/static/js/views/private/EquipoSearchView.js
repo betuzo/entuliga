@@ -65,13 +65,21 @@ define([
             } else {
                 var modelo = this.equipos.get(equipoId);
                 this.callbackAceptar(modelo);
-                this.$('#equipo-search-dialog').modal('hide');
             }
         },
 
         clickItemSearch: function(event) {
             $('.list-group-item').removeClass('active');
             $(event.target).addClass('active');
+        },
+
+        destroyView: function() {
+            // COMPLETELY UNBIND THE VIEW
+            this.undelegateEvents();
+            this.$el.removeData().unbind();
+            // Remove view from DOM
+            this.remove();
+            Backbone.View.prototype.remove.call(this);
         }
 	});
 

@@ -17,7 +17,6 @@ public class RegexTest {
     @Test
     public void testRegex() {
         String regex = "^(?=[A-Za-z0-9])(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])([\\w\\\\Q!¡@#$%&*()_+\\-={}\\[\\]\\/:;\"'<>,.?¿\\\\E]){8,16}$";
-        String regexswb = "^(?=[A-Za-z0-9])(?=^.{8,16}$)(?=.*[A-Z])(?=.*[0-9])(?=.*[\\\\Q!¡@#$%&*()_\\-+={}\\[\\]\\/:;\"'<>,.?¿\\\\E]).*$";
 
         String password= "Maas1d#sdgs";
 

@@ -18,12 +18,12 @@ define([
         },
 
         initialize: function() {
-            this.torneoequipos = new TorneoEquiposCollection();
-            this.torneoequipos.setTorneo(this.model);
-            this.listenTo(this.torneoequipos, 'add', this.agregarTorneoEquipo);
-            this.listenTo(this.torneoequipos, 'sync', this.syncTorneoEquipos);
+            app.torneoequipos = new TorneoEquiposCollection();
+            app.torneoequipos.setTorneo(this.model);
+            this.listenTo(app.torneoequipos, 'add', this.agregarTorneoEquipo);
+            this.listenTo(app.torneoequipos, 'sync', this.syncTorneoEquipos);
 
-            this.torneoequipos.fetch();
+            app.torneoequipos.fetch();
         },
 
         render: function() {
@@ -44,20 +44,29 @@ define([
         },
 
         selectEquipo: function(equipo) {
-            var that = this;
+            this.destroyView();
+            $("<div id='modal-equipo-search'></div>").appendTo('#torneo-equipos');
             var modelo = new TorneoEquipoModel();
             modelo.save({ torneoId: this.model.get('id'),
                            equipoId: equipo.get('id')}, {
                 wait:true,
                 success:function(model, response) {
-                    $("#torneo-equipos").find('tbody').html('');
-                    that.torneoequipos.fetch();
+                    app.torneoequipos.add(model);
                 },
                 error: function(model, error) {
                     console.log(model.toJSON());
                     console.log('error.responseText');
                 }
             });
+        },
+
+        destroyView: function() {
+            // COMPLETELY UNBIND THE VIEW
+            this.undelegateEvents();
+            this.$el.removeData().unbind();
+            // Remove view from DOM
+            this.remove();
+            Backbone.View.prototype.remove.call(this);
         }
 	});
 

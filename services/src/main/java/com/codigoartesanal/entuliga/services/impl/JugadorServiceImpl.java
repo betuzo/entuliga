@@ -41,6 +41,21 @@ public class JugadorServiceImpl implements JugadorService {
         return copy;
     }
 
+    @Override
+    public List<Map<String, Object>> listJugadorByTorneoAndContainName(Long idTorneo, String likeName) {
+        Torneo torneo = new Torneo();
+        torneo.setId(idTorneo);
+        Iterator<Jugador> itJugador =
+                jugadorRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itJugador.hasNext()) {
+            Jugador jugador = itJugador.next();
+            Map<String, Object> dto = convertJugadorToMap(jugador);
+            copy.add(dto);
+        }
+        return copy;
+    }
+
     private Map<String, Object> convertJugadorToMap(Jugador jugador) {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, jugador.getId());

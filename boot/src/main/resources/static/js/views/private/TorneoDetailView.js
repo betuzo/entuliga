@@ -3,18 +3,22 @@ define([
 	'backbone',
 	'core/BaseView',
 	'views/private/TorneoEquipoAdminView',
+	'views/private/TorneoJugadorAdminView',
 	'text!templates/private/tplTorneoDetail.html'
-], function($, Backbone, BaseView, TorneoEquipoAdminView, tplTorneoDetail){
+], function($, Backbone, BaseView, TorneoEquipoAdminView, TorneoJugadorAdminView, tplTorneoDetail){
 
 	var TorneoDetailView = BaseView.extend({
         template: _.template(tplTorneoDetail),
 
         events: {
-            'click #torneo-jornada': 'viewJornada',
-            'click #toreno-equipo': 'viewEquipo'
+            'click #torneo-jornada'     :   'viewJornada',
+            'click #torneo-equipo'      :   'viewEquipo',
+            'click #torneo-jugador'     :   'viewJugador',
+            'click .list-group-item'    :   'clickOptionDetail'
         },
 
         initialize: function() {
+            this.tipo = 'none';
         },
 
         render: function() {
@@ -23,12 +27,33 @@ define([
         },
 
         viewJornada: function() {
+            if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
+                || this.tipo != 'jornada'){
+                this.tipo = 'jornada';
+            }
+        },
 
+        viewJugador: function() {
+            if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
+                || this.tipo != 'jugador'){
+                this.tipo = 'jugador';
+                this.torneoDetailAdminView = new TorneoJugadorAdminView({model: this.model});
+                $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+            }
         },
 
         viewEquipo: function() {
-            this.torneoEquipoAdminView = new TorneoEquipoAdminView({model: this.model});
-            $('#torneo-edit').html(this.torneoEquipoAdminView.render().$el);
+            if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
+                || this.tipo != 'equipo'){
+                this.tipo = 'equipo';
+                this.torneoDetailAdminView = new TorneoEquipoAdminView({model: this.model});
+                $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+            }
+        },
+
+        clickOptionDetail: function(event) {
+            $('.list-group-item').removeClass('active');
+            $(event.target).addClass('active');
         }
 	});
 

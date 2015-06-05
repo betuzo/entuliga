@@ -19,5 +19,6 @@ public interface EquipoRepository extends CrudRepository<Equipo, Long>{
     @Query("select eq from Equipo eq where eq not in " +
             "(select te.equipo from TorneoEquipo te where te.torneo = :torneo) " +
             "and eq.nombre like :likeName")
-    List<Equipo> findAllNotInTorneoAndNombreContaining(@Param("torneo") Torneo torneo,@Param("likeName") String likeName);
+    List<Equipo> findAllNotInTorneoAndNombreContaining(
+            @Param("torneo") Torneo torneo,@Param("likeName") String likeName);
 }
