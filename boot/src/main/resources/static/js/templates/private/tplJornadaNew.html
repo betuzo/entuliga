@@ -1,0 +1,35 @@
+<div class="modal fade" id="jornada-new-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Jornada</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert"></div>
+                <form id="form-torneo-jornada" role="form">
+                <input id="torneo-liga-id" type="hidden" name="torneoId" value="<%= torneoId %>">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input class="form-control" placeholder="Nombre" type="text" name="nombre" value="<%= nombre %>">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>Fase</label>
+                            <select class="form-control" id="select-fase" placeholder="Fase..." name="fase" value="<%= fase %>">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button id="btn-aceptar" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
