@@ -1,11 +1,13 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.JornadaService;
+import com.codigoartesanal.entuliga.services.PartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,6 +19,9 @@ public class JornadaController {
 
     @Autowired
     JornadaService jornadaService;
+
+    @Autowired
+    PartidoService partidoService;
 
     @ResponseBody
     @RequestMapping(
@@ -41,4 +46,15 @@ public class JornadaController {
         response.put(JornadaService.PROPERTY_MESSAGE, "Jornada eliminado");
         return response;
     }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{jornada}/partido" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> listTorneoEquipoByLiga(
+            @PathVariable("jornada") Long idJornada) {
+        return partidoService.listPartidoByJornada(idJornada);
+    }
+
 }
