@@ -45,12 +45,10 @@ define([
 
         render: function() {
             this.$el.html(this.template());
-<<<<<<< HEAD
             this.$('.modal-dialog').modal('show');
-            return this;
-=======
             this.$('#colonia-dialog').modal('show');
             this.$('.alert-danger').hide();
+            return this;
         },
 
         agregarPais: function(modelo) {
@@ -128,7 +126,6 @@ define([
                 this.callbackAceptar(modelo);
                 this.$('#colonia-dialog').modal('hide');
             }
->>>>>>> b0992ba2eb46b6de737aa333280036ae9ad7a8f7
         }
 	});
 
