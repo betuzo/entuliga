@@ -24,11 +24,20 @@ public class PersistenceConfig {
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/user.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/pais.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/estado.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/municipio.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/colonia.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/geolocation.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/equipo.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/liga.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/torneo.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/jugador.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/constraints.sql");
         return builder.setType(EmbeddedDatabaseType.H2).build();
     }
 
-    @Bean
+    /*@Bean
     public DataSourceInitializer dataSourceInitializer() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
 
@@ -41,7 +50,7 @@ public class PersistenceConfig {
         dataSourceInitializer.setDataSource(dataSource());
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
         return dataSourceInitializer;
-    }
+    }*/
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,

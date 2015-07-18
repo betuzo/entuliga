@@ -1,0 +1,88 @@
+<form id="form-liga" role="form">
+    <p>Detalle Liga.</p>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input class="form-control" placeholder="Nombre" type="text" name="nombre" value="<%= nombre %>">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Nombre Oficial</label>
+                <input class="form-control" placeholder="Nombre Oficial" type="text" name="nombreCompleto" value="<%= nombreCompleto %>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Telefono</label>
+                <input class="form-control" placeholder="Telefono" type="text" name="telefono" value="<%= telefono %>">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Calle</label>
+                <input class="form-control" placeholder="Calle" type="text" name="calle" value="<%= calle %>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>No Exterior</label>
+                <input class="form-control" placeholder="No Exterior" type="text" name="noExterior" value="<%= noExterior %>">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>No Interior</label>
+                <input class="form-control" placeholder="No Interior" type="text" name="noInterior" value="<%= noInterior %>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Codigo Postal</label>
+                <input class="form-control" placeholder="Codigo Postal" type="text" name="codigoPostal" value="<%= codigoPostal %>">
+
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Colonia</label>
+                <div class="input-group">
+                    <input id="liga-colonia-id" type="hidden" name="coloniaId" value="<%= coloniaId %>">
+                    <input id="liga-colonia-desc" class="form-control" placeholder="Colonia" type="text" name="coloniaDesc" value="<%= coloniaDesc %>">
+                    <div class="input-group-btn">
+                        <button id="colonia-buscar" type="button" class="btn btn-primary">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Latitude</label>
+                <input class="form-control" placeholder="Latitude" type="text" name="latitude" value="<%= latitude %>">
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label>Longitude</label>
+                <input class="form-control" placeholder="Longitude" type="text" name="longitude" value="<%= longitude %>">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button id="btn-ok" type="button" class="btn btn-success">Guardar</button>
+        </div>
+    </div>
+</form>
+<div id="modal-colonia">
+</div>

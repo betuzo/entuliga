@@ -20,7 +20,7 @@ public class Rebote {
 
     @ManyToOne
     @JoinColumn(name = "jugador_id", nullable = false)
-    private Jugador jugador;
+    private TorneoJugador jugador;
 
     public Long getId() {
         return id;
@@ -62,11 +62,11 @@ public class Rebote {
         this.tipo = tipo;
     }
 
-    public Jugador getJugador() {
+    public TorneoJugador getJugador() {
         return jugador;
     }
 
-    public void setJugador(Jugador jugador) {
+    public void setJugador(TorneoJugador jugador) {
         this.jugador = jugador;
     }
 

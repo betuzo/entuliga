@@ -3,6 +3,7 @@ package com.codigoartesanal.entuliga.services;
 import com.codigoartesanal.entuliga.model.Liga;
 import com.codigoartesanal.entuliga.model.User;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,8 +20,17 @@ public interface LigaService {
     public static final String PROPERTY_NO_INTERIOR     = "noInterior";
     public static final String PROPERTY_CODIGO_POSTAL   = "codigoPostal";
     public static final String PROPERTY_COLONIA_ID      = "coloniaId";
+    public static final String PROPERTY_COLONIA_DESC    = "coloniaDesc";
+    public static final String PROPERTY_MUNICIPIO_ID    = "municipioId";
+    public static final String PROPERTY_MUNICIPIO_DESC  = "municipioDesc";
+    public static final String PROPERTY_ESTADO_ID       = "estadoId";
+    public static final String PROPERTY_ESTADO_DESC     = "estadoDesc";
+    public static final String PROPERTY_PAIS_ID         = "paisId";
+    public static final String PROPERTY_PAIS_DESC       = "paisDesc";
     public static final String PROPERTY_LONGITUDE       = "longitude";
     public static final String PROPERTY_LATITUDE        = "latitude";
 
     public Liga createLiga(Map<String, String> ligaMap, User admin);
+
+    List<Map<String,Object>> listLigaByUser(User user);
 }

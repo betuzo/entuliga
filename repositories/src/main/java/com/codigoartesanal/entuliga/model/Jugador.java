@@ -14,9 +14,6 @@ public class Jugador {
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)
     private User admin;
-    @ManyToOne
-    @JoinColumn(name = "equipo_id", nullable = false)
-    private Equipo equipo;
     private String nombre;
     private String paterno;
     private String materno;
@@ -26,6 +23,9 @@ public class Jugador {
     private Sexo sexo;
     @Column(name = "fecha_registro")
     private Date fechaRegistro;
+    @ManyToOne
+    @JoinColumn(name = "geoLocation_id", nullable = false)
+    private GeoLocation geoLocation;
 
     public Long getId() {
         return id;
@@ -41,14 +41,6 @@ public class Jugador {
 
     public void setAdmin(User admin) {
         this.admin = admin;
-    }
-
-    public Equipo getEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
     }
 
     public String getNombre() {
@@ -99,18 +91,30 @@ public class Jugador {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public GeoLocation getGeoLocation() {
+        return geoLocation;
+    }
+
+    public void setGeoLocation(GeoLocation geoLocation) {
+        this.geoLocation = geoLocation;
+    }
+
+    public String getNombreCompleto() {
+        return this.nombre + " " + this.paterno + " " + this.materno;
+    }
+
     @Override
     public String toString() {
         return "Jugador{" +
                 "id=" + id +
                 ", admin=" + admin +
-                ", equipo=" + equipo +
                 ", nombre='" + nombre + '\'' +
                 ", paterno='" + paterno + '\'' +
                 ", materno='" + materno + '\'' +
                 ", rutaFoto='" + rutaFoto + '\'' +
                 ", sexo=" + sexo +
                 ", fechaRegistro=" + fechaRegistro +
+                ", geoLocation=" + geoLocation +
                 '}';
     }
 }

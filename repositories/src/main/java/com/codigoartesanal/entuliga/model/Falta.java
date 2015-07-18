@@ -19,10 +19,10 @@ public class Falta {
     private TipoFalta tipo;
     @ManyToOne
     @JoinColumn(name = "recibe_id", nullable = false)
-    private Jugador recibe;
+    private TorneoJugador recibe;
     @ManyToOne
     @JoinColumn(name = "infractor_id", nullable = false)
-    private Jugador infractor;
+    private TorneoJugador infractor;
 
     public Long getId() {
         return id;
@@ -64,19 +64,19 @@ public class Falta {
         this.tipo = tipo;
     }
 
-    public Jugador getRecibe() {
+    public TorneoJugador getRecibe() {
         return recibe;
     }
 
-    public void setRecibe(Jugador recibe) {
+    public void setRecibe(TorneoJugador recibe) {
         this.recibe = recibe;
     }
 
-    public Jugador getInfractor() {
+    public TorneoJugador getInfractor() {
         return infractor;
     }
 
-    public void setInfractor(Jugador infractor) {
+    public void setInfractor(TorneoJugador infractor) {
         this.infractor = infractor;
     }
 

@@ -20,9 +20,6 @@ public class Equipo {
     @Column(name = "ruta_logo_equipo")
     private String rutaLogoEquipo;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "equipo")
-    private Set<Jugador> jugadores;
-
     public Long getId() {
         return id;
     }
@@ -62,15 +59,7 @@ public class Equipo {
     public void setRutaLogoEquipo(String rutaLogoEquipo) {
         this.rutaLogoEquipo = rutaLogoEquipo;
     }
-
-    public Set<Jugador> getJugadores() {
-        return jugadores;
-    }
-
-    public void setJugadores(Set<Jugador> jugadores) {
-        this.jugadores = jugadores;
-    }
-
+    
     @Override
     public String toString() {
         return "Equipo{" +

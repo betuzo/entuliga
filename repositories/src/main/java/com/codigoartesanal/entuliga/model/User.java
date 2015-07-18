@@ -14,7 +14,7 @@ public class User {
 	private String password;
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<UserRole> userRole = new HashSet<UserRole>(0);
  
 	public User() {
