@@ -18,7 +18,7 @@ define([
 
         render: function() {
             this.$el.html(this.template());
-            this.$('.modal-dialog').modal();
+            this.$('.modal-dialog').modal('show');
             return this;
         }
 	});
