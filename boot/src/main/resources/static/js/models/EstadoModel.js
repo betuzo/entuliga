@@ -4,9 +4,7 @@ define([
 
     var EstadoModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'estado';
-        },
+        urlRoot: 'estado',
 
         defaults: {
         },

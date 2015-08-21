@@ -3,6 +3,7 @@ package com.codigoartesanal.entuliga.controller;
 import com.codigoartesanal.entuliga.services.JornadaService;
 import com.codigoartesanal.entuliga.services.PartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,15 +39,14 @@ public class JornadaController {
             value = { "/{jornada}" },
             method = RequestMethod.DELETE,
             produces = {"application/json;charset=UTF-8"})
-    public Map<String, Object> deleteTorneoEquipo(@PathVariable("jornada") Long idJornada) {
+    public Map<String, Object> deleteTorneoEquipo(@PathVariable("jornada") Long jornada) {
         Map<String, Object> response = new HashMap<>();
-        response.put(JornadaService.PROPERTY_ID, idJornada);
-        jornadaService.deleteJornada(idJornada);
+        response.put(JornadaService.PROPERTY_ID, jornada);
+        jornadaService.deleteJornada(Long.valueOf(jornada));
         response.put(JornadaService.PROPERTY_RESULT, true);
         response.put(JornadaService.PROPERTY_MESSAGE, "Jornada eliminado");
         return response;
     }
-
     @ResponseBody
     @RequestMapping(
             value = { "/{jornada}/partido" },

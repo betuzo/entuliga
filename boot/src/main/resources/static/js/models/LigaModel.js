@@ -4,9 +4,7 @@ define([
 
     var LigaModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'liga';
-        },
+        urlRoot: 'liga',
 
         defaults: {
             nombre: '',

@@ -4,9 +4,7 @@ define([
 
     var PosicionModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'posicion';
-        },
+        urlRoot: 'posicion',
 
         defaults: {
             clave: '',

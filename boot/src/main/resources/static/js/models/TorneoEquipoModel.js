@@ -4,9 +4,7 @@ define([
 
     var TorneoEquipoModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'torneoequipo';
-        },
+        urlRoot: 'torneoequipo',
 
         defaults: {
             statusEquipo: 'INSCRITO'

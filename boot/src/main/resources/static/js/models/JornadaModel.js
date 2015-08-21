@@ -4,9 +4,7 @@ define([
 
     var JornadaModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'jornada';
-        },
+        urlRoot: 'jornada',
 
         defaults: {
             torneoId: '',

@@ -4,9 +4,7 @@ define([
 
     var TorneoPartidoModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'partido';
-        },
+        urlRoot: 'partido',
 
         defaults: {
             torneoEquipoId: '',

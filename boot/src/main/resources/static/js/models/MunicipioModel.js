@@ -4,9 +4,7 @@ define([
 
     var MunicipioModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'municipio';
-        },
+        urlRoot: 'municipio',
 
         defaults: {
         },

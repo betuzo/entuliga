@@ -4,9 +4,7 @@ define([
 
     var PaisModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'pais';
-        },
+        urlRoot: 'pais',
 
         defaults: {
         },

@@ -6,9 +6,7 @@ define([
 
     var ComentarioModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'comentario';
-        },
+        urlRoot: 'comentario',
 
         defaults: {
         },

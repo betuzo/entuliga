@@ -4,9 +4,7 @@ define([
 
     var ColoniaModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'colonia';
-        },
+        urlRoot: 'colonia',
 
         defaults: {
         },

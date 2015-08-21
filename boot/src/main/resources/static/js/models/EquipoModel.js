@@ -4,9 +4,7 @@ define([
 
     var EquipoModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'equipo';
-        },
+        urlRoot: 'equipo',
 
         defaults: {
             nombre: '',

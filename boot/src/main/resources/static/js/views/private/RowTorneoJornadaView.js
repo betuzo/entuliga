@@ -25,7 +25,6 @@ define([
         deleteJornada: function() {
             that = this;
             this.model.destroy({
-                contentType: 'application/json',
                 wait:true,
                 success: function(model, response) {
                     that.destroyView();

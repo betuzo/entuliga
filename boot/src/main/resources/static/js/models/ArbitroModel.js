@@ -4,9 +4,7 @@ define([
 
     var ArbitroModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'arbitro';
-        },
+        urlRoot: 'arbitro',
 
         defaults: {
             nombre: '',

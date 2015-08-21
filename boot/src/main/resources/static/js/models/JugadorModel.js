@@ -4,9 +4,7 @@ define([
 
     var JugadorModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'jugador';
-        },
+        urlRoot: 'jugador',
 
         defaults: {
             nombre: '',

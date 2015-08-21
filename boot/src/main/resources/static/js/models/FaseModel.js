@@ -4,9 +4,7 @@ define([
 
     var FaseModel = Backbone.Model.extend({
 
-        url: function() {
-            return 'fase';
-        },
+        urlRoot: 'fase',
 
         defaults: {
             clave: '',
