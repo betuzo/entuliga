@@ -45,8 +45,10 @@ define([
 
         render: function() {
             this.$el.html(this.template());
+            this.$('.modal-dialog').modal('show');
             this.$('#colonia-dialog').modal('show');
             this.$('.alert-danger').hide();
+            return this;
         },
 
         agregarPais: function(modelo) {
