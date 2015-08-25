@@ -5,9 +5,10 @@ define([
 	'views/private/TorneoEquipoAdminView',
 	'views/private/TorneoJugadorAdminView',
     'views/private/TorneoJornadaAdminView',
+    'views/private/TorneoPartidoAdminView',
 	'text!templates/private/tplTorneoDetail.html'
 ], function($, Backbone, BaseView, TorneoEquipoAdminView, TorneoJugadorAdminView,
-            TorneoJornadaAdminView, tplTorneoDetail){
+            TorneoJornadaAdminView, TorneoPartidoAdminView, tplTorneoDetail){
 
 	var TorneoDetailView = BaseView.extend({
         template: _.template(tplTorneoDetail),
@@ -42,6 +43,8 @@ define([
             if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
                 || this.tipo != 'partido'){
                 this.tipo = 'partido';
+                this.torneoDetailAdminView = new TorneoPartidoAdminView({model: this.model});
+                $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
             }
         },
 

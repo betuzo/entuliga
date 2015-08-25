@@ -10,6 +10,9 @@ public class Cancha {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "admin_id", nullable = false)
+    private User admin;
     private String nombre;
     private String descripcion;
     @ManyToOne
@@ -22,6 +25,14 @@ public class Cancha {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 
     public String getNombre() {
@@ -52,6 +63,7 @@ public class Cancha {
     public String toString() {
         return "Cancha{" +
                 "id=" + id +
+                ", admin=" + admin +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", location=" + location +

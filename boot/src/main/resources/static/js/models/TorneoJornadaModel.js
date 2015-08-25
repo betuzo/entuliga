@@ -2,9 +2,9 @@ define([
     'backbone'
 ], function(Backbone){
 
-    var JornadaModel = Backbone.Model.extend({
+    var TorneoJornadaModel = Backbone.Model.extend({
 
-        urlRoot: 'jornada',
+        urlRoot: 'torneojornada',
 
         defaults: {
             torneoId: '',
@@ -28,5 +28,5 @@ define([
         }
     });
 
-	return JornadaModel;
+	return TorneoJornadaModel;
 });

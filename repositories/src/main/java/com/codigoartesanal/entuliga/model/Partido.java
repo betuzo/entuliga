@@ -27,7 +27,7 @@ public class Partido {
     private Long puntosVisitante;
     @ManyToOne
     @JoinColumn(name = "cancha_id", nullable = false)
-    private Cancha cancha;
+    private TorneoCancha cancha;
     private Date horario;
     @Enumerated(EnumType.STRING)
     private StatusPartido status;
@@ -104,11 +104,11 @@ public class Partido {
         this.puntosVisitante = puntosVisitante;
     }
 
-    public Cancha getCancha() {
+    public TorneoCancha getCancha() {
         return cancha;
     }
 
-    public void setCancha(Cancha cancha) {
+    public void setCancha(TorneoCancha cancha) {
         this.cancha = cancha;
     }
 

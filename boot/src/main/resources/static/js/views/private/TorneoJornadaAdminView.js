@@ -2,12 +2,12 @@ define([
 	'jquery',
 	'backbone',
 	'core/BaseView',
-	'models/JornadaModel',
-	'collections/JornadasCollection',
+	'models/TorneoJornadaModel',
+	'collections/TorneoJornadasCollection',
 	'views/private/JornadaNewView',
 	'views/private/RowTorneoJornadaView',
 	'text!templates/private/tplTorneoJornadaAdmin.html'
-], function($, Backbone, BaseView, JornadaModel, JornadasCollection,
+], function($, Backbone, BaseView, TorneoJornadaModel, TorneoJornadasCollection,
             JornadaNewView, RowTorneoJornadaView, tplTorneoJornadaAdmin){
 
 	var TorneoJornadaAdminView = BaseView.extend({
@@ -18,7 +18,7 @@ define([
         },
 
         initialize: function() {
-            app.torneojornadas = new JornadasCollection();
+            app.torneojornadas = new TorneoJornadasCollection();
             app.torneojornadas.setTorneo(this.model);
             this.listenTo(app.torneojornadas, 'add', this.agregarTorneoJornada);
             this.listenTo(app.torneojornadas, 'sync', this.syncTorneoJornadas);

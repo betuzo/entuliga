@@ -3,10 +3,10 @@ define([
 	'backbone',
 	'bootstrap',
 	'core/BaseView',
-	'models/JornadaModel',
+	'models/TorneoJornadaModel',
 	'collections/FasesCollection',
 	'text!templates/private/tplJornadaNew.html'
-], function($, Backbone, bootstrap, BaseView, JornadaModel,
+], function($, Backbone, bootstrap, BaseView, TorneoJornadaModel,
             FasesCollection, tplJornadaNew){
 
 	var EquipoSearchView = BaseView.extend({
@@ -19,7 +19,7 @@ define([
 
         initialize: function(opts) {
             this.callbackAceptar = opts.callbackAceptar;
-            this.model = new JornadaModel();
+            this.model = new TorneoJornadaModel();
             this.torneo = opts.modelo;
             this.render();
 

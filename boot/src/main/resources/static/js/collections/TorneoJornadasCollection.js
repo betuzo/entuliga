@@ -1,10 +1,10 @@
 define([
 	'backbone',
-    'models/JornadaModel'
-], function(Backbone, JornadaModel){
+    'models/TorneoJornadaModel'
+], function(Backbone, TorneoJornadaModel){
 
-    var JornadasCollection = Backbone.Collection.extend({
-        model: JornadaModel,
+    var TorneoJornadasCollection = Backbone.Collection.extend({
+        model: TorneoJornadaModel,
         url: function() {
             return 'torneo/' + this.torneo.get('id') + '/jornada';
         },
@@ -13,5 +13,5 @@ define([
         }
     });
 
-	return JornadasCollection;
+	return TorneoJornadasCollection;
 });
