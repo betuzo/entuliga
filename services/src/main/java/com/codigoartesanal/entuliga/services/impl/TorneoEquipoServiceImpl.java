@@ -1,10 +1,8 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Equipo;
-import com.codigoartesanal.entuliga.model.StatusEquipo;
-import com.codigoartesanal.entuliga.model.Torneo;
-import com.codigoartesanal.entuliga.model.TorneoEquipo;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.EquipoRepository;
+import com.codigoartesanal.entuliga.repositories.JornadaRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.TorneoEquipoService;
@@ -27,6 +25,9 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
 
     @Autowired
     TorneoRepository torneoRepository;
+
+    @Autowired
+    JornadaRepository jornadaRepository;
 
     @Override
     public Map<String, Object> createTorneoEquipo(Map<String, String> equipo) {
@@ -54,6 +55,19 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
     @Override
     public void deleteTorneoEquipo(Long idTorneoEquipo) {
         torneoEquipoRepository.delete(idTorneoEquipo);
+    }
+
+    @Override
+    public List<Map<String, Object>> listTorneoEquipoByJornada(Long idJornada) {
+        Jornada jornada = jornadaRepository.findOne(idJornada);
+        Iterator<TorneoEquipo> itTorneoEquipo = torneoEquipoRepository.findAllByTorneoNotInJornada(jornada.getTorneo(), jornada).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itTorneoEquipo.hasNext()) {
+            TorneoEquipo torneoEquipo = itTorneoEquipo.next();
+            Map<String, Object> dto = convertTorneoEquipoToMap(torneoEquipo);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private TorneoEquipo convertMapToTorneoEquipo(Map<String, String> torneoEquipoMap) {

@@ -8,6 +8,7 @@ import com.codigoartesanal.entuliga.repositories.CanchaRepository;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.services.CanchaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -15,6 +16,7 @@ import java.util.*;
 /**
  * Created by betuzo on 25/08/15.
  */
+@Service
 public class CanchaServiceImpl implements CanchaService {
 
     @Autowired

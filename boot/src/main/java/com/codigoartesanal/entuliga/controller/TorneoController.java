@@ -2,6 +2,7 @@ package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.services.JornadaService;
+import com.codigoartesanal.entuliga.services.TorneoCanchaService;
 import com.codigoartesanal.entuliga.services.TorneoEquipoService;
 import com.codigoartesanal.entuliga.services.TorneoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class TorneoController {
 
     @Autowired
     TorneoEquipoService torneoEquipoService;
+
+    @Autowired
+    TorneoCanchaService torneoCanchaService;
 
     @ResponseBody
     @RequestMapping(
@@ -61,5 +65,14 @@ public class TorneoController {
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> listJornadaByTorneo(@PathVariable("torneo") Long idTorneo) {
         return jornadaService.listJornadaByTorneo(idTorneo);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneo}/cancha" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> listCanchaByTorneo(@PathVariable("torneo") Long idTorneo) {
+        return torneoCanchaService.listCanchaByTorneo(idTorneo);
     }
 }

@@ -22,4 +22,6 @@ public interface TorneoEquipoService {
     List<Map<String,Object>> listTorneoEquipoByTorneo(Long idTorneo);
 
     void deleteTorneoEquipo(Long idTorneoEquipo);
+
+    List<Map<String,Object>> listTorneoEquipoByJornada(Long idJornada);
 }

@@ -6,9 +6,10 @@ define([
 	'collections/TorneoJornadasCollection',
 	'collections/TorneoPartidosCollection',
     'views/private/RowTorneoPartidoView',
+    'views/private/PartidoCreateView',
 	'text!templates/private/tplTorneoPartidoAdmin.html'
 ], function($, Backbone, BaseView, TorneoPartidoModel, TorneoJornadasCollection,
-            TorneoPartidosCollection, RowTorneoPartidoView, tplTorneoPartidoAdmin){
+            TorneoPartidosCollection, RowTorneoPartidoView, PartidoCreateView, tplTorneoPartidoAdmin){
 
 	var TorneoPartidoAdminView = BaseView.extend({
         template: _.template(tplTorneoPartidoAdmin),
@@ -66,7 +67,7 @@ define([
         },
 
         agregarPartido: function() {
-            //this.jugadorSearchView = new JugadorSearchView({modelo: this.torneoJornada, callbackAceptar: this.selectPartido});
+            this.partidoCreateView = new PartidoCreateView({modelo: this.torneoJornada, callbackAceptar: this.selectPartido});
         },
 
         selectPartido: function(partido) {

@@ -17,7 +17,7 @@ define([
             canchaNombre: '',
             horario: (new Date()).getTime(),
             horarioDes: (new Date()).format("mm/dd/yyyy"),
-            status: 'PROGRAMADO
+            status: 'PROGRAMADO'
         },
 
         initialize: function() {

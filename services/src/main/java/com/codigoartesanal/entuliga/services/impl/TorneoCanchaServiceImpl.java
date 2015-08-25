@@ -1,0 +1,82 @@
+package com.codigoartesanal.entuliga.services.impl;
+
+import com.codigoartesanal.entuliga.model.Cancha;
+import com.codigoartesanal.entuliga.model.Torneo;
+import com.codigoartesanal.entuliga.model.TorneoCancha;
+import com.codigoartesanal.entuliga.repositories.CanchaRepository;
+import com.codigoartesanal.entuliga.repositories.TorneoCanchaRepository;
+import com.codigoartesanal.entuliga.repositories.TorneoRepository;
+import com.codigoartesanal.entuliga.services.TorneoCanchaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+/**
+ * Created by betuzo on 25/08/15.
+ */
+@Service
+public class TorneoCanchaServiceImpl implements TorneoCanchaService {
+
+
+    @Autowired
+    TorneoCanchaRepository torneoCanchaRepository;
+
+    @Autowired
+    CanchaRepository canchaRepository;
+
+    @Autowired
+    TorneoRepository torneoRepository;
+
+    @Override
+    public Map<String, Object> createTorneoCancha(Map<String, String> mapTorneoCancha) {
+        TorneoCancha torneoCancha = convertMapToTorneoCancha(mapTorneoCancha);
+        torneoCancha = torneoCanchaRepository.save(torneoCancha);
+        torneoCancha.setCancha(canchaRepository.findOne(torneoCancha.getCancha().getId()));
+        torneoCancha.setTorneo(torneoRepository.findOne(torneoCancha.getTorneo().getId()));
+        return convertTorneoCanchaToMap(torneoCancha);
+    }
+
+    @Override
+    public List<Map<String, Object>> listCanchaByTorneo(Long idTorneo) {
+        Torneo torneo = new Torneo();
+        torneo.setId(idTorneo);
+        Iterator<TorneoCancha> itTorneoCancha = torneoCanchaRepository.findAllByTorneo(torneo).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itTorneoCancha.hasNext()) {
+            TorneoCancha torneoCancha = itTorneoCancha.next();
+            Map<String, Object> dto = convertTorneoCanchaToMap(torneoCancha);
+            copy.add(dto);
+        }
+        return copy;
+    }
+
+    @Override
+    public void deleteTorneoCancha(Long idTorneoCancha) {
+        torneoCanchaRepository.delete(idTorneoCancha);
+    }
+
+    private TorneoCancha convertMapToTorneoCancha(Map<String, String> torneoEquipoMap) {
+        TorneoCancha torneoCancha = new TorneoCancha();
+        Cancha cancha = new Cancha();
+        cancha.setId(Long.valueOf(torneoEquipoMap.get(PROPERTY_CANCHA_ID)));
+
+        torneoCancha.setCancha(cancha);
+
+        Torneo torneo = new Torneo();
+        torneo.setId(Long.valueOf(torneoEquipoMap.get(PROPERTY_TORNEO_ID)));
+
+        torneoCancha.setTorneo(torneo);
+        return torneoCancha;
+    }
+
+    private Map<String, Object> convertTorneoCanchaToMap(TorneoCancha torneoEquipo) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(PROPERTY_ID, torneoEquipo.getId());
+        map.put(PROPERTY_CANCHA_ID, torneoEquipo.getCancha().getId());
+        map.put(PROPERTY_CANCHA_NOMBRE, torneoEquipo.getCancha().getNombre());
+        map.put(PROPERTY_TORNEO_ID, torneoEquipo.getTorneo().getId());
+        map.put(PROPERTY_TORNEO_NOMBRE, torneoEquipo.getTorneo().getNombre());
+        return map;
+    }
+}
