@@ -12,7 +12,8 @@ define([
 	'views/private/TorneoAdminView',
 	'views/private/EquipoAdminView',
 	'views/private/JugadorAdminView',
-	'views/private/ArbitroAdminView'
+	'views/private/ArbitroAdminView',
+	'views/private/CanchaAdminView'
 ], function($, _, Backbone, BaseRouter, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
             LigaAdminView, TorneoAdminView, EquipoAdminView,
@@ -30,7 +31,8 @@ define([
             'admin/torneos/:liga':  'adminTorneos',
             'admin/equipos':        'adminEquipos',
             'admin/jugadores':      'adminJugadores',
-            'admin/arbitros':       'adminArbitros'
+            'admin/arbitros':       'adminArbitros',
+            'admin/canchas':        'adminCanchas'
         },
 
         before : function(params, next) {
@@ -105,6 +107,11 @@ define([
 
         adminArbitros: function() {
             var view = new ArbitroAdminView();
+            this.changeView(view);
+        },
+
+        adminCanchas: function() {
+            var view = new CanchaAdminView();
             this.changeView(view);
         }
 	});

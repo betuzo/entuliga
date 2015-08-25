@@ -3,85 +3,83 @@ define([
 	'backbone',
 	'bootstrap',
 	'core/BaseView',
-	'models/PartidoModel',
+	'models/TorneoPartidoModel',
 	'collections/TorneoEquiposCollection',
 	'collections/TorneoCanchasCollection',
 	'text!templates/private/tplPartidoCreate.html'
-], function($, Backbone, bootstrap, BaseView, TorneoJugadorModel,
-            JugadoresCollection, PosicionesCollection, tplJugadorSearch){
+], function($, Backbone, bootstrap, BaseView, TorneoPartidoModel,
+            TorneoEquiposCollection, TorneoCanchasCollection, tplPartidoCreate){
 
 	var PartidoCreateView = BaseView.extend({
 	    el: '#modal-partido-create',
-        template: _.template(tplJugadorSearch),
+        template: _.template(tplPartidoCreate),
 
         events: {
-            'click #btn-buscar': 'clickBuscar',
-            'click #btn-aceptar': 'clickAceptar',
-            'click .list-group-item': 'clickItemSearch'
+            'click #btn-aceptar': 'clickAceptar'
         },
 
         initialize: function(opts) {
             this.callbackAceptar = opts.callbackAceptar;
-            this.model = new TorneoJugadorModel();
-            this.torneoEquipo = opts.modelo;
+            this.model = new TorneoPartidoModel();
+            this.jornada = opts.modelo;
             this.render();
-            this.jugadores = new JugadoresCollection();
-            this.listenTo(this.jugadores, 'add', this.agregarJugador);
-            this.listenTo(this.jugadores, 'sync', this.syncJugadores);
-            this.posiciones = new PosicionesCollection();
-            this.listenTo(this.posiciones, 'add', this.agregarPosicion);
-            this.listenTo(this.posiciones, 'sync', this.syncPosiciones);
-            this.posiciones.fetch();
+            this.locales = new TorneoEquiposCollection();
+            this.listenTo(this.locales, 'add', this.agregarLocal);
+            this.listenTo(this.locales, 'sync', this.syncLocales);
+            this.locales.fetch();
+            this.visitas = new TorneoEquiposCollection();
+            this.listenTo(this.visitas, 'add', this.agregarVisita);
+            this.listenTo(this.visitas, 'sync', this.syncVisitas);
+            this.canchas = new TorneoCanchasCollection();
+            this.listenTo(this.canchas, 'add', this.agregarCancha);
+            this.listenTo(this.canchas, 'sync', this.syncCanchas);
+            this.canchas.fetch();
 
             Backbone.Validation.bind(this);
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
-            this.$('#jugador-search-dialog').modal('show');
+            this.$('#partido-create-dialog').modal('show');
             this.$('.alert-danger').hide();
-            this.$('#torneo-liga-id').val(this.torneoEquipo.get('id'));
+            this.$('#jornada-id').val(this.jornada.get('id'));
         },
 
-        agregarJugador: function(modelo) {
-
-        },
-
-        syncJugadores: function() {
-            $("#result-search").html('');
-            this.jugadores.forEach(function(jugador) {
-                var liitem = "<a class='list-group-item' id='" + jugador.get('id') + "'>" + jugador.get('nombre') +"</a>";
-                $(liitem).appendTo("#result-search");
-            });
-        },
-
-        agregarPosicion: function(modelo) {
-            $('#select-posicion').append($('<option>', {
-                value: modelo.get('clave'),
-                text : modelo.get('descripcion')
+        agregarLocal: function(modelo) {
+            $('#select-local').append($('<option>', {
+                value: modelo.get('id'),
+                text : modelo.get('nombre')
             }));
         },
 
-        syncPosiciones: function(modelo) {
-            $('#select-posicion').change();
+        syncLocales: function() {
+            $('#select-local').change();
         },
 
-        clickBuscar: function(event) {
-            var textName = $('#text-busqueda').val();
-            var idTorneo = this.torneoEquipo.get('torneoId');
-            if (textName != '' && textName != 'undefined') {
-                $("#result-search").html('');
-                this.jugadores.setTipo('like');
-                this.jugadores.setCriterio(textName);
-                this.jugadores.fetch({
-                    data: { tipo: 'notInTorneoAndContainName', idTorneo: idTorneo },
-                    processData: true
-                });
-            }
+        agregarVisita: function(modelo) {
+            $('#select-visita').append($('<option>', {
+                value: modelo.get('id'),
+                text : modelo.get('nombre')
+            }));
+        },
+
+        syncVisitas: function(modelo) {
+            $('#select-visita').change();
+        },
+
+        agregarCancha: function(modelo) {
+            $('#select-cancha').append($('<option>', {
+                value: modelo.get('id'),
+                text : modelo.get('nombre')
+            }));
+        },
+
+        syncCanchas: function(modelo) {
+            $('#select-cancha').change();
         },
 
         clickAceptar: function(event) {
-            var data = this.$el.find("#form-torneo-jugador").serializeObject();
+            var data = this.$el.find("#form-torneo-partido").serializeObject();
             this.model.set(data);
             that = this;
             if(this.model.isValid(true)){
@@ -98,13 +96,6 @@ define([
                     }
                 });
             }
-        },
-
-        clickItemSearch: function(event) {
-            $('.list-group-item').removeClass('active');
-            $(event.target).addClass('active');
-            var jugadorId = $('.list-group-item.active').attr('id');
-            this.$('#jugador-id').val(jugadorId);
         },
 
         destroyView: function() {

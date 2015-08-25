@@ -1,40 +1,43 @@
-<div class="modal fade" id="jugador-search-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="partido-create-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Jugador</h4>
+                <h4 class="modal-title">Partido</h4>
             </div>
             <div class="modal-body">
-                <p>Seleccione Jugador.</p>
+                <p>Crear Partido.</p>
                 <div class="alert alert-danger" role="alert"></div>
-                <form id="form-torneo-jugador" role="form">
-                <input id="torneo-liga-id" type="hidden" name="torneoEquipoId" value="<%= torneoEquipoId %>">
-                <input id="jugador-id" type="hidden" name="jugadorId" value="<%= jugadorId %>">
+                <form id="form-torneo-partido" role="form">
+                <input id="jornada-id" type="hidden" name="jornadaId" value="<%= jornadaId %>">
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="form-group">
-                            <label>Numero</label>
-                            <input class="form-control" placeholder="Numero" type="text" name="numeroJugador" value="<%= numeroJugador %>">
+                            <label>Local</label>
+                            <select class="form-control" id="select-local" placeholder="Local..." name="localId" value="<%= localId %>">
+                            </select>
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="form-group">
-                            <label>Posicion</label>
-                            <select class="form-control" id="select-posicion" placeholder="Posicion..." name="posicionJugador" value="<%= posicionJugador %>">
+                            <label>Visitante</label>
+                            <select class="form-control" id="select-visita" placeholder="Visitante..." name="visitaId" value="<%= visitaId %>">
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12">
-                        <div class="input-group">
-                            <input id="text-busqueda" type="text" class="form-control" placeholder="Buscar por...">
-                            <span class="input-group-btn">
-                                <button id="btn-buscar" class="btn btn-default" type="button">Buscar</button>
-                            </span>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>Cancha</label>
+                            <select class="form-control" id="select-cancha" placeholder="Cancha..." name="cancha" value="<%= cancha %>">
+                            </select>
                         </div>
-                        <div id="result-search" class="list-group">
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>Horario</label>
+                            <input type="text" id="dtp-horario" name="horario" value="<%= horario %>">
                         </div>
                     </div>
                 </div>

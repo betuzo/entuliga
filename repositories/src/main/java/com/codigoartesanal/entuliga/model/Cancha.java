@@ -14,10 +14,11 @@ public class Cancha {
     @JoinColumn(name = "admin_id", nullable = false)
     private User admin;
     private String nombre;
+    private String alias;
     private String descripcion;
     @ManyToOne
     @JoinColumn(name = "geoLocation_id", nullable = false)
-    private GeoLocation location;
+    private GeoLocation geoLocation;
 
     public Long getId() {
         return id;
@@ -43,6 +44,14 @@ public class Cancha {
         this.nombre = nombre;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -51,12 +60,12 @@ public class Cancha {
         this.descripcion = descripcion;
     }
 
-    public GeoLocation getLocation() {
-        return location;
+    public GeoLocation getGeoLocation() {
+        return geoLocation;
     }
 
-    public void setLocation(GeoLocation location) {
-        this.location = location;
+    public void setGeoLocation(GeoLocation geoLocation) {
+        this.geoLocation = geoLocation;
     }
 
     @Override
@@ -65,8 +74,9 @@ public class Cancha {
                 "id=" + id +
                 ", admin=" + admin +
                 ", nombre='" + nombre + '\'' +
+                ", alias='" + alias + '\'' +
                 ", descripcion='" + descripcion + '\'' +
-                ", location=" + location +
+                ", geoLocation=" + geoLocation +
                 '}';
     }
 }

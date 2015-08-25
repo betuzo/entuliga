@@ -1,9 +1,11 @@
 define([
-    'backbone'
-], function(Backbone){
+    'backbone',
+    'dateformat'
+], function(Backbone, dateformat){
 
-    var TorneoPartidoModel = Backbone.Model.extend({
-        urlRoot: 'torneopartido',
+    var PartidoModel = Backbone.Model.extend({
+
+        urlRoot: 'partido',
 
         defaults: {
             jornadaId: '',
@@ -64,5 +66,5 @@ define([
 
     });
 
-	return TorneoPartidoModel;
+	return PartidoModel;
 });
