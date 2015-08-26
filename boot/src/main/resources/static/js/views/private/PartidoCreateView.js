@@ -8,7 +8,7 @@ define([
 	'collections/JornadaEquiposCollection',
 	'collections/TorneoCanchasCollection',
 	'text!templates/private/tplPartidoCreate.html'
-], function($, Backbone, bootstrap, BaseView, TorneoPartidoModel,
+], function($, Backbone, bootstrap, BaseView, TorneoPartidoModel, TorneoModel,
             JornadaEquiposCollection, TorneoCanchasCollection, tplPartidoCreate){
 
 	var PartidoCreateView = BaseView.extend({
@@ -23,7 +23,7 @@ define([
         initialize: function(opts) {
             this.callbackAceptar = opts.callbackAceptar;
             this.model = new TorneoPartidoModel();
-            this.jornada = opts.model;
+            this.jornada = opts.modelo;
             this.torneo = new TorneoModel({ id: this.jornada.get('torneoId')});
             this.render();
 
@@ -57,7 +57,7 @@ define([
         agregarLocal: function(modelo) {
             $('#select-local').append($('<option>', {
                 value: modelo.get('id'),
-                text : modelo.get('nombre')
+                text : modelo.get('equipoNombre')
             }));
         },
 
@@ -71,7 +71,7 @@ define([
             }
             $('#select-visita').append($('<option>', {
                 value: modelo.get('id'),
-                text : modelo.get('nombre')
+                text : modelo.get('equipoNombre')
             }));
         },
 

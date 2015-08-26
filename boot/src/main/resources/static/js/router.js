@@ -17,7 +17,7 @@ define([
 ], function($, _, Backbone, BaseRouter, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
             LigaAdminView, TorneoAdminView, EquipoAdminView,
-            JugadorAdminView, ArbitroAdminView){
+            JugadorAdminView, ArbitroAdminView, CanchaAdminView){
         var Router = BaseRouter.extend({
 
         routes: {
