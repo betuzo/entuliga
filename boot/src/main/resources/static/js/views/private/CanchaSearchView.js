@@ -2,13 +2,13 @@ define([
 	'jquery',
 	'bootstrap',
 	'core/BaseView',
-	'collections/EquiposCollection',
-	'text!templates/private/tplEquipoSearch.html'
-], function($, bootstrap, BaseView, EquiposCollection, tplEquipoSearch){
+	'collections/CanchasCollection',
+	'text!templates/private/tplCanchaSearch.html'
+], function($, bootstrap, BaseView, CanchasCollection, tplCanchaSearch){
 
-	var EquipoSearchView = BaseView.extend({
-	    el: '#modal-equipo-search',
-        template: _.template(tplEquipoSearch),
+	var CanchaSearchView = BaseView.extend({
+	    el: '#modal-cancha-search',
+        template: _.template(tplCanchaSearch),
 
         events: {
             'click #btn-buscar': 'clickBuscar',
@@ -20,25 +20,25 @@ define([
             this.callbackAceptar = opts.callbackAceptar;
             this.model = opts.modelo;
             this.render();
-            this.equipos = new EquiposCollection();
-            this.listenTo(this.equipos, 'add', this.agregarEquipo);
-            this.listenTo(this.equipos, 'sync', this.syncEquipos);
+            this.canchas = new CanchasCollection();
+            this.listenTo(this.canchas, 'add', this.agregarCancha);
+            this.listenTo(this.canchas, 'sync', this.syncCanchas);
         },
 
         render: function() {
             this.$el.html(this.template());
-            this.$('#equipo-search-dialog').modal('show');
+            this.$('#cancha-search-dialog').modal('show');
             this.$('.alert-danger').hide();
         },
 
-        agregarEquipo: function(modelo) {
+        agregarCancha: function(modelo) {
 
         },
 
-        syncEquipos: function() {
+        syncCanchas: function() {
             $("#result-search").html('');
-            this.equipos.forEach(function(equipo) {
-                var liitem = "<a class='equipos list-group-item' id='" + equipo.get('id') + "'>" + equipo.get('nombre') +"</a>";
+            this.canchas.forEach(function(cancha) {
+                var liitem = "<a class='canchas list-group-item' id='" + cancha.get('id') + "'>" + cancha.get('nombre') +"</a>";
                 $(liitem).appendTo("#result-search");
             });
         },
@@ -48,9 +48,9 @@ define([
             var idTorneo = this.model.get('id');
             if (textName != '' && textName != 'undefined') {
                 $("#result-search").html('');
-                this.equipos.setTipo('like');
-                this.equipos.setCriterio(textName);
-                this.equipos.fetch({
+                this.canchas.setTipo('like');
+                this.canchas.setCriterio(textName);
+                this.canchas.fetch({
                     data: { tipo: 'notInTorneoAndContainName', idTorneo: idTorneo },
                     processData: true
                 });
@@ -58,18 +58,18 @@ define([
         },
 
         clickAceptar: function(event) {
-            var equipoId = $('.equipos.list-group-item.active').attr('id');
-            if (equipoId == 'undefined' || equipoId == undefined || equipoId == ''){
+            var canchaId = $('.canchas.list-group-item.active').attr('id');
+            if (canchaId == 'undefined' || canchaId == undefined || canchaId == ''){
                 this.$('.alert-danger').show();
-                this.$('.alert-danger').html('Debe seleccionar un equipo');
+                this.$('.alert-danger').html('Debe seleccionar una cancha');
             } else {
-                var modelo = this.equipos.get(equipoId);
+                var modelo = this.canchas.get(canchaId);
                 this.callbackAceptar(modelo);
             }
         },
 
         clickItemSearch: function(event) {
-            $('.equipos.list-group-item').removeClass('active');
+            $('.canchas.list-group-item').removeClass('active');
             $(event.target).addClass('active');
         },
 
@@ -83,6 +83,6 @@ define([
         }
 	});
 
-	return EquipoSearchView;
+	return CanchaSearchView;
 
 });

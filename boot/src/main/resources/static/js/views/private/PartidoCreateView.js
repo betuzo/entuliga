@@ -2,13 +2,14 @@ define([
 	'jquery',
 	'backbone',
 	'bootstrap',
+	'datetimepicker',
 	'core/BaseView',
 	'models/TorneoPartidoModel',
 	'models/TorneoModel',
 	'collections/JornadaEquiposCollection',
 	'collections/TorneoCanchasCollection',
 	'text!templates/private/tplPartidoCreate.html'
-], function($, Backbone, bootstrap, BaseView, TorneoPartidoModel, TorneoModel,
+], function($, Backbone, bootstrap, datetimepicker, BaseView, TorneoPartidoModel, TorneoModel,
             JornadaEquiposCollection, TorneoCanchasCollection, tplPartidoCreate){
 
 	var PartidoCreateView = BaseView.extend({
@@ -31,12 +32,12 @@ define([
             this.listenTo(this.locales, 'add', this.agregarLocal);
             this.listenTo(this.locales, 'sync', this.syncLocales);
             this.locales.setJornada(this.jornada);
-            this.locales.fetch();
 
             this.visitas = new JornadaEquiposCollection();
             this.listenTo(this.visitas, 'add', this.agregarVisita);
             this.listenTo(this.visitas, 'sync', this.syncVisitas);
             this.visitas.setJornada(this.jornada);
+            this.visitas.fetch();
 
             this.canchas = new TorneoCanchasCollection();
             this.listenTo(this.canchas, 'add', this.agregarCancha);
@@ -52,6 +53,11 @@ define([
             this.$('#partido-create-dialog').modal('show');
             this.$('.alert-danger').hide();
             this.$('#jornada-id').val(this.jornada.get('id'));
+            this.$el.find('#dtp-horario').datetimepicker({
+                format: "mm/dd/yyyy hh:ii"
+            }).on('show', function(ev) {
+                 $('.datepicker.dropdown-menu').addClass('ui-datepicker-partido');
+            });
         },
 
         agregarLocal: function(modelo) {
@@ -66,23 +72,16 @@ define([
         },
 
         agregarVisita: function(modelo) {
-            if ($('#select-local').val() == modelo.get('id')) {
-                return;
-            }
-            $('#select-visita').append($('<option>', {
-                value: modelo.get('id'),
-                text : modelo.get('equipoNombre')
-            }));
         },
 
         syncVisitas: function(modelo) {
-            $('#select-visita').change();
+            this.locales.fetch();
         },
 
         agregarCancha: function(modelo) {
             $('#select-cancha').append($('<option>', {
                 value: modelo.get('id'),
-                text : modelo.get('nombre')
+                text : modelo.get('canchaNombre')
             }));
         },
 
@@ -91,9 +90,17 @@ define([
         },
 
         changeLocal: function(event) {
-            var modelo = this.locales.get($(event.target).val());
+            var local = this.locales.get($(event.target).val());
             $('#select-visita').html('');
-            this.visitas.fetch();
+            this.visitas.each(function(modelo){
+                if (local.get('id') == modelo.get('id')) {
+                    return;
+                }
+                $('#select-visita').append($('<option>', {
+                    value: modelo.get('id'),
+                    text : modelo.get('equipoNombre')
+                }));
+            });
         },
 
         clickAceptar: function(event) {

@@ -34,4 +34,6 @@ public interface CanchaService {
     Cancha createCancha(Map<String, String> liga, User user);
 
     List<Map<String,Object>> listCanchaByUser(User user);
+
+    List<Map<String,Object>> listCanchaByTorneoAndContainName(Long idTorneo, String likeName);
 }

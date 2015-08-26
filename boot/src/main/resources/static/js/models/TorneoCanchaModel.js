@@ -7,7 +7,7 @@ define([
         urlRoot: 'torneocancha',
 
         defaults: {
-            statusEquipo: 'INSCRITO'
+            statusCancha: 'INSCRITO'
         },
 
         initialize: function() {
@@ -17,10 +17,10 @@ define([
             if(!atributos.torneoId) {
                 return 'Debe tener un Torneo.';
             }
-            if(!atributos.equipoId) {
-                return 'Debe tener un Equipo.';
+            if(!atributos.canchaId) {
+                return 'Debe tener una Cancha.';
             }
-            if(!atributos.statusEquipo) {
+            if(!atributos.statusCancha) {
                 return 'Debe tener un Status.';
             }
         }

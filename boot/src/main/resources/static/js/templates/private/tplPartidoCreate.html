@@ -37,7 +37,7 @@
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label>Horario</label>
-                            <input type="text" id="dtp-horario" name="horario" value="<%= horario %>">
+                            <input id="dtp-horario" class="span2 form-control" size="16" type="text" name="horarioDes" value="<%= horarioDes %>">
                         </div>
                     </div>
                 </div>
@@ -50,3 +50,9 @@
         </div>
     </div>
 </div>
+<style>
+    .ui-datepicker-partido{
+        z-index: 100000 !important;
+        display: block;
+    }
+</style>

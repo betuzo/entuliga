@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.Cancha;
+import com.codigoartesanal.entuliga.model.StatusCancha;
 import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.TorneoCancha;
 import com.codigoartesanal.entuliga.repositories.CanchaRepository;
@@ -67,16 +68,19 @@ public class TorneoCanchaServiceImpl implements TorneoCanchaService {
         torneo.setId(Long.valueOf(torneoEquipoMap.get(PROPERTY_TORNEO_ID)));
 
         torneoCancha.setTorneo(torneo);
+        torneoCancha.setStatusCancha(StatusCancha.valueOf(torneoEquipoMap.get(PROPERTY_STATUS_CANCHA)));
+
         return torneoCancha;
     }
 
-    private Map<String, Object> convertTorneoCanchaToMap(TorneoCancha torneoEquipo) {
+    private Map<String, Object> convertTorneoCanchaToMap(TorneoCancha torneoCancha) {
         Map<String, Object> map = new HashMap<>();
-        map.put(PROPERTY_ID, torneoEquipo.getId());
-        map.put(PROPERTY_CANCHA_ID, torneoEquipo.getCancha().getId());
-        map.put(PROPERTY_CANCHA_NOMBRE, torneoEquipo.getCancha().getNombre());
-        map.put(PROPERTY_TORNEO_ID, torneoEquipo.getTorneo().getId());
-        map.put(PROPERTY_TORNEO_NOMBRE, torneoEquipo.getTorneo().getNombre());
+        map.put(PROPERTY_ID, torneoCancha.getId());
+        map.put(PROPERTY_CANCHA_ID, torneoCancha.getCancha().getId());
+        map.put(PROPERTY_CANCHA_NOMBRE, torneoCancha.getCancha().getNombre());
+        map.put(PROPERTY_TORNEO_ID, torneoCancha.getTorneo().getId());
+        map.put(PROPERTY_TORNEO_NOMBRE, torneoCancha.getTorneo().getNombre());
+        map.put(PROPERTY_STATUS_CANCHA, torneoCancha.getStatusCancha());
         return map;
     }
 }

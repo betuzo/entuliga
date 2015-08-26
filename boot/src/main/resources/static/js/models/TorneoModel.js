@@ -19,7 +19,8 @@ define([
             totalJornadas: 0,
             totalEquipos: 0,
             totalJugadores: 0,
-            totalPartidos: 0
+            totalPartidos: 0,
+            totalCanchas: 0
         },
 
         initialize: function() {

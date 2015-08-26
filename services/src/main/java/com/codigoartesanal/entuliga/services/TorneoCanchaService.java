@@ -12,6 +12,7 @@ public interface TorneoCanchaService {
     public static final String PROPERTY_TORNEO_NOMBRE       = "torneoNombre";
     public static final String PROPERTY_CANCHA_ID           = "canchaId";
     public static final String PROPERTY_CANCHA_NOMBRE       = "canchaNombre";
+    public static final String PROPERTY_STATUS_CANCHA       = "statusCancha";
 
     public static final String PROPERTY_RESULT              = "result";
     public static final String PROPERTY_MESSAGE             = "message";

@@ -6,9 +6,10 @@ define([
 	'views/private/TorneoJugadorAdminView',
     'views/private/TorneoJornadaAdminView',
     'views/private/TorneoPartidoAdminView',
+    'views/private/TorneoCanchaAdminView',
 	'text!templates/private/tplTorneoDetail.html'
-], function($, Backbone, BaseView, TorneoEquipoAdminView, TorneoJugadorAdminView,
-            TorneoJornadaAdminView, TorneoPartidoAdminView, tplTorneoDetail){
+], function($, Backbone, BaseView, TorneoEquipoAdminView, TorneoJugadorAdminView, TorneoJornadaAdminView,
+            TorneoPartidoAdminView, TorneoCanchaAdminView, tplTorneoDetail){
 
 	var TorneoDetailView = BaseView.extend({
         template: _.template(tplTorneoDetail),
@@ -18,6 +19,7 @@ define([
             'click #torneo-equipo'      :   'viewEquipo',
             'click #torneo-jugador'     :   'viewJugador',
             'click #torneo-partido'     :   'viewPartido',
+            'click #torneo-cancha'      :   'viewCancha',
             'click .list-group-item'    :   'clickOptionDetail'
         },
 
@@ -62,6 +64,15 @@ define([
                 || this.tipo != 'equipo'){
                 this.tipo = 'equipo';
                 this.torneoDetailAdminView = new TorneoEquipoAdminView({model: this.model});
+                $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+            }
+        },
+
+        viewCancha: function() {
+            if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
+                || this.tipo != 'cancha'){
+                this.tipo = 'cancha';
+                this.torneoDetailAdminView = new TorneoCanchaAdminView({model: this.model});
                 $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
             }
         },

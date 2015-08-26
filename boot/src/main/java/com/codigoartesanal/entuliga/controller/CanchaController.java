@@ -49,4 +49,20 @@ public class CanchaController {
         return canchaService.listCanchaByUser(user);
     }
 
+    @ResponseBody
+    @RequestMapping(
+            value = { "/search/{criterio}" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> listCanchaByName(
+            @PathVariable("criterio") String criterio,
+            @RequestParam(value = "tipo") String tipo,
+            @RequestParam(value = "idTorneo") Long idTorneo) {
+        switch (tipo) {
+            case "notInTorneoAndContainName":
+                return canchaService.listCanchaByTorneoAndContainName(idTorneo, "%" + criterio + "%");
+        }
+        return null;
+    }
+
 }

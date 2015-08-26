@@ -24,6 +24,11 @@ require.config({
             deps: [
                 'jquery'
             ]
+        },
+        datetimepicker: {
+            deps: [
+                'jquery'
+            ]
         }
     },
     paths: {
@@ -36,6 +41,7 @@ require.config({
         bootstrap: 'vendor/bootstrap/bootstrap',
         selecter: 'vendor/bootstrap/select/bootstrap-select.min',
         datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker',
+        datetimepicker: 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
         dateformat: 'vendor/date-format/date.format'
     }
 });

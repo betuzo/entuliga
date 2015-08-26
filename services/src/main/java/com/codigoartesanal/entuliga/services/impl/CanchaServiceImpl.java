@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Cancha;
-import com.codigoartesanal.entuliga.model.Colonia;
-import com.codigoartesanal.entuliga.model.GeoLocation;
-import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.CanchaRepository;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.services.CanchaService;
@@ -47,6 +44,20 @@ public class CanchaServiceImpl implements CanchaService {
         }
         return copy;
     }
+
+    @Override
+    public List<Map<String, Object>> listCanchaByTorneoAndContainName(Long idTorneo, String likeName) {
+        Torneo torneo = new Torneo();
+        torneo.setId(idTorneo);
+        Iterator<Cancha> itCancha =
+                canchaRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itCancha.hasNext()) {
+            Cancha cancha = itCancha.next();
+            Map<String, Object> dto = convertCanchaToMap(cancha);
+            copy.add(dto);
+        }
+        return copy;    }
 
     private Map<String, Object> convertCanchaToMap(Cancha cancha) {
         Map<String, Object> map = new HashMap<>();

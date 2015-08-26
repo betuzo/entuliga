@@ -16,6 +16,9 @@ public class TorneoCancha {
     @ManyToOne
     @JoinColumn(name = "cancha_id", nullable = false)
     private Cancha cancha;
+    @Column(name = "status_equipo")
+    @Enumerated(EnumType.STRING)
+    private StatusCancha statusCancha;
 
     public Long getId() {
         return id;
@@ -41,12 +44,21 @@ public class TorneoCancha {
         this.cancha = cancha;
     }
 
+    public StatusCancha getStatusCancha() {
+        return statusCancha;
+    }
+
+    public void setStatusCancha(StatusCancha statusCancha) {
+        this.statusCancha = statusCancha;
+    }
+
     @Override
     public String toString() {
         return "TorneoArbitro{" +
                 "id=" + id +
                 ", torneo=" + torneo +
                 ", cancha=" + cancha +
+                ", statusCancha=" + statusCancha +
                 '}';
     }
 }
