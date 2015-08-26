@@ -106,6 +106,8 @@ define([
         clickAceptar: function(event) {
             var data = this.$el.find("#form-torneo-partido").serializeObject();
             this.model.set(data);
+            var horario = new Date(this.model.get('horarioDes'));
+            this.model.set({horario: horario.getTime()});
             that = this;
             if(this.model.isValid(true)){
                 this.model.save({}, {

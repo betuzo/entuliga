@@ -16,8 +16,8 @@ define([
             canchaId: '',
             canchaNombre: '',
             horario: (new Date()).getTime(),
-            horarioDes: (new Date()).format("mm/dd/yyyy"),
-            status: 'PROGRAMADO'
+            horarioDes: (new Date()).format("mm/dd/yyyy HH:MM"),
+            statusPartido: 'PROGRAMADO'
         },
 
         initialize: function() {
@@ -57,7 +57,7 @@ define([
             horarioDes: {
                 required: false
             },
-            status: {
+            statusPartido: {
                 required: true
             }
         }
