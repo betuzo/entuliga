@@ -35,7 +35,7 @@ public class LigaController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "" },
+            value = { "/{liga}" },
             method = {RequestMethod.PUT},
             produces = {"application/json;charset=UTF-8"})
     public Liga updateLiga(@RequestBody Map<String, String> liga, User user) {
@@ -44,7 +44,7 @@ public class LigaController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{liga}" },
+            value = { "" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> listLigaByUser(User user) {
