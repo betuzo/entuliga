@@ -16,13 +16,22 @@ define([
 
         },
 
-        initialize: function() {
-
+        initialize: function(idPartido) {
+            this.model = new TorneoPartidoModel();
+            this.listenTo(this.model, 'sync', this.syncPartido);
         },
 
         render: function() {
-            this.$el.html(this.template());
             return this;
+        },
+
+        syncPartido: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+        },
+
+        setIdPartido: function(idPartido) {
+            this.model.set('id', idPartido);
+            this.model.fetch();
         }
 	});
 

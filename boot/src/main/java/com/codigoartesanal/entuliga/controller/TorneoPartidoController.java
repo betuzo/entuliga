@@ -42,4 +42,14 @@ public class TorneoPartidoController {
         return response;
     }
 
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> obtenerTorneoPartidoById(@PathVariable("torneopartido") Long idPartido) {
+        Map<String, Object> response = partidoService.partidoById(idPartido);
+        return response;
+    }
+
 }

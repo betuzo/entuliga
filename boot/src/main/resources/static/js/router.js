@@ -120,6 +120,7 @@ define([
 
         adminPartido: function(partido) {
             var view = new PartidoAdminView();
+            view.setIdPartido(partido);
             this.changeView(view);
         }
 	});

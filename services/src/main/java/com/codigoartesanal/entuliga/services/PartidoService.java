@@ -29,4 +29,6 @@ public interface PartidoService {
     Map<String,Object> createPartido(Map<String, String> partido);
 
     void deletePartido(Long idPartido);
+
+    Map<String,Object> partidoById(Long idPartido);
 }

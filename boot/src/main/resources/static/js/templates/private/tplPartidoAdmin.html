@@ -7,33 +7,54 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <select class="form-control" id="select-liga" placeholder="Liga...">
-                            </select>
-                        </div>
-                        <div class="panel panel-default">
-                            <div id="liga-detail" class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4><%= localNombre %></h4>
+                                <h6><%= localNombre %></h6>
+                            </div>
+                            <div class="col-md-2">
+                                <h2><%= localPuntos %></h2>
+                            </div>
+                            <div class="col-md-2">
+                                <h2><%= visitaPuntos %></h2>
+                            </div>
+                            <div class="col-md-4">
+                                <h4><%= visitaNombre %></h4>
+                                <h6><%= visitaNombre %></h6>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <select class="form-control" id="select-torneo" placeholder="Torneo...">
-                            </select>
-                        </div>
-                        <div class="panel panel-default">
-                            <div id="torneo-detail" class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4><%= horarioDes %></h4>
+                            </div>
+                            <div class="col-md-8">
+                                <h4><%= canchaNombre %></h4>
+                                <h6><%= canchaNombre %></h6>
                             </div>
                         </div>
                         <div class="btn-group-horizontal" role="group" aria-label="...">
-                            <button id="torneo-nuevo" type="button" class="btn btn-primary">Nuevo</button>
-                            <button id="torneo-editar" type="button" class="btn btn-primary">Editar</button>
+                            <button id="torneo-nuevo" type="button" class="btn btn-primary">Comenzar</button>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Torneo</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Local</h3>
+                                    </div>
+                                    <div id="jogadores-local" class="panel-body">
+                                    </div>
+                                </div>
                             </div>
-                            <div id="torneo-edit" class="panel-body">
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Visita</h3>
+                                    </div>
+                                    <div id="jugadores-visita" class="panel-body">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

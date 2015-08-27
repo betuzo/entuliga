@@ -51,6 +51,11 @@ public class PartidoServiceImpl implements PartidoService {
         partidoRepository.delete(idPartido);
     }
 
+    @Override
+    public Map<String, Object> partidoById(Long idPartido) {
+        return convertPartidoToMap(partidoRepository.findOne(idPartido));
+    }
+
     private Partido populatePartido(Partido partido) {
         partido.setLocal(torneoEquipoRepository.findOne(partido.getLocal().getId()));
         partido.setVisitante(torneoEquipoRepository.findOne(partido.getVisitante().getId()));
