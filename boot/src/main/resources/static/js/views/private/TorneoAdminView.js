@@ -28,9 +28,9 @@ define([
             this.listenTo(this.ligas, 'add', this.agregarLiga);
             this.listenTo(this.ligas, 'sync', this.syncLigas);
 
-            this.torneos = new TorneosCollection();
-            this.listenTo(this.torneos, 'add', this.agregarTorneo);
-            this.listenTo(this.torneos, 'sync', this.syncTorneos);
+            app.torneos = new TorneosCollection();
+            this.listenTo(app.torneos, 'add', this.agregarTorneo);
+            this.listenTo(app.torneos, 'sync', this.syncTorneos);
 
             this.ligas.fetch();
         },
@@ -46,8 +46,8 @@ define([
             if (typeof modelo != 'undefined') {
                 this.ligaDetailView = new LigaDetailView({model: modelo});
                 $('#liga-detail').html(this.ligaDetailView.render().$el);
-                this.torneos.setLiga(modelo);
-                this.torneos.fetch();
+                app.torneos.setLiga(modelo);
+                app.torneos.fetch();
                 $('#torneo-nuevo').removeAttr("disabled");
                 $('#torneo-editar').removeAttr("disabled");
             } else {
@@ -57,7 +57,7 @@ define([
         },
 
         changeTorneo: function(event) {
-            var modelo = this.torneos.get($(event.target).val());
+            var modelo = app.torneos.get($(event.target).val());
             if (typeof modelo != 'undefined') {
                 this.torneoDetailView = new TorneoDetailView({model: modelo});
                 $('#torneo-detail').html(this.torneoDetailView.render().$el);
@@ -96,7 +96,7 @@ define([
         },
 
         editTorneo: function() {
-            var modelo = this.torneos.get($("#select-torneo").val());
+            var modelo = app.torneos.get($("#select-torneo").val());
             this.torneoEditView = new TorneoEditView({tipo: 'edit', modelo: modelo});
             $('#torneo-edit').html(this.torneoEditView.render().$el);
         }

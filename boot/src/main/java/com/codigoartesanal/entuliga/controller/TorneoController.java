@@ -42,7 +42,7 @@ public class TorneoController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "" },
+            value = { "/{torneo}" },
             method = {RequestMethod.PUT},
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> updateTorneo(@RequestBody Map<String, String> liga, User user) {

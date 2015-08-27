@@ -59,6 +59,7 @@ define([
         },
 
         saveLigaSuccess: function(model, response, options){
+            app.ligas.add(model);
             console.log('Successfully saved!');
             alert('Great Success!');
         },

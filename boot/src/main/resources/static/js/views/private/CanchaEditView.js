@@ -59,6 +59,7 @@ define([
         },
 
         saveCanchaSuccess: function(model, response, options){
+            app.canchas.add(model);
             console.log('Successfully saved!');
             alert('Great Success!');
         },

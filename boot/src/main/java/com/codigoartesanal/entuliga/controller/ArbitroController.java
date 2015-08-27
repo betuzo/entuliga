@@ -33,7 +33,7 @@ public class ArbitroController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "" },
+            value = { "/{arbitro}" },
             method = {RequestMethod.PUT},
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> updateArbitro(@RequestBody Map<String, String> arbitro, User user) {

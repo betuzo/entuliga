@@ -59,6 +59,7 @@ define([
         },
 
         saveArbitroSuccess: function(model, response, options){
+            app.arbitros.add(model);
             console.log('Successfully saved!');
             alert('Great Success!');
         },

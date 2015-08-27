@@ -20,11 +20,11 @@ define([
         },
 
         initialize: function() {
-            this.ligas = new LigasCollection();
-            this.listenTo(this.ligas, 'add', this.agregarLiga);
-            this.listenTo(this.ligas, 'sync', this.syncLigas);
+            app.ligas = new LigasCollection();
+            this.listenTo(app.ligas, 'add', this.agregarLiga);
+            this.listenTo(app.ligas, 'sync', this.syncLigas);
 
-            this.ligas.fetch();
+            app.ligas.fetch();
         },
 
         render: function() {
@@ -34,7 +34,7 @@ define([
         },
 
         changeLiga: function(event) {
-            var modelo = this.ligas.get($(event.target).val());
+            var modelo = app.ligas.get($(event.target).val());
             if (typeof modelo != 'undefined') {
                 this.ligaDetailView = new LigaDetailView({model: modelo});
                 $('#liga-detail').html(this.ligaDetailView.render().$el);
@@ -50,7 +50,7 @@ define([
         },
 
         editLiga: function() {
-            var modelo = this.ligas.get($("#select-liga").val());
+            var modelo = app.ligas.get($("#select-liga").val());
             this.ligaEditView = new LigaEditView({tipo: 'edit', modelo: modelo});
             $('#liga-edit').html(this.ligaEditView.render().$el);
         },

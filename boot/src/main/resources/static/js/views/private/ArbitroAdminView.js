@@ -20,11 +20,11 @@ define([
         },
 
         initialize: function() {
-            this.arbitros = new ArbitrosCollection();
-            this.listenTo(this.arbitros, 'add', this.agregarArbitro);
-            this.listenTo(this.arbitros, 'sync', this.syncArbitros);
+            app.arbitros = new ArbitrosCollection();
+            this.listenTo(app.arbitros, 'add', this.agregarArbitro);
+            this.listenTo(app.arbitros, 'sync', this.syncArbitros);
 
-            this.arbitros.fetch();
+            app.arbitros.fetch();
         },
 
         render: function() {
@@ -34,7 +34,7 @@ define([
         },
 
         changeArbitro: function(event) {
-            var modelo = this.arbitros.get($(event.target).val());
+            var modelo = app.arbitros.get($(event.target).val());
             if (typeof modelo != 'undefined') {
                 this.arbitroDetailView = new ArbitroDetailView({model: modelo});
                 $('#arbitro-detail').html(this.arbitroDetailView.render().$el);
@@ -50,7 +50,7 @@ define([
         },
 
         editArbitro: function() {
-            var modelo = this.arbitros.get($("#select-arbitro").val());
+            var modelo = app.arbitros.get($("#select-arbitro").val());
             this.arbitroEditView = new ArbitroEditView({tipo: 'edit', modelo: modelo});
             $('#arbitro-edit').html(this.arbitroEditView.render().$el);
         },

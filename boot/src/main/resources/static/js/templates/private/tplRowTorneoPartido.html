@@ -1,8 +1,13 @@
 <th><%= id %></th>
 <td><%= localNombre %></td>
 <td><%= visitaNombre %></td>
-<td><%= horario %></td>
+<td><%= horarioDes %></td>
 <td><%= canchaNombre %></td>
+<td>
+    <a id="editar-partido" class="btn btn-primary btn-xs" href="#admin/partido/<%= id %>">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true" value="<%= id %>"></span>
+    </a>
+</td>
 <td>
     <button id="eliminar-partido" class="btn btn-primary btn-xs" value="<%= id %>">
         <span class="glyphicon glyphicon-trash" aria-hidden="true" value="<%= id %>"></span>

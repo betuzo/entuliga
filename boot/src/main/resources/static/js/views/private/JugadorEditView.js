@@ -59,6 +59,7 @@ define([
         },
 
         saveJugadorSuccess: function(model, response, options){
+            app.jugadores.add(model);
             console.log('Successfully saved!');
             alert('Great Success!');
         },

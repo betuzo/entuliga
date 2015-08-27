@@ -13,7 +13,7 @@ public class TorneoCancha {
     @ManyToOne
     @JoinColumn(name = "torneo_id", nullable = false)
     private Torneo torneo;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cancha_id", nullable = false)
     private Cancha cancha;
     @Column(name = "status_equipo")

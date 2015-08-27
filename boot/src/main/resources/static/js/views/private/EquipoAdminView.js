@@ -21,11 +21,11 @@ define([
         },
 
         initialize: function() {
-            this.equipos = new EquiposCollection();
-            this.listenTo(this.equipos, 'add', this.agregarEquipo);
-            this.listenTo(this.equipos, 'sync', this.syncEquipos);
+            app.equipos = new EquiposCollection();
+            this.listenTo(app.equipos, 'add', this.agregarEquipo);
+            this.listenTo(app.equipos, 'sync', this.syncEquipos);
 
-            this.equipos.fetch();
+            app.equipos.fetch();
         },
 
         render: function() {
@@ -35,7 +35,7 @@ define([
         },
 
         changeEquipo: function(event) {
-            var modelo = this.equipos.get($(event.target).val());
+            var modelo = app.equipos.get($(event.target).val());
             if (typeof modelo != 'undefined') {
                 this.equipoDetailView = new EquipoDetailView({model: modelo});
                 $('#equipo-detail').html(this.equipoDetailView.render().$el);
@@ -51,7 +51,7 @@ define([
         },
 
         editEquipo: function() {
-            var modelo = this.equipos.get($("#select-equipo").val());
+            var modelo = app.equipos.get($("#select-equipo").val());
             this.equipoEditView = new EquipoEditView({tipo: 'edit', modelo: modelo});
             $('#equipo-edit').html(this.equipoEditView.render().$el);
         },

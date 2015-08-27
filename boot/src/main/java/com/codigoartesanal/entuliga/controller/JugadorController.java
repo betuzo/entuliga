@@ -30,7 +30,7 @@ public class JugadorController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "" },
+            value = { "/{jugador}" },
             method = {RequestMethod.PUT},
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> updateJugador(@RequestBody Map<String, String> jugador, User user) {

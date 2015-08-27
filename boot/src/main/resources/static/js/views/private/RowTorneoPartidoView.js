@@ -22,7 +22,7 @@ define([
             return this;
         },
 
-        deleteJugador: function() {
+        deletePartido: function() {
             that = this;
             this.model.destroy({
                 contentType: 'application/json',

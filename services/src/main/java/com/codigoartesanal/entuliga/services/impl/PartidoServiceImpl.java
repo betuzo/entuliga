@@ -2,6 +2,8 @@ package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
+import com.codigoartesanal.entuliga.repositories.TorneoCanchaRepository;
+import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
 import com.codigoartesanal.entuliga.services.PartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,12 @@ public class PartidoServiceImpl implements PartidoService {
 
     @Autowired
     PartidoRepository partidoRepository;
+
+    @Autowired
+    TorneoEquipoRepository torneoEquipoRepository;
+
+    @Autowired
+    TorneoCanchaRepository torneoCanchaRepository;
 
     @Override
     public List<Map<String, Object>> listPartidoByJornada(Long idJornada) {
@@ -34,12 +42,20 @@ public class PartidoServiceImpl implements PartidoService {
     @Override
     public Map<String, Object> createPartido(Map<String, String> mapPartido) {
         Partido partido = convertMapToPartido(mapPartido);
-        return convertPartidoToMap(partidoRepository.save(partido));
+        partido = populatePartido(partidoRepository.save(partido));
+        return convertPartidoToMap(partido);
     }
 
     @Override
     public void deletePartido(Long idPartido) {
         partidoRepository.delete(idPartido);
+    }
+
+    private Partido populatePartido(Partido partido) {
+        partido.setLocal(torneoEquipoRepository.findOne(partido.getLocal().getId()));
+        partido.setVisitante(torneoEquipoRepository.findOne(partido.getVisitante().getId()));
+        partido.setCancha(torneoCanchaRepository.findOne(partido.getCancha().getId()));
+        return partido;
     }
 
     private Partido convertMapToPartido(Map<String, String> mapPartido) {

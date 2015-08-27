@@ -16,7 +16,7 @@ public class TorneoEquipo {
     @ManyToOne
     @JoinColumn(name = "torneo_id", nullable = false)
     private Torneo torneo;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "equipo_id", nullable = false)
     private Equipo equipo;
     @Column(name = "status_equipo")

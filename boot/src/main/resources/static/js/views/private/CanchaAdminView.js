@@ -21,11 +21,11 @@ define([
         },
 
         initialize: function() {
-            this.canchas = new CanchasCollection();
-            this.listenTo(this.canchas, 'add', this.agregarCancha);
-            this.listenTo(this.canchas, 'sync', this.syncCanchas);
+            app.canchas = new CanchasCollection();
+            this.listenTo(app.canchas, 'add', this.agregarCancha);
+            this.listenTo(app.canchas, 'sync', this.syncCanchas);
 
-            this.canchas.fetch();
+            app.canchas.fetch();
         },
 
         render: function() {
@@ -35,7 +35,7 @@ define([
         },
 
         changeCancha: function(event) {
-            var modelo = this.canchas.get($(event.target).val());
+            var modelo = app.canchas.get($(event.target).val());
             if (typeof modelo != 'undefined') {
                 this.canchaDetailView = new CanchaDetailView({model: modelo});
                 $('#cancha-detail').html(this.canchaDetailView.render().$el);
@@ -51,7 +51,7 @@ define([
         },
 
         editCancha: function() {
-            var modelo = this.canchas.get($("#select-cancha").val());
+            var modelo = app.canchas.get($("#select-cancha").val());
             this.canchaEditView = new CanchaEditView({tipo: 'edit', modelo: modelo});
             $('#cancha-edit').html(this.canchaEditView.render().$el);
         },

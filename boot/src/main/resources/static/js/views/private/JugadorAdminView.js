@@ -20,12 +20,12 @@ define([
         },
 
         initialize: function() {
-            this.jugadores = new JugadoresCollection();
-            this.jugadores.setTipo('none');
-            this.listenTo(this.jugadores, 'add', this.agregarJugador);
-            this.listenTo(this.jugadores, 'sync', this.syncJugadores);
+            app.jugadores = new JugadoresCollection();
+            app.jugadores.setTipo('none');
+            this.listenTo(app.jugadores, 'add', this.agregarJugador);
+            this.listenTo(app.jugadores, 'sync', this.syncJugadores);
 
-            this.jugadores.fetch();
+            app.jugadores.fetch();
         },
 
         render: function() {
@@ -35,7 +35,7 @@ define([
         },
 
         changeJugador: function(event) {
-            var modelo = this.jugadores.get($(event.target).val());
+            var modelo = app.jugadores.get($(event.target).val());
             if (typeof modelo != 'undefined') {
                 this.jugadorDetailView = new JugadorDetailView({model: modelo});
                 $('#jugador-detail').html(this.jugadorDetailView.render().$el);
@@ -51,7 +51,7 @@ define([
         },
 
         editJugador: function() {
-            var modelo = this.jugadores.get($("#select-jugador").val());
+            var modelo = app.jugadores.get($("#select-jugador").val());
             this.jugadorEditView = new JugadorEditView({tipo: 'edit', modelo: modelo});
             $('#jugador-edit').html(this.jugadorEditView.render().$el);
         },

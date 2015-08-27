@@ -73,7 +73,7 @@ define([
         selectPartido: function(partido) {
             this.destroyView();
             $("<div id='modal-equipo-create'></div>").appendTo('#torneo-partidos');
-            app.torneojugadores.add(partido);
+            app.torneopartidos.add(partido);
         },
 
         destroyView: function() {

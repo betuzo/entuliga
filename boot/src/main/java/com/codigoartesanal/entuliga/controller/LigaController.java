@@ -44,7 +44,7 @@ public class LigaController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "" },
+            value = { "/{liga}" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> listLigaByUser(User user) {

@@ -13,26 +13,29 @@ define([
 	'views/private/EquipoAdminView',
 	'views/private/JugadorAdminView',
 	'views/private/ArbitroAdminView',
-	'views/private/CanchaAdminView'
+	'views/private/CanchaAdminView',
+	'views/private/PartidoAdminView'
 ], function($, _, Backbone, BaseRouter, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
             LigaAdminView, TorneoAdminView, EquipoAdminView,
-            JugadorAdminView, ArbitroAdminView, CanchaAdminView){
+            JugadorAdminView, ArbitroAdminView, CanchaAdminView,
+            PartidoAdminView){
         var Router = BaseRouter.extend({
 
         routes: {
-            '':                     'main',
-            '/':                    'main',
-            'login':                'login',
-            'admin':                'admin',
-            'admin/perfil':         'adminPerfil',
-            'admin/ligas':          'adminLigas',
-            'admin/torneos':        'adminTorneos',
-            'admin/torneos/:liga':  'adminTorneos',
-            'admin/equipos':        'adminEquipos',
-            'admin/jugadores':      'adminJugadores',
-            'admin/arbitros':       'adminArbitros',
-            'admin/canchas':        'adminCanchas'
+            '':                             'main',
+            '/':                            'main',
+            'login':                        'login',
+            'admin':                        'admin',
+            'admin/perfil':                 'adminPerfil',
+            'admin/ligas':                  'adminLigas',
+            'admin/torneos':                'adminTorneos',
+            'admin/torneos/:liga':          'adminTorneos',
+            'admin/equipos':                'adminEquipos',
+            'admin/jugadores':              'adminJugadores',
+            'admin/arbitros':               'adminArbitros',
+            'admin/canchas':                'adminCanchas',
+            'admin/partido/:partido':       'adminPartido'
         },
 
         before : function(params, next) {
@@ -112,6 +115,11 @@ define([
 
         adminCanchas: function() {
             var view = new CanchaAdminView();
+            this.changeView(view);
+        },
+
+        adminPartido: function(partido) {
+            var view = new PartidoAdminView();
             this.changeView(view);
         }
 	});

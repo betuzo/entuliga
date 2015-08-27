@@ -48,6 +48,7 @@ define([
         },
 
         saveEquipoSuccess: function(model, response, options){
+            app.equipos.add(model);
             console.log('Successfully saved!');
             alert('Great Success!');
         },

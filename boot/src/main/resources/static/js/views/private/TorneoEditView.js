@@ -54,6 +54,7 @@ define([
         },
 
         saveTorneoSuccess: function(model, response, options){
+            app.torneos.add(model);
             console.log('Successfully saved!');
             alert('Great Success!');
         },
