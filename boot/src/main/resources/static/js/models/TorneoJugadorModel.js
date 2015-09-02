@@ -9,6 +9,7 @@ define([
         defaults: {
             torneoEquipoId: '',
             jugadorId: '',
+            jugadorNombre: '',
             numeroJugador: '',
             posicionJugador: 'BASE',
             statusJugador: 'INSCRITO'
@@ -23,6 +24,9 @@ define([
             },
             jugadorId: {
                 required: true
+            },
+            jugadorNombre: {
+                required: false
             },
             statusJugador: {
                 required: true
