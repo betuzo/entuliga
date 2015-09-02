@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public interface PartidoService {
     public static final String PROPERTY_ID                  = "id";
+    public static final String PROPERTY_TORNEO_ID           = "torneoId";
     public static final String PROPERTY_JORNADA_ID          = "jornadaId";
     public static final String PROPERTY_JORNADA_NOMBRE      = "jornadaNombre";
     public static final String PROPERTY_LOCAL_ID            = "localId";

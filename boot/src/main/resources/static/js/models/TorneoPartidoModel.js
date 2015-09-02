@@ -7,6 +7,7 @@ define([
         urlRoot: 'torneopartido',
 
         defaults: {
+            torneoId: '',
             jornadaId: '',
             localId: '',
             localNombre: '',
@@ -28,6 +29,9 @@ define([
         },
 
         validation: {
+            torneoId: {
+                required: false
+            },
             jornadaId: {
                 required: true
             },

@@ -93,6 +93,7 @@ public class PartidoServiceImpl implements PartidoService {
     private Map<String, Object> convertPartidoToMap(Partido partido) {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, partido.getId());
+        map.put(PROPERTY_TORNEO_ID, partido.getJornada().getTorneo().getId());
         map.put(PROPERTY_JORNADA_ID, partido.getJornada().getId());
         map.put(PROPERTY_JORNADA_NOMBRE, partido.getJornada().getNombre());
         map.put(PROPERTY_LOCAL_ID, partido.getLocal().getId());
