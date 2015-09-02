@@ -23,6 +23,7 @@ define([
             this.locales = new TorneoJugadoresCollection();
             this.listenTo(this.locales, 'add', this.agregarLocal);
             this.listenTo(this.locales, 'sync', this.syncLocales);
+            this.render();
 
             var local = new TorneoEquipoModel({ id : this.model.get('localId') });
             this.locales.setTorneoEquipo(local);

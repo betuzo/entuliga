@@ -23,6 +23,7 @@ define([
             this.visitantes = new TorneoJugadoresCollection();
             this.listenTo(this.visitantes, 'add', this.agregarVisitante);
             this.listenTo(this.visitantes, 'sync', this.syncVisitantes);
+            this.render();
 
             var visita = new TorneoEquipoModel({ id : this.model.get('visitaId') });
             this.visitantes.setTorneoEquipo(visita);
