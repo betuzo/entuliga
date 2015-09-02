@@ -17,7 +17,7 @@ public class GeoLocation {
     private String noInterior;
     @Column(name = "codigo_postal")
     private String codigoPostal;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "colonia_id", nullable = false)
     private Colonia colonia;
     private double longitude;

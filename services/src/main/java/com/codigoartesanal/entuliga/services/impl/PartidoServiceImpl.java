@@ -97,12 +97,15 @@ public class PartidoServiceImpl implements PartidoService {
         map.put(PROPERTY_JORNADA_NOMBRE, partido.getJornada().getNombre());
         map.put(PROPERTY_LOCAL_ID, partido.getLocal().getEquipo().getId());
         map.put(PROPERTY_LOCAL_NOMBRE, partido.getLocal().getEquipo().getNombre());
+        map.put(PROPERTY_LOCAL_ALIAS, partido.getLocal().getEquipo().getAliasEquipo());
         map.put(PROPERTY_LOCAL_PUNTOS, partido.getPuntosLocal());
         map.put(PROPERTY_VISITANTE_ID, partido.getVisitante().getEquipo().getId());
         map.put(PROPERTY_VISITANTE_NOMBRE, partido.getVisitante().getEquipo().getNombre());
+        map.put(PROPERTY_VISITANTE_ALIAS, partido.getVisitante().getEquipo().getAliasEquipo());
         map.put(PROPERTY_VISITANTE_PUNTOS, partido.getPuntosVisitante());
         map.put(PROPERTY_CANCHA_ID, partido.getCancha().getId());
         map.put(PROPERTY_CANCHA_NOMBRE, partido.getCancha().getCancha().getNombre());
+        map.put(PROPERTY_CANCHA_DOMICILIO, partido.getCancha().getCancha().getDomicilio());
         map.put(PROPERTY_HORARIO, partido.getHorario());
         map.put(PROPERTY_STATUS_PARTIDO, partido.getStatus());
         return map;

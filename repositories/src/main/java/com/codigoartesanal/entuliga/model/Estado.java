@@ -13,7 +13,7 @@ public class Estado {
     private Long id;
     private String nombre;
     private String abreviatura;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pais_id", nullable = false)
     private Pais pais;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "estado")

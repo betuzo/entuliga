@@ -9,7 +9,7 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-4">
-                                <h4><%= localNombre %></h4>
+                                <h4><%= localAlias %></h4>
                                 <h6><%= localNombre %></h6>
                             </div>
                             <div class="col-md-2">
@@ -19,7 +19,7 @@
                                 <h2><%= visitaPuntos %></h2>
                             </div>
                             <div class="col-md-4">
-                                <h4><%= visitaNombre %></h4>
+                                <h4><%= visitaAlias %></h4>
                                 <h6><%= visitaNombre %></h6>
                             </div>
                         </div>
@@ -29,11 +29,20 @@
                             </div>
                             <div class="col-md-8">
                                 <h4><%= canchaNombre %></h4>
-                                <h6><%= canchaNombre %></h6>
+                                <h6><%= canchaDomicilio %></h6>
                             </div>
                         </div>
                         <div class="btn-group-horizontal" role="group" aria-label="...">
-                            <button id="torneo-nuevo" type="button" class="btn btn-primary">Comenzar</button>
+                            <% if (statusPartido=='PROGRAMADO') { %>
+                                <button id="partido-editar" type="button" class="btn btn-primary">Editar</button>
+                                <button id="partido-comenzar" type="button" class="btn btn-success">Comenzar</button>
+                            <% } %>
+                            <% if (statusPartido=='ENPROCESO') { %>
+                                <button id="partido-finalizar" type="button" class="btn btn-warning">Finalizar</button>
+                            <% } %>
+                            <% if (statusPartido!=='CANCELADO') { %>
+                                <button id="partido-cancelar" type="button" class="btn btn-danger">Cancelar</button>
+                            <% } %>
                         </div>
                     </div>
                     <div class="col-md-6">

@@ -11,7 +11,7 @@ public class Colonia {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "municipio_id", nullable = false)
     private Municipio municipio;
 

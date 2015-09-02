@@ -12,12 +12,15 @@ public interface PartidoService {
     public static final String PROPERTY_JORNADA_NOMBRE      = "jornadaNombre";
     public static final String PROPERTY_LOCAL_ID            = "localId";
     public static final String PROPERTY_LOCAL_NOMBRE        = "localNombre";
+    public static final String PROPERTY_LOCAL_ALIAS         = "localAlias";
     public static final String PROPERTY_LOCAL_PUNTOS        = "localPuntos";
     public static final String PROPERTY_VISITANTE_ID        = "visitaId";
     public static final String PROPERTY_VISITANTE_NOMBRE    = "visitaNombre";
+    public static final String PROPERTY_VISITANTE_ALIAS     = "visitaAlias";
     public static final String PROPERTY_VISITANTE_PUNTOS    = "visitaPuntos";
     public static final String PROPERTY_CANCHA_ID           = "canchaId";
     public static final String PROPERTY_CANCHA_NOMBRE       = "canchaNombre";
+    public static final String PROPERTY_CANCHA_DOMICILIO    = "canchaDomicilio";
     public static final String PROPERTY_HORARIO             = "horario";
     public static final String PROPERTY_STATUS_PARTIDO      = "statusPartido";
 
