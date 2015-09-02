@@ -14,7 +14,7 @@ define([
 	'views/private/JugadorAdminView',
 	'views/private/ArbitroAdminView',
 	'views/private/CanchaAdminView',
-	'views/private/PartidoAdminView'
+	'views/private/partido/PartidoAdminView'
 ], function($, _, Backbone, BaseRouter, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
             LigaAdminView, TorneoAdminView, EquipoAdminView,
