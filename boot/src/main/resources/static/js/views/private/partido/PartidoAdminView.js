@@ -18,7 +18,10 @@ define([
         template: _.template(tplPartidoAdmin),
 
         events: {
-            'click #partido-editar': 'partidoEditar'
+            'click #partido-editar': 'partidoEditar',
+            'click #agregar-arbitro': 'agregarArbitro',
+            'click #partido-comenzar': 'partidoComenzar',
+            'click #partido-cancelar': 'partidoCancelar'
         },
 
         initialize: function(idPartido) {
@@ -50,6 +53,37 @@ define([
         successSavePartido: function(partido) {
 
         },
+
+        agregarArbitro: function() {
+
+        },
+
+        partidoComenzar: function() {
+            this.model.set({statusPartido: 'ENPROCESO'});
+            this.saveModel();
+        },
+
+        partidoCancelar: function() {
+            this.model.set({statusPartido: 'CANCELADO'});
+            this.saveModel();
+        },
+
+        saveModel: function() {
+            that = this;
+            if(this.model.isValid(true)){
+                this.model.save({}, {
+                    wait:true,
+                    success:function(model, response) {
+                        console.log('Successfully saved!');
+                        alert('Great Success!');
+                    },
+                    error: function(model, error) {
+                        console.log(model.toJSON());
+                        console.log('error.responseText');
+                    }
+                });
+            }
+        }
 	});
 
 	return PartidoAdminView;

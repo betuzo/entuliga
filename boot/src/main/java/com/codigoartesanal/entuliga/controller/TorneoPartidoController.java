@@ -31,6 +31,16 @@ public class TorneoPartidoController {
     @ResponseBody
     @RequestMapping(
             value = { "/{torneopartido}" },
+            method = {RequestMethod.PUT},
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> updateTorneoPartido(
+            @RequestBody Map<String, String> partido) {
+        return partidoService.createPartido(partido);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}" },
             method = RequestMethod.DELETE,
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> deleteTorneoPartido(@PathVariable("torneopartido") Long idPartido) {

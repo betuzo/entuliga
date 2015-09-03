@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.*;
+import com.codigoartesanal.entuliga.repositories.JornadaRepository;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoCanchaRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
@@ -24,6 +25,9 @@ public class PartidoServiceImpl implements PartidoService {
 
     @Autowired
     TorneoCanchaRepository torneoCanchaRepository;
+
+    @Autowired
+    JornadaRepository jornadaRepository;
 
     @Override
     public List<Map<String, Object>> listPartidoByJornada(Long idJornada) {
@@ -60,11 +64,15 @@ public class PartidoServiceImpl implements PartidoService {
         partido.setLocal(torneoEquipoRepository.findOne(partido.getLocal().getId()));
         partido.setVisitante(torneoEquipoRepository.findOne(partido.getVisitante().getId()));
         partido.setCancha(torneoCanchaRepository.findOne(partido.getCancha().getId()));
+        partido.setJornada(jornadaRepository.findOne(partido.getJornada().getId()));
         return partido;
     }
 
     private Partido convertMapToPartido(Map<String, String> mapPartido) {
         Partido partido = new Partido();
+        if (mapPartido.containsKey(PROPERTY_ID)) {
+            partido = this.get(Long.valueOf(mapPartido.get(PROPERTY_ID)));
+        }
 
         Jornada jornada = new Jornada();
         jornada.setId(Long.valueOf(mapPartido.get(PROPERTY_JORNADA_ID)));
@@ -111,4 +119,8 @@ public class PartidoServiceImpl implements PartidoService {
         map.put(PROPERTY_STATUS_PARTIDO, partido.getStatus());
         return map;
     }
+    private Partido get(Long idPartido){
+        return this.partidoRepository.findOne(idPartido);
+    }
+
 }
