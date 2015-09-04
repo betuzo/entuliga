@@ -16,7 +16,7 @@ public class Cancha {
     private String nombre;
     private String alias;
     private String descripcion;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "geoLocation_id", nullable = false)
     private GeoLocation geoLocation;
 
@@ -66,6 +66,15 @@ public class Cancha {
 
     public void setGeoLocation(GeoLocation geoLocation) {
         this.geoLocation = geoLocation;
+    }
+
+    public String getDomicilio(){
+        return this.getGeoLocation().getCalle() + " " +
+                this.getGeoLocation().getNoExterior() + " " +
+                this.getGeoLocation().getNoInterior() + " " +
+                this.getGeoLocation().getColonia().getNombre() + " " +
+                this.getGeoLocation().getColonia().getMunicipio().getNombre() + " " +
+                this.getGeoLocation().getColonia().getMunicipio().getEstado().getAbreviatura();
     }
 
     @Override

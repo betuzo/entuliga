@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.*;
+import com.codigoartesanal.entuliga.repositories.JornadaRepository;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoCanchaRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
@@ -24,6 +25,9 @@ public class PartidoServiceImpl implements PartidoService {
 
     @Autowired
     TorneoCanchaRepository torneoCanchaRepository;
+
+    @Autowired
+    JornadaRepository jornadaRepository;
 
     @Override
     public List<Map<String, Object>> listPartidoByJornada(Long idJornada) {
@@ -51,15 +55,24 @@ public class PartidoServiceImpl implements PartidoService {
         partidoRepository.delete(idPartido);
     }
 
+    @Override
+    public Map<String, Object> partidoById(Long idPartido) {
+        return convertPartidoToMap(partidoRepository.findOne(idPartido));
+    }
+
     private Partido populatePartido(Partido partido) {
         partido.setLocal(torneoEquipoRepository.findOne(partido.getLocal().getId()));
         partido.setVisitante(torneoEquipoRepository.findOne(partido.getVisitante().getId()));
         partido.setCancha(torneoCanchaRepository.findOne(partido.getCancha().getId()));
+        partido.setJornada(jornadaRepository.findOne(partido.getJornada().getId()));
         return partido;
     }
 
     private Partido convertMapToPartido(Map<String, String> mapPartido) {
         Partido partido = new Partido();
+        if (mapPartido.containsKey(PROPERTY_ID)) {
+            partido = this.get(Long.valueOf(mapPartido.get(PROPERTY_ID)));
+        }
 
         Jornada jornada = new Jornada();
         jornada.setId(Long.valueOf(mapPartido.get(PROPERTY_JORNADA_ID)));
@@ -88,18 +101,26 @@ public class PartidoServiceImpl implements PartidoService {
     private Map<String, Object> convertPartidoToMap(Partido partido) {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, partido.getId());
+        map.put(PROPERTY_TORNEO_ID, partido.getJornada().getTorneo().getId());
         map.put(PROPERTY_JORNADA_ID, partido.getJornada().getId());
         map.put(PROPERTY_JORNADA_NOMBRE, partido.getJornada().getNombre());
-        map.put(PROPERTY_LOCAL_ID, partido.getLocal().getEquipo().getId());
+        map.put(PROPERTY_LOCAL_ID, partido.getLocal().getId());
         map.put(PROPERTY_LOCAL_NOMBRE, partido.getLocal().getEquipo().getNombre());
+        map.put(PROPERTY_LOCAL_ALIAS, partido.getLocal().getEquipo().getAliasEquipo());
         map.put(PROPERTY_LOCAL_PUNTOS, partido.getPuntosLocal());
-        map.put(PROPERTY_VISITANTE_ID, partido.getVisitante().getEquipo().getId());
+        map.put(PROPERTY_VISITANTE_ID, partido.getVisitante().getId());
         map.put(PROPERTY_VISITANTE_NOMBRE, partido.getVisitante().getEquipo().getNombre());
+        map.put(PROPERTY_VISITANTE_ALIAS, partido.getVisitante().getEquipo().getAliasEquipo());
         map.put(PROPERTY_VISITANTE_PUNTOS, partido.getPuntosVisitante());
         map.put(PROPERTY_CANCHA_ID, partido.getCancha().getId());
         map.put(PROPERTY_CANCHA_NOMBRE, partido.getCancha().getCancha().getNombre());
+        map.put(PROPERTY_CANCHA_DOMICILIO, partido.getCancha().getCancha().getDomicilio());
         map.put(PROPERTY_HORARIO, partido.getHorario());
         map.put(PROPERTY_STATUS_PARTIDO, partido.getStatus());
         return map;
     }
+    private Partido get(Long idPartido){
+        return this.partidoRepository.findOne(idPartido);
+    }
+
 }

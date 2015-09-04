@@ -14,7 +14,7 @@ define([
 	'views/private/JugadorAdminView',
 	'views/private/ArbitroAdminView',
 	'views/private/CanchaAdminView',
-	'views/private/PartidoAdminView'
+	'views/private/partido/PartidoAdminView'
 ], function($, _, Backbone, BaseRouter, LoginView,
             MainView, MainNavView, MainAdminView, MainAdminNavView,
             LigaAdminView, TorneoAdminView, EquipoAdminView,
@@ -120,6 +120,7 @@ define([
 
         adminPartido: function(partido) {
             var view = new PartidoAdminView();
+            view.setIdPartido(partido);
             this.changeView(view);
         }
 	});

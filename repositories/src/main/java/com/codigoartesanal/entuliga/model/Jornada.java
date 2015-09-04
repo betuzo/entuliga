@@ -11,7 +11,7 @@ public class Jornada {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "torneo_id", nullable = false)
     private Torneo torneo;
     private String nombre;

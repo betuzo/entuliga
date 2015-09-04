@@ -1,0 +1,59 @@
+<div class="modal fade" id="partido-create-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Partido</h4>
+            </div>
+            <div class="modal-body">
+                <p>Editar Partido.</p>
+                <div class="alert alert-danger" role="alert"></div>
+                <form id="form-torneo-partido" role="form">
+                    <input id="jornada-id" type="hidden" name="jornadaId" value="<%= jornadaId %>">
+                    <input type="hidden" name="localId" value="<%= localId %>">
+                    <input type="hidden" name="visitaId" value="<%= visitaId %>">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Local</label>
+                                <h4><%= localNombre %></h4>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Visita</label>
+                                <h4><%= visitaNombre %></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Cancha</label>
+                                <select class="form-control" id="select-cancha" placeholder="Cancha..." name="canchaId" value="<%= canchaId %>">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Horario</label>
+                                <input id="dtp-horario" class="span2 form-control" size="16" type="text" name="horarioDes" value="<%= horarioDes %>">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button id="btn-aceptar" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .ui-datepicker-partido{
+    z-index: 100000 !important;
+    display: block;
+    }
+</style>
+
