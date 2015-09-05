@@ -88,7 +88,7 @@ define([
         },
 
         successAddPunto: function(punto) {
-
+            this.destroyView();
         },
 
         partidoFaltasLocal: function() {

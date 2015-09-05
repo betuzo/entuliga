@@ -62,9 +62,9 @@ public class EncesteServiceImpl implements EncesteService {
 
     private void acumulaPunto(Enceste enceste){
         if (enceste.getOrigen() == OrigenEstadistica.LOCAL) {
-            partidoRepository.acumulaPuntosLocal(enceste.getTipo().getValor(), enceste.getPartido().getId());
+            partidoRepository.acumulaPuntosLocal(Long.valueOf(enceste.getTipo().getValor()), enceste.getPartido().getId());
         } else if (enceste.getOrigen() == OrigenEstadistica.VISITA) {
-            partidoRepository.acumulaPuntosVisita(enceste.getTipo().getValor(), enceste.getPartido().getId());
+            partidoRepository.acumulaPuntosVisita(Long.valueOf(enceste.getTipo().getValor()), enceste.getPartido().getId());
         }
     }
 

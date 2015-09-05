@@ -36,6 +36,9 @@ public class PersistenceConfig {
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/cancha.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/torneoequipo.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/torneojugador.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/torneocancha.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/jornada.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/partido.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/constraints.sql");
         return builder.setType(EmbeddedDatabaseType.H2).build();
     }
