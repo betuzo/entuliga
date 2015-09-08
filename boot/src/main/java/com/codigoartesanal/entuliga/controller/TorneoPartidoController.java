@@ -1,11 +1,13 @@
 package com.codigoartesanal.entuliga.controller;
 
+import com.codigoartesanal.entuliga.services.EncesteService;
 import com.codigoartesanal.entuliga.services.PartidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,12 +20,25 @@ public class TorneoPartidoController {
     @Autowired
     PartidoService partidoService;
 
+    @Autowired
+    EncesteService encesteService;
+
     @ResponseBody
     @RequestMapping(
             value = { "" },
             method = {RequestMethod.POST},
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> createTorneoPartido(
+            @RequestBody Map<String, String> partido) {
+        return partidoService.createPartido(partido);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}" },
+            method = {RequestMethod.PUT},
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> updateTorneoPartido(
             @RequestBody Map<String, String> partido) {
         return partidoService.createPartido(partido);
     }
@@ -49,6 +64,16 @@ public class TorneoPartidoController {
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> obtenerTorneoPartidoById(@PathVariable("torneopartido") Long idPartido) {
         Map<String, Object> response = partidoService.partidoById(idPartido);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}/punto" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> obtenerPuntosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
+        List<Map<String, Object>> response = encesteService.puntosByPartido(idPartido);
         return response;
     }
 

@@ -17,6 +17,8 @@ public class Enceste {
     private Integer segundo;
     @Enumerated(EnumType.STRING)
     private TipoEnceste tipo;
+    @Enumerated(EnumType.STRING)
+    private OrigenEstadistica origen;
     @ManyToOne
     @JoinColumn(name = "tirador_id", nullable = false)
     private TorneoJugador tirador;
@@ -61,12 +63,24 @@ public class Enceste {
         this.tipo = tipo;
     }
 
+    public OrigenEstadistica getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(OrigenEstadistica origen) {
+        this.origen = origen;
+    }
+
     public TorneoJugador getTirador() {
         return tirador;
     }
 
     public void setTirador(TorneoJugador tirador) {
         this.tirador = tirador;
+    }
+
+    public String getTiempoDescripcion(){
+        return " " + minuto + " : " + segundo;
     }
 
     @Override
@@ -77,6 +91,7 @@ public class Enceste {
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
                 ", tipo=" + tipo +
+                ", origen=" + origen +
                 ", tirador=" + tirador +
                 '}';
     }

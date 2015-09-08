@@ -1,0 +1,54 @@
+<div class="modal fade" id="punto-create-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Punto</h4>
+            </div>
+            <div class="modal-body">
+                <p>Crear Punto.</p>
+                <div class="alert alert-danger" role="alert"></div>
+                <form id="form-punto" role="form">
+                    <input id="partido-id" type="hidden" name="partidoId" value="<%= partidoId %>">
+                    <input id="origen-punto" type="hidden" name="origen" value="<%= origen %>">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Cancha</label>
+                                <select class="form-control" id="select-tirador" placeholder="Jugador..." name="jugadorId" value="<%= jugadorId %>">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Tipo Punto</label>
+                                <select class="form-control" id="select-tipo-enceste" placeholder="Tipo Enceste..." name="tipo" value="<%= tipo %>">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Minuto</label>
+                                <input class="form-control" type="text" name="minuto" value="<%= minuto %>">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Segundo</label>
+                                <input class="form-control" type="text" name="segundo" value="<%= segundo %>">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button id="btn-aceptar" type="button" class="btn btn-success">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

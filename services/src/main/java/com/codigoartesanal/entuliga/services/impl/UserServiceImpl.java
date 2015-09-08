@@ -3,6 +3,7 @@ package com.codigoartesanal.entuliga.services.impl;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.model.UserRole;
 import com.codigoartesanal.entuliga.repositories.UserRepository;
+import com.codigoartesanal.entuliga.repositories.UserRoleRepository;
 import com.codigoartesanal.entuliga.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    UserRoleRepository userRoleRepository;
 
     @Override
     public Map<String, Object> findByUsername(String username) {
@@ -33,6 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private List<String> getRolesByUser(User user){
+        user.setUserRole(userRoleRepository.findAllByUser(user));
         Iterator<UserRole> iter = user.getUserRole().iterator();
         List<String> roles = new ArrayList<String>();
         while (iter.hasNext()) {
