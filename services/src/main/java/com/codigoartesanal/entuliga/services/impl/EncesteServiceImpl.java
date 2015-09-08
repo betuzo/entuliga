@@ -93,6 +93,7 @@ public class EncesteServiceImpl implements EncesteService {
         map.put(PROPERTY_MINUTO, enceste.getMinuto());
         map.put(PROPERTY_SEGUNDO, enceste.getSegundo());
         map.put(PROPERTY_TIPO, enceste.getTipo());
+        map.put(PROPERTY_TIPO_VALOR, enceste.getTipo().getValor());
         map.put(PROPERTY_ORIGEN, enceste.getOrigen());
         map.put(PROPERTY_JUGADOR_ID, enceste.getTirador().getId());
         map.put(PROPERTY_JUGADOR_NOMBRE, enceste.getTirador().getJugador().getNombreCompleto());

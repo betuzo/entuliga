@@ -12,6 +12,7 @@ define([
             minuto: '',
             segundo: '',
             tipo: '',
+            tipoValor: '',
             origen: '',
             jugadorId: '',
             jugadorNombre: ''
@@ -35,6 +36,9 @@ define([
             },
             tipo: {
                 required: true
+            },
+            tipoValor: {
+                required: false
             },
             origen: {
                 required: true

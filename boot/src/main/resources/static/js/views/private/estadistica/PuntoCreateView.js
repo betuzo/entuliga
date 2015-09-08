@@ -23,6 +23,7 @@ define([
             this.model = new PuntoModel();
             this.modelPartido = opts.modelo;
             this.callbackAceptar = opts.callbackAceptar;
+            this.parent = opts.parent;
             this.model.set({origen : opts.origen});
             this.model.set({partidoId : opts.modelo.get('id')});
             this.render();
@@ -101,13 +102,14 @@ define([
         },
 
         destroyView: function() {
+            $("body").removeClass("modal-open");
             // COMPLETELY UNBIND THE VIEW
             this.undelegateEvents();
             this.$el.removeData().unbind();
             // Remove view from DOM
             this.remove();
             Backbone.View.prototype.remove.call(this);
-            $("<div id='modal-partido-parent'></div>").appendTo('#modal-partido');
+            $("<div id='modal-partido'></div>").appendTo('#modal-partido-parent');
         }
 	});
 

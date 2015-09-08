@@ -9,13 +9,14 @@ define([
 	'views/private/partido/PartidoVisitaView',
 	'views/private/partido/PartidoArbitrosView',
 	'views/private/partido/PartidoEditView',
+	'views/private/estadistica/EstadisticaResumenView',
 	'views/private/estadistica/EstadisticaPuntosView',
 	'views/private/estadistica/PuntoCreateView',
 	'text!templates/private/partido/tplPartidoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, BaseView, TorneoPartidoModel,
             PartidoLocalView, PartidoVisitaView, PartidoArbitrosView,
-            PartidoEditView, EstadisticaPuntosView, PuntoCreateView,
-            tplPartidoAdmin){
+            PartidoEditView, EstadisticaResumenView, EstadisticaPuntosView,
+            PuntoCreateView, tplPartidoAdmin){
 
 	var PartidoAdminView = BaseView.extend({
         template: _.template(tplPartidoAdmin),
@@ -60,6 +61,7 @@ define([
             new PartidoVisitaView(this.model);
             new PartidoArbitrosView(this.model);
             new EstadisticaPuntosView(this.model);
+            new EstadisticaResumenView(this.model);
         },
 
         setIdPartido: function(idPartido) {
@@ -80,14 +82,25 @@ define([
         },
 
         partidoPuntosLocal: function() {
-            new PuntoCreateView({modelo: this.model, callbackAceptar: this.successAddPunto, origen: 'LOCAL'});
+            new PuntoCreateView({modelo: this.model, callbackAceptar: this.successAddPunto,
+                                 origen: 'LOCAL', parent: this});
         },
 
         partidoPuntosVisita: function() {
-            new PuntoCreateView({modelo: this.model, callbackAceptar: this.successAddPunto, origen: 'VISITA'});
+            new PuntoCreateView({modelo: this.model, callbackAceptar: this.successAddPunto,
+                                 origen: 'VISITA', parent: this});
         },
 
         successAddPunto: function(punto) {
+            if (punto.get('origen') == 'LOCAL') {
+                var puntoLocal = this.parent.model.get('localPuntos') + punto.get('tipoValor');
+                this.parent.model.set({localPuntos: puntoLocal});
+            } else {
+                var puntoVisita = this.parent.model.get('visitaPuntos') + punto.get('tipoValor');
+                this.parent.model.set({visitaPuntos: puntoVisita});
+            }
+            $('#section-estadisticas-resumen').html('');
+            new EstadisticaResumenView(this.parent.model);
             this.destroyView();
         },
 
