@@ -56,6 +56,10 @@ define([
 
         syncPartido: function() {
             this.$el.html(this.template(this.model.toJSON()));
+            $('#estadistica-tab a').click(function (e) {
+              e.preventDefault()
+              $(this).tab('show')
+            })
 
             new PartidoLocalView(this.model);
             new PartidoVisitaView(this.model);
@@ -101,6 +105,7 @@ define([
             }
             $('#section-estadisticas-resumen').html('');
             new EstadisticaResumenView(this.parent.model);
+            app.puntosPartido.add(punto);
             this.destroyView();
         },
 

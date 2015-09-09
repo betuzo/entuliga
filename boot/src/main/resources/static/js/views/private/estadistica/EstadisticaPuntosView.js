@@ -9,7 +9,7 @@ define([
             RowEstadisticaPuntoView, tplEstadisticaPuntos){
 
 	var EstadisticaPuntosView = BaseView.extend({
-	    el: '#section-estaadisticas',
+	    el: '#section-estaadisticas-puntos',
         template: _.template(tplEstadisticaPuntos),
 
         events: {
@@ -18,13 +18,13 @@ define([
 
         initialize: function(modelo) {
             this.model = modelo;
-            this.puntos = new PuntosCollection();
-            this.listenTo(this.puntos, 'add', this.agregarPunto);
-            this.listenTo(this.puntos, 'sync', this.syncPuntos);
+            app.puntosPartido = new PuntosCollection();
+            this.listenTo(app.puntosPartido, 'add', this.agregarPunto);
+            this.listenTo(app.puntosPartido, 'sync', this.syncPuntos);
             this.render();
 
-            this.puntos.setTorneoPartido(this.model);
-            this.puntos.fetch();
+            app.puntosPartido.setTorneoPartido(this.model);
+            app.puntosPartido.fetch();
         },
 
         render: function() {
