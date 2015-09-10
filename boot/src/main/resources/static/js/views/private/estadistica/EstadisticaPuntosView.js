@@ -16,8 +16,9 @@ define([
 
         },
 
-        initialize: function(modelo) {
-            this.model = modelo;
+        initialize: function(opts) {
+            this.model = opts.modelo;
+            this.parent = opts.parent;
             app.puntosPartido = new PuntosCollection();
             this.listenTo(app.puntosPartido, 'add', this.agregarPunto);
             this.listenTo(app.puntosPartido, 'sync', this.syncPuntos);
@@ -34,7 +35,7 @@ define([
         agregarPunto: function(model) {
             var origenClass = this.generateClassByOrigenPunto(model.get('origen'));
             model.set({origenClass: origenClass});
-            var vista = new RowEstadisticaPuntoView(model);
+            var vista = new RowEstadisticaPuntoView({modelo: model, parent: this.parent});
             $("#puntos").find('tbody:last').append(vista.render().$el);
         },
 

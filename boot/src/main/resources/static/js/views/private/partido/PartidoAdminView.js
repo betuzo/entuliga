@@ -64,7 +64,7 @@ define([
             new PartidoLocalView(this.model);
             new PartidoVisitaView(this.model);
             new PartidoArbitrosView(this.model);
-            new EstadisticaPuntosView(this.model);
+            new EstadisticaPuntosView({modelo: this.model, parent: this});
             new EstadisticaResumenView(this.model);
         },
 
@@ -107,6 +107,19 @@ define([
             new EstadisticaResumenView(this.parent.model);
             app.puntosPartido.add(punto);
             this.destroyView();
+        },
+
+        successRemovePunto: function(punto) {
+            if (punto.get('origen') == 'LOCAL') {
+                var puntoLocal = this.model.get('localPuntos') - punto.get('tipoValor');
+                this.model.set({localPuntos: puntoLocal});
+            } else {
+                var puntoVisita = this.model.get('visitaPuntos') - punto.get('tipoValor');
+                this.model.set({visitaPuntos: puntoVisita});
+            }
+            $('#section-estadisticas-resumen').html('');
+            new EstadisticaResumenView(this.model);
+            app.puntosPartido.remove(punto);
         },
 
         partidoFaltasLocal: function() {

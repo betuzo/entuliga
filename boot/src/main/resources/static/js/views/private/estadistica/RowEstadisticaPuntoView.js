@@ -10,16 +10,34 @@ define([
         tagName: 'tr',
 
         events: {
+            'click #eliminar-punto': 'deletePunto'
         },
 
-        initialize: function(modelo) {
-            this.model =  modelo;
+        initialize: function(opts) {
+            this.model =  opts.modelo;
+            this.parent = opts.parent;
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             this.$el.addClass( this.model.get('origenClass') );
             return this;
+        },
+
+        deletePunto: function() {
+            that = this;
+            this.model.destroy({
+                contentType: 'application/json',
+                wait:true,
+                success: function(model, response) {
+                    that.destroyView();
+                    that.parent.successRemovePunto(model);
+                    alert(response.message);
+                },
+                error: function(model, error) {
+                    alert(error);
+                }
+            });
         },
 
         destroyView: function() {
