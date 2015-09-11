@@ -82,9 +82,9 @@ public class BloqueoServiceImpl implements BloqueoService {
         map.put(PROPERTY_MINUTO, bloqueo.getMinuto());
         map.put(PROPERTY_SEGUNDO, bloqueo.getSegundo());
         map.put(PROPERTY_BLOQUEA_ID, bloqueo.getBloquea().getId());
-        map.put(PROPERTY_BLOQUEA_ID, bloqueo.getBloquea().getJugador().getNombreCompleto());
+        map.put(PROPERTY_BLOQUEA_NOMBRE, bloqueo.getBloquea().getJugador().getNombreCompleto());
         map.put(PROPERTY_BLOQUEADO_ID, bloqueo.getBloqueado().getId());
-        map.put(PROPERTY_BLOQUEADO_ID, bloqueo.getBloqueado().getJugador().getNombreCompleto());
+        map.put(PROPERTY_BLOQUEADO_NOMBRE, bloqueo.getBloqueado().getJugador().getNombreCompleto());
         return map;
     }
 }

@@ -106,7 +106,7 @@ public class TorneoPartidoController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{torneopartido}/falta" },
+            value = { "/{torneopartido}/movimiento" },
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> obtenerMovimientosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
@@ -116,7 +116,7 @@ public class TorneoPartidoController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{torneopartido}/falta" },
+            value = { "/{torneopartido}/asistencia" },
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> obtenerAsistenciasByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
@@ -126,7 +126,7 @@ public class TorneoPartidoController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{torneopartido}/falta" },
+            value = { "/{torneopartido}/bloqueo" },
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> obtenerBloqueosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
@@ -136,7 +136,7 @@ public class TorneoPartidoController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{torneopartido}/falta" },
+            value = { "/{torneopartido}/rebote" },
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> obtenerRebotesByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
@@ -146,7 +146,7 @@ public class TorneoPartidoController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{torneopartido}/falta" },
+            value = { "/{torneopartido}/robo" },
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> obtenerRobosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
