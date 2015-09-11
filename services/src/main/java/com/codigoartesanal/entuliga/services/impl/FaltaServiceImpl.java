@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.services.FaltaService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Map;
 /**
  * Created by betuzo on 10/09/15.
  */
+@Service
 public class FaltaServiceImpl implements FaltaService {
     @Override
     public Map<String, Object> createFalta(Map<String, String> falta) {

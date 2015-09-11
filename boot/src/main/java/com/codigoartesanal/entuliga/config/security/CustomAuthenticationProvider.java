@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.Collection;
 
 /**
- * Created by kkimvazquezangeles on 21/04/15.
+ * Created by betuzo on 21/04/15.
  */
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 

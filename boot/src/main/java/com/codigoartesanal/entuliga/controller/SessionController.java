@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by kkimvazquezangeles on 07/04/15.
+ * Created by betuzo on 07/04/15.
  */
 @Controller
 @RequestMapping("/session")

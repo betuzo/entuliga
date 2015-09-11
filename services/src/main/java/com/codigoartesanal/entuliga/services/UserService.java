@@ -3,7 +3,7 @@ package com.codigoartesanal.entuliga.services;
 import java.util.Map;
 
 /**
- * Created by kkimvazquezangeles on 07/04/15.
+ * Created by betuzo on 07/04/15.
  */
 public interface UserService {
     public static final String PROPERTY_ID              = "id";
