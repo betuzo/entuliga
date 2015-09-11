@@ -80,6 +80,10 @@ public class Movimiento {
         this.sale = sale;
     }
 
+    public String getTiempoDescripcion(){
+        return " " + minuto + " : " + segundo;
+    }
+
     @Override
     public String toString() {
         return "Movimiento{" +

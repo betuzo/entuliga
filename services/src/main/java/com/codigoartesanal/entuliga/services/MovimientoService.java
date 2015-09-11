@@ -12,6 +12,7 @@ public interface MovimientoService {
     public static final String PROPERTY_TIEMPO_DES          = "tiempoDes";
     public static final String PROPERTY_MINUTO              = "minuto";
     public static final String PROPERTY_SEGUNDO             = "segundo";
+    public static final String PROPERTY_TIPO                = "tipo";
     public static final String PROPERTY_ENTRA_ID            = "entraId";
     public static final String PROPERTY_ENTRA_NOMBRE        = "entraNombre";
     public static final String PROPERTY_SALE_ID             = "saleId";

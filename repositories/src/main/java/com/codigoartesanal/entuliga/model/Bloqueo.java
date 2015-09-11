@@ -70,6 +70,10 @@ public class Bloqueo {
         this.bloqueado = bloqueado;
     }
 
+    public String getTiempoDescripcion(){
+        return " " + minuto + " : " + segundo;
+    }
+
     @Override
     public String toString() {
         return "Bloqueo{" +

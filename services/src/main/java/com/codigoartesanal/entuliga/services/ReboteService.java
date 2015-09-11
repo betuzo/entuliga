@@ -12,6 +12,7 @@ public interface ReboteService {
     public static final String PROPERTY_TIEMPO_DES          = "tiempoDes";
     public static final String PROPERTY_MINUTO              = "minuto";
     public static final String PROPERTY_SEGUNDO             = "segundo";
+    public static final String PROPERTY_TIPO                = "tipo";
     public static final String PROPERTY_JUGADOR_ID          = "jugadorId";
     public static final String PROPERTY_JUGADOR_NOMBRE      = "jugadorNombre";
 

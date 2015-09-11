@@ -70,6 +70,10 @@ public class Robo {
         this.perdedor = perdedor;
     }
 
+    public String getTiempoDescripcion(){
+        return " " + minuto + " : " + segundo;
+    }
+
     @Override
     public String toString() {
         return "Robo{" +
