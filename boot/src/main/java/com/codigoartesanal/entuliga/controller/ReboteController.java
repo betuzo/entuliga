@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.controller;
 
-import com.codigoartesanal.entuliga.services.EncesteService;
+import com.codigoartesanal.entuliga.services.BloqueoService;
+import com.codigoartesanal.entuliga.services.ReboteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,33 +13,33 @@ import java.util.Map;
  * Created by betuzo on 3/06/15.
  */
 @Controller
-@RequestMapping("/punto")
-public class PuntoController {
+@RequestMapping("/rebote")
+public class ReboteController {
 
     @Autowired
-    EncesteService encesteService;
+    ReboteService reboteService;
 
     @ResponseBody
     @RequestMapping(
             value = { "" },
             method = {RequestMethod.POST},
             produces = {"application/json;charset=UTF-8"})
-    public Map<String, Object> createPunto(
-            @RequestBody Map<String, String> enceste) {
-        return encesteService.createEnceste(enceste);
+    public Map<String, Object> createRebote(
+            @RequestBody Map<String, String> rebote) {
+        return reboteService.createRebote(rebote);
     }
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{punto}" },
+            value = { "/{rebote}" },
             method = RequestMethod.DELETE,
             produces = {"application/json;charset=UTF-8"})
-    public Map<String, Object> deletePunto(@PathVariable("punto") Long idPunto) {
+    public Map<String, Object> deleteRebote(@PathVariable("rebote") Long idRebote) {
         Map<String, Object> response = new HashMap<>();
-        response.put(EncesteService.PROPERTY_ID, idPunto);
-        encesteService.deleteEnceste(idPunto);
-        response.put(EncesteService.PROPERTY_RESULT, true);
-        response.put(EncesteService.PROPERTY_MESSAGE, "Punto eliminado");
+        response.put(ReboteService.PROPERTY_ID, idRebote);
+        reboteService.deleteRebote(idRebote);
+        response.put(ReboteService.PROPERTY_RESULT, true);
+        response.put(ReboteService.PROPERTY_MESSAGE, "Rebote eliminada");
         return response;
     }
 

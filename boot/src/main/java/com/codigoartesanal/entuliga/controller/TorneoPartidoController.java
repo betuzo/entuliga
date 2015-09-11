@@ -1,7 +1,6 @@
 package com.codigoartesanal.entuliga.controller;
 
-import com.codigoartesanal.entuliga.services.EncesteService;
-import com.codigoartesanal.entuliga.services.PartidoService;
+import com.codigoartesanal.entuliga.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +21,24 @@ public class TorneoPartidoController {
 
     @Autowired
     EncesteService encesteService;
+
+    @Autowired
+    FaltaService faltaService;
+
+    @Autowired
+    MovimientoService movimientoService;
+
+    @Autowired
+    AsistenciaService asistenciaService;
+
+    @Autowired
+    BloqueoService bloqueoService;
+
+    @Autowired
+    ReboteService reboteService;
+
+    @Autowired
+    RoboService roboService;
 
     @ResponseBody
     @RequestMapping(
@@ -74,6 +91,66 @@ public class TorneoPartidoController {
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> obtenerPuntosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
         List<Map<String, Object>> response = encesteService.puntosByPartido(idPartido);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}/falta" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> obtenerFaltasByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
+        List<Map<String, Object>> response = faltaService.faltasByPartido(idPartido);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}/falta" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> obtenerMovimientosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
+        List<Map<String, Object>> response = movimientoService.movimientosByPartido(idPartido);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}/falta" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> obtenerAsistenciasByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
+        List<Map<String, Object>> response = asistenciaService.asistenciasByPartido(idPartido);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}/falta" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> obtenerBloqueosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
+        List<Map<String, Object>> response = bloqueoService.bloqueosByPartido(idPartido);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}/falta" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> obtenerRebotesByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
+        List<Map<String, Object>> response = reboteService.rebotesByPartido(idPartido);
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneopartido}/falta" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> obtenerRobosByTorneoPartido(@PathVariable("torneopartido") Long idPartido) {
+        List<Map<String, Object>> response = roboService.robosByPartido(idPartido);
         return response;
     }
 
