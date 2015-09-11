@@ -70,6 +70,10 @@ public class Asistencia {
         this.asistido = asistido;
     }
 
+    public String getTiempoDescripcion(){
+        return " " + minuto + " : " + segundo;
+    }
+
     @Override
     public String toString() {
         return "Asistencia{" +

@@ -80,6 +80,10 @@ public class Falta {
         this.infractor = infractor;
     }
 
+    public String getTiempoDescripcion(){
+        return " " + minuto + " : " + segundo;
+    }
+
     @Override
     public String toString() {
         return "Falta{" +

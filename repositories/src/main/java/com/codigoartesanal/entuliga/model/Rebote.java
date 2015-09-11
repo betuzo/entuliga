@@ -70,6 +70,10 @@ public class Rebote {
         this.jugador = jugador;
     }
 
+    public String getTiempoDescripcion(){
+        return " " + minuto + " : " + segundo;
+    }
+
     @Override
     public String toString() {
         return "Rebote{" +

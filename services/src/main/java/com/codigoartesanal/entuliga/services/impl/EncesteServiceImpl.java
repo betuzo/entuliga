@@ -50,7 +50,9 @@ public class EncesteServiceImpl implements EncesteService {
 
     @Override
     public void deleteEnceste(Long idEnceste) {
+        Enceste enceste = encesteRepository.findOne(idEnceste);
         encesteRepository.delete(idEnceste);
+        reducePunto(enceste);
     }
 
     private Enceste populateEnceste(Enceste enceste){
@@ -65,6 +67,14 @@ public class EncesteServiceImpl implements EncesteService {
             partidoRepository.acumulaPuntosLocal(Long.valueOf(enceste.getTipo().getValor()), enceste.getPartido().getId());
         } else if (enceste.getOrigen() == OrigenEstadistica.VISITA) {
             partidoRepository.acumulaPuntosVisita(Long.valueOf(enceste.getTipo().getValor()), enceste.getPartido().getId());
+        }
+    }
+
+    private void reducePunto(Enceste enceste){
+        if (enceste.getOrigen() == OrigenEstadistica.LOCAL) {
+            partidoRepository.reducePuntosLocal(Long.valueOf(enceste.getTipo().getValor()), enceste.getPartido().getId());
+        } else if (enceste.getOrigen() == OrigenEstadistica.VISITA) {
+            partidoRepository.reducePuntosVisita(Long.valueOf(enceste.getTipo().getValor()), enceste.getPartido().getId());
         }
     }
 
