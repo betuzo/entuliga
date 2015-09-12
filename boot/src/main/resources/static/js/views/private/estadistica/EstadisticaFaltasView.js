@@ -5,8 +5,8 @@ define([
 	'collections/estadistica/FaltasCollection',
 	'views/private/estadistica/RowEstadisticaFaltaView',
 	'text!templates/private/estadistica/tplEstadisticaFaltas.html'
-], function($, Backbone, BaseView, PuntosCollection,
-            RowEstadisticaPuntoView, tplEstadisticaFaltas){
+], function($, Backbone, BaseView, FaltasCollection,
+            RowEstadisticaFaltaView, tplEstadisticaFaltas){
 
 	var EstadisticaFaltasView = BaseView.extend({
 	    el: '#section-estaadisticas-faltas',
@@ -19,27 +19,27 @@ define([
         initialize: function(opts) {
             this.model = opts.modelo;
             this.parent = opts.parent;
-            app.puntosPartido = new FaltasCollection();
-            this.listenTo(app.puntosPartido, 'add', this.agregarPunto);
-            this.listenTo(app.puntosPartido, 'sync', this.syncPuntos);
+            app.faltasPartido = new FaltasCollection();
+            this.listenTo(app.faltasPartido, 'add', this.agregarFalta);
+            this.listenTo(app.faltasPartido, 'sync', this.syncFaltas);
             this.render();
 
-            app.puntosPartido.setTorneoPartido(this.model);
-            app.puntosPartido.fetch();
+            app.faltasPartido.setTorneoPartido(this.model);
+            app.faltasPartido.fetch();
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
         },
 
-        agregarPunto: function(model) {
+        agregarFalta: function(model) {
             var origenClass = this.generateClassByOrigenPunto(model.get('origen'));
             model.set({origenClass: origenClass});
             var vista = new RowEstadisticaFaltaView({modelo: model, parent: this.parent});
-            $("#puntos").find('tbody:last').append(vista.render().$el);
+            $("#faltas").find('tbody:last').append(vista.render().$el);
         },
 
-        syncPuntos: function() {
+        syncFaltas: function() {
         },
 
         generateClassByOrigenPunto: function(estadoSolicitud) {
