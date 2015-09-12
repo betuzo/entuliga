@@ -8,6 +8,7 @@ import com.codigoartesanal.entuliga.repositories.RoboRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoJugadorRepository;
 import com.codigoartesanal.entuliga.services.RoboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * Created by betuzo on 10/09/15.
  */
+@Service
 public class RoboServiceImpl implements RoboService{
 
     @Autowired

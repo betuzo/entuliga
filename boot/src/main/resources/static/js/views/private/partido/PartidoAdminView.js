@@ -11,11 +11,19 @@ define([
 	'views/private/partido/PartidoEditView',
 	'views/private/estadistica/EstadisticaResumenView',
 	'views/private/estadistica/EstadisticaPuntosView',
+	'views/private/estadistica/EstadisticaFaltasView',
+	'views/private/estadistica/EstadisticaMovimientosView',
+	'views/private/estadistica/EstadisticaAsistenciasView',
+	'views/private/estadistica/EstadisticaBloqueosView',
+	'views/private/estadistica/EstadisticaRebotesView',
+	'views/private/estadistica/EstadisticaRobosView',
 	'views/private/estadistica/PuntoCreateView',
 	'text!templates/private/partido/tplPartidoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, BaseView, TorneoPartidoModel,
             PartidoLocalView, PartidoVisitaView, PartidoArbitrosView,
             PartidoEditView, EstadisticaResumenView, EstadisticaPuntosView,
+            EstadisticaFaltasView, EstadisticaMovimientosView, EstadisticaAsistenciasView,
+            EstadisticaBloqueosView, EstadisticaRebotesView, EstadisticaRobosView,
             PuntoCreateView, tplPartidoAdmin){
 
 	var PartidoAdminView = BaseView.extend({
@@ -65,6 +73,12 @@ define([
             new PartidoVisitaView(this.model);
             new PartidoArbitrosView(this.model);
             new EstadisticaPuntosView({modelo: this.model, parent: this});
+            new EstadisticaFaltasView({modelo: this.model, parent: this});
+            new EstadisticaMovimientosView({modelo: this.model, parent: this});
+            new EstadisticaAsistenciasView({modelo: this.model, parent: this});
+            new EstadisticaBloqueosView({modelo: this.model, parent: this});
+            new EstadisticaRebotesView({modelo: this.model, parent: this});
+            new EstadisticaRobosView({modelo: this.model, parent: this});
             new EstadisticaResumenView(this.model);
         },
 
