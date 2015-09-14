@@ -9,7 +9,7 @@ define([
             RowEstadisticaAsistenciaView, tplEstadisticaAsistencias){
 
 	var EstadisticaAsistenciasView = BaseView.extend({
-	    el: '#section-estaadisticas-asistencias',
+	    el: '#section-estadisticas-asistencias',
         template: _.template(tplEstadisticaAsistencias),
 
         events: {

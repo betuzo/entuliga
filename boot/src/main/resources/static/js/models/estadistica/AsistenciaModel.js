@@ -11,6 +11,7 @@ define([
             tiempoDes: '',
             minuto: '',
             segundo: '',
+            origen: '',
             asisteId: '',
             asisteNombre: '',
             asistidoId: '',
@@ -31,6 +32,9 @@ define([
                 required: true
             },
             segundo: {
+                required: true
+            },
+            origen: {
                 required: true
             },
             asisteId: {

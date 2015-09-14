@@ -18,13 +18,14 @@ define([
 	'views/private/estadistica/EstadisticaRebotesView',
 	'views/private/estadistica/EstadisticaRobosView',
 	'views/private/estadistica/PuntoCreateView',
+	'views/private/estadistica/FaltaCreateView',
 	'text!templates/private/partido/tplPartidoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, BaseView, TorneoPartidoModel,
             PartidoLocalView, PartidoVisitaView, PartidoArbitrosView,
             PartidoEditView, EstadisticaResumenView, EstadisticaPuntosView,
             EstadisticaFaltasView, EstadisticaMovimientosView, EstadisticaAsistenciasView,
             EstadisticaBloqueosView, EstadisticaRebotesView, EstadisticaRobosView,
-            PuntoCreateView, tplPartidoAdmin){
+            PuntoCreateView, FaltaCreateView, tplPartidoAdmin){
 
 	var PartidoAdminView = BaseView.extend({
         template: _.template(tplPartidoAdmin),
@@ -137,7 +138,21 @@ define([
         },
 
         partidoFaltasLocal: function() {
+            new FaltaCreateView({modelo: this.model, callbackAceptar: this.successAddFalta,
+                                             origen: 'LOCAL', parent: this});
+        },
 
+        partidoFaltasVisita: function() {
+            new FaltaCreateView({modelo: this.model, callbackAceptar: this.successAddFalta,
+                                             origen: 'VISITA', parent: this});
+        },
+        successAddFalta: function(falta) {
+            app.faltasPartido.add(falta);
+            this.destroyView();
+        },
+
+        successRemoveFalta: function(falta) {
+            app.faltasPartido.remove(falta);
         },
 
         partidoCambiosLocal: function() {
@@ -157,10 +172,6 @@ define([
         },
 
         partidoRobosLocal: function() {
-
-        },
-
-        partidoFaltasVisita: function() {
 
         },
 

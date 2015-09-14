@@ -9,7 +9,7 @@ define([
             RowEstadisticaPuntoView, tplEstadisticaPuntos){
 
 	var EstadisticaPuntosView = BaseView.extend({
-	    el: '#section-estaadisticas-puntos',
+	    el: '#section-estadisticas-puntos',
         template: _.template(tplEstadisticaPuntos),
 
         events: {

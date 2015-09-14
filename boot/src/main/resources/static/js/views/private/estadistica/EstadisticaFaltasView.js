@@ -9,7 +9,7 @@ define([
             RowEstadisticaFaltaView, tplEstadisticaFaltas){
 
 	var EstadisticaFaltasView = BaseView.extend({
-	    el: '#section-estaadisticas-faltas',
+	    el: '#section-estadisticas-faltas',
         template: _.template(tplEstadisticaFaltas),
 
         events: {

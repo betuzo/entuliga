@@ -13,6 +13,8 @@ public class Bloqueo {
     @ManyToOne
     @JoinColumn(name = "partido_id", nullable = false)
     private Partido partido;
+    @Enumerated(EnumType.STRING)
+    private OrigenEstadistica origen;
     private Integer minuto;
     private Integer segundo;
     @ManyToOne
@@ -36,6 +38,14 @@ public class Bloqueo {
 
     public void setPartido(Partido partido) {
         this.partido = partido;
+    }
+
+    public OrigenEstadistica getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(OrigenEstadistica origen) {
+        this.origen = origen;
     }
 
     public Integer getMinuto() {
@@ -79,6 +89,7 @@ public class Bloqueo {
         return "Bloqueo{" +
                 "id=" + id +
                 ", partido=" + partido +
+                ", origen=" + origen +
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
                 ", bloquea=" + bloquea +

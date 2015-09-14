@@ -9,7 +9,7 @@ define([
             RowEstadisticaBloqueoView, tplEstadisticaBloqueos){
 
 	var EstadisticaBloqueosView = BaseView.extend({
-	    el: '#section-estaadisticas-bloqueos',
+	    el: '#section-estadisticas-bloqueos',
         template: _.template(tplEstadisticaBloqueos),
 
         events: {

@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Rebote;
-import com.codigoartesanal.entuliga.model.Partido;
-import com.codigoartesanal.entuliga.model.TipoRebote;
-import com.codigoartesanal.entuliga.model.TorneoJugador;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.ReboteRepository;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoJugadorRepository;
@@ -68,6 +65,7 @@ public class ReboteServiceImpl implements ReboteService {
         rebote.setMinuto(Integer.valueOf(reboteMap.get(PROPERTY_MINUTO)));
         rebote.setSegundo(Integer.valueOf(reboteMap.get(PROPERTY_SEGUNDO)));
         rebote.setTipo(TipoRebote.valueOf(reboteMap.get(PROPERTY_TIPO)));
+        rebote.setOrigen(OrigenEstadistica.valueOf(reboteMap.get(PROPERTY_ORIGEN)));
         return rebote;
     }
 
@@ -79,6 +77,7 @@ public class ReboteServiceImpl implements ReboteService {
         map.put(PROPERTY_MINUTO, rebote.getMinuto());
         map.put(PROPERTY_SEGUNDO, rebote.getSegundo());
         map.put(PROPERTY_TIPO, rebote.getTipo());
+        map.put(PROPERTY_ORIGEN, rebote.getOrigen());
         map.put(PROPERTY_JUGADOR_ID, rebote.getJugador().getId());
         map.put(PROPERTY_JUGADOR_NOMBRE, rebote.getJugador().getJugador().getNombreCompleto());
         return map;

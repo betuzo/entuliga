@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.Asistencia;
+import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 import com.codigoartesanal.entuliga.model.Partido;
 import com.codigoartesanal.entuliga.model.TorneoJugador;
 import com.codigoartesanal.entuliga.repositories.AsistenciaRepository;
@@ -71,6 +72,8 @@ public class AsistenciaServiceImpl implements AsistenciaService {
 
         asistencia.setMinuto(Integer.valueOf(asistenciaMap.get(PROPERTY_MINUTO)));
         asistencia.setSegundo(Integer.valueOf(asistenciaMap.get(PROPERTY_SEGUNDO)));
+        asistencia.setOrigen(OrigenEstadistica.valueOf(asistenciaMap.get(PROPERTY_ORIGEN)));
+
         return asistencia;
     }
 
@@ -81,6 +84,7 @@ public class AsistenciaServiceImpl implements AsistenciaService {
         map.put(PROPERTY_TIEMPO_DES, asistencia.getTiempoDescripcion());
         map.put(PROPERTY_MINUTO, asistencia.getMinuto());
         map.put(PROPERTY_SEGUNDO, asistencia.getSegundo());
+        map.put(PROPERTY_ORIGEN, asistencia.getOrigen());
         map.put(PROPERTY_ASISTE_ID, asistencia.getAsiste().getId());
         map.put(PROPERTY_ASISTE_NOMBRE, asistencia.getAsiste().getJugador().getNombreCompleto());
         map.put(PROPERTY_ASISTIDO_ID, asistencia.getAsistido().getId());

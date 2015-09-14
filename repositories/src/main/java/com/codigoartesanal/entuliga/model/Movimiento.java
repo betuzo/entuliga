@@ -17,6 +17,8 @@ public class Movimiento {
     private Integer segundo;
     @Enumerated(EnumType.STRING)
     private TipoMovimiento tipo;
+    @Enumerated(EnumType.STRING)
+    private OrigenEstadistica origen;
     @ManyToOne
     @JoinColumn(name = "entra_id", nullable = false)
     private TorneoJugador entra;
@@ -64,6 +66,14 @@ public class Movimiento {
         this.tipo = tipo;
     }
 
+    public OrigenEstadistica getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(OrigenEstadistica origen) {
+        this.origen = origen;
+    }
+
     public TorneoJugador getEntra() {
         return entra;
     }
@@ -92,6 +102,7 @@ public class Movimiento {
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
                 ", tipo=" + tipo +
+                ", origen=" + origen +
                 ", entra=" + entra +
                 ", sale=" + sale +
                 '}';

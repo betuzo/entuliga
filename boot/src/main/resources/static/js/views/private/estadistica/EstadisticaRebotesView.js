@@ -9,7 +9,7 @@ define([
             RowEstadisticaReboteView, tplEstadisticaRebotes){
 
 	var EstadisticaRebotesView = BaseView.extend({
-	    el: '#section-estaadisticas-rebotes',
+	    el: '#section-estadisticas-rebotes',
         template: _.template(tplEstadisticaRebotes),
 
         events: {

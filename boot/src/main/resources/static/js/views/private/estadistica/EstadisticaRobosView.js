@@ -9,7 +9,7 @@ define([
             RowEstadisticaRoboView, tplEstadisticaRobos){
 
 	var EstadisticaRobosView = BaseView.extend({
-	    el: '#section-estaadisticas-robos',
+	    el: '#section-estadisticas-robos',
         template: _.template(tplEstadisticaRobos),
 
         events: {

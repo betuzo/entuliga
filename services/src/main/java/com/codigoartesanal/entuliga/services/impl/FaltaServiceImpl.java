@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Falta;
-import com.codigoartesanal.entuliga.model.Partido;
-import com.codigoartesanal.entuliga.model.TipoFalta;
-import com.codigoartesanal.entuliga.model.TorneoJugador;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.FaltaRepository;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoJugadorRepository;
@@ -73,6 +70,8 @@ public class FaltaServiceImpl implements FaltaService {
         falta.setMinuto(Integer.valueOf(faltaMap.get(PROPERTY_MINUTO)));
         falta.setSegundo(Integer.valueOf(faltaMap.get(PROPERTY_SEGUNDO)));
         falta.setTipo(TipoFalta.valueOf(faltaMap.get(PROPERTY_TIPO)));
+        falta.setOrigen(OrigenEstadistica.valueOf(faltaMap.get(PROPERTY_ORIGEN)));
+
         return falta;
     }
 
@@ -84,6 +83,7 @@ public class FaltaServiceImpl implements FaltaService {
         map.put(PROPERTY_MINUTO, falta.getMinuto());
         map.put(PROPERTY_SEGUNDO, falta.getSegundo());
         map.put(PROPERTY_TIPO, falta.getTipo());
+        map.put(PROPERTY_ORIGEN, falta.getOrigen());
         map.put(PROPERTY_INFRACTOR_ID, falta.getInfractor().getId());
         map.put(PROPERTY_INFRACTOR_NOMBRE, falta.getInfractor().getJugador().getNombreCompleto());
         map.put(PROPERTY_RECEPTOR_ID, falta.getRecibe().getId());
