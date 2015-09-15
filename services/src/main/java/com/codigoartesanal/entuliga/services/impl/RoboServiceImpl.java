@@ -1,5 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
+import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 import com.codigoartesanal.entuliga.model.Partido;
 import com.codigoartesanal.entuliga.model.Robo;
 import com.codigoartesanal.entuliga.model.TorneoJugador;
@@ -10,9 +11,7 @@ import com.codigoartesanal.entuliga.services.RoboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -44,7 +43,16 @@ public class RoboServiceImpl implements RoboService{
 
     @Override
     public List<Map<String, Object>> robosByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Robo> itRobo = roboRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itRobo.hasNext()) {
+            Robo robo = itRobo.next();
+            Map<String, Object> dto = convertRoboToMap(robo);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Robo populateRobo(Robo robo){
@@ -71,6 +79,7 @@ public class RoboServiceImpl implements RoboService{
 
         robo.setMinuto(Integer.valueOf(roboMap.get(PROPERTY_MINUTO)));
         robo.setSegundo(Integer.valueOf(roboMap.get(PROPERTY_SEGUNDO)));
+        robo.setOrigen(OrigenEstadistica.valueOf(roboMap.get(PROPERTY_ORIGEN)));
         return robo;
     }
 
@@ -79,6 +88,7 @@ public class RoboServiceImpl implements RoboService{
         map.put(PROPERTY_ID, robo.getId());
         map.put(PROPERTY_PARTIDO_ID, robo.getPartido().getId());
         map.put(PROPERTY_TIEMPO_DES, robo.getTiempoDescripcion());
+        map.put(PROPERTY_ORIGEN, robo.getOrigen());
         map.put(PROPERTY_MINUTO, robo.getMinuto());
         map.put(PROPERTY_SEGUNDO, robo.getSegundo());
         map.put(PROPERTY_ROBADOR_ID, robo.getRobador().getId());

@@ -17,6 +17,8 @@ public class Falta {
     private Integer segundo;
     @Enumerated(EnumType.STRING)
     private TipoFalta tipo;
+    @Enumerated(EnumType.STRING)
+    private OrigenEstadistica origen;
     @ManyToOne
     @JoinColumn(name = "recibe_id", nullable = false)
     private TorneoJugador recibe;
@@ -64,6 +66,14 @@ public class Falta {
         this.tipo = tipo;
     }
 
+    public OrigenEstadistica getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(OrigenEstadistica origen) {
+        this.origen = origen;
+    }
+
     public TorneoJugador getRecibe() {
         return recibe;
     }
@@ -92,6 +102,7 @@ public class Falta {
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
                 ", tipo=" + tipo +
+                ", origen=" + origen +
                 ", recibe=" + recibe +
                 ", infractor=" + infractor +
                 '}';

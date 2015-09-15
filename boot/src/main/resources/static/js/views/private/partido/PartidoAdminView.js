@@ -18,13 +18,20 @@ define([
 	'views/private/estadistica/EstadisticaRebotesView',
 	'views/private/estadistica/EstadisticaRobosView',
 	'views/private/estadistica/PuntoCreateView',
+	'views/private/estadistica/FaltaCreateView',
+	'views/private/estadistica/MovimientoCreateView',
+	'views/private/estadistica/AsistenciaCreateView',
+	'views/private/estadistica/BloqueoCreateView',
+	'views/private/estadistica/ReboteCreateView',
+	'views/private/estadistica/RoboCreateView',
 	'text!templates/private/partido/tplPartidoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, BaseView, TorneoPartidoModel,
             PartidoLocalView, PartidoVisitaView, PartidoArbitrosView,
             PartidoEditView, EstadisticaResumenView, EstadisticaPuntosView,
             EstadisticaFaltasView, EstadisticaMovimientosView, EstadisticaAsistenciasView,
             EstadisticaBloqueosView, EstadisticaRebotesView, EstadisticaRobosView,
-            PuntoCreateView, tplPartidoAdmin){
+            PuntoCreateView, FaltaCreateView, MovimientoCreateView, AsistenciaCreateView,
+            BloqueoCreateView, ReboteCreateView, RoboCreateView, tplPartidoAdmin){
 
 	var PartidoAdminView = BaseView.extend({
         template: _.template(tplPartidoAdmin),
@@ -137,51 +144,118 @@ define([
         },
 
         partidoFaltasLocal: function() {
-
-        },
-
-        partidoCambiosLocal: function() {
-
-        },
-
-        partidoAsistenciasLocal: function() {
-
-        },
-
-        partidoBloqueosLocal: function() {
-
-        },
-
-        partidoRebotesLocal: function() {
-
-        },
-
-        partidoRobosLocal: function() {
-
+            new FaltaCreateView({modelo: this.model, callbackAceptar: this.successAddFalta,
+                                             origen: 'LOCAL', parent: this});
         },
 
         partidoFaltasVisita: function() {
+            new FaltaCreateView({modelo: this.model, callbackAceptar: this.successAddFalta,
+                                             origen: 'VISITA', parent: this});
+        },
 
+        successAddFalta: function(falta) {
+            app.faltasPartido.add(falta);
+            this.destroyView();
+        },
+
+        successRemoveFalta: function(falta) {
+            app.faltasPartido.remove(falta);
+        },
+
+        partidoCambiosLocal: function() {
+            new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
+                                              origen: 'LOCAL', parent: this});
         },
 
         partidoCambiosVisita: function() {
+            new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
+                                              origen: 'VISITA', parent: this});
+        },
 
+        successAddMovimiento: function(movimiento) {
+            app.movimientosPartido.add(movimiento);
+            this.destroyView();
+        },
+
+        successRemoveMovimiento: function(movimiento) {
+            app.movimientosPartido.remove(movimiento);
+        },
+
+        partidoAsistenciasLocal: function() {
+            new AsistenciaCreateView({modelo: this.model, callbackAceptar: this.successAddAsistencia,
+                                        origen: 'LOCAL', parent: this});
         },
 
         partidoAsistenciasVisita: function() {
+            new AsistenciaCreateView({modelo: this.model, callbackAceptar: this.successAddAsistencia,
+                                        origen: 'VISITA', parent: this});
+        },
+
+        successAddAsistencia: function(asistencia) {
+            app.asistenciasPartido.add(asistencia);
+            this.destroyView();
+        },
+
+        successRemoveAsistencia: function(asistencia) {
+            app.asistenciasPartido.remove(asistencia);
+        },
+
+        partidoBloqueosLocal: function() {
+            new BloqueoCreateView({modelo: this.model, callbackAceptar: this.successAddBloqueo,
+                                        origen: 'LOCAL', parent: this});
 
         },
 
         partidoBloqueosVisita: function() {
+            new BloqueoCreateView({modelo: this.model, callbackAceptar: this.successAddBloqueo,
+                                        origen: 'VISITA', parent: this});
+        },
 
+        successAddBloqueo: function(bloqueo) {
+            app.bloqueosPartido.add(bloqueo);
+            this.destroyView();
+        },
+
+        successRemoveBloqueo: function(bloqueo) {
+            app.bloqueosPartido.remove(bloqueo);
+        },
+
+        partidoRebotesLocal: function() {
+            new ReboteCreateView({modelo: this.model, callbackAceptar: this.successAddRebote,
+                                        origen: 'LOCAL', parent: this});
         },
 
         partidoRebotesVisita: function() {
+            new ReboteCreateView({modelo: this.model, callbackAceptar: this.successAddRebote,
+                                        origen: 'VISITA', parent: this});
+        },
 
+        successAddRebote: function(rebote) {
+            app.rebotesPartido.add(rebote);
+            this.destroyView();
+        },
+
+        successRemoveRebote: function(rebote) {
+            app.rebotesPartido.remove(rebote);
+        },
+
+        partidoRobosLocal: function() {
+            new RoboCreateView({modelo: this.model, callbackAceptar: this.successAddRobo,
+                                        origen: 'LOCAL', parent: this});
         },
 
         partidoRobosVisita: function() {
+            new RoboCreateView({modelo: this.model, callbackAceptar: this.successAddRobo,
+                                        origen: 'VISITA', parent: this});
+        },
 
+        successAddRobo: function(robo) {
+            app.robosPartido.add(robo);
+            this.destroyView();
+        },
+
+        successRemoveRobo: function(robo) {
+            app.robosPartido.remove(robo);
         },
 
         partidoComenzar: function() {

@@ -11,6 +11,7 @@ define([
             tiempoDes: '',
             minuto: '',
             segundo: '',
+            origen: '',
             bloqueaId: '',
             bloqueaNombre: '',
             bloqueadoId: '',
@@ -31,6 +32,9 @@ define([
                 required: true
             },
             segundo: {
+                required: true
+            },
+            origen: {
                 required: true
             },
             bloqueaId: {

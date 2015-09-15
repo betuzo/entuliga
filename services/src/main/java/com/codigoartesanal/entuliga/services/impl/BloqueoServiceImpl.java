@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.Bloqueo;
+import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 import com.codigoartesanal.entuliga.model.Partido;
 import com.codigoartesanal.entuliga.model.TorneoJugador;
 import com.codigoartesanal.entuliga.repositories.BloqueoRepository;
@@ -10,9 +11,7 @@ import com.codigoartesanal.entuliga.services.BloqueoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -44,7 +43,16 @@ public class BloqueoServiceImpl implements BloqueoService {
 
     @Override
     public List<Map<String, Object>> bloqueosByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Bloqueo> itBloqueo = bloqueoRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itBloqueo.hasNext()) {
+            Bloqueo bloqueo = itBloqueo.next();
+            Map<String, Object> dto = convertBloqueoToMap(bloqueo);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Bloqueo populateBloqueo(Bloqueo bloqueo){
@@ -71,6 +79,8 @@ public class BloqueoServiceImpl implements BloqueoService {
 
         bloqueo.setMinuto(Integer.valueOf(bloqueoMap.get(PROPERTY_MINUTO)));
         bloqueo.setSegundo(Integer.valueOf(bloqueoMap.get(PROPERTY_SEGUNDO)));
+        bloqueo.setOrigen(OrigenEstadistica.valueOf(bloqueoMap.get(PROPERTY_ORIGEN)));
+
         return bloqueo;
     }
 
@@ -81,6 +91,7 @@ public class BloqueoServiceImpl implements BloqueoService {
         map.put(PROPERTY_TIEMPO_DES, bloqueo.getTiempoDescripcion());
         map.put(PROPERTY_MINUTO, bloqueo.getMinuto());
         map.put(PROPERTY_SEGUNDO, bloqueo.getSegundo());
+        map.put(PROPERTY_ORIGEN, bloqueo.getOrigen());
         map.put(PROPERTY_BLOQUEA_ID, bloqueo.getBloquea().getId());
         map.put(PROPERTY_BLOQUEA_NOMBRE, bloqueo.getBloquea().getJugador().getNombreCompleto());
         map.put(PROPERTY_BLOQUEADO_ID, bloqueo.getBloqueado().getId());

@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Movimiento;
-import com.codigoartesanal.entuliga.model.Partido;
-import com.codigoartesanal.entuliga.model.TipoMovimiento;
-import com.codigoartesanal.entuliga.model.TorneoJugador;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.MovimientoRepository;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoJugadorRepository;
@@ -11,9 +8,7 @@ import com.codigoartesanal.entuliga.services.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -45,13 +40,24 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public List<Map<String, Object>> movimientosByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Movimiento> itMovimiento = movimientoRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itMovimiento.hasNext()) {
+            Movimiento movimiento = itMovimiento.next();
+            Map<String, Object> dto = convertMovimientoToMap(movimiento);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Movimiento populateMovimiento(Movimiento movimiento){
         movimiento.setPartido(partidoRepository.findOne(movimiento.getPartido().getId()));
         movimiento.setEntra(torneoJugadorRepository.findOne(movimiento.getEntra().getId()));
-        movimiento.setSale(torneoJugadorRepository.findOne(movimiento.getSale().getId()));
+        if (movimiento.getSale() != null) {
+            movimiento.setSale(torneoJugadorRepository.findOne(movimiento.getSale().getId()));
+        }
 
         return movimiento;
     }
@@ -67,12 +73,19 @@ public class MovimientoServiceImpl implements MovimientoService {
         movimiento.setEntra(entra);
 
         TorneoJugador sale = new TorneoJugador();
-        sale.setId(Long.valueOf(movimientoMap.get(PROPERTY_SALE_ID)));
+        String idSale = movimientoMap.get(PROPERTY_SALE_ID);
+        if (idSale != null && !idSale.isEmpty()) {
+            sale.setId(Long.valueOf(idSale));
+        } else {
+            sale = null;
+        }
         movimiento.setSale(sale);
 
         movimiento.setMinuto(Integer.valueOf(movimientoMap.get(PROPERTY_MINUTO)));
         movimiento.setSegundo(Integer.valueOf(movimientoMap.get(PROPERTY_SEGUNDO)));
         movimiento.setTipo(TipoMovimiento.valueOf(movimientoMap.get(PROPERTY_TIPO)));
+        movimiento.setOrigen(OrigenEstadistica.valueOf(movimientoMap.get(PROPERTY_ORIGEN)));
+
         return movimiento;
     }
 
@@ -84,10 +97,13 @@ public class MovimientoServiceImpl implements MovimientoService {
         map.put(PROPERTY_MINUTO, movimiento.getMinuto());
         map.put(PROPERTY_SEGUNDO, movimiento.getSegundo());
         map.put(PROPERTY_TIPO, movimiento.getTipo());
+        map.put(PROPERTY_ORIGEN, movimiento.getOrigen());
         map.put(PROPERTY_ENTRA_ID, movimiento.getEntra().getId());
         map.put(PROPERTY_ENTRA_NOMBRE, movimiento.getEntra().getJugador().getNombreCompleto());
-        map.put(PROPERTY_SALE_ID, movimiento.getSale().getId());
-        map.put(PROPERTY_SALE_NOMBRE, movimiento.getSale().getJugador().getNombreCompleto());
+        if (movimiento.getSale() != null) {
+            map.put(PROPERTY_SALE_ID, movimiento.getSale().getId());
+            map.put(PROPERTY_SALE_NOMBRE, movimiento.getSale().getJugador().getNombreCompleto());
+        }
         return map;
     }
 }

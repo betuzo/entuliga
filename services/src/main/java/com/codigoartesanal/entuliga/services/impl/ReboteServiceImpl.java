@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Rebote;
-import com.codigoartesanal.entuliga.model.Partido;
-import com.codigoartesanal.entuliga.model.TipoRebote;
-import com.codigoartesanal.entuliga.model.TorneoJugador;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.ReboteRepository;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoJugadorRepository;
@@ -11,9 +8,7 @@ import com.codigoartesanal.entuliga.services.ReboteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -45,7 +40,16 @@ public class ReboteServiceImpl implements ReboteService {
 
     @Override
     public List<Map<String, Object>> rebotesByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Rebote> itRebote = reboteRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itRebote.hasNext()) {
+            Rebote rebote = itRebote.next();
+            Map<String, Object> dto = convertReboteToMap(rebote);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Rebote populateRebote(Rebote rebote){
@@ -68,6 +72,7 @@ public class ReboteServiceImpl implements ReboteService {
         rebote.setMinuto(Integer.valueOf(reboteMap.get(PROPERTY_MINUTO)));
         rebote.setSegundo(Integer.valueOf(reboteMap.get(PROPERTY_SEGUNDO)));
         rebote.setTipo(TipoRebote.valueOf(reboteMap.get(PROPERTY_TIPO)));
+        rebote.setOrigen(OrigenEstadistica.valueOf(reboteMap.get(PROPERTY_ORIGEN)));
         return rebote;
     }
 
@@ -79,6 +84,7 @@ public class ReboteServiceImpl implements ReboteService {
         map.put(PROPERTY_MINUTO, rebote.getMinuto());
         map.put(PROPERTY_SEGUNDO, rebote.getSegundo());
         map.put(PROPERTY_TIPO, rebote.getTipo());
+        map.put(PROPERTY_ORIGEN, rebote.getOrigen());
         map.put(PROPERTY_JUGADOR_ID, rebote.getJugador().getId());
         map.put(PROPERTY_JUGADOR_NOMBRE, rebote.getJugador().getJugador().getNombreCompleto());
         return map;

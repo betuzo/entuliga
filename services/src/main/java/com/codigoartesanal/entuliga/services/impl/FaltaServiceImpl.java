@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Falta;
-import com.codigoartesanal.entuliga.model.Partido;
-import com.codigoartesanal.entuliga.model.TipoFalta;
-import com.codigoartesanal.entuliga.model.TorneoJugador;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.FaltaRepository;
 import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoJugadorRepository;
@@ -11,9 +8,7 @@ import com.codigoartesanal.entuliga.services.FaltaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -45,7 +40,16 @@ public class FaltaServiceImpl implements FaltaService {
 
     @Override
     public List<Map<String, Object>> faltasByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Falta> itFalte = faltaRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itFalte.hasNext()) {
+            Falta falta = itFalte.next();
+            Map<String, Object> dto = convertFaltaToMap(falta);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Falta populateFalta(Falta falta){
@@ -73,6 +77,8 @@ public class FaltaServiceImpl implements FaltaService {
         falta.setMinuto(Integer.valueOf(faltaMap.get(PROPERTY_MINUTO)));
         falta.setSegundo(Integer.valueOf(faltaMap.get(PROPERTY_SEGUNDO)));
         falta.setTipo(TipoFalta.valueOf(faltaMap.get(PROPERTY_TIPO)));
+        falta.setOrigen(OrigenEstadistica.valueOf(faltaMap.get(PROPERTY_ORIGEN)));
+
         return falta;
     }
 
@@ -84,6 +90,7 @@ public class FaltaServiceImpl implements FaltaService {
         map.put(PROPERTY_MINUTO, falta.getMinuto());
         map.put(PROPERTY_SEGUNDO, falta.getSegundo());
         map.put(PROPERTY_TIPO, falta.getTipo());
+        map.put(PROPERTY_ORIGEN, falta.getOrigen());
         map.put(PROPERTY_INFRACTOR_ID, falta.getInfractor().getId());
         map.put(PROPERTY_INFRACTOR_NOMBRE, falta.getInfractor().getJugador().getNombreCompleto());
         map.put(PROPERTY_RECEPTOR_ID, falta.getRecibe().getId());

@@ -12,6 +12,7 @@ public interface AsistenciaService {
     public static final String PROPERTY_TIEMPO_DES          = "tiempoDes";
     public static final String PROPERTY_MINUTO              = "minuto";
     public static final String PROPERTY_SEGUNDO             = "segundo";
+    public static final String PROPERTY_ORIGEN              = "origen";
     public static final String PROPERTY_ASISTE_ID           = "asisteId";
     public static final String PROPERTY_ASISTE_NOMBRE       = "asisteNombre";
     public static final String PROPERTY_ASISTIDO_ID         = "asistidoId";

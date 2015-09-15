@@ -17,7 +17,8 @@ public class Rebote {
     private Integer segundo;
     @Enumerated(EnumType.STRING)
     private TipoRebote tipo;
-
+    @Enumerated(EnumType.STRING)
+    private OrigenEstadistica origen;
     @ManyToOne
     @JoinColumn(name = "jugador_id", nullable = false)
     private TorneoJugador jugador;
@@ -62,6 +63,14 @@ public class Rebote {
         this.tipo = tipo;
     }
 
+    public OrigenEstadistica getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(OrigenEstadistica origen) {
+        this.origen = origen;
+    }
+
     public TorneoJugador getJugador() {
         return jugador;
     }
@@ -82,6 +91,7 @@ public class Rebote {
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
                 ", tipo=" + tipo +
+                ", origen=" + origen +
                 ", jugador=" + jugador +
                 '}';
     }

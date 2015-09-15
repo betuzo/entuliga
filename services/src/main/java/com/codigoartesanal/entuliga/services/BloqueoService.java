@@ -12,6 +12,7 @@ public interface BloqueoService {
     public static final String PROPERTY_TIEMPO_DES          = "tiempoDes";
     public static final String PROPERTY_MINUTO              = "minuto";
     public static final String PROPERTY_SEGUNDO             = "segundo";
+    public static final String PROPERTY_ORIGEN              = "origen";
     public static final String PROPERTY_BLOQUEA_ID          = "bloqueaId";
     public static final String PROPERTY_BLOQUEA_NOMBRE      = "bloqueaNombre";
     public static final String PROPERTY_BLOQUEADO_ID        = "bloqueadoId";

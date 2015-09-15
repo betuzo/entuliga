@@ -15,6 +15,8 @@ public class Robo {
     private Partido partido;
     private Integer minuto;
     private Integer segundo;
+    @Enumerated(EnumType.STRING)
+    private OrigenEstadistica origen;
     @ManyToOne
     @JoinColumn(name = "robador_id", nullable = false)
     private TorneoJugador robador;
@@ -54,6 +56,14 @@ public class Robo {
         this.segundo = segundo;
     }
 
+    public OrigenEstadistica getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(OrigenEstadistica origen) {
+        this.origen = origen;
+    }
+
     public TorneoJugador getRobador() {
         return robador;
     }
@@ -81,6 +91,7 @@ public class Robo {
                 ", partido=" + partido +
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
+                ", origen=" + origen +
                 ", robador=" + robador +
                 ", perdedor=" + perdedor +
                 '}';

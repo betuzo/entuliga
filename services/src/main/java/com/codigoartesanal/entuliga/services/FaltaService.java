@@ -13,6 +13,7 @@ public interface FaltaService {
     public static final String PROPERTY_MINUTO              = "minuto";
     public static final String PROPERTY_SEGUNDO             = "segundo";
     public static final String PROPERTY_TIPO                = "tipo";
+    public static final String PROPERTY_ORIGEN              = "origen";
     public static final String PROPERTY_INFRACTOR_ID        = "infractorId";
     public static final String PROPERTY_INFRACTOR_NOMBRE    = "infractorNombre";
     public static final String PROPERTY_RECEPTOR_ID         = "receptorId";

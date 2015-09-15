@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.Asistencia;
+import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 import com.codigoartesanal.entuliga.model.Partido;
 import com.codigoartesanal.entuliga.model.TorneoJugador;
 import com.codigoartesanal.entuliga.repositories.AsistenciaRepository;
@@ -10,9 +11,7 @@ import com.codigoartesanal.entuliga.services.AsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -44,7 +43,16 @@ public class AsistenciaServiceImpl implements AsistenciaService {
 
     @Override
     public List<Map<String, Object>> asistenciasByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Asistencia> itAsistencia = asistenciaRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itAsistencia.hasNext()) {
+            Asistencia asistencia = itAsistencia.next();
+            Map<String, Object> dto = convertAsistenciaToMap(asistencia);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Asistencia populateAsistencia(Asistencia asistencia){
@@ -71,6 +79,8 @@ public class AsistenciaServiceImpl implements AsistenciaService {
 
         asistencia.setMinuto(Integer.valueOf(asistenciaMap.get(PROPERTY_MINUTO)));
         asistencia.setSegundo(Integer.valueOf(asistenciaMap.get(PROPERTY_SEGUNDO)));
+        asistencia.setOrigen(OrigenEstadistica.valueOf(asistenciaMap.get(PROPERTY_ORIGEN)));
+
         return asistencia;
     }
 
@@ -81,6 +91,7 @@ public class AsistenciaServiceImpl implements AsistenciaService {
         map.put(PROPERTY_TIEMPO_DES, asistencia.getTiempoDescripcion());
         map.put(PROPERTY_MINUTO, asistencia.getMinuto());
         map.put(PROPERTY_SEGUNDO, asistencia.getSegundo());
+        map.put(PROPERTY_ORIGEN, asistencia.getOrigen());
         map.put(PROPERTY_ASISTE_ID, asistencia.getAsiste().getId());
         map.put(PROPERTY_ASISTE_NOMBRE, asistencia.getAsiste().getJugador().getNombreCompleto());
         map.put(PROPERTY_ASISTIDO_ID, asistencia.getAsistido().getId());

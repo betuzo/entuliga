@@ -12,6 +12,7 @@ define([
             minuto: '',
             segundo: '',
             tipo: '',
+            origen: '',
             entraId: '',
             entraNombre: '',
             saleId: '',
@@ -35,6 +36,9 @@ define([
                 required: true
             },
             tipo: {
+                required: true
+            },
+            origen: {
                 required: true
             },
             entraId: {
