@@ -8,9 +8,7 @@ import com.codigoartesanal.entuliga.services.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -42,7 +40,16 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public List<Map<String, Object>> movimientosByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Movimiento> itMovimiento = movimientoRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itMovimiento.hasNext()) {
+            Movimiento movimiento = itMovimiento.next();
+            Map<String, Object> dto = convertMovimientoToMap(movimiento);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Movimiento populateMovimiento(Movimiento movimiento){

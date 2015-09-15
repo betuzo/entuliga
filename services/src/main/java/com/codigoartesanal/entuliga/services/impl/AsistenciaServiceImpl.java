@@ -11,9 +11,7 @@ import com.codigoartesanal.entuliga.services.AsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -45,7 +43,16 @@ public class AsistenciaServiceImpl implements AsistenciaService {
 
     @Override
     public List<Map<String, Object>> asistenciasByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Asistencia> itAsistencia = asistenciaRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itAsistencia.hasNext()) {
+            Asistencia asistencia = itAsistencia.next();
+            Map<String, Object> dto = convertAsistenciaToMap(asistencia);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Asistencia populateAsistencia(Asistencia asistencia){

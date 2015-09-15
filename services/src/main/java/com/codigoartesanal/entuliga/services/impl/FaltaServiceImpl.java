@@ -8,9 +8,7 @@ import com.codigoartesanal.entuliga.services.FaltaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -42,7 +40,16 @@ public class FaltaServiceImpl implements FaltaService {
 
     @Override
     public List<Map<String, Object>> faltasByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Falta> itFalte = faltaRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itFalte.hasNext()) {
+            Falta falta = itFalte.next();
+            Map<String, Object> dto = convertFaltaToMap(falta);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Falta populateFalta(Falta falta){

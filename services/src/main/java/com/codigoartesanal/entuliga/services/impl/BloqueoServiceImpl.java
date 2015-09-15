@@ -11,9 +11,7 @@ import com.codigoartesanal.entuliga.services.BloqueoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -45,7 +43,16 @@ public class BloqueoServiceImpl implements BloqueoService {
 
     @Override
     public List<Map<String, Object>> bloqueosByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Bloqueo> itBloqueo = bloqueoRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itBloqueo.hasNext()) {
+            Bloqueo bloqueo = itBloqueo.next();
+            Map<String, Object> dto = convertBloqueoToMap(bloqueo);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Bloqueo populateBloqueo(Bloqueo bloqueo){

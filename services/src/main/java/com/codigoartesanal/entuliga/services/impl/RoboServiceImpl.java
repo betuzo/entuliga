@@ -11,9 +11,7 @@ import com.codigoartesanal.entuliga.services.RoboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by betuzo on 10/09/15.
@@ -45,7 +43,16 @@ public class RoboServiceImpl implements RoboService{
 
     @Override
     public List<Map<String, Object>> robosByPartido(Long idPartido) {
-        return null;
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<Robo> itRobo = roboRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itRobo.hasNext()) {
+            Robo robo = itRobo.next();
+            Map<String, Object> dto = convertRoboToMap(robo);
+            copy.add(dto);
+        }
+        return copy;
     }
 
     private Robo populateRobo(Robo robo){
