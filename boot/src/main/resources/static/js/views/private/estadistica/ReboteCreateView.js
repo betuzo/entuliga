@@ -3,23 +3,24 @@ define([
 	'backbone',
     'bootstrap',
 	'core/BaseView',
-	'models/estadistica/BloqueoModel',
+	'models/estadistica/ReboteModel',
 	'models/TorneoEquipoModel',
 	'collections/TorneoJugadoresCollection',
-	'text!templates/private/estadistica/tplBloqueoCreate.html'
-], function($, Backbone, bootstrap, BaseView, BloqueoModel, TorneoEquipoModel,
-            TorneoJugadoresCollection, tplBloqueoCreate){
+    'collections/estadistica/TipoRebotesCollection',
+	'text!templates/private/estadistica/tplReboteCreate.html'
+], function($, Backbone, bootstrap, BaseView, ReboteModel, TorneoEquipoModel,
+            TorneoJugadoresCollection, TipoRebotesCollection, tplReboteCreate){
 
-	var BloqueoCreateView = BaseView.extend({
+	var ReboteCreateView = BaseView.extend({
 	    el: '#modal-partido',
-        template: _.template(tplBloqueoCreate),
+        template: _.template(tplReboteCreate),
 
         events: {
             'click #btn-aceptar': 'clickAceptar'
         },
 
         initialize: function(opts) {
-            this.model = new BloqueoModel();
+            this.model = new ReboteModel();
             this.modelPartido = opts.modelo;
             this.callbackAceptar = opts.callbackAceptar;
             this.parent = opts.parent;
@@ -27,20 +28,20 @@ define([
             this.model.set({partidoId : opts.modelo.get('id')});
             this.render();
 
-            this.bloqueadores = new TorneoJugadoresCollection();
-            this.listenTo(this.bloqueadores, 'add', this.agregarInfractor);
-            this.listenTo(this.bloqueadores, 'sync', this.syncBloqueadores);
-            this.fetchBloqueadoresByOrigen(opts.origen);
+            this.tipos = new TipoRebotesCollection();
+            this.listenTo(this.tipos, 'add', this.agregarTipoRebote);
+            this.listenTo(this.tipos, 'sync', this.syncTipoRebotes);
+            this.tipos.fetch();
 
-            this.bloqueados = new TorneoJugadoresCollection();
-            this.listenTo(this.bloqueados, 'add', this.agregarReceptor);
-            this.listenTo(this.bloqueados, 'sync', this.syncBloqueados);
-            this.fetchBloqueadosByOrigen(opts.origen);
+            this.jugadores = new TorneoJugadoresCollection();
+            this.listenTo(this.jugadores, 'add', this.agregarJugador);
+            this.listenTo(this.jugadores, 'sync', this.syncJugadores);
+            this.fetchJugadoresByOrigen(opts.origen);
 
             Backbone.Validation.bind(this);
         },
 
-        fetchBloqueadoresByOrigen: function(origen) {
+        fetchJugadoresByOrigen: function(origen) {
             var equipo;
             if (origen == 'LOCAL') {
                 equipo = new TorneoEquipoModel({ id : this.modelPartido.get('localId') });
@@ -48,52 +49,40 @@ define([
             if (origen == 'VISITA') {
                 equipo = new TorneoEquipoModel({ id : this.modelPartido.get('visitaId') });
             }
-            this.bloqueadores.setTorneoEquipo(equipo);
-            this.bloqueadores.fetch();
-        },
-
-        fetchBloqueadosByOrigen: function(origen) {
-            var equipo;
-            if (origen == 'VISITA') {
-                equipo = new TorneoEquipoModel({ id : this.modelPartido.get('localId') });
-            }
-            if (origen == 'LOCAL') {
-                equipo = new TorneoEquipoModel({ id : this.modelPartido.get('visitaId') });
-            }
-            this.bloqueados.setTorneoEquipo(equipo);
-            this.bloqueados.fetch();
+            this.jugadores.setTorneoEquipo(equipo);
+            this.jugadores.fetch();
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
-            this.$('#bloqueo-create-dialog').modal('show');
+            this.$('#rebote-create-dialog').modal('show');
             this.$('.alert-danger').hide();
         },
 
-        agregarInfractor: function(modelo) {
-            $('#select-bloquea').append($('<option>', {
+        agregarTipoRebote: function(modelo) {
+            $('#select-tipo-rebote').append($('<option>', {
+                value: modelo.get('clave'),
+                text : modelo.get('descripcion')
+            }));
+        },
+
+        syncTipoRebotes: function(modelo) {
+            $('#select-tipo-rebote').change();
+        },
+
+        agregarJugador: function(modelo) {
+            $('#select-jugador').append($('<option>', {
                 value: modelo.get('id'),
                 text : modelo.get('jugadorNombre')
             }));
         },
 
-        syncBloqueadores: function(modelo) {
-            $('#select-bloquea').change();
-        },
-
-        agregarReceptor: function(modelo) {
-            $('#select-bloqueado').append($('<option>', {
-                value: modelo.get('id'),
-                text : modelo.get('jugadorNombre')
-            }));
-        },
-
-        syncBloqueados: function(modelo) {
-            $('#select-bloqueado').change();
+        syncJugadores: function(modelo) {
+            $('#select-jugador').change();
         },
 
         clickAceptar: function(event) {
-            var data = this.$el.find("#form-bloqueo").serializeObject();
+            var data = this.$el.find("#form-rebote").serializeObject();
             this.model.set(data);
             that = this;
             if(this.model.isValid(true)){
@@ -124,6 +113,6 @@ define([
         }
 	});
 
-	return BloqueoCreateView;
+	return ReboteCreateView;
 
 });

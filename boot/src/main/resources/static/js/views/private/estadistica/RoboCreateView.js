@@ -3,23 +3,23 @@ define([
 	'backbone',
     'bootstrap',
 	'core/BaseView',
-	'models/estadistica/BloqueoModel',
+	'models/estadistica/RoboModel',
 	'models/TorneoEquipoModel',
 	'collections/TorneoJugadoresCollection',
-	'text!templates/private/estadistica/tplBloqueoCreate.html'
-], function($, Backbone, bootstrap, BaseView, BloqueoModel, TorneoEquipoModel,
-            TorneoJugadoresCollection, tplBloqueoCreate){
+	'text!templates/private/estadistica/tplRoboCreate.html'
+], function($, Backbone, bootstrap, BaseView, RoboModel, TorneoEquipoModel,
+            TorneoJugadoresCollection, tplRoboCreate){
 
-	var BloqueoCreateView = BaseView.extend({
+	var RoboCreateView = BaseView.extend({
 	    el: '#modal-partido',
-        template: _.template(tplBloqueoCreate),
+        template: _.template(tplRoboCreate),
 
         events: {
             'click #btn-aceptar': 'clickAceptar'
         },
 
         initialize: function(opts) {
-            this.model = new BloqueoModel();
+            this.model = new RoboModel();
             this.modelPartido = opts.modelo;
             this.callbackAceptar = opts.callbackAceptar;
             this.parent = opts.parent;
@@ -27,20 +27,20 @@ define([
             this.model.set({partidoId : opts.modelo.get('id')});
             this.render();
 
-            this.bloqueadores = new TorneoJugadoresCollection();
-            this.listenTo(this.bloqueadores, 'add', this.agregarInfractor);
-            this.listenTo(this.bloqueadores, 'sync', this.syncBloqueadores);
-            this.fetchBloqueadoresByOrigen(opts.origen);
+            this.robadores = new TorneoJugadoresCollection();
+            this.listenTo(this.robadores, 'add', this.agregarRobador);
+            this.listenTo(this.robadores, 'sync', this.syncRobadores);
+            this.fetchRobadoresByOrigen(opts.origen);
 
-            this.bloqueados = new TorneoJugadoresCollection();
-            this.listenTo(this.bloqueados, 'add', this.agregarReceptor);
-            this.listenTo(this.bloqueados, 'sync', this.syncBloqueados);
-            this.fetchBloqueadosByOrigen(opts.origen);
+            this.perdedores = new TorneoJugadoresCollection();
+            this.listenTo(this.perdedores, 'add', this.agregarPerdedor);
+            this.listenTo(this.perdedores, 'sync', this.syncPerdedores);
+            this.fetchPerdedoresByOrigen(opts.origen);
 
             Backbone.Validation.bind(this);
         },
 
-        fetchBloqueadoresByOrigen: function(origen) {
+        fetchRobadoresByOrigen: function(origen) {
             var equipo;
             if (origen == 'LOCAL') {
                 equipo = new TorneoEquipoModel({ id : this.modelPartido.get('localId') });
@@ -48,11 +48,11 @@ define([
             if (origen == 'VISITA') {
                 equipo = new TorneoEquipoModel({ id : this.modelPartido.get('visitaId') });
             }
-            this.bloqueadores.setTorneoEquipo(equipo);
-            this.bloqueadores.fetch();
+            this.robadores.setTorneoEquipo(equipo);
+            this.robadores.fetch();
         },
 
-        fetchBloqueadosByOrigen: function(origen) {
+        fetchPerdedoresByOrigen: function(origen) {
             var equipo;
             if (origen == 'VISITA') {
                 equipo = new TorneoEquipoModel({ id : this.modelPartido.get('localId') });
@@ -60,40 +60,40 @@ define([
             if (origen == 'LOCAL') {
                 equipo = new TorneoEquipoModel({ id : this.modelPartido.get('visitaId') });
             }
-            this.bloqueados.setTorneoEquipo(equipo);
-            this.bloqueados.fetch();
+            this.perdedores.setTorneoEquipo(equipo);
+            this.perdedores.fetch();
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
-            this.$('#bloqueo-create-dialog').modal('show');
+            this.$('#robo-create-dialog').modal('show');
             this.$('.alert-danger').hide();
         },
 
-        agregarInfractor: function(modelo) {
-            $('#select-bloquea').append($('<option>', {
+        agregarRobador: function(modelo) {
+            $('#select-robo').append($('<option>', {
                 value: modelo.get('id'),
                 text : modelo.get('jugadorNombre')
             }));
         },
 
-        syncBloqueadores: function(modelo) {
-            $('#select-bloquea').change();
+        syncRobadores: function(modelo) {
+            $('#select-robo').change();
         },
 
-        agregarReceptor: function(modelo) {
-            $('#select-bloqueado').append($('<option>', {
+        agregarPerdedor: function(modelo) {
+            $('#select-pierde').append($('<option>', {
                 value: modelo.get('id'),
                 text : modelo.get('jugadorNombre')
             }));
         },
 
-        syncBloqueados: function(modelo) {
-            $('#select-bloqueado').change();
+        syncPerdedores: function(modelo) {
+            $('#select-pierde').change();
         },
 
         clickAceptar: function(event) {
-            var data = this.$el.find("#form-bloqueo").serializeObject();
+            var data = this.$el.find("#form-robo").serializeObject();
             this.model.set(data);
             that = this;
             if(this.model.isValid(true)){
@@ -124,6 +124,6 @@ define([
         }
 	});
 
-	return BloqueoCreateView;
+	return RoboCreateView;
 
 });
