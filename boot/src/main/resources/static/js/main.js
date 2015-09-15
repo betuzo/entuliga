@@ -29,12 +29,38 @@ require.config({
             deps: [
                 'jquery'
             ]
+        },
+        jqueryValidate: {
+            deps: [
+                'jquery'
+            ]
+        },
+        knob: {
+            deps: [
+                'jquery'
+            ]
+        },
+        appear: {
+            deps: [
+                'jquery'
+            ]
+        },
+        entuliga: {
+            deps: [
+                'jquery',
+                'knob',
+                'appear',
+                'modernizr'
+            ]
         }
     },
     paths: {
         backbone: 'vendor/backbone/backbone-min',
         jquery: 'vendor/jquery/jquery',
-        jquerySerializeObject: 'vendor/jquery/jquery.serializeObject/jquery.serializeObject.min',
+        jquerySerializeObject: 'vendor/jquery/serializeObject/jquery.serializeObject.min',
+        jqueryValidate: 'vendor/jquery/validate/jquery.validate.min',
+        knob: 'vendor/jquery/knob/jquery.knob',
+        appear: 'vendor/jquery/appear/appear',
         backboneValidation: 'vendor/backbone/backbone-validation/backbone-validation-min',
         text : 'vendor/requirejs-text/text',
         underscore: 'vendor/underscore/underscore-min',
@@ -42,7 +68,9 @@ require.config({
         selecter: 'vendor/bootstrap/select/bootstrap-select.min',
         datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker',
         datetimepicker: 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
-        dateformat: 'vendor/date-format/date.format'
+        dateformat: 'vendor/date-format/date.format',
+        modernizr: 'vendor/modernizr/modernizr',
+        entuliga: 'vendor/entuliga/init'
     }
 });
 

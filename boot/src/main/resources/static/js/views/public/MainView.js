@@ -1,8 +1,11 @@
 define([
 	'jquery',
+	'bootstrap',
+	'jqueryValidate',
+	'entuliga',
 	'core/BaseView',
 	'text!templates/public/tplMain.html'
-], function($, BaseView, tplMain){
+], function($, bootstrap, jqueryValidate, entuliga, BaseView, tplMain){
 
 	var MainView = BaseView.extend({
         template: _.template(tplMain),
@@ -15,6 +18,7 @@ define([
 
         render: function() {
             this.$el.html(this.template());
+            $('nav').hide();
             return this;
         }
 	});

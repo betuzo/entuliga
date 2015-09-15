@@ -16,6 +16,7 @@ define([
 
         render: function() {
             this.$el.html(this.template());
+            $('nav').show();
             return this;
         }
 	});
