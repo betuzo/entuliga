@@ -23,7 +23,7 @@ public class Movimiento {
     @JoinColumn(name = "entra_id", nullable = false)
     private TorneoJugador entra;
     @ManyToOne
-    @JoinColumn(name = "sale_id", nullable = false)
+    @JoinColumn(name = "sale_id", nullable = true)
     private TorneoJugador sale;
 
     public Long getId() {

@@ -48,7 +48,9 @@ public class MovimientoServiceImpl implements MovimientoService {
     private Movimiento populateMovimiento(Movimiento movimiento){
         movimiento.setPartido(partidoRepository.findOne(movimiento.getPartido().getId()));
         movimiento.setEntra(torneoJugadorRepository.findOne(movimiento.getEntra().getId()));
-        movimiento.setSale(torneoJugadorRepository.findOne(movimiento.getSale().getId()));
+        if (movimiento.getSale() != null) {
+            movimiento.setSale(torneoJugadorRepository.findOne(movimiento.getSale().getId()));
+        }
 
         return movimiento;
     }
@@ -64,7 +66,12 @@ public class MovimientoServiceImpl implements MovimientoService {
         movimiento.setEntra(entra);
 
         TorneoJugador sale = new TorneoJugador();
-        sale.setId(Long.valueOf(movimientoMap.get(PROPERTY_SALE_ID)));
+        String idSale = movimientoMap.get(PROPERTY_SALE_ID);
+        if (idSale != null && !idSale.isEmpty()) {
+            sale.setId(Long.valueOf(idSale));
+        } else {
+            sale = null;
+        }
         movimiento.setSale(sale);
 
         movimiento.setMinuto(Integer.valueOf(movimientoMap.get(PROPERTY_MINUTO)));
@@ -86,8 +93,10 @@ public class MovimientoServiceImpl implements MovimientoService {
         map.put(PROPERTY_ORIGEN, movimiento.getOrigen());
         map.put(PROPERTY_ENTRA_ID, movimiento.getEntra().getId());
         map.put(PROPERTY_ENTRA_NOMBRE, movimiento.getEntra().getJugador().getNombreCompleto());
-        map.put(PROPERTY_SALE_ID, movimiento.getSale().getId());
-        map.put(PROPERTY_SALE_NOMBRE, movimiento.getSale().getJugador().getNombreCompleto());
+        if (movimiento.getSale() != null) {
+            map.put(PROPERTY_SALE_ID, movimiento.getSale().getId());
+            map.put(PROPERTY_SALE_NOMBRE, movimiento.getSale().getJugador().getNombreCompleto());
+        }
         return map;
     }
 }
