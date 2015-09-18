@@ -15,6 +15,11 @@ require.config({
                 'backbone'
             ]
         },
+        jqueryUI: {
+            deps: [
+                'jquery'
+            ]
+        },
         jquerySerializeObject: {
             deps: [
                 'jquery'
@@ -59,6 +64,7 @@ require.config({
         jquery: 'vendor/jquery/jquery',
         jquerySerializeObject: 'vendor/jquery/serializeObject/jquery.serializeObject.min',
         jqueryValidate: 'vendor/jquery/validate/jquery.validate.min',
+        jqueryUI: 'vendor/jquery/ui/jquery-ui.min',
         knob: 'vendor/jquery/knob/jquery.knob',
         appear: 'vendor/jquery/appear/appear',
         backboneValidation: 'vendor/backbone/backbone-validation/backbone-validation-min',

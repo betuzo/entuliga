@@ -40,6 +40,18 @@ public class TorneoServiceImpl implements TorneoService {
         return copy;
     }
 
+    @Override
+    public List<Map<String, Object>> listTorneo() {
+        Iterator<Torneo> itTorneo = torneoRepository.findAll().iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itTorneo.hasNext()) {
+            Torneo torneo = itTorneo.next();
+            Map<String, Object> dto = convertTorneoToMap(torneo);
+            copy.add(dto);
+        }
+        return copy;
+    }
+
     private Torneo convertMapToToneo(Map<String, String> torneoMap) {
         Torneo torneo = new Torneo();
         Liga liga = new Liga();

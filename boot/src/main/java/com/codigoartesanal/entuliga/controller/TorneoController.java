@@ -42,6 +42,15 @@ public class TorneoController {
 
     @ResponseBody
     @RequestMapping(
+            value = { "" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> listTorneos() {
+        return torneoService.listTorneo();
+    }
+
+    @ResponseBody
+    @RequestMapping(
             value = { "/{torneo}" },
             method = {RequestMethod.PUT},
             produces = {"application/json;charset=UTF-8"})
