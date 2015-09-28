@@ -61,7 +61,7 @@ define([
 
         initialize: function () {
             this.main();
-            this.mainNav();
+            //this.mainNav();
         },
 
         mainNav: function() {
