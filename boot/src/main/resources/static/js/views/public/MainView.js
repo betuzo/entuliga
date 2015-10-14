@@ -19,6 +19,8 @@ define([
             this.listenTo(this.torneos, 'add', this.agregarTorneo);
             this.listenTo(this.torneos, 'sync', this.syncTorneos);
 
+            this.torneosDesc = [];
+
             this.torneos.fetch();
         },
 
@@ -28,6 +30,7 @@ define([
         },
 
         agregarTorneo: function(modelo) {
+            this.torneosDesc.push({id: modelo.get('id'), value: modelo.get('descripcion')});
         },
 
         syncTorneos: function() {
@@ -38,67 +41,27 @@ define([
             var states = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: [
-                  'Alabama',
-                  'Alaska',
-                  'Arizona',
-                  'Arkansas',
-                  'California',
-                  'Colorado',
-                  'Connecticut',
-                  'Delaware',
-                  'Florida',
-                  'Georgia',
-                  'Hawaii',
-                  'Idaho',
-                  'Illinois',
-                  'Indiana',
-                  'Iowa',
-                  'Kansas',
-                  'Kentucky',
-                  'Louisiana',
-                  'Maine',
-                  'Maryland',
-                  'Massachusetts',
-                  'Michigan',
-                  'Minnesota',
-                  'Mississippi',
-                  'Missouri',
-                  'Montana',
-                  'Nebraska',
-                  'Nevada',
-                  'New Hampshire',
-                  'New Jersey',
-                  'New Mexico',
-                  'New York',
-                  'North Carolina',
-                  'North Dakota',
-                  'Ohio',
-                  'Oklahoma',
-                  'Oregon',
-                  'Pennsylvania',
-                  'Rhode Island',
-                  'South Carolina',
-                  'South Dakota',
-                  'Tennessee',
-                  'Texas',
-                  'Utah',
-                  'Vermont',
-                  'Virginia',
-                  'Washington',
-                  'West Virginia',
-                  'Wisconsin',
-                  'Wyoming'
-                ]
+                local: this.torneosDesc
             });
             states.initialize();
             $('#sel-torneo').typeahead({
                 hint: true,
                 highlight: true,
-                minLength: 1
+                minLength: 1,
+                updater: function(item) {
+                    alert(item);
+                }
             },
             {
-                source: states
+                source: states,
+                templates: {
+                    empty: [
+                      '<div class="empty-message">',
+                        'unable to find any Best Picture winners that match the current query',
+                      '</div>'
+                    ].join('\n'),
+                    suggestion: _.template('<div><strong><%= value %></strong> – </div>')
+                }
             });
         }
 	});
