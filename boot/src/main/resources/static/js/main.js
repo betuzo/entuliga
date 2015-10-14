@@ -29,6 +29,16 @@ require.config({
             deps: [
                 'jquery'
             ]
+        },
+        bloodhound: {
+            deps: [
+                'jquery'
+            ]
+        },
+        typeahead: {
+            deps: [
+                'jquery'
+            ]
         }
     },
     paths: {
@@ -42,7 +52,9 @@ require.config({
         selecter: 'vendor/bootstrap/select/bootstrap-select.min',
         datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker',
         datetimepicker: 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
-        dateformat: 'vendor/date-format/date.format'
+        dateformat: 'vendor/date-format/date.format',
+        bloodhound: 'vendor/typeahead/bloodhound',
+        typeahead: 'vendor/typeahead/typeahead.jquery'
     }
 });
 
