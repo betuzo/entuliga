@@ -12,6 +12,7 @@ define([
         template: _.template(tplMain),
 
         events: {
+            'typeahead:select #sel-torneo': 'selToreno'
         },
 
         initialize: function() {
@@ -30,7 +31,7 @@ define([
         },
 
         agregarTorneo: function(modelo) {
-            this.torneosDesc.push({id: modelo.get('id'), value: modelo.get('descripcion')});
+            this.torneosDesc.push({id: modelo.get('id'), descripcion: modelo.get('descripcion')});
         },
 
         syncTorneos: function() {
@@ -38,31 +39,26 @@ define([
         },
 
         setUp: function() {
-            var states = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
+            var numbers = new Bloodhound({
+                datumTokenizer: function(d) {
+                    return Bloodhound.tokenizers.whitespace(d.descripcion);
+                },
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 local: this.torneosDesc
             });
-            states.initialize();
-            $('#sel-torneo').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1,
-                updater: function(item) {
-                    alert(item);
-                }
-            },
-            {
-                source: states,
-                templates: {
-                    empty: [
-                      '<div class="empty-message">',
-                        'unable to find any Best Picture winners that match the current query',
-                      '</div>'
-                    ].join('\n'),
-                    suggestion: _.template('<div><strong><%= value %></strong> – </div>')
-                }
+
+            // initialize the bloodhound suggestion engine
+            numbers.initialize();
+
+            // instantiate the typeahead UI
+            $('#sel-torneo').typeahead(null, {
+                displayKey: 'descripcion',
+                source: numbers.ttAdapter()
             });
+        },
+
+        selToreno: function(ev, suggestion) {
+                console.log('Selection: ' + suggestion);
         }
 	});
 
