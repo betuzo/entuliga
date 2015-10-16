@@ -17,6 +17,7 @@ public class Torneo {
     @JoinColumn(name = "liga_id", nullable = false)
     private Liga liga;
     private String nombre;
+    private String clave;
     private String descripcion;
     @Column(name = "fecha_inicio")
     private Date fechaInicio;
@@ -53,6 +54,14 @@ public class Torneo {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
     public String getDescripcion() {
@@ -107,6 +116,7 @@ public class Torneo {
     public String toString() {
         return "Torneo{" +
                 "status=" + status +
+                "clave=" + clave +
                 ", fechaFin=" + fechaFin +
                 ", fechaInicio=" + fechaInicio +
                 ", descripcion='" + descripcion + '\'' +
