@@ -31,7 +31,7 @@ define([
         },
 
         agregarTorneo: function(modelo) {
-            this.torneosDesc.push({id: modelo.get('id'), descripcion: modelo.get('descripcion')});
+            this.torneosDesc.push({clave: modelo.get('clave'), descripcion: modelo.get('descripcion')});
         },
 
         syncTorneos: function() {
@@ -58,7 +58,7 @@ define([
         },
 
         selToreno: function(ev, suggestion) {
-                console.log('Selection: ' + suggestion);
+            Backbone.history.navigate('torneo/' + suggestion.clave, { trigger : true });
         }
 	});
 
