@@ -52,6 +52,12 @@ public class TorneoServiceImpl implements TorneoService {
         return copy;
     }
 
+    @Override
+    public Map<String, Object> listTorneoByClave(String clave) {
+        Torneo torneo = torneoRepository.findByClave(clave);
+        return convertTorneoToMap(torneo);
+    }
+
     private Torneo convertMapToToneo(Map<String, String> torneoMap) {
         Torneo torneo = new Torneo();
         Liga liga = new Liga();

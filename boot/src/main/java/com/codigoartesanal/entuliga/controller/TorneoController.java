@@ -60,6 +60,15 @@ public class TorneoController {
 
     @ResponseBody
     @RequestMapping(
+            value = { "/{torneo}" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> listTorneo(@PathVariable("torneo") String clave) {
+        return torneoService.listTorneoByClave(clave);
+    }
+
+    @ResponseBody
+    @RequestMapping(
             value = { "/{torneo}/equipo" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})

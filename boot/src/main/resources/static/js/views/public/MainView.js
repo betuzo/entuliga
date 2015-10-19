@@ -12,12 +12,16 @@ define([
         template: _.template(tplMain),
 
         events: {
+            'typeahead:select #sel-torneo': 'selToreno'
         },
 
         initialize: function() {
             this.torneos = new TorneosCollection();
             this.listenTo(this.torneos, 'add', this.agregarTorneo);
             this.listenTo(this.torneos, 'sync', this.syncTorneos);
+
+            this.torneosDesc = [];
+            this.torneo = null;
 
             this.torneos.fetch();
         },
@@ -28,6 +32,7 @@ define([
         },
 
         agregarTorneo: function(modelo) {
+            this.torneosDesc.push({clave: modelo.get('clave'), descripcion: modelo.get('descripcion')});
         },
 
         syncTorneos: function() {
@@ -35,72 +40,32 @@ define([
         },
 
         setUp: function() {
-            var states = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
+            var numbers = new Bloodhound({
+                datumTokenizer: function(d) {
+                    return Bloodhound.tokenizers.whitespace(d.descripcion);
+                },
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: [
-                  'Alabama',
-                  'Alaska',
-                  'Arizona',
-                  'Arkansas',
-                  'California',
-                  'Colorado',
-                  'Connecticut',
-                  'Delaware',
-                  'Florida',
-                  'Georgia',
-                  'Hawaii',
-                  'Idaho',
-                  'Illinois',
-                  'Indiana',
-                  'Iowa',
-                  'Kansas',
-                  'Kentucky',
-                  'Louisiana',
-                  'Maine',
-                  'Maryland',
-                  'Massachusetts',
-                  'Michigan',
-                  'Minnesota',
-                  'Mississippi',
-                  'Missouri',
-                  'Montana',
-                  'Nebraska',
-                  'Nevada',
-                  'New Hampshire',
-                  'New Jersey',
-                  'New Mexico',
-                  'New York',
-                  'North Carolina',
-                  'North Dakota',
-                  'Ohio',
-                  'Oklahoma',
-                  'Oregon',
-                  'Pennsylvania',
-                  'Rhode Island',
-                  'South Carolina',
-                  'South Dakota',
-                  'Tennessee',
-                  'Texas',
-                  'Utah',
-                  'Vermont',
-                  'Virginia',
-                  'Washington',
-                  'West Virginia',
-                  'Wisconsin',
-                  'Wyoming'
-                ]
+                local: this.torneosDesc
             });
-            states.initialize();
-            $('#sel-torneo').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            },
-            {
-                source: states
+
+            // initialize the bloodhound suggestion engine
+            numbers.initialize();
+
+            // instantiate the typeahead UI
+            $('#sel-torneo').typeahead(null, {
+                displayKey: 'descripcion',
+                source: numbers.ttAdapter()
             });
-        }
+        },
+
+        selToreno: function(ev, suggestion) {
+            this.torneo = suggestion;
+        },
+
+        goTorneo: function() {
+            if (this.torneo){
+                Backbone.history.navigate('torneo/' + this.torneo.clave, { trigger : true });
+            }
 	});
 
 	return MainView;
