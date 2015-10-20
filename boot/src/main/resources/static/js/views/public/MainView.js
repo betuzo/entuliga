@@ -66,6 +66,7 @@ define([
             if (this.torneo){
                 Backbone.history.navigate('torneo/' + this.torneo.clave, { trigger : true });
             }
+        }
 	});
 
 	return MainView;

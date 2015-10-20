@@ -123,15 +123,12 @@ define([
             var view = new PartidoAdminView();
             view.setIdPartido(partido);
             this.changeView(view);
-<<<<<<< Updated upstream
-=======
         },
 
         publicTorneo: function(clave) {
             console.log('Selection: ' + clave);
             var view = new TorneoLandingView({clave : clave});
             this.changeView(view);
->>>>>>> Stashed changes
         }
 	});
 
