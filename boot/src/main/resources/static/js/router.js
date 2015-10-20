@@ -4,8 +4,6 @@ define([
 	'backbone',
 	'core/BaseRouter',
 	'views/LoginView',
-	'views/public/MainView',
-	'views/public/MainNavView',
 	'views/private/MainAdminView',
 	'views/private/MainAdminNavView',
 	'views/private/LigaAdminView',
@@ -14,12 +12,15 @@ define([
 	'views/private/JugadorAdminView',
 	'views/private/ArbitroAdminView',
 	'views/private/CanchaAdminView',
-	'views/private/partido/PartidoAdminView'
+	'views/private/partido/PartidoAdminView',
+    'views/public/MainView',
+    'views/public/MainNavView',
+	'views/public/TorneoLandingView'
 ], function($, _, Backbone, BaseRouter, LoginView,
-            MainView, MainNavView, MainAdminView, MainAdminNavView,
-            LigaAdminView, TorneoAdminView, EquipoAdminView,
-            JugadorAdminView, ArbitroAdminView, CanchaAdminView,
-            PartidoAdminView){
+            MainAdminView, MainAdminNavView, LigaAdminView,
+            TorneoAdminView, EquipoAdminView, JugadorAdminView,
+            ArbitroAdminView, CanchaAdminView, PartidoAdminView,
+            MainView, MainNavView, TorneoLandingView){
         var Router = BaseRouter.extend({
 
         routes: {
@@ -128,6 +129,8 @@ define([
 
         publicTorneo: function(clave) {
             console.log('Selection: ' + clave);
+            var view = new TorneoLandingView({clave : clave});
+            this.changeView(view);
         }
 	});
 

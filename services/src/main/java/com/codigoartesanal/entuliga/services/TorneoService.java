@@ -20,7 +20,6 @@ public interface TorneoService {
 
     Map<String,Object> createTorneo(Map<String, String> torneo, User user);
     List<Map<String,Object>> listTorneoByLiga(Long idLiga);
-
     List<Map<String,Object>> listTorneo();
-
+    Map<String,Object> listTorneoByClave(String clave);
 }

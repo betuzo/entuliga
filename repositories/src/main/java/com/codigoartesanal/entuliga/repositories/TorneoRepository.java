@@ -11,4 +11,5 @@ import java.util.List;
  */
 public interface TorneoRepository extends CrudRepository<Torneo, Long> {
     List<Torneo> findAllByLiga(Liga liga);
+    Torneo findByClave(String clave);
 }

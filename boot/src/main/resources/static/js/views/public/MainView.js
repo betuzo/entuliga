@@ -12,7 +12,8 @@ define([
         template: _.template(tplMain),
 
         events: {
-            'typeahead:select #sel-torneo': 'selToreno'
+            'typeahead:select #sel-torneo': 'selToreno',
+            'click #go-torneo': 'goTorneo'
         },
 
         initialize: function() {
@@ -21,6 +22,7 @@ define([
             this.listenTo(this.torneos, 'sync', this.syncTorneos);
 
             this.torneosDesc = [];
+            this.torneo = null;
 
             this.torneos.fetch();
         },
@@ -58,7 +60,13 @@ define([
         },
 
         selToreno: function(ev, suggestion) {
-            Backbone.history.navigate('torneo/' + suggestion.clave, { trigger : true });
+            this.torneo = suggestion;
+        },
+
+        goTorneo: function() {
+            if (this.torneo){
+                Backbone.history.navigate('torneo/' + this.torneo.clave, { trigger : true });
+            }
         }
 	});
 
