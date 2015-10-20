@@ -36,7 +36,9 @@ define([
             'admin/jugadores':              'adminJugadores',
             'admin/arbitros':               'adminArbitros',
             'admin/canchas':                'adminCanchas',
-            'admin/partido/:partido':       'adminPartido'
+            'admin/partido/:partido':       'adminPartido',
+
+            'torneo/:clave':                'publicTorneo'
         },
 
         before : function(params, next) {

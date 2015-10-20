@@ -23,6 +23,7 @@ public class TorneoServiceImpl implements TorneoService {
     @Override
     public Map<String, Object> createTorneo(Map<String, String> torneoMap, User user) {
         Torneo torneo = convertMapToToneo(torneoMap);
+        torneo.setClave(generateClaveByNombre(torneo.getNombre()));
         return convertTorneoToMap(torneoRepository.save(torneo));
     }
 
@@ -79,11 +80,19 @@ public class TorneoServiceImpl implements TorneoService {
         map.put(PROPERTY_ID, torneo.getId());
         map.put(PROPERTY_LIGA_ID, torneo.getLiga().getId());
         map.put(PROPERTY_NOMBRE, torneo.getNombre());
+        map.put(PROPERTY_CLAVE, torneo.getClave());
         map.put(PROPERTY_DESCRIPCION, torneo.getDescripcion());
         map.put(PROPERTY_FECHA_INICIO, torneo.getFechaInicio());
         map.put(PROPERTY_FECHA_FIN, torneo.getFechaFin());
         map.put(PROPERTY_STATUS, torneo.getStatus());
         return map;
+    }
+
+    private String generateClaveByNombre(String nombre){
+        String clave;
+        clave = nombre.replace(" ", "-");
+        clave = clave.toLowerCase();
+        return clave;
     }
 
     private Torneo get(Long idTorneo){
