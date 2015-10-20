@@ -15,6 +15,16 @@ require.config({
                 'backbone'
             ]
         },
+        bootstrap: {
+            deps: [
+                'jquery'
+            ]
+        },
+        selecter: {
+            deps: [
+                'jquery'
+            ]
+        },
         jquerySerializeObject: {
             deps: [
                 'jquery'

@@ -12,6 +12,7 @@ public interface TorneoService {
     public static final String PROPERTY_ID              = "id";
     public static final String PROPERTY_LIGA_ID         = "ligaId";
     public static final String PROPERTY_NOMBRE          = "nombre";
+    public static final String PROPERTY_CLAVE           = "clave";
     public static final String PROPERTY_DESCRIPCION     = "descripcion";
     public static final String PROPERTY_FECHA_INICIO    = "fechaInicio";
     public static final String PROPERTY_FECHA_FIN       = "fechaFin";
