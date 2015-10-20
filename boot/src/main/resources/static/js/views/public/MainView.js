@@ -12,7 +12,8 @@ define([
         template: _.template(tplMain),
 
         events: {
-            'typeahead:select #sel-torneo': 'selToreno'
+            'typeahead:select #sel-torneo': 'selToreno',
+            'click #go-torneo': 'goTorneo'
         },
 
         initialize: function() {
