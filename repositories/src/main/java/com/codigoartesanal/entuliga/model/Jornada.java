@@ -9,7 +9,8 @@ import java.util.Set;
 @Entity
 public class Jornada {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="jornada_id_seq")
+    @SequenceGenerator(name="jornada_id_seq", sequenceName="jornada_id_seq")
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "torneo_id", nullable = false)

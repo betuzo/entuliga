@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -114,11 +115,11 @@ public class CanchaServiceImpl implements CanchaService {
         geoLocation.setCodigoPostal(canchaMap.get(PROPERTY_CODIGO_POSTAL));
         String latitude = canchaMap.get(PROPERTY_LATITUDE);
         if (latitude != null && !latitude.isEmpty()) {
-            geoLocation.setLatitude(Double.parseDouble(latitude));
+            geoLocation.setLatitude(BigDecimal.valueOf(Double.parseDouble(latitude)));
         }
         String longitude = canchaMap.get(PROPERTY_LONGITUDE);
         if (longitude != null && !longitude.isEmpty()) {
-            geoLocation.setLongitude(Double.parseDouble(longitude));
+            geoLocation.setLongitude(BigDecimal.valueOf(Double.parseDouble(longitude)));
         }
         Colonia colonia = new Colonia();
         colonia.setId(Long.valueOf(canchaMap.get(PROPERTY_COLONIA_ID)));

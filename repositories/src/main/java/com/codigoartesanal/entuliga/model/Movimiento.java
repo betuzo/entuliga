@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Movimiento {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="movimiento_id_seq")
+    @SequenceGenerator(name="movimiento_id_seq", sequenceName="movimiento_id_seq")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "partido_id", nullable = false)

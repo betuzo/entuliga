@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 public class GeoLocation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="geolocation_id_seq")
+    @SequenceGenerator(name="geolocation_id_seq", sequenceName="geolocation_id_seq")
     private Long id;
     private String calle;
     @Column(name = "no_exterior")
@@ -20,8 +21,8 @@ public class GeoLocation {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "colonia_id", nullable = false)
     private Colonia colonia;
-    private double longitude;
-    private double latitude;
+    private java.math.BigDecimal longitude;
+    private java.math.BigDecimal latitude;
 
     public Long getId() {
         return id;
@@ -71,19 +72,19 @@ public class GeoLocation {
         this.colonia = colonia;
     }
 
-    public double getLongitude() {
+    public java.math.BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(java.math.BigDecimal longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public java.math.BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(java.math.BigDecimal latitude) {
         this.latitude = latitude;
     }
 

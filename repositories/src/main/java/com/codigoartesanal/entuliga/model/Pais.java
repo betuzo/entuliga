@@ -9,7 +9,8 @@ import java.util.Set;
 @Entity
 public class Pais {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pais_id_seq")
+    @SequenceGenerator(name="pais_id_seq", sequenceName="pais_id_seq")
     private Long id;
     private String nombre;
     private String abreviatura;

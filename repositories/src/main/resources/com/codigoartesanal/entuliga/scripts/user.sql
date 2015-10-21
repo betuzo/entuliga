@@ -1,29 +1,29 @@
-CREATE TABLE IF NOT EXISTS USER (
+CREATE TABLE IF NOT EXISTS USUARIO (
     USERNAME VARCHAR(25) PRIMARY KEY,
     PASSWORD VARCHAR(70) NOT NULL,
     ENABLED BIT NOT NULL
 );
                
-INSERT INTO USER (USERNAME, PASSWORD, ENABLED) VALUES
-('jperez', '123456', 1),
-('jsoto', '$2a$10$GqqtbEuDi8YXzI1n8Zoqv.Upp61NP/Jy1fvPiMAgtcsyFuwc7N.AK', 1),
-('rolguin', '123456', 1),
-('sgarcia', '123456', 1),
-('jmolina', '123456', 1),
-('snaranjo', '123456', 1),
-('gduque', '123456', 1),
-('jsaenz', '123456', 1),
-('gloreto', '123456', 1),
-('omurillo', '123456', 1),
-('aosorno', '123456', 1),
-('cpalacio', '123456', 1),
-('hgonzalez', '123456', 1),
-('cmontoya', '123456', 1),
-('atabares', '123456', 1),
-('jlopez', '123456', 1);
+INSERT INTO USUARIO (USERNAME, PASSWORD, ENABLED) VALUES
+('jperez', '123456', true),
+('jsoto', '$2a$10$GqqtbEuDi8YXzI1n8Zoqv.Upp61NP/Jy1fvPiMAgtcsyFuwc7N.AK', true),
+('rolguin', '123456', true),
+('sgarcia', '123456', true),
+('jmolina', '123456', true),
+('snaranjo', '123456', true),
+('gduque', '123456', true),
+('jsaenz', '123456', true),
+('gloreto', '123456', true),
+('omurillo', '123456', true),
+('aosorno', '123456', true),
+('cpalacio', '123456', true),
+('hgonzalez', '123456', true),
+('cmontoya', '123456', true),
+('atabares', '123456', true),
+('jlopez', '123456', true);
 
 CREATE TABLE IF NOT EXISTS USER_ROLE (
-    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
     USERNAME VARCHAR(25) NOT NULL,
     ROLE VARCHAR(25) NOT NULL
 );

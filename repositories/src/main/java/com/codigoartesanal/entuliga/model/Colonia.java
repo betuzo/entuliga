@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Colonia {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="colonia_id_seq")
+    @SequenceGenerator(name="colonia_id_seq", sequenceName="colonia_id_seq")
     private Long id;
     private String nombre;
     @ManyToOne(fetch = FetchType.EAGER)

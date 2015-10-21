@@ -9,7 +9,8 @@ import java.util.Set;
 @Entity
 public class Estado {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="estado_id_seq")
+    @SequenceGenerator(name="estado_id_seq", sequenceName="estado_id_seq")
     private Long id;
     private String nombre;
     private String abreviatura;

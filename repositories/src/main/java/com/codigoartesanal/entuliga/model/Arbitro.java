@@ -9,7 +9,8 @@ import java.util.Date;
 @Entity
 public class Arbitro {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="arbitro_id_seq")
+    @SequenceGenerator(name="arbitro_id_seq", sequenceName="arbitro_id_seq")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "admin_id", nullable = false)

@@ -11,7 +11,8 @@ import java.util.Set;
         uniqueConstraints = @UniqueConstraint(columnNames = { "torneo_id", "equipo_id" }))
 public class TorneoEquipo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="torneoequipo_id_seq")
+    @SequenceGenerator(name="torneoequipo_id_seq", sequenceName="torneoequipo_id_seq")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "torneo_id", nullable = false)

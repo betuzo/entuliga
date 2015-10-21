@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -103,11 +104,11 @@ public class LigaServiceImpl implements LigaService {
         geoLocation.setCodigoPostal(ligaMap.get(PROPERTY_CODIGO_POSTAL));
         String latitude = ligaMap.get(PROPERTY_LATITUDE);
         if (latitude != null && !latitude.isEmpty()) {
-            geoLocation.setLatitude(Double.parseDouble(latitude));
+            geoLocation.setLatitude(BigDecimal.valueOf(Double.parseDouble(latitude)));
         }
         String longitude = ligaMap.get(PROPERTY_LONGITUDE);
         if (longitude != null && !longitude.isEmpty()) {
-            geoLocation.setLongitude(Double.parseDouble(longitude));
+            geoLocation.setLongitude(BigDecimal.valueOf(Double.parseDouble(longitude)));
         }
         Colonia colonia = new Colonia();
         colonia.setId(Long.valueOf(ligaMap.get(PROPERTY_COLONIA_ID)));
