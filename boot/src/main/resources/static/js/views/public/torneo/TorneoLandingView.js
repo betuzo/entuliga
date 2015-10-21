@@ -3,8 +3,13 @@ define([
 	'bootstrap',
 	'core/BaseView',
 	'models/TorneoModel',
-	'text!templates/public/tplTorneoLanding.html'
-], function($, bootstrap, BaseView, TorneoModel, tplTorneoLanding){
+	'views/public/torneo/TorneoJornadaView',
+	'views/public/torneo/TorneoPosicionesView',
+	'views/public/torneo/TorneoLideresView',
+	'text!templates/public/torneo/tplTorneoLanding.html'
+], function($, bootstrap, BaseView, TorneoModel,
+            TorneoJornadaView, TorneoPosicionesView,
+            TorneoLideresView, tplTorneoLanding){
 
 	var TorneoLandingView = BaseView.extend({
         template: _.template(tplTorneoLanding),
@@ -27,6 +32,10 @@ define([
 
         syncTorneoSuccess: function() {
             this.$el.html(this.template(this.model.toJSON()));
+
+            new TorneoJornadaView(this.model);
+            new TorneoLideresView(this.model);
+            new TorneoPosicionesView(this.model);
         }
 	});
 
