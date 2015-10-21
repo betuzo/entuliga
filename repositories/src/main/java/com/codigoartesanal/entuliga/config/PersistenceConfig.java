@@ -46,18 +46,17 @@ public class PersistenceConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/entuliga");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("B3tuzo");
+        dataSource.setUrl("jdbc:postgresql://ec2-54-225-199-108.compute-1.amazonaws.com:5432/d2s0bat8nnmlr7?sslmode=require");
+        dataSource.setUsername("lvqqialdspisrm");
+        dataSource.setPassword("lt2X_hajbja1u4RqkJbj4VgfX8");
 
         return dataSource;
     }
 
     @Bean
-    public DataSourceInitializer dataSourceInitializer() {
+    public DataSourceInitializer dataSourceInitializerEntuliga() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
 
-        /*
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/user.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/pais.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/estado.sql"));
@@ -74,7 +73,8 @@ public class PersistenceConfig {
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/torneocancha.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/jornada.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/partido.sql"));
-        */
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/clasificacion.sql"));
+
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource());
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
