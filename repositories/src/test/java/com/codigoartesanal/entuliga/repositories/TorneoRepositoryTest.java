@@ -1,6 +1,6 @@
 package com.codigoartesanal.entuliga.repositories;
 
-import com.codigoartesanal.entuliga.config.PersistenceConfig;
+import com.codigoartesanal.entuliga.config.PersistenceTestConfig;
 import com.codigoartesanal.entuliga.model.Liga;
 import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.dto.EstadisticaJugadorDTO;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by betuzo on 21/10/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfig.class})
+@ContextConfiguration(classes = {PersistenceTestConfig.class})
 public class TorneoRepositoryTest {
 
     @Autowired

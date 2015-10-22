@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.repositories;
 
 import com.codigoartesanal.entuliga.config.PersistenceConfig;
+import com.codigoartesanal.entuliga.config.PersistenceTestConfig;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.model.UserRole;
 import org.junit.Assert;
@@ -16,7 +17,7 @@ import java.util.Set;
  * Created by betuzo on 25/01/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfig.class})
+@ContextConfiguration(classes = {PersistenceTestConfig.class})
 public class UserRoleRepositoryTests {
 
     @Autowired

@@ -1,6 +1,6 @@
 package com.codigoartesanal.entuliga.repositories.view;
 
-import com.codigoartesanal.entuliga.config.PersistenceConfig;
+import com.codigoartesanal.entuliga.config.PersistenceTestConfig;
 import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.view.Clasificacion;
 import org.junit.Assert;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Created by betuzo on 21/10/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfig.class})
+@ContextConfiguration(classes = {PersistenceTestConfig.class})
 public class ClasificacionRepositoryTest {
 
     @Autowired

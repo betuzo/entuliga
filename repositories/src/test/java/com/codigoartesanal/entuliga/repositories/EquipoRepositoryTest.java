@@ -1,6 +1,6 @@
 package com.codigoartesanal.entuliga.repositories;
 
-import com.codigoartesanal.entuliga.config.PersistenceConfig;
+import com.codigoartesanal.entuliga.config.PersistenceTestConfig;
 import com.codigoartesanal.entuliga.model.Equipo;
 import com.codigoartesanal.entuliga.model.Torneo;
 import org.junit.Assert;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by betuzo on 28/05/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfig.class})
+@ContextConfiguration(classes = {PersistenceTestConfig.class})
 public class EquipoRepositoryTest {
 
     @Autowired
