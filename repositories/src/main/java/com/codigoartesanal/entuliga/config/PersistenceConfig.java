@@ -23,12 +23,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 @EnableJpaRepositories(basePackages = {"com.codigoartesanal.entuliga.repositories"})
 public class PersistenceConfig {
 
-    private Database database;
-
     @Bean
-    @Profile("production")
-    public DataSource productionDataSource() {
-        this.database = Database.POSTGRESQL;
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setDriverClassName("org.postgresql.Driver");
@@ -42,7 +38,6 @@ public class PersistenceConfig {
     @Bean
     @Profile("dev")
     public DataSource devDataSource() {
-        this.database = Database.H2;
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/user.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/pais.sql");
@@ -66,10 +61,10 @@ public class PersistenceConfig {
     }
 
     @Bean
-    @Profile("productionfirst")
     public DataSourceInitializer dataSourceInitializer() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
 
+        /*
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/user.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/pais.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/estado.sql"));
@@ -87,9 +82,10 @@ public class PersistenceConfig {
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/jornada.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/partido.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/clasificacion.sql"));
+        */
 
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-        dataSourceInitializer.setDataSource(devDataSource());
+        dataSourceInitializer.setDataSource(dataSource());
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
         return dataSourceInitializer;
     }
@@ -109,7 +105,7 @@ public class PersistenceConfig {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(false);
         hibernateJpaVendorAdapter.setGenerateDdl(true);
-        hibernateJpaVendorAdapter.setDatabase(this.database);
+        hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
         return hibernateJpaVendorAdapter;
     }
 

@@ -23,6 +23,7 @@ public class Enceste {
     @ManyToOne
     @JoinColumn(name = "tirador_id", nullable = false)
     private TorneoJugador tirador;
+    private Integer valor;
 
     public Long getId() {
         return id;
@@ -80,6 +81,14 @@ public class Enceste {
         this.tirador = tirador;
     }
 
+    public Integer getValor() {
+        return valor;
+    }
+
+    public void setValor(Integer valor) {
+        this.valor = valor;
+    }
+
     public String getTiempoDescripcion(){
         return " " + minuto + " : " + segundo;
     }
@@ -92,6 +101,7 @@ public class Enceste {
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
                 ", tipo=" + tipo +
+                ", valor=" + valor +
                 ", origen=" + origen +
                 ", tirador=" + tirador +
                 '}';

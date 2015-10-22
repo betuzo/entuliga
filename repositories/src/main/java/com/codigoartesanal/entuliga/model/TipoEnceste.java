@@ -28,8 +28,8 @@ public enum TipoEnceste {
             case DOS:
                 return 2;
             case TIROLIBRE:
-                return 2;
-            case TIROCASTIGO:
+                return 1;
+                case TIROCASTIGO:
                 return 1;
             default:
                 return 0;
