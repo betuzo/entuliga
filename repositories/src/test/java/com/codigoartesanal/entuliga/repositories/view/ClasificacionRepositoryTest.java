@@ -31,7 +31,8 @@ public class ClasificacionRepositoryTest {
     public void testFindAllByTorneo() {
         Torneo torneo = new Torneo();
         torneo.setId(1L);
-        Iterable<Clasificacion> clasificacions = clasificacionRepository.findAllByTorneo(torneo);
+        Iterable<Clasificacion> clasificacions =
+                clasificacionRepository.findAllByTorneoOrderByTotalGanadosDescDiferenciaPuntosDesc(torneo);
 
         Assert.assertNotNull(clasificacions);
     }
