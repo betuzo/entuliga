@@ -25,6 +25,7 @@ define([
             this.lideres.fetch();
 
             this.render();
+            this.hideTables();
         },
 
         render: function() {
@@ -33,11 +34,21 @@ define([
 
         agregarLider: function(modelo) {
             var vista = new RowEstadisticaJugadorView(modelo);
-            $("#torneo-tabla-posiciones").find('tbody:last').append(vista.render().$el);
+            var table = this.getTableByTipoEstadistica(modelo.get('tipo'));
+            $("#" + table).show();
+            $("#" + table).find('tbody:last').append(vista.render().$el);
         },
 
         syncLideres: function() {
 
+        },
+
+        hideTables: function() {
+            $("#torneo-lideres-puntos").hide();
+            $("#torneo-lideres-rebotes").hide();
+            $("#torneo-lideres-asistencias").hide();
+            $("#torneo-lideres-bloqueos").hide();
+            $("#torneo-lideres-robos").hide();
         },
 
         getTableByTipoEstadistica: function(tipoEstadistica) {
