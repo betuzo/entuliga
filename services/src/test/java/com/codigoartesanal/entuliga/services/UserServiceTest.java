@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by betuzo on 8/05/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestServicesConfig.class, PersistenceConfig.class})
+@ContextConfiguration(classes = {TestServicesConfig.class})
 public class UserServiceTest {
 
     @Autowired

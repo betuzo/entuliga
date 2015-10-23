@@ -33,6 +33,7 @@ public class PersistenceTestConfig extends PersistenceConfig {
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/partido.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/clasificacion.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/estadistica.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/sequence.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/constraints.sql");
 
         return builder.setType(EmbeddedDatabaseType.H2).build();

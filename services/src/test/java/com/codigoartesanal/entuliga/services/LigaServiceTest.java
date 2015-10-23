@@ -18,8 +18,9 @@ import java.util.Map;
  * Created by betuzo on 12/05/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestServicesConfig.class, PersistenceConfig.class})
+@ContextConfiguration(classes = {TestServicesConfig.class})
 public class LigaServiceTest {
+
     @Autowired
     LigaService ligaService;
 
