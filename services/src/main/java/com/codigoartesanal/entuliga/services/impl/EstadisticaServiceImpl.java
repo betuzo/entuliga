@@ -5,8 +5,11 @@ import com.codigoartesanal.entuliga.model.dto.EstadisticaJugadorDTO;
 import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.EstadisticaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,38 +22,23 @@ public class EstadisticaServiceImpl implements EstadisticaService{
     TorneoRepository torneoRepository;
 
     @Override
-    public List<EstadisticaJugadorDTO> listLideresPuntosByTorneo(Long idTorneo) {
+    public List<EstadisticaJugadorDTO> listLideresTodosByTorneoTopFive(Long idTorneo) {
+        List<EstadisticaJugadorDTO> estadisticasTodas = new ArrayList<>();
         Torneo torneo = new Torneo();
         torneo.setId(idTorneo);
-        return torneoRepository.findAllLideresPuntosByTorneo(torneo);
+        Pageable pageable = createPageableByLimit(5);
+
+        estadisticasTodas.addAll(torneoRepository.findLimitLideresPuntosByTorneo(torneo, pageable));
+        estadisticasTodas.addAll(torneoRepository.findLimitLideresRebotesByTorneo(torneo, pageable));
+        estadisticasTodas.addAll(torneoRepository.findLimitLideresAsistenciasByTorneo(torneo, pageable));
+        estadisticasTodas.addAll(torneoRepository.findLimitLideresBloqueosByTorneo(torneo, pageable));
+        estadisticasTodas.addAll(torneoRepository.findLimitLideresRobosByTorneo(torneo, pageable));
+
+        return estadisticasTodas;
     }
 
-    @Override
-    public List<EstadisticaJugadorDTO> listLideresRebotesByTorneo(Long idTorneo) {
-        Torneo torneo = new Torneo();
-        torneo.setId(idTorneo);
-        return torneoRepository.findAllLideresRebotesByTorneo(torneo);
-    }
-
-    @Override
-    public List<EstadisticaJugadorDTO> listLideresAsistenciasByTorneo(Long idTorneo) {
-        Torneo torneo = new Torneo();
-        torneo.setId(idTorneo);
-        return torneoRepository.findAllLideresAsistenciasByTorneo(torneo);
-    }
-
-    @Override
-    public List<EstadisticaJugadorDTO> listLideresBloqueosByTorneo(Long idTorneo) {
-        Torneo torneo = new Torneo();
-        torneo.setId(idTorneo);
-        return torneoRepository.findAllLideresBloqueosByTorneo(torneo);
-    }
-
-    @Override
-    public List<EstadisticaJugadorDTO> listLideresRobosByTorneo(Long idTorneo) {
-        Torneo torneo = new Torneo();
-        torneo.setId(idTorneo);
-        return torneoRepository.findAllLideresRobosByTorneo(torneo);
+    private Pageable createPageableByLimit(int limit){
+        return new PageRequest(0, limit);
     }
 
 }

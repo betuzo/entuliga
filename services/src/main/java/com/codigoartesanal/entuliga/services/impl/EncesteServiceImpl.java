@@ -91,6 +91,7 @@ public class EncesteServiceImpl implements EncesteService {
         enceste.setMinuto(Integer.valueOf(encesteMap.get(PROPERTY_MINUTO)));
         enceste.setSegundo(Integer.valueOf(encesteMap.get(PROPERTY_SEGUNDO)));
         enceste.setTipo(TipoEnceste.valueOf(encesteMap.get(PROPERTY_TIPO)));
+        enceste.setValor(enceste.getTipo().getValor());
         enceste.setOrigen(OrigenEstadistica.valueOf(encesteMap.get(PROPERTY_ORIGEN)));
         return enceste;
     }

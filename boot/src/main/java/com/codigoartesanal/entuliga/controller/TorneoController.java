@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.model.dto.EstadisticaJugadorDTO;
 import com.codigoartesanal.entuliga.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ public class TorneoController {
 
     @Autowired
     ClasificacionService clasificacionService;
+
+    @Autowired
+    EstadisticaService estadisticaService;
 
     @ResponseBody
     @RequestMapping(
@@ -101,5 +105,14 @@ public class TorneoController {
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> listClasificacionByTorneo(@PathVariable("torneo") Long idTorneo) {
         return clasificacionService.listClasificacionByTorneo(idTorneo);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneo}/estadistica" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<EstadisticaJugadorDTO> listEstadisticaByTorneoTopFive(@PathVariable("torneo") Long idTorneo) {
+        return estadisticaService.listLideresTodosByTorneoTopFive(idTorneo);
     }
 }

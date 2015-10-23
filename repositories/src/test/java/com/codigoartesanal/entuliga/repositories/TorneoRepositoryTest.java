@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -36,43 +37,48 @@ public class TorneoRepositoryTest {
     public void testFindAllLideresPuntosByTorneo() {
         Torneo torneo = new Torneo();
         torneo.setId(1L);
-        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findAllLideresPuntosByTorneo(torneo);
+        PageRequest pageRequest = new PageRequest(0, 5);
+        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findLimitLideresPuntosByTorneo(torneo, pageRequest);
 
-        Assert.assertNotNull(estadisticas.size()>0);
+        Assert.assertNotNull(estadisticas.size()<5);
     }
 
     @Test
     public void testFindAllLideresRebotesByTorneo() {
         Torneo torneo = new Torneo();
         torneo.setId(1L);
-        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findAllLideresRebotesByTorneo(torneo);
+        PageRequest pageRequest = new PageRequest(0, 5);
+        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findLimitLideresRebotesByTorneo(torneo, pageRequest);
 
-        Assert.assertNotNull(estadisticas.size()==0);
+        Assert.assertNotNull(estadisticas.size()<5);
     }
 
     @Test
     public void testFindAllLideresAsistenciasByTorneo() {
         Torneo torneo = new Torneo();
         torneo.setId(1L);
-        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findAllLideresAsistenciasByTorneo(torneo);
+        PageRequest pageRequest = new PageRequest(0, 5);
+        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findLimitLideresAsistenciasByTorneo(torneo, pageRequest);
 
-        Assert.assertNotNull(estadisticas.size()==0);
+        Assert.assertNotNull(estadisticas.size()<5);
     }
 
     @Test
     public void testFindAllLideresBloqueosByTorneo() {
         Torneo torneo = new Torneo();
         torneo.setId(1L);
-        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findAllLideresBloqueosByTorneo(torneo);
+        PageRequest pageRequest = new PageRequest(0, 5);
+        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findLimitLideresBloqueosByTorneo(torneo, pageRequest);
 
-        Assert.assertNotNull(estadisticas.size()==0);
+        Assert.assertNotNull(estadisticas.size()<5);
     }
     @Test
     public void testFindAllLideresRobosByTorneo() {
         Torneo torneo = new Torneo();
         torneo.setId(1L);
-        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findAllLideresRobosByTorneo(torneo);
+        PageRequest pageRequest = new PageRequest(0, 5);
+        List<EstadisticaJugadorDTO> estadisticas = torneoRepository.findLimitLideresRobosByTorneo(torneo, pageRequest);
 
-        Assert.assertNotNull(estadisticas.size()==0);
+        Assert.assertNotNull(estadisticas.size()<5);
     }
 }

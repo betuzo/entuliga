@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.repositories;
 
 import com.codigoartesanal.entuliga.config.PersistenceConfig;
+import com.codigoartesanal.entuliga.config.PersistenceTestConfig;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Created by betuzo on 2/06/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {PersistenceTestConfig.class})
 public class RegexTest {
 
     @Test
