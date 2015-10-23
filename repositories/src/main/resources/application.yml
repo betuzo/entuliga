@@ -1,0 +1,17 @@
+spring:
+  profiles.active: default
+
+spring:
+  profiles: default
+spring.datasource:
+  driverClassName: org.postgresql.Driver
+  url: jdbc:postgresql://ec2-54-225-199-108.compute-1.amazonaws.com:5432/d2s0bat8nnmlr7?sslmode=require
+  username: lvqqialdspisrm
+  password: lt2X_hajbja1u4RqkJbj4VgfX8
+
+spring:
+  profiles: qa
+spring.datasource:
+  url: jdbc:mysql://qa.myapp.com:3306/myappdb?autoReconnect=true
+  username: qauser
+  password: qapassword
