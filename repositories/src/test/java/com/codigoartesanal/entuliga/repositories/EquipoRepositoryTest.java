@@ -17,10 +17,9 @@ import java.util.List;
 /**
  * Created by betuzo on 28/05/15.
  */
+@ActiveProfiles(value = "test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {PersistenceConfig.class})
-@ActiveProfiles(value = "test")
-@PropertySource("classpath:application.properties")
 public class EquipoRepositoryTest {
 
     @Autowired

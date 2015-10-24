@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -23,6 +24,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {"com.codigoartesanal.entuliga.repositories"})
+@PropertySource("classpath:application.properties")
 public class PersistenceConfig {
 
     private static final String PROPERTY_SPRING_DATASOURCE_DRIVER   = "spring.datasource.driverClassName";
@@ -62,7 +64,7 @@ public class PersistenceConfig {
 
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+            HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(Boolean.parseBoolean(env.getRequiredProperty(PROPERTY_SPRING_JPA_SHOWSQL)));
         hibernateJpaVendorAdapter.setGenerateDdl(Boolean.parseBoolean(env.getRequiredProperty(PROPERTY_SPRING_JPA_HB_GENERATEDDL)));
         hibernateJpaVendorAdapter.setDatabase(Database.valueOf(env.getRequiredProperty(PROPERTY_SPRING_JPA_DATABASE)));
