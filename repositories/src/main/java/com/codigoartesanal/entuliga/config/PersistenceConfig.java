@@ -64,7 +64,7 @@ public class PersistenceConfig {
 
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
-            HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(Boolean.parseBoolean(env.getRequiredProperty(PROPERTY_SPRING_JPA_SHOWSQL)));
         hibernateJpaVendorAdapter.setGenerateDdl(Boolean.parseBoolean(env.getRequiredProperty(PROPERTY_SPRING_JPA_HB_GENERATEDDL)));
         hibernateJpaVendorAdapter.setDatabase(Database.valueOf(env.getRequiredProperty(PROPERTY_SPRING_JPA_DATABASE)));
@@ -101,7 +101,7 @@ public class PersistenceConfig {
 
     @Bean
     @Profile({"test", "dev"})
-    public DataSourceInitializer dataSourceInitializer() {
+    public DataSourceInitializer dataSourceInitializerConfiguration() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
 
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/user.sql"));
