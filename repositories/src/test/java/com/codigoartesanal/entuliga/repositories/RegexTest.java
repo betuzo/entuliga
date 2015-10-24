@@ -1,10 +1,11 @@
 package com.codigoartesanal.entuliga.repositories;
 
 import com.codigoartesanal.entuliga.config.PersistenceConfig;
-import com.codigoartesanal.entuliga.config.PersistenceTestConfig;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -12,7 +13,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Created by betuzo on 2/06/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceTestConfig.class})
+@ContextConfiguration(classes = {PersistenceConfig.class})
+@PropertySource("classpath:application.properties")
+@ActiveProfiles(value = "test")
 public class RegexTest {
 
     @Test
