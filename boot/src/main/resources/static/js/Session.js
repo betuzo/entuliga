@@ -6,6 +6,10 @@ define([
 	var SessionModel = Backbone.Model.extend({
 	    url : 'session/login',
 
+	    initialize: function(){
+	    	this.set('authenticated', false);
+	    },
+
 		login : function(callback, user, pass){
 			var that = callback;
 			var Session = this;

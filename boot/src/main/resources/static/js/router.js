@@ -15,12 +15,13 @@ define([
 	'views/private/partido/PartidoAdminView',
     'views/public/MainView',
     'views/public/MainNavView',
-	'views/public/torneo/TorneoLandingView'
+	'views/public/torneo/TorneoLandingView',
+	'Session'
 ], function($, _, Backbone, BaseRouter, LoginView,
             MainAdminView, MainAdminNavView, LigaAdminView,
             TorneoAdminView, EquipoAdminView, JugadorAdminView,
             ArbitroAdminView, CanchaAdminView, PartidoAdminView,
-            MainView, MainNavView, TorneoLandingView){
+            MainView, MainNavView, TorneoLandingView, Session){
         var Router = BaseRouter.extend({
 
         routes: {
@@ -41,9 +42,31 @@ define([
             'torneo/:clave':                'publicTorneo'
         },
 
+        requresAuth : ['#admin'],
+
+        preventAccessWhenAuth : ['#login'],
+
         before : function(params, next) {
-            console.log('before');
-            return next();
+            //Checking if user is authenticated or not
+            //then check the path if the path requires authentication
+            var isAuth = Session.get('authenticated');
+            var path = Backbone.history.location.hash;
+            var needAuth = path.indexOf(this.requresAuth) > -1;
+            var cancleAccess = _.contains(this.preventAccessWhenAuth, path);
+
+            if(needAuth && !isAuth){
+              //If user gets redirect to login because wanted to access
+              // to a route that requires login, save the path in session
+              // to redirect the user back to path after successful login
+              Backbone.history.navigate('login', { trigger : true });
+            }else if(isAuth && cancleAccess){
+              //User is authenticated and tries to go to login, register ...
+              // so redirect the user to home page
+              Backbone.history.navigate('', { trigger : true });
+            }else{
+              //No problem, handle the route!!
+              return next();
+            }
         },
 
         after : function() {
