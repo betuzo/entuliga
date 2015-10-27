@@ -11,7 +11,8 @@ import java.util.Set;
 public class Torneo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="torneo_id_seq")
+    @SequenceGenerator(name="torneo_id_seq", sequenceName="torneo_id_seq")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "liga_id", nullable = false)

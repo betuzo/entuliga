@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 public class TorneoCancha {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="torneocancha_id_seq")
+    @SequenceGenerator(name="torneocancha_id_seq", sequenceName="torneocancha_id_seq")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "torneo_id", nullable = false)
@@ -16,7 +17,7 @@ public class TorneoCancha {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cancha_id", nullable = false)
     private Cancha cancha;
-    @Column(name = "status_equipo")
+    @Column(name = "status_cancha")
     @Enumerated(EnumType.STRING)
     private StatusCancha statusCancha;
 

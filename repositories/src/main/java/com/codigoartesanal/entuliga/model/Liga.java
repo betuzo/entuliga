@@ -10,7 +10,8 @@ import java.util.Set;
 public class Liga {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="liga_id_seq")
+    @SequenceGenerator(name="liga_id_seq", sequenceName="liga_id_seq")
     private Long id;
     private String nombre;
     @Column(name = "nombre_completo")

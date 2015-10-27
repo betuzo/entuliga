@@ -1,10 +1,8 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.model.User;
-import com.codigoartesanal.entuliga.services.JornadaService;
-import com.codigoartesanal.entuliga.services.TorneoCanchaService;
-import com.codigoartesanal.entuliga.services.TorneoEquipoService;
-import com.codigoartesanal.entuliga.services.TorneoService;
+import com.codigoartesanal.entuliga.model.dto.EstadisticaJugadorDTO;
+import com.codigoartesanal.entuliga.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +28,12 @@ public class TorneoController {
 
     @Autowired
     TorneoCanchaService torneoCanchaService;
+
+    @Autowired
+    ClasificacionService clasificacionService;
+
+    @Autowired
+    EstadisticaService estadisticaService;
 
     @ResponseBody
     @RequestMapping(
@@ -92,5 +96,23 @@ public class TorneoController {
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> listCanchaByTorneo(@PathVariable("torneo") Long idTorneo) {
         return torneoCanchaService.listCanchaByTorneo(idTorneo);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneo}/clasificacion" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> listClasificacionByTorneo(@PathVariable("torneo") Long idTorneo) {
+        return clasificacionService.listClasificacionByTorneo(idTorneo);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneo}/estadistica" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<EstadisticaJugadorDTO> listEstadisticaByTorneoTopFive(@PathVariable("torneo") Long idTorneo) {
+        return estadisticaService.listLideresTodosByTorneoTopFive(idTorneo);
     }
 }

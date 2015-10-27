@@ -42,9 +42,11 @@ public class UserSessionAop {
         for(Object arg :pjp.getArgs()){
             if(arg instanceof User && username != null && !username.isEmpty()) {
                 User user = userRepository.findOne(username);
-                ((User) arg).setUsername(user.getUsername());
-                ((User) arg).setEnabled(user.isEnabled());
-                ((User) arg).setUserRole(user.getUserRole());
+                if (user != null) {
+                    ((User) arg).setUsername(user.getUsername());
+                    ((User) arg).setEnabled(user.isEnabled());
+                    ((User) arg).setUserRole(user.getUserRole());
+                }
             }
         }
 

@@ -8,13 +8,26 @@ define([
 	'Session'
 ], function($, Backbone, backboneValidation, jquerySerializeObject, Router, Session){
 
+	var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" style="display: block; margin: auto;"/></div></div>');
+	var callServers = 0;
+
 	var ApplicationModel = Backbone.Model.extend({
 
 	    start : function(){
-	    	Backbone.history.start();
             var router = new Router();
+			Backbone.history.start();
 
 			$.ajaxSetup({
+				beforeSend: function() {
+					pleaseWaitDiv.modal('show');
+					callServers = callServers + 1;
+				},
+				complete: function(){
+					if (callServers == 1) {
+						pleaseWaitDiv.modal('hide');
+					}
+					callServers = callServers - 1;
+				},
 				statusCode: {
 					401: function(){
 						// Redirec the to the login page.
@@ -27,6 +40,8 @@ define([
 					}
 				}
 			});
+
+			var router = new Router();
 
 			// Extend the callbacks to work with Bootstrap, as used in this example
             // See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks

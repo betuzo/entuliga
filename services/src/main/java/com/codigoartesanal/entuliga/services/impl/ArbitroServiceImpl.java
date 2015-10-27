@@ -7,6 +7,7 @@ import com.codigoartesanal.entuliga.services.ArbitroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -102,11 +103,11 @@ public class ArbitroServiceImpl implements ArbitroService {
         geoLocation.setCodigoPostal(arbitroMap.get(PROPERTY_CODIGO_POSTAL));
         String latitude = arbitroMap.get(PROPERTY_LATITUDE);
         if (latitude != null && !latitude.isEmpty()) {
-            geoLocation.setLatitude(Double.parseDouble(latitude));
+            geoLocation.setLatitude(BigDecimal.valueOf(Double.parseDouble(latitude)));
         }
         String longitude = arbitroMap.get(PROPERTY_LONGITUDE);
         if (longitude != null && !longitude.isEmpty()) {
-            geoLocation.setLongitude(Double.parseDouble(longitude));
+            geoLocation.setLongitude(BigDecimal.valueOf(Double.parseDouble(longitude)));
         }
         Colonia colonia = new Colonia();
         colonia.setId(Long.valueOf(arbitroMap.get(PROPERTY_COLONIA_ID)));

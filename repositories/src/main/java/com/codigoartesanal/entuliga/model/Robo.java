@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Robo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="robo_id_seq")
+    @SequenceGenerator(name="robo_id_seq", sequenceName="robo_id_seq")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "partido_id", nullable = false)

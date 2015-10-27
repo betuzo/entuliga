@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Entity
 public class Enceste {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="enceste_id_seq")
+    @SequenceGenerator(name="enceste_id_seq", sequenceName="enceste_id_seq")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "partido_id", nullable = false)
@@ -22,6 +23,7 @@ public class Enceste {
     @ManyToOne
     @JoinColumn(name = "tirador_id", nullable = false)
     private TorneoJugador tirador;
+    private Integer valor;
 
     public Long getId() {
         return id;
@@ -79,6 +81,14 @@ public class Enceste {
         this.tirador = tirador;
     }
 
+    public Integer getValor() {
+        return valor;
+    }
+
+    public void setValor(Integer valor) {
+        this.valor = valor;
+    }
+
     public String getTiempoDescripcion(){
         return " " + minuto + " : " + segundo;
     }
@@ -91,6 +101,7 @@ public class Enceste {
                 ", minuto=" + minuto +
                 ", segundo=" + segundo +
                 ", tipo=" + tipo +
+                ", valor=" + valor +
                 ", origen=" + origen +
                 ", tirador=" + tirador +
                 '}';

@@ -9,7 +9,8 @@ import java.util.Set;
 @Entity
 public class Municipio {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="municipio_id_seq")
+    @SequenceGenerator(name="municipio_id_seq", sequenceName="municipio_id_seq")
     private Long id;
     private String nombre;
     @Column(name = "nombre_oficial")

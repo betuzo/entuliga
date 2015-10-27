@@ -1,15 +1,7 @@
 package com.codigoartesanal.entuliga.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 @Entity
 @Table(	name = "USER_ROLE",
@@ -18,7 +10,8 @@ import javax.persistence.JoinColumn;
 public class UserRole{
  
  	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="userrole_id_seq")
+	@SequenceGenerator(name="userrole_id_seq", sequenceName="userrole_id_seq")
 	private Long id;
 	@ManyToOne
 	@JoinColumn(name = "username", nullable = false)
