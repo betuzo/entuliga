@@ -14,8 +14,8 @@ define([
 	var ApplicationModel = Backbone.Model.extend({
 
 	    start : function(){
-	    	Backbone.history.start();
             var router = new Router();
+			Backbone.history.start();
 
 			$.ajaxSetup({
 				beforeSend: function() {

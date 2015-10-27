@@ -63,17 +63,12 @@ define([
         },
 
         initialize: function () {
-            this.main();
-            this.mainNav();
-        },
-
-        mainNav: function() {
-            new MainNavView();
         },
 
         main: function() {
             var view = new MainView();
             this.changeView(view);
+            new MainNavView();
         },
 
         login: function() {
@@ -81,14 +76,10 @@ define([
             this.changeView(view);
         },
 
-        mainAdminNav: function() {
-            new MainAdminNavView();
-        },
-
         admin: function() {
             var view = new MainAdminView();
             this.changeView(view);
-            this.mainAdminNav();
+            new MainAdminNavView();
         },
 
         adminLigas: function() {
