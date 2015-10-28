@@ -6,7 +6,7 @@ security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
 spring:
-  profiles.active: prepro
+  profiles.active: dev
 
 ---
 spring:
@@ -22,6 +22,8 @@ backend:
     username: backendadmin
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
+
+entuliga.web.pathPhoto: file:/Users/betuzo/opt/photo/
 
 ---
 spring:
@@ -43,3 +45,5 @@ backend:
     username: backendadmin
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
+
+entuliga.web.pathPhoto: /home/betuzo/opt/boot/prod/photo/

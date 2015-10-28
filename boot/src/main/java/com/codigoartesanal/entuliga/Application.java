@@ -1,5 +1,6 @@
 package com.codigoartesanal.entuliga;
 
+import com.codigoartesanal.entuliga.config.WebConfig;
 import com.codigoartesanal.entuliga.config.infrastructure.InfrastructureConfig;
 import com.codigoartesanal.entuliga.config.PersistenceConfig;
 import com.codigoartesanal.entuliga.config.ServicesConfig;
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan(basePackages = { "com.codigoartesanal.entuliga.controller" })
-@Import({ PersistenceConfig.class, ServicesConfig.class, SecurityConfig.class, InfrastructureConfig.class})
+@Import({ WebConfig.class, PersistenceConfig.class, ServicesConfig.class, SecurityConfig.class, InfrastructureConfig.class})
 @EnableAutoConfiguration
 @EnableConfigurationProperties
 public class Application {
