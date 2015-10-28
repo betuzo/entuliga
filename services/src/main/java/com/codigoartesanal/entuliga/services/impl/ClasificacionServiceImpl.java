@@ -4,6 +4,8 @@ import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.view.Clasificacion;
 import com.codigoartesanal.entuliga.repositories.view.ClasificacionRepository;
 import com.codigoartesanal.entuliga.services.ClasificacionService;
+import com.codigoartesanal.entuliga.services.PhotoService;
+import com.codigoartesanal.entuliga.services.TipoPhoto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class ClasificacionServiceImpl implements ClasificacionService {
 
     @Autowired
     ClasificacionRepository clasificacionRepository;
+
+    @Autowired
+    PhotoService photoService;
 
     @Override
     public List<Map<String, Object>> listClasificacionByTorneo(Long idTorneo) {
@@ -37,7 +42,11 @@ public class ClasificacionServiceImpl implements ClasificacionService {
 
         map.put(PROPERTY_EQUIPO_ID, clasificacion.getEquipo().getId());
         map.put(PROPERTY_EQUIPO_NOMBRE, clasificacion.getEquipo().getEquipo().getNombre());
+        map.put(PROPERTY_EQUIPO_LOGO,
+                photoService.getValidPath(clasificacion.getEquipo().getEquipo().getRutaLogoEquipo(), TipoPhoto.EQUIPO));
         map.put(PROPERTY_TORNEO_ID, clasificacion.getTorneo().getId());
+
+
         map.put(PROPERTY_PUNTOS_LOCAL, clasificacion.getPuntosLocal());
         map.put(PROPERTY_PUNTOS_LOCAL_CONTRA, clasificacion.getPuntosLocalContra());
         map.put(PROPERTY_GANADOS_LOCAL, clasificacion.getGanadosLocal());
