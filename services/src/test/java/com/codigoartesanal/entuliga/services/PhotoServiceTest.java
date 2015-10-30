@@ -2,6 +2,7 @@ package com.codigoartesanal.entuliga.services;
 
 import com.codigoartesanal.entuliga.config.PersistenceConfig;
 import com.codigoartesanal.entuliga.config.ServicesConfig;
+import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,52 +23,102 @@ public class PhotoServiceTest {
     PhotoService photoService;
 
     @Test
-    public void testNullPathEquipo() {
-        String path = photoService.getValidPath(null, TipoPhoto.EQUIPO);
+    public void testNullPathEquipoDefault() {
+        String path = photoService.getValidPathLogo(null, null);
         Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT.getPath().equals(path));
+    }
+
+    @Test
+    public void testNullPathEquipoLocal() {
+        String path = photoService.getValidPathLogo(null, OrigenEstadistica.LOCAL);
+        Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT_LOCAL.getPath().equals(path));
+    }
+
+    @Test
+    public void testNullPathEquipoVisita() {
+        String path = photoService.getValidPathLogo(null, OrigenEstadistica.VISITA);
+        Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT_VISITA.getPath().equals(path));
     }
 
     @Test
     public void testNullPathJugador() {
-        String path = photoService.getValidPath(null, TipoPhoto.JUGADOR);
+        String path = photoService.getValidPathFoto(null);
         Assert.assertTrue(PathPhoto.JUGADOR_DEFAULT.getPath().equals(path));
     }
 
     @Test
-    public void testEmptyPathEquipo() {
-        String path = photoService.getValidPath("", TipoPhoto.EQUIPO);
+    public void testEmptyPathEquipoDefault() {
+        String path = photoService.getValidPathLogo("", null);
         Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT.getPath().equals(path));
+    }
+
+    @Test
+    public void testEmptyPathEquipoLocal() {
+        String path = photoService.getValidPathLogo("", OrigenEstadistica.LOCAL);
+        Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT_LOCAL.getPath().equals(path));
+    }
+
+    @Test
+    public void testEmptyPathEquipoVisita() {
+        String path = photoService.getValidPathLogo("", OrigenEstadistica.VISITA);
+        Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT_VISITA.getPath().equals(path));
     }
 
     @Test
     public void testEmptyPathJugador() {
-        String path = photoService.getValidPath("", TipoPhoto.JUGADOR);
+        String path = photoService.getValidPathFoto("");
         Assert.assertTrue(PathPhoto.JUGADOR_DEFAULT.getPath().equals(path));
     }
 
     @Test
-    public void testInvalidPathEquipo() {
-        String path = photoService.getValidPath("sadasd", TipoPhoto.EQUIPO);
+    public void testInvalidPathEquipoDefault() {
+        String path = photoService.getValidPathLogo("sadasd", null);
         Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT.getPath().equals(path));
     }
 
     @Test
+    public void testInvalidPathEquipoLocal() {
+        String path = photoService.getValidPathLogo("sadasd", OrigenEstadistica.LOCAL);
+        Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT_LOCAL.getPath().equals(path));
+    }
+
+    @Test
+    public void testInvalidPathEquipoVisita() {
+        String path = photoService.getValidPathLogo("sadasd", OrigenEstadistica.VISITA);
+        Assert.assertTrue(PathPhoto.EQUIPO_DEFAULT_VISITA.getPath().equals(path));
+    }
+
+    @Test
     public void testInvalidPathJugador() {
-        String path = photoService.getValidPath("asdas", TipoPhoto.JUGADOR);
+        String path = photoService.getValidPathFoto("asdas");
         Assert.assertTrue(PathPhoto.JUGADOR_DEFAULT.getPath().equals(path));
     }
 
     @Test
-    public void testValidPathEquipo() {
+    public void testValidPathEquipoDefault() {
         String name = "equipo-test.svg";
-        String path = photoService.getValidPath(name, TipoPhoto.EQUIPO);
+        String path = photoService.getValidPathLogo(name, null);
+        Assert.assertTrue(path.contains(name));
+    }
+
+    @Test
+    public void testValidPathEquipoLocal() {
+        String name = "equipo-test.svg";
+        String path = photoService.getValidPathLogo(name, OrigenEstadistica.LOCAL);
+        Assert.assertTrue(path.contains(name));
+    }
+
+    @Test
+    public void testValidPathEquipoVisita() {
+        String name = "equipo-test.svg";
+        String path = photoService.getValidPathLogo(name, OrigenEstadistica.VISITA);
         Assert.assertTrue(path.contains(name));
     }
 
     @Test
     public void testValidPathJugador() {
         String name = "jugador-test.png";
-        String path = photoService.getValidPath(name, TipoPhoto.JUGADOR);
+        String path = photoService.getValidPathFoto(name);
         Assert.assertTrue(path.contains(name));
     }
 

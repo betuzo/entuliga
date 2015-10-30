@@ -5,7 +5,6 @@ import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.repositories.JugadorRepository;
 import com.codigoartesanal.entuliga.services.JugadorService;
 import com.codigoartesanal.entuliga.services.PhotoService;
-import com.codigoartesanal.entuliga.services.TipoPhoto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +67,7 @@ public class JugadorServiceImpl implements JugadorService {
         map.put(PROPERTY_NOMBRE, jugador.getNombre());
         map.put(PROPERTY_PATERNO, jugador.getPaterno());
         map.put(PROPERTY_MATERNO, jugador.getMaterno());
-        map.put(PROPERTY_RUTA_FOTO, photoService.getValidPath(jugador.getRutaFoto(), TipoPhoto.JUGADOR));
+        map.put(PROPERTY_RUTA_FOTO, photoService.getValidPathFoto(jugador.getRutaFoto()));
         map.put(PROPERTY_SEXO, jugador.getSexo());
         map.put(PROPERTY_FECHA_REGISTRO, jugador.getFechaRegistro());
         if (jugador.getGeoLocation() == null)

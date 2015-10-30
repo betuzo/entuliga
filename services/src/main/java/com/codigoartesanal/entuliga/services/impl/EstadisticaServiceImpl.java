@@ -5,7 +5,6 @@ import com.codigoartesanal.entuliga.model.dto.EstadisticaJugadorDTO;
 import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.EstadisticaService;
 import com.codigoartesanal.entuliga.services.PhotoService;
-import com.codigoartesanal.entuliga.services.TipoPhoto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,8 +39,8 @@ public class EstadisticaServiceImpl implements EstadisticaService{
         estadisticasTodas.addAll(torneoRepository.findLimitLideresRobosByTorneo(torneo, pageable));
 
         for(EstadisticaJugadorDTO dto : estadisticasTodas){
-            dto.setFotoJugador(photoService.getValidPath(dto.getFotoJugador(), TipoPhoto.JUGADOR));
-            dto.setLogoEquipo(photoService.getValidPath(dto.getLogoEquipo(), TipoPhoto.EQUIPO));
+            dto.setFotoJugador(photoService.getValidPathFoto(dto.getFotoJugador()));
+            dto.setLogoEquipo(photoService.getValidPathLogo(dto.getLogoEquipo(), null));
         }
 
         return estadisticasTodas;

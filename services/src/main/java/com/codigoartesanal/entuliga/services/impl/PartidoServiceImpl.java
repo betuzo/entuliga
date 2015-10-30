@@ -7,7 +7,6 @@ import com.codigoartesanal.entuliga.repositories.TorneoCanchaRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
 import com.codigoartesanal.entuliga.services.PartidoService;
 import com.codigoartesanal.entuliga.services.PhotoService;
-import com.codigoartesanal.entuliga.services.TipoPhoto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -113,14 +112,14 @@ public class PartidoServiceImpl implements PartidoService {
         map.put(PROPERTY_LOCAL_NOMBRE, partido.getLocal().getEquipo().getNombre());
         map.put(PROPERTY_LOCAL_ALIAS, partido.getLocal().getEquipo().getAliasEquipo());
         String logoLocal =
-                photoService.getValidPath(partido.getLocal().getEquipo().getRutaLogoEquipo(), TipoPhoto.EQUIPO);
+                photoService.getValidPathLogo(partido.getLocal().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.LOCAL);
         map.put(PROPERTY_LOCAL_LOGO, logoLocal);
         map.put(PROPERTY_LOCAL_PUNTOS, partido.getPuntosLocal());
         map.put(PROPERTY_VISITANTE_ID, partido.getVisitante().getId());
         map.put(PROPERTY_VISITANTE_NOMBRE, partido.getVisitante().getEquipo().getNombre());
         map.put(PROPERTY_VISITANTE_ALIAS, partido.getVisitante().getEquipo().getAliasEquipo());
         String logoVisita =
-                photoService.getValidPath(partido.getVisitante().getEquipo().getRutaLogoEquipo(), TipoPhoto.EQUIPO);
+                photoService.getValidPathLogo(partido.getVisitante().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.VISITA);
         map.put(PROPERTY_VISITANTE_LOGO, logoVisita);
         map.put(PROPERTY_VISITANTE_PUNTOS, partido.getPuntosVisitante());
         map.put(PROPERTY_CANCHA_ID, partido.getCancha().getId());
