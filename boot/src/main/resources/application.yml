@@ -6,7 +6,7 @@ security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
 spring:
-  profiles.active: dev
+  profiles.active: prepro
 
 ---
 spring:
