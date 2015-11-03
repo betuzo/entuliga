@@ -1,1 +1,1 @@
-web: ./boot/build/install/boot/bin/boot
+web: ./boot/build/install/boot/bin/bootsa
