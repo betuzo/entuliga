@@ -1,1 +1,1 @@
-web: ./gradlew run
+web: ./boot/build/install/boot/bin/boot
