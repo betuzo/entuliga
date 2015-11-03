@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar  boot/build/libs/dtuliga-0.0.1.jar
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar  boot/build/libs/entuliga-0.0.1.jar
