@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar  boot/build/libs/entuliga-0.0.1.jar com/codigoartesanal/entuliga/Application
+web: java -Dserver.port=$PORT -jar  boot/build/libs/entuliga-0.0.1.jar
