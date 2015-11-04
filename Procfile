@@ -1,1 +1,1 @@
-web: ./gradlew clean
+web: ./gradlew clean build
