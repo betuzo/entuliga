@@ -1,3 +1,5 @@
+.gradle
+
 .idea/
 build/
 *.log
@@ -18,5 +20,12 @@ services/*.iml
 services/build/
 services/*.log
 
+gradle/wrapper/gradle-wrapper.jar
+
+gradle/wrapper/gradle-wrapper.properties
+
+gradlew
+
+gradlew.bat
 
 .DS_Store
