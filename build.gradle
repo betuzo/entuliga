@@ -142,17 +142,8 @@ project(":boot") {
         compile fileTree(dir: 'lib', include: ['*.jar'])
     }
 
-    jar {
-        baseName = 'entuliga'
-
-        manifest {
-            attributes 'Main-Class': 'org.springframework.boot.loader.JarLauncher'
-            attributes 'Start-Class': 'com.codigoartesanal.entuliga.Application'
-        }
-    }
-
     task wrapper(type: Wrapper) {
-        gradleVersion = '2.1'
+        gradleVersion = '2.0'
     }
 
     task stage(dependsOn: ['clean', 'build', 'installApp'])
