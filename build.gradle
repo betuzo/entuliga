@@ -69,7 +69,7 @@ project(":services") {
   }
 }
 
-project(":boot") {
+project(":controllers") {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
