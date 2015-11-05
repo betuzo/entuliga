@@ -146,8 +146,10 @@ project(":controllers") {
         baseName = 'entuliga'
 
         manifest {
-            attributes 'Main-Class': 'org.springframework.boot.loader.JarLauncher'
-            attributes 'Start-Class': 'com.codigoartesanal.entuliga.Application'
+            attributes('Main-Class': 'org.springframework.boot.loader.JarLauncher',
+                    'Start-Class': 'com.codigoartesanal.entuliga.Application',
+                    'Implementation-Title': 'Gradle',
+                    'Implementation-Version': version)
         }
     }
 
