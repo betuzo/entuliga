@@ -1,1 +1,1 @@
-web: ./gradlew build
+web: java -Dserver.port=$PORT -jar controllers/build/libs/*.jar
