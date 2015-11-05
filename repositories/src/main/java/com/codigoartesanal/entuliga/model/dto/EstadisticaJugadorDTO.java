@@ -17,7 +17,9 @@ public class EstadisticaJugadorDTO {
     private Long idTorneoJugador;
     private Long idJugador;
     private String nombreJugador;
+    private String fotoJugador;
     private String nombreEquipo;
+    private String logoEquipo;
 
     public EstadisticaJugadorDTO(
             TorneoEquipo torneoEquipo, Equipo equipo, TorneoJugador torneoJugador,
@@ -30,7 +32,9 @@ public class EstadisticaJugadorDTO {
         this.idTorneoJugador = torneoJugador.getId();
         this.idJugador = jugador.getId();
         this.nombreEquipo = equipo.getNombre();
+        this.logoEquipo = equipo.getRutaLogoEquipo();
         this.nombreJugador = jugador.getNombreCompleto();
+        this.fotoJugador = jugador.getRutaFoto();
     }
 
     public Long getValor() {
@@ -89,11 +93,27 @@ public class EstadisticaJugadorDTO {
         this.nombreJugador = nombreJugador;
     }
 
+    public String getFotoJugador() {
+        return fotoJugador;
+    }
+
+    public void setFotoJugador(String fotoJugador) {
+        this.fotoJugador = fotoJugador;
+    }
+
     public String getNombreEquipo() {
         return nombreEquipo;
     }
 
     public void setNombreEquipo(String nombreEquipo) {
         this.nombreEquipo = nombreEquipo;
+    }
+
+    public String getLogoEquipo() {
+        return logoEquipo;
+    }
+
+    public void setLogoEquipo(String logoEquipo) {
+        this.logoEquipo = logoEquipo;
     }
 }

@@ -10,6 +10,7 @@ public interface ClasificacionService {
     public static final String PROPERTY_EQUIPO_ID               = "equipoId";
     public static final String PROPERTY_TORNEO_ID               = "torneoId";
     public static final String PROPERTY_EQUIPO_NOMBRE           = "equipoNombre";
+    public static final String PROPERTY_EQUIPO_LOGO             = "equipoLogo";
 
     public static final String PROPERTY_PUNTOS_LOCAL            = "puntosLocal";
     public static final String PROPERTY_PUNTOS_LOCAL_CONTRA     = "puntosLocalContra";

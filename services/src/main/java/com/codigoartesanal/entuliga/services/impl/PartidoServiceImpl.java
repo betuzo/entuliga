@@ -6,6 +6,7 @@ import com.codigoartesanal.entuliga.repositories.PartidoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoCanchaRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
 import com.codigoartesanal.entuliga.services.PartidoService;
+import com.codigoartesanal.entuliga.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class PartidoServiceImpl implements PartidoService {
 
     @Autowired
     JornadaRepository jornadaRepository;
+
+    @Autowired
+    PhotoService photoService;
 
     @Override
     public List<Map<String, Object>> listPartidoByJornada(Long idJornada) {
@@ -107,10 +111,16 @@ public class PartidoServiceImpl implements PartidoService {
         map.put(PROPERTY_LOCAL_ID, partido.getLocal().getId());
         map.put(PROPERTY_LOCAL_NOMBRE, partido.getLocal().getEquipo().getNombre());
         map.put(PROPERTY_LOCAL_ALIAS, partido.getLocal().getEquipo().getAliasEquipo());
+        String logoLocal =
+                photoService.getValidPathLogo(partido.getLocal().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.LOCAL);
+        map.put(PROPERTY_LOCAL_LOGO, logoLocal);
         map.put(PROPERTY_LOCAL_PUNTOS, partido.getPuntosLocal());
         map.put(PROPERTY_VISITANTE_ID, partido.getVisitante().getId());
         map.put(PROPERTY_VISITANTE_NOMBRE, partido.getVisitante().getEquipo().getNombre());
         map.put(PROPERTY_VISITANTE_ALIAS, partido.getVisitante().getEquipo().getAliasEquipo());
+        String logoVisita =
+                photoService.getValidPathLogo(partido.getVisitante().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.VISITA);
+        map.put(PROPERTY_VISITANTE_LOGO, logoVisita);
         map.put(PROPERTY_VISITANTE_PUNTOS, partido.getPuntosVisitante());
         map.put(PROPERTY_CANCHA_ID, partido.getCancha().getId());
         map.put(PROPERTY_CANCHA_NOMBRE, partido.getCancha().getCancha().getNombre());

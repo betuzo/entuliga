@@ -12,4 +12,5 @@ INSERT INTO JUGADOR (ID, ADMIN_ID, NOMBRE, PATERNO, MATERNO, RUTA_FOTO, SEXO, FE
 (11, 'hgonzalez', 'Héctor Iván', 'González', 'Castaño', 'asdassd', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 2),
 (12, 'cmontoya', 'Carlos Mario', 'Montoya', 'Serna', 'asdassd', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 2),
 (13, 'atabares', 'Arturo', 'Tabares', 'Mora', 'asdassd', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 2),
-(14, 'jlopez', 'Jaime', 'Lopez', 'Tobón', 'asdassd', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 2);
+(14, 'jlopez', 'Jaime', 'Lopez', 'Tobón', 'asdassd', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 2),
+(15, 'jperez', 'Juan', 'Perez', 'Cruz', 'asdassd', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 2);

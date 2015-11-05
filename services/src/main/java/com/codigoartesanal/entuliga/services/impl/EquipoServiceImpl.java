@@ -5,6 +5,7 @@ import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.repositories.EquipoRepository;
 import com.codigoartesanal.entuliga.services.EquipoService;
+import com.codigoartesanal.entuliga.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class EquipoServiceImpl implements EquipoService {
 
     @Autowired
     EquipoRepository equipoRepository;
+
+    @Autowired
+    PhotoService photoService;
 
     @Override
     public Map<String, Object> createEquipo(Map<String, String> equipoMap, User admin) {
@@ -58,7 +62,7 @@ public class EquipoServiceImpl implements EquipoService {
         map.put(PROPERTY_ID, equipo.getId());
         map.put(PROPERTY_NOMBRE, equipo.getNombre());
         map.put(PROPERTY_ALIAS_EQUIPO, equipo.getAliasEquipo());
-        map.put(PROPERTY_RUTA_LOGO_EQUIPO, equipo.getRutaLogoEquipo());
+        map.put(PROPERTY_RUTA_LOGO_EQUIPO, photoService.getValidPathLogo(equipo.getRutaLogoEquipo(), null));
         return map;
     }
 
