@@ -78,8 +78,7 @@ project(":controllers") {
     apply plugin: 'war'
 
     war {
-        baseName = 'entuligas'
-        version =  '0.0.1'
+
     }
 
     sourceCompatibility = 1.7
