@@ -75,11 +75,6 @@ project(":controllers") {
     apply plugin: 'idea'
     apply plugin: 'spring-boot'
     apply plugin: 'application'
-    apply plugin: 'war'
-
-    war {
-
-    }
 
     sourceCompatibility = 1.7
 
