@@ -1,2 +1,2 @@
-include 'repositories', 'services', 'controllers'
+include 'repositories', 'services', 'web'
 
