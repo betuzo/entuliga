@@ -75,7 +75,13 @@ project(":controllers") {
     apply plugin: 'idea'
     apply plugin: 'spring-boot'
     apply plugin: 'application'
+    apply plugin: 'war'
 
+    war {
+        baseName = 'entuliga'
+        version =  '0.0.1'
+    }
+    
     sourceCompatibility = 1.7
 
     compileJava {
