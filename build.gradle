@@ -147,21 +147,6 @@ project(":controllers") {
         compile fileTree(dir: 'lib', include: ['*.jar'])
     }
 
-    jar {
-        baseName = 'entuliga'
-
-        manifest {
-            attributes('Main-Class': 'org.springframework.boot.loader.JarLauncher',
-                    'Start-Class': 'com.codigoartesanal.entuliga.Application',
-                    'Implementation-Title': 'Gradle',
-                    'Implementation-Version': version)
-        }
-    }
-
-    task wrapper(type: Wrapper) {
-        gradleVersion = '2.0'
-    }
-
     task stage(type: Copy, dependsOn: [clean, build]) {
         from jar.archivePath
         into project.rootDir
