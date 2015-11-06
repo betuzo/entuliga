@@ -1,18 +1,22 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.PhotoService;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,10 +30,20 @@ public class FileUploadController {
     @Resource
     Environment env;
 
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> uploadFileHandler(@RequestParam("name") String name,
-                             @RequestParam("file") MultipartFile file) {
+    public Map<String, String> addFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (!ServletFileUpload.isMultipartContent(request)) {
+
+            if (!(request instanceof StandardMultipartHttpServletRequest)){
+                throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
+            }
+        }
+
+        StandardMultipartHttpServletRequest dmhsRequest = (StandardMultipartHttpServletRequest) request ;
+        MultipartFile file = (MultipartFile) dmhsRequest.getFile("filelogo");
+        String name = file.getName();
+
         Map<String, String> result = new HashMap<>();
         if (!file.isEmpty()) {
             try {

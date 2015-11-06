@@ -28,14 +28,12 @@ define([
             this.model.once("sync", this.saveEquipoSuccess);
             this.model.once("error", this.saveEquipoError);
             Backbone.Validation.bind(this);
-
-            this.setUp();
         },
 
         setUp: function() {
             $('#file-es').fileinput({
                 language: 'es',
-                uploadUrl: '#',
+                uploadUrl: 'fileUpload',
                 allowedFileExtensions : ['jpg', 'png','gif'],
             });
         },
