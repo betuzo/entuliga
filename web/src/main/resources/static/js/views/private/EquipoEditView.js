@@ -3,11 +3,13 @@ define([
 	'backbone',
 	'backboneValidation',
 	'jquerySerializeObject',
+	'fileinput',
+	'fileinputes',
 	'models/EquipoModel',
 	'core/BaseView',
 	'text!templates/private/tplEquipoEdit.html'
 ], function($, Backbone, backboneValidation, jquerySerializeObject,
-            EquipoModel, BaseView, tplEquipoEdit){
+            fileinput, fileinputes, EquipoModel, BaseView, tplEquipoEdit){
 
 	var EquipoEditView = BaseView.extend({
         template: _.template(tplEquipoEdit),
@@ -26,6 +28,16 @@ define([
             this.model.once("sync", this.saveEquipoSuccess);
             this.model.once("error", this.saveEquipoError);
             Backbone.Validation.bind(this);
+
+            this.setUp();
+        },
+
+        setUp: function() {
+            $('#file-es').fileinput({
+                language: 'es',
+                uploadUrl: '#',
+                allowedFileExtensions : ['jpg', 'png','gif'],
+            });
         },
 
         remove: function() {
