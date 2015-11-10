@@ -5,6 +5,7 @@ import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.repositories.EquipoRepository;
 import com.codigoartesanal.entuliga.services.EquipoService;
+import com.codigoartesanal.entuliga.services.PathPhoto;
 import com.codigoartesanal.entuliga.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,12 +58,20 @@ public class EquipoServiceImpl implements EquipoService {
         return copy;
     }
 
+    @Override
+    public void updateLogoByEquipo(String logo, Long idEquipo) {
+        equipoRepository.updateLogoByIdEquipo(logo, idEquipo);
+    }
+
     private Map<String, Object> convertEquipoToMap(Equipo equipo) {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, equipo.getId());
         map.put(PROPERTY_NOMBRE, equipo.getNombre());
         map.put(PROPERTY_ALIAS_EQUIPO, equipo.getAliasEquipo());
-        map.put(PROPERTY_RUTA_LOGO_EQUIPO, photoService.getValidPathLogo(equipo.getRutaLogoEquipo(), null));
+        map.put(PROPERTY_LOGO_EQUIPO, equipo.getRutaLogoEquipo());
+        String pathWebFull = photoService.getValidPathWebLogo(equipo.getRutaLogoEquipo(), null);
+        map.put(PROPERTY_RUTA_LOGO_EQUIPO, pathWebFull);
+        map.put(PROPERTY_HAS_LOGO_EQUIPO, !pathWebFull.contains(PathPhoto.EQUIPO_DEFAULT.getPath()));
         return map;
     }
 

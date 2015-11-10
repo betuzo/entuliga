@@ -31,10 +31,26 @@ define([
         },
 
         setUp: function() {
+            var equipoId = this.model.get('id');
+            var logo = {};
+            var initPre = [];
+            var initPreConfig = [];
+
+            if (this.model.get('hasLogoEquipo')) {
+                logo = { logo: this.model.get('logoEquipo') };
+                initPre = ["<img src='" + this.model.get('rutaLogoEquipo') + "'>"];
+                initPreConfig = [ {caption: this.model.get('aliasEquipo'), url: "file/delete", key: equipoId} ];
+            }
+
             $('#file-es').fileinput({
                 language: 'es',
-                uploadUrl: 'fileUpload',
+                uploadUrl: 'file/upload',
                 allowedFileExtensions : ['jpg', 'png','gif'],
+                overwriteInitial: false,
+                initialPreview: initPre,
+                initialPreviewConfig: initPreConfig,
+                uploadExtraData: { equipoId: equipoId },
+                deleteExtraData: logo
             });
         },
 
