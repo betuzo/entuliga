@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.EquipoService;
+import com.codigoartesanal.entuliga.services.PathPhoto;
 import com.codigoartesanal.entuliga.services.PhotoService;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class FileUploadController {
                 equipoService.updateLogoByEquipo(nameLogo, idEquipo);
 
                 result.put("result", "success");
+                result.put("filename", photoService.getValidPathWebLogo(nameLogo, null));
             } catch (Exception e) {
                 result.put("result", "fail");
             }
@@ -68,7 +70,7 @@ public class FileUploadController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> deleteFile(@RequestParam("equipoId") Long idEquipo, @RequestParam("logo") String logo)
+    public Map<String, String> deleteFile(@RequestParam("key") Long idEquipo, @RequestParam("logo") String logo)
             throws IOException {
         Map<String, String> result = new HashMap<>();
 
@@ -76,7 +78,7 @@ public class FileUploadController {
         equipoService.updateLogoByEquipo("", idEquipo);
 
         result.put("result", "success");
-
+        result.put("defaultname", PathPhoto.EQUIPO_DEFAULT.getPath());
         return result;
     }
 }

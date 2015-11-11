@@ -31,27 +31,51 @@ define([
         },
 
         setUp: function() {
+            app.equipoEdit = this;
             var equipoId = this.model.get('id');
             var logo = {};
             var initPre = [];
-            var initPreConfig = [];
+            var initPreConfig = [ {caption: this.model.get('aliasEquipo'), width: "120px", url: "file/delete", key: equipoId} ];
 
             if (this.model.get('hasLogoEquipo')) {
                 logo = { logo: this.model.get('logoEquipo') };
                 initPre = ["<img src='" + this.model.get('rutaLogoEquipo') + "'>"];
-                initPreConfig = [ {caption: this.model.get('aliasEquipo'), url: "file/delete", key: equipoId} ];
             }
 
             $('#file-es').fileinput({
                 language: 'es',
                 uploadUrl: 'file/upload',
-                allowedFileExtensions : ['jpg', 'png','gif'],
-                overwriteInitial: false,
+                previewFileType: "image",
+                browseClass: "btn btn-success",
+                browseLabel: "Pick Image",
+                browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+                removeClass: "btn btn-danger",
+                removeLabel: "Delete",
+                removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+                uploadClass: "btn btn-info",
+                uploadLabel: "Upload",
+                uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> ",
+                maxFileCount: 1,
                 initialPreview: initPre,
                 initialPreviewConfig: initPreConfig,
                 uploadExtraData: { equipoId: equipoId },
                 deleteExtraData: logo
             });
+
+            $('#file-es').on('fileuploaded', function(event, data, previewId, index) {
+                var form = data.form, files = data.files, extra = data.extra,
+                    response = data.response, reader = data.reader;
+                console.log('File uploaded triggered');
+                app.equipoEdit.model.set({hasLogoEquipo: true});
+                app.equipoEdit.model.set({rutaLogoEquipo: data.response.filename});
+            });
+
+            $('#file-es').on('filedeleted', function(event, id, index) {
+                console.log('fileremoved id = ' + id);
+                app.equipoEdit.model.set({hasLogoEquipo: false});
+                app.equipoEdit.model.set({rutaLogoEquipo: index.responseJSON.defaultname});
+            });
+
         },
 
         remove: function() {

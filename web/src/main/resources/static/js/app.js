@@ -23,7 +23,7 @@ define([
 					callServers = callServers + 1;
 				},
 				complete: function(){
-					if (callServers == 1) {
+					if (callServers =< 1) {
 						pleaseWaitDiv.modal('hide');
 					}
 					callServers = callServers - 1;

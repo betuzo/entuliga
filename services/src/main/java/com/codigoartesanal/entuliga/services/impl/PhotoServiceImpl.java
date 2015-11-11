@@ -30,7 +30,7 @@ public class PhotoServiceImpl implements PhotoService {
         if (file == null || !file.exists()) {
             return PathPhoto.JUGADOR_DEFAULT.getPath();
         }
-        return PathPhoto.JUGADOR_BASE.getPath() + path;
+        return PathPhoto.PHOTO_BASE.getPath() + PathPhoto.JUGADOR_BASE.getPath() + path;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PhotoServiceImpl implements PhotoService {
         if (file == null || !file.exists()) {
             return pathDefault;
         }
-        return PathPhoto.EQUIPO_BASE.getPath() + path;
+        return PathPhoto.PHOTO_BASE.getPath() + PathPhoto.EQUIPO_BASE.getPath() + path;
     }
 
     @Override
