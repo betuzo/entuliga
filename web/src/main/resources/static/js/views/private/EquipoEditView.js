@@ -47,14 +47,8 @@ define([
                 uploadUrl: 'file/upload',
                 previewFileType: "image",
                 browseClass: "btn btn-success",
-                browseLabel: "Pick Image",
+                browseLabel: "Buscar",
                 browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
-                removeClass: "btn btn-danger",
-                removeLabel: "Delete",
-                removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
-                uploadClass: "btn btn-info",
-                uploadLabel: "Upload",
-                uploadIcon: "<i class=\"glyphicon glyphicon-upload\"></i> ",
                 maxFileCount: 1,
                 initialPreview: initPre,
                 initialPreviewConfig: initPreConfig,
@@ -67,13 +61,19 @@ define([
                     response = data.response, reader = data.reader;
                 console.log('File uploaded triggered');
                 app.equipoEdit.model.set({hasLogoEquipo: true});
-                app.equipoEdit.model.set({rutaLogoEquipo: data.response.filename});
+                app.equipoEdit.model.set({logoEquipo: data.response.filename});
+                app.equipoEdit.model.set({rutaLogoEquipo: data.response.pathfilename});
+                app.equipos.add(app.equipoEdit.model);
+                app.equipoEdit.setUp();
             });
 
             $('#file-es').on('filedeleted', function(event, id, index) {
                 console.log('fileremoved id = ' + id);
                 app.equipoEdit.model.set({hasLogoEquipo: false});
                 app.equipoEdit.model.set({rutaLogoEquipo: index.responseJSON.defaultname});
+                app.equipoEdit.model.set({logoEquipo: ''});
+                app.equipos.add(app.equipoEdit.model);
+                app.equipoEdit.setUp();
             });
 
         },

@@ -82,7 +82,7 @@ public class EquipoServiceImpl implements EquipoService {
         }
         equipo.setNombre(equipoMap.get(PROPERTY_NOMBRE));
         equipo.setAliasEquipo(equipoMap.get(PROPERTY_ALIAS_EQUIPO));
-        equipo.setRutaLogoEquipo(equipoMap.get(PROPERTY_RUTA_LOGO_EQUIPO));
+        equipo.setRutaLogoEquipo(equipoMap.get(PROPERTY_LOGO_EQUIPO));
         return equipo;
     }
 

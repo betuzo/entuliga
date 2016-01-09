@@ -23,7 +23,7 @@ backend:
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
 
-entuliga.web.pathPhoto: /home/betuzo/opt/photo/
+entuliga.web.pathPhoto: /Users/betuzo/opt/photo/
 
 ---
 spring:

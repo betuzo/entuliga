@@ -57,7 +57,8 @@ public class FileUploadController {
                 equipoService.updateLogoByEquipo(nameLogo, idEquipo);
 
                 result.put("result", "success");
-                result.put("filename", photoService.getValidPathWebLogo(nameLogo, null));
+                result.put("pathfilename", photoService.getValidPathWebLogo(nameLogo, null));
+                result.put("filename", nameLogo);
             } catch (Exception e) {
                 result.put("result", "fail");
             }
