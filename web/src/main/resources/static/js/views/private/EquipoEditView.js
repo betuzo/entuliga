@@ -3,13 +3,13 @@ define([
 	'backbone',
 	'backboneValidation',
 	'jquerySerializeObject',
-	'fileinput',
-	'fileinputes',
 	'models/EquipoModel',
+	'models/util/PhotoModel',
 	'core/BaseView',
+	'views/private/util/UploadFileView',
 	'text!templates/private/tplEquipoEdit.html'
-], function($, Backbone, backboneValidation, jquerySerializeObject,
-            fileinput, fileinputes, EquipoModel, BaseView, tplEquipoEdit){
+], function($, Backbone, backboneValidation, jquerySerializeObject, EquipoModel,
+                PhotoModel, BaseView, UploadFileView, tplEquipoEdit){
 
 	var EquipoEditView = BaseView.extend({
         template: _.template(tplEquipoEdit),
@@ -31,51 +31,28 @@ define([
         },
 
         setUp: function() {
-            app.equipoEdit = this;
-            var equipoId = this.model.get('id');
-            var logo = {};
-            var initPre = [];
-            var initPreConfig = [ {caption: this.model.get('aliasEquipo'), width: "120px", url: "file/delete", key: equipoId} ];
-
-            if (this.model.get('hasLogoEquipo')) {
-                logo = { logo: this.model.get('logoEquipo') };
-                initPre = ["<img src='" + this.model.get('rutaLogoEquipo') + "'>"];
-            }
-
-            $('#file-es').fileinput({
-                language: 'es',
-                uploadUrl: 'file/upload',
-                previewFileType: "image",
-                browseClass: "btn btn-success",
-                browseLabel: "Buscar",
-                browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
-                maxFileCount: 1,
-                initialPreview: initPre,
-                initialPreviewConfig: initPreConfig,
-                uploadExtraData: { equipoId: equipoId },
-                deleteExtraData: logo
+            var that = this;
+            var photo = new PhotoModel();
+            photo.set({pathLogo: this.model.get('rutaLogoEquipo')});
+            photo.set({hasLogo: this.model.get('hasLogoEquipo')});
+            photo.set({idLogo: this.model.get('id')});
+            photo.set({nameLogo: this.model.get('logoEquipo')});
+            var uploadFile = new UploadFileView({
+                modelo: photo,
+                callbackUpload:function (data) {
+                    that.model.set({hasLogoEquipo: true});
+                    that.model.set({rutaLogoEquipo: data.pathfilename});
+                    that.model.set({logoEquipo: data.filename});
+                    app.equipos.add(that.model);
+                },
+                callbackDelete:function (data) {
+                    that.model.set({hasLogoEquipo: false});
+                    that.model.set({rutaLogoEquipo: data.defaultname});
+                    that.model.set({logoEquipo: ''});
+                    app.equipos.add(that.model);
+                }
             });
-
-            $('#file-es').on('fileuploaded', function(event, data, previewId, index) {
-                var form = data.form, files = data.files, extra = data.extra,
-                    response = data.response, reader = data.reader;
-                console.log('File uploaded triggered');
-                app.equipoEdit.model.set({hasLogoEquipo: true});
-                app.equipoEdit.model.set({logoEquipo: data.response.filename});
-                app.equipoEdit.model.set({rutaLogoEquipo: data.response.pathfilename});
-                app.equipos.add(app.equipoEdit.model);
-                app.equipoEdit.setUp();
-            });
-
-            $('#file-es').on('filedeleted', function(event, id, index) {
-                console.log('fileremoved id = ' + id);
-                app.equipoEdit.model.set({hasLogoEquipo: false});
-                app.equipoEdit.model.set({rutaLogoEquipo: index.responseJSON.defaultname});
-                app.equipoEdit.model.set({logoEquipo: ''});
-                app.equipos.add(app.equipoEdit.model);
-                app.equipoEdit.setUp();
-            });
-
+            $('#upload-file').html(uploadFile.render().$el);
         },
 
         remove: function() {

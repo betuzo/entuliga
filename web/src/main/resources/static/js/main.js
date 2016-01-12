@@ -75,7 +75,7 @@ require.config({
         selecter: 'vendor/bootstrap/select/bootstrap-select.min',
         datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker',
         datetimepicker: 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
-        fileinput: 'vendor/bootstrap/fileinput/fileinput.min',
+        fileinput: 'vendor/bootstrap/fileinput/fileinput',
         fileinputes: 'vendor/bootstrap/fileinput/fileinput_locale_es',
         dateformat: 'vendor/date-format/date.format',
         bloodhound: 'vendor/typeahead/bloodhound',
