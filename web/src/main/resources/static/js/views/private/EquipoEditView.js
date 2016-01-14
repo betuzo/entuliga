@@ -44,12 +44,14 @@ define([
                     that.model.set({rutaLogoEquipo: data.pathfilename});
                     that.model.set({logoEquipo: data.filename});
                     app.equipos.add(that.model);
+                    $('#select-equipo').change();
                 },
                 callbackDelete:function (data) {
                     that.model.set({hasLogoEquipo: false});
                     that.model.set({rutaLogoEquipo: data.defaultname});
                     that.model.set({logoEquipo: ''});
                     app.equipos.add(that.model);
+                    $('#select-equipo').change();
                 }
             });
             $('#upload-file').html(uploadFile.render().$el);
