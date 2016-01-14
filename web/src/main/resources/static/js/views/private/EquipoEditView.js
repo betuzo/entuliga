@@ -30,7 +30,11 @@ define([
             Backbone.Validation.bind(this);
         },
 
-        setUp: function() {
+        setUpNew: function() {
+            $('#upload-file').html('<img class="avatar avatar-sm" src="photo/equipo/equipo-default.png">');
+        },
+
+        setUpEdit: function() {
             var that = this;
             var photo = new PhotoModel();
             photo.set({pathLogo: this.model.get('rutaLogoEquipo')});

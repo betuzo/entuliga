@@ -9,7 +9,7 @@ define([
         defaults: {
             nombre: '',
             aliasEquipo: '',
-            rutaLogoEquipo: ''
+            logoEquipo: 'novalid'
         },
 
         initialize: function() {
@@ -22,7 +22,7 @@ define([
             aliasEquipo: {
                 required: true
             },
-            rutaLogoEquipo: {
+            logoEquipo: {
                 required: true
             }
         }

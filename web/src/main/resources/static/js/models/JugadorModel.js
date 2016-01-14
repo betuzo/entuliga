@@ -11,7 +11,7 @@ define([
             paterno: '',
             materno: '',
             sexo: 'FEMENINO',
-            logoJugadpr: '',
+            logoJugadpr: 'novalid',
             fechaRegistro: (new Date()).getTime(),
             calle: '',
             noExterior: '',
