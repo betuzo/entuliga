@@ -20,6 +20,8 @@ define([
             this.model = opts.modelo;
             this.callbackUpload = opts.callbackUpload;
             this.callbackDelete = opts.callbackDelete;
+            this.urlUpload = opts.urlUpload;
+            this.urlDelete = opts.urlDelete;
         },
 
         render: function() {
@@ -60,28 +62,28 @@ define([
             var data = new FormData();
             data.append('key', this.model.get('idLogo'));
             data.append('logo', this.model.get('nameLogo'));
-            this.servicesRemote('delete', data, this.callbackDelete);
+            this.servicesRemote(this.urlDelete, data, this.callbackDelete);
         },
 
         confirmFile: function(){
             var picture = $('#file-es')[0].files[0];
             var data = new FormData();
             data.append('filelogo', picture);
-            data.append('equipoId', this.model.get('idLogo'));
-            this.servicesRemote('upload', data, this.callbackUpload);
+            data.append('id', this.model.get('idLogo'));
+            this.servicesRemote(this.urlUpload, data, this.callbackUpload);
         },
 
         servicesRemote: function(url, data, callback) {
             var that = this;
             $.ajax({
-                url: 'file/'+ url,
+                url: url,
                 data: data,
                 cache: false,
                 contentType: false,
                 processData: false,
                 type: 'POST',
                 success: function(data){
-                    if (this.url == 'file/delete'){
+                    if (this.url == that.urlDelete){
                         that.model.set({hasLogo: false});
                         that.previewPhoto.attr('src', data.defaultname);
                     } else {

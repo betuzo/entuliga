@@ -4,11 +4,14 @@ define([
 	'backboneValidation',
 	'jquerySerializeObject',
 	'models/JugadorModel',
+	'models/util/PhotoModel',
 	'core/BaseView',
 	'views/private/MainColoniaAdminView',
+	'views/private/util/UploadFileView',
 	'text!templates/private/tplJugadorEdit.html'
 ], function($, Backbone, backboneValidation, jquerySerializeObject,
-            JugadorModel, BaseView, MainColoniaAdminView, tplJugadorEdit){
+            JugadorModel, PhotoModel, BaseView, MainColoniaAdminView,
+            UploadFileView, tplJugadorEdit){
 
 	var JugadorEditView = BaseView.extend({
         template: _.template(tplJugadorEdit),
@@ -28,6 +31,35 @@ define([
             this.model.once("sync", this.saveJugadorSuccess);
             this.model.once("error", this.saveJugadorError);
             Backbone.Validation.bind(this);
+        },
+
+        setUp: function() {
+            var that = this;
+            var photo = new PhotoModel();
+            photo.set({pathLogo: this.model.get('rutaLogoJugador')});
+            photo.set({hasLogo: this.model.get('hasLogoJugador')});
+            photo.set({idLogo: this.model.get('id')});
+            photo.set({nameLogo: this.model.get('logoJugadpr')});
+            var uploadFile = new UploadFileView({
+                modelo: photo,
+                urlUpload: 'file/upload/foto',
+                urlDelete: 'file/delete/foto',
+                callbackUpload:function (data) {
+                    that.model.set({hasLogoJugador: true});
+                    that.model.set({rutaLogoJugador: data.pathfilename});
+                    that.model.set({logoJugadpr: data.filename});
+                    app.jugadores.add(that.model);
+                    $('#select-jugador').change();
+                },
+                callbackDelete:function (data) {
+                    that.model.set({hasLogoJugador: false});
+                    that.model.set({rutaLogoJugador: data.defaultname});
+                    that.model.set({logoJugadpr: ''});
+                    app.jugadores.add(that.model);
+                    $('#select-jugador').change();
+                }
+            });
+            $('#upload-file').html(uploadFile.render().$el);
         },
 
         remove: function() {

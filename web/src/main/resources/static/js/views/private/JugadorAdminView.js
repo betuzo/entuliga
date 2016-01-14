@@ -54,6 +54,7 @@ define([
             var modelo = app.jugadores.get($("#select-jugador").val());
             this.jugadorEditView = new JugadorEditView({tipo: 'edit', modelo: modelo});
             $('#jugador-edit').html(this.jugadorEditView.render().$el);
+            this.jugadorEditView.setUp();
         },
 
         agregarJugador: function(modelo) {

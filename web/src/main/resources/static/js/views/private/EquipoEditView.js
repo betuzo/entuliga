@@ -39,6 +39,8 @@ define([
             photo.set({nameLogo: this.model.get('logoEquipo')});
             var uploadFile = new UploadFileView({
                 modelo: photo,
+                urlUpload: 'file/upload/logo',
+                urlDelete: 'file/delete/logo',
                 callbackUpload:function (data) {
                     that.model.set({hasLogoEquipo: true});
                     that.model.set({rutaLogoEquipo: data.pathfilename});

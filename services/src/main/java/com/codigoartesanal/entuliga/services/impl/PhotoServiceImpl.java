@@ -62,8 +62,18 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public String getValidPathAbsoluteLogo() {
         // Creating the directory to store file
+        return getValidPathAbsolute(PathPhoto.EQUIPO_BASE.getPath());
+    }
+
+    @Override
+    public String getValidPathAbsoluteFoto() {
+        return getValidPathAbsolute(PathPhoto.JUGADOR_BASE.getPath());
+    }
+
+    private String getValidPathAbsolute(String base) {
+        // Creating the directory to store file
         String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
-                + PathPhoto.EQUIPO_BASE.getPath();
+                + base;
         File dir = new File(pathFull);
         if (!dir.exists())
             dir.mkdirs();

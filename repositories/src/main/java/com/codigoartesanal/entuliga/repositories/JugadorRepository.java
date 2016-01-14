@@ -3,9 +3,11 @@ package com.codigoartesanal.entuliga.repositories;
 import com.codigoartesanal.entuliga.model.Jugador;
 import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.User;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,5 +21,10 @@ public interface JugadorRepository extends CrudRepository<Jugador, Long> {
             "(select tj.jugador from TorneoJugador tj where tj.torneoEquipo.torneo = :torneo) " +
             "and ju.nombre like :likeName")
     List<Jugador> findAllNotInTorneoAndNombreContaining(
-            @Param("torneo") Torneo torneo,@Param("likeName") String likeName);
+            @Param("torneo") Torneo torneo, @Param("likeName") String likeName);
+
+    @Transactional
+    @Modifying
+    @Query("update Jugador e set e.rutaFoto = :rutaFotoJugador where e.id = :id")
+    int updateFotoByIdJugador(@Param("rutaFotoJugador") String rutaFotoJugador, @Param("id") Long id);
 }

@@ -20,6 +20,8 @@ public interface PhotoService {
 
     String getValidPathAbsoluteLogo();
 
+    String getValidPathAbsoluteFoto();
+
     boolean writeFile(byte[] file, String path) throws IOException;
 
     void deleteLogo(String logo);
