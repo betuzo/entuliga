@@ -48,12 +48,14 @@ define([
         newJugador: function() {
             this.jugadorEditView = new JugadorEditView({tipo: 'new', modelo: null});
             $('#jugador-edit').html(this.jugadorEditView.render().$el);
+            this.jugadorEditView.setUpNew();
         },
 
         editJugador: function() {
             var modelo = app.jugadores.get($("#select-jugador").val());
             this.jugadorEditView = new JugadorEditView({tipo: 'edit', modelo: modelo});
             $('#jugador-edit').html(this.jugadorEditView.render().$el);
+            this.jugadorEditView.setUpEdit();
         },
 
         agregarJugador: function(modelo) {

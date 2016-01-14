@@ -39,8 +39,8 @@ public class EstadisticaServiceImpl implements EstadisticaService{
         estadisticasTodas.addAll(torneoRepository.findLimitLideresRobosByTorneo(torneo, pageable));
 
         for(EstadisticaJugadorDTO dto : estadisticasTodas){
-            dto.setFotoJugador(photoService.getValidPathFoto(dto.getFotoJugador()));
-            dto.setLogoEquipo(photoService.getValidPathLogo(dto.getLogoEquipo(), null));
+            dto.setFotoJugador(photoService.getValidPathWebFoto(dto.getFotoJugador()));
+            dto.setLogoEquipo(photoService.getValidPathWebLogo(dto.getLogoEquipo(), null));
         }
 
         return estadisticasTodas;

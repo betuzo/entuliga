@@ -33,4 +33,10 @@ public class EquipoRepositoryTest {
         List<Equipo> equipos = equipoRepository.findAllNotInTorneoAndNombreContaining(torneo, likename);
         Assert.assertNotNull(equipos);
     }
+
+    @Test
+    public void testUpdateLogoStringByIdEquipo() {
+        int equipos = equipoRepository.updateLogoByIdEquipo("dasdasd", 1L);
+        Assert.assertNotNull(equipos == 1);
+    }
 }

@@ -48,12 +48,14 @@ define([
         newEquipo: function() {
             this.equipoEditView = new EquipoEditView({tipo: 'new', modelo: null});
             $('#equipo-edit').html(this.equipoEditView.render().$el);
+            this.equipoEditView.setUpNew();
         },
 
         editEquipo: function() {
             var modelo = app.equipos.get($("#select-equipo").val());
             this.equipoEditView = new EquipoEditView({tipo: 'edit', modelo: modelo});
             $('#equipo-edit').html(this.equipoEditView.render().$el);
+            this.equipoEditView.setUpEdit();
         },
 
         agregarEquipo: function(modelo) {

@@ -4,6 +4,7 @@ import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.repositories.JugadorRepository;
 import com.codigoartesanal.entuliga.services.JugadorService;
+import com.codigoartesanal.entuliga.services.PathPhoto;
 import com.codigoartesanal.entuliga.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,13 +62,21 @@ public class JugadorServiceImpl implements JugadorService {
         return copy;
     }
 
+    @Override
+    public void updateFotoByJugador(String foto, Long idJugador) {
+        jugadorRepository.updateFotoByIdJugador(foto, idJugador);
+    }
+
     private Map<String, Object> convertJugadorToMap(Jugador jugador) {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, jugador.getId());
         map.put(PROPERTY_NOMBRE, jugador.getNombre());
         map.put(PROPERTY_PATERNO, jugador.getPaterno());
         map.put(PROPERTY_MATERNO, jugador.getMaterno());
-        map.put(PROPERTY_RUTA_FOTO, photoService.getValidPathFoto(jugador.getRutaFoto()));
+        map.put(PROPERTY_LOGO_JUGADOR, jugador.getRutaFoto());
+        String pathWebFull = photoService.getValidPathWebFoto(jugador.getRutaFoto());
+        map.put(PROPERTY_RUTA_LOGO_JUGADOR, pathWebFull);
+        map.put(PROPERTY_HAS_LOGO_JUGADOR, !pathWebFull.contains(PathPhoto.JUGADOR_DEFAULT.getPath()));
         map.put(PROPERTY_SEXO, jugador.getSexo());
         map.put(PROPERTY_FECHA_REGISTRO, jugador.getFechaRegistro());
         if (jugador.getGeoLocation() == null)
@@ -109,7 +118,7 @@ public class JugadorServiceImpl implements JugadorService {
         jugador.setNombre(ligaMap.get(PROPERTY_NOMBRE));
         jugador.setPaterno(ligaMap.get(PROPERTY_PATERNO));
         jugador.setMaterno(ligaMap.get(PROPERTY_MATERNO));
-        jugador.setRutaFoto(ligaMap.get(PROPERTY_RUTA_FOTO));
+        jugador.setRutaFoto(ligaMap.get(PROPERTY_LOGO_JUGADOR));
         jugador.setSexo(Sexo.valueOf(ligaMap.get(PROPERTY_SEXO)));
         jugador.setFechaRegistro(new Date(Long.valueOf(ligaMap.get(PROPERTY_FECHA_REGISTRO))));
 

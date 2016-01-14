@@ -19,8 +19,8 @@ subprojects {
   apply plugin:"java"
   apply plugin:"eclipse"
 
-  sourceCompatibility = 1.7
-  targetCompatibility = 1.7
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
 
   [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -76,10 +76,10 @@ project(":web") {
     apply plugin: 'spring-boot'
     apply plugin: 'application'
 
-    sourceCompatibility = 1.7
+    sourceCompatibility = 1.8
 
     compileJava {
-        targetCompatibility = 1.7
+        targetCompatibility = 1.8
     }
 
     mainClassName = "com.codigoartesanal.entuliga.Application"

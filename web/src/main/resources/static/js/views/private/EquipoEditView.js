@@ -4,10 +4,12 @@ define([
 	'backboneValidation',
 	'jquerySerializeObject',
 	'models/EquipoModel',
+	'models/util/PhotoModel',
 	'core/BaseView',
+	'views/private/util/UploadFileView',
 	'text!templates/private/tplEquipoEdit.html'
-], function($, Backbone, backboneValidation, jquerySerializeObject,
-            EquipoModel, BaseView, tplEquipoEdit){
+], function($, Backbone, backboneValidation, jquerySerializeObject, EquipoModel,
+                PhotoModel, BaseView, UploadFileView, tplEquipoEdit){
 
 	var EquipoEditView = BaseView.extend({
         template: _.template(tplEquipoEdit),
@@ -26,6 +28,39 @@ define([
             this.model.once("sync", this.saveEquipoSuccess);
             this.model.once("error", this.saveEquipoError);
             Backbone.Validation.bind(this);
+        },
+
+        setUpNew: function() {
+            $('#upload-file').html('<img class="avatar avatar-sm" src="photo/equipo/equipo-default.png">');
+        },
+
+        setUpEdit: function() {
+            var that = this;
+            var photo = new PhotoModel();
+            photo.set({pathLogo: this.model.get('rutaLogoEquipo')});
+            photo.set({hasLogo: this.model.get('hasLogoEquipo')});
+            photo.set({idLogo: this.model.get('id')});
+            photo.set({nameLogo: this.model.get('logoEquipo')});
+            var uploadFile = new UploadFileView({
+                modelo: photo,
+                urlUpload: 'file/upload/logo',
+                urlDelete: 'file/delete/logo',
+                callbackUpload:function (data) {
+                    that.model.set({hasLogoEquipo: true});
+                    that.model.set({rutaLogoEquipo: data.pathfilename});
+                    that.model.set({logoEquipo: data.filename});
+                    app.equipos.add(that.model);
+                    $('#select-equipo').change();
+                },
+                callbackDelete:function (data) {
+                    that.model.set({hasLogoEquipo: false});
+                    that.model.set({rutaLogoEquipo: data.defaultname});
+                    that.model.set({logoEquipo: ''});
+                    app.equipos.add(that.model);
+                    $('#select-equipo').change();
+                }
+            });
+            $('#upload-file').html(uploadFile.render().$el);
         },
 
         remove: function() {

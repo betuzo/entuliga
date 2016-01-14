@@ -42,7 +42,7 @@ public class ClasificacionServiceImpl implements ClasificacionService {
         map.put(PROPERTY_EQUIPO_ID, clasificacion.getEquipo().getId());
         map.put(PROPERTY_EQUIPO_NOMBRE, clasificacion.getEquipo().getEquipo().getNombre());
         map.put(PROPERTY_EQUIPO_LOGO,
-                photoService.getValidPathLogo(clasificacion.getEquipo().getEquipo().getRutaLogoEquipo(), null));
+                photoService.getValidPathWebLogo(clasificacion.getEquipo().getEquipo().getRutaLogoEquipo(), null));
         map.put(PROPERTY_TORNEO_ID, clasificacion.getTorneo().getId());
 
 
