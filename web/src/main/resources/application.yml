@@ -5,12 +5,12 @@ server:
 security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
-spring:
-  profiles.active: dev
+spring.profiles.active: preprobd
+spring.profiles.include: googlestorage
 
 ---
 spring:
-  profiles: dev
+  profiles: devbd
 
   jpa:
     showSql: true
@@ -23,11 +23,9 @@ backend:
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
 
-entuliga.web.pathPhoto: /home/betuzo/opt/photo/
-
 ---
 spring:
-  profiles: prepro
+  profiles: preprobd
 
   jpa:
     showSql: false
@@ -46,4 +44,24 @@ backend:
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
 
-entuliga.web.pathPhoto: /home/betuzo/opt/boot/prod/photo/
+---
+spring:
+  profiles: googlestorage
+
+entuliga:
+  web.pathPhoto: photo/
+  service.google:
+    bucketName: entuliga-logo
+    pathWeb: https://storage.googleapis.com/entuliga-logo/
+
+---
+spring:
+  profiles: localbmvstorage
+
+entuliga.web.pathPhoto: /home/betuzo/opt/photo/
+
+---
+spring:
+  profiles: localhomestorage
+
+entuliga.web.pathPhoto: /Users/betuzo/opt/photo/

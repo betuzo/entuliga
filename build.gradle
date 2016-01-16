@@ -1,4 +1,5 @@
 ext.springVersion = "4.0.0.RELEASE"
+ext.googleApis = "v1-rev58-1.21.0"
 
 buildscript {
     ext {
@@ -59,10 +60,12 @@ project(":services") {
           exclude module: "slf4j-log4j12"
           exclude module: "logback-classic"
       }
+
     compile "org.springframework:spring-context:$springVersion"
     compile "org.springframework:spring-aspects:$springVersion"
     compile 'org.springframework.security:spring-security-web:3.2.5.RELEASE'
     compile 'org.slf4j:slf4j-log4j12:1.7.12'
+      compile "com.google.apis:google-api-services-storage:$googleApis"
 
     testCompile "org.springframework:spring-test:$springVersion"
     testCompile 'junit:junit:4.11'
