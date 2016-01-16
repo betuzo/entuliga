@@ -18,10 +18,6 @@ public interface PhotoService {
 
     String getValidNameLogo(String path, Long idEquipo);
 
-    String getValidPathAbsoluteLogo();
-
-    String getValidPathAbsoluteFoto();
-
     boolean writeLogo(byte[] file, String path) throws IOException;
 
     boolean writeFoto(byte[] file, String path) throws IOException;

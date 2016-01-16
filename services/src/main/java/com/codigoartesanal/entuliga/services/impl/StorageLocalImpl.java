@@ -15,23 +15,20 @@ import java.io.*;
  * Created by betuzo on 15/01/16.
  */
 @Service
-@Profile({"dev", "prepro", "test"})
+@Profile({"localbmvstorage", "localhomestorage", "test"})
 public class StorageLocalImpl implements StorageImage {
 
     @Resource
     Environment env;
 
-    @Autowired
-    PhotoService photoService;
-
     @Override
     public boolean writeLogo(byte[] file, String path) {
-        return writeFile(file, photoService.getValidPathAbsoluteLogo() + path);
+        return writeFile(file, getValidPathAbsolute(PathPhoto.EQUIPO_BASE.getPath()) + path);
     }
 
     @Override
     public boolean writeFoto(byte[] file, String path)  {
-        return writeFile(file, photoService.getValidPathAbsoluteFoto() + path);
+        return writeFile(file, getValidPathAbsolute(PathPhoto.JUGADOR_BASE.getPath()) + path);
     }
 
     @Override
@@ -80,5 +77,16 @@ public class StorageLocalImpl implements StorageImage {
         }
 
         return true;
+    }
+
+    private String getValidPathAbsolute(String base) {
+        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
+                + base;
+        File dir = new File(pathFull);
+        if (!dir.exists())
+            dir.mkdirs();
+
+        return dir.getAbsolutePath()
+                + File.separator;
     }
 }

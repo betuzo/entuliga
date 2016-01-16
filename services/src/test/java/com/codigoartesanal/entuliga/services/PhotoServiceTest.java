@@ -126,12 +126,6 @@ public class PhotoServiceTest {
     }
 
     @Test
-    public void testGetValidPathAbsoluteLogo() {
-        String path = photoService.getValidPathAbsoluteLogo();
-        Assert.assertTrue(path.contains(PathPhoto.EQUIPO_BASE.getPath()));
-    }
-
-    @Test
     public void testWriteFileNull() {
         String serveerPath = "./src/test/resources/img/prueba.png";
         boolean result = true;
@@ -150,7 +144,7 @@ public class PhotoServiceTest {
         byte[] contenido = "Hallo World".getBytes();
         boolean result = true;
         try {
-            result = photoService.writeFoto(contenido, serveerPath + name);
+            result = photoService.writeLogo(contenido, name);
             photoService.deleteLogo(name);
         } catch (IOException e) {
             Assert.assertTrue(false);
@@ -170,7 +164,7 @@ public class PhotoServiceTest {
         byte[] contenido = "Hallo World".getBytes();
         boolean result = true;
         try {
-            result = photoService.writeFoto(contenido, serveerPath + name);
+            result = photoService.writeFoto(contenido, name);
             photoService.deleteFoto(name);
         } catch (IOException e) {
             Assert.assertTrue(false);

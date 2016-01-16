@@ -17,10 +17,10 @@ import java.security.GeneralSecurityException;
  * Created by betuzo on 15/01/16.
  */
 @Service
-@Profile("google")
+@Profile("googlestorage")
 public class StorageGoogleCloudImpl implements StorageImage {
 
-    static final String PROPERTY_STATIC_GOOGLE_BUCKET_NAME = "entuliga.service.bucketName";
+    static final String PROPERTY_STATIC_GOOGLE_BUCKET_NAME = "entuliga.service.google.bucketName";
     static final String PROPERTY_STATIC_GOOGLE_IMAGE_CONTENT_TYPE = "image/*";
 
     @Resource

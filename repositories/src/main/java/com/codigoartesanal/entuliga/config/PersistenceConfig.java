@@ -40,7 +40,7 @@ public class PersistenceConfig {
     protected Environment env;
 
     @Bean
-    @Profile({"prepro", "google"})
+    @Profile("preprobd")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
@@ -72,7 +72,7 @@ public class PersistenceConfig {
     }
 
     @Bean
-    @Profile({"test", "dev"})
+    @Profile({"test", "devbd"})
     public DataSource dataSourceDev() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/user.sql");
@@ -100,7 +100,7 @@ public class PersistenceConfig {
     }
 
     @Bean
-    @Profile({"test", "dev"})
+    @Profile({"test", "devbd"})
     public DataSourceInitializer dataSourceInitializerConfiguration() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
 
