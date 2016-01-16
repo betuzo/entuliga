@@ -56,9 +56,8 @@ public class FileUploadController {
                 byte[] bytes = file.getBytes();
 
                 String nameLogo = photoService.getValidNameLogo(file.getOriginalFilename(), id);
-                String serverPath = photoService.getValidPathAbsoluteLogo() + nameLogo;
 
-                photoService.writeFile(bytes, serverPath);
+                photoService.writeLogo(bytes, nameLogo);
                 equipoService.updateLogoByEquipo(nameLogo, id);
 
                 result.put("result", "success");
@@ -94,9 +93,8 @@ public class FileUploadController {
                 byte[] bytes = file.getBytes();
 
                 String nameLogo = photoService.getValidNameLogo(file.getOriginalFilename(), id);
-                String serverPath = photoService.getValidPathAbsoluteFoto() + nameLogo;
 
-                photoService.writeFile(bytes, serverPath);
+                photoService.writeFoto(bytes, nameLogo);
                 jugadorService.updateFotoByJugador(nameLogo, id);
 
                 result.put("result", "success");

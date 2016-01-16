@@ -136,7 +136,7 @@ public class PhotoServiceTest {
         String serveerPath = "./src/test/resources/img/prueba.png";
         boolean result = true;
         try {
-            result = photoService.writeFile(null, serveerPath);
+            result = photoService.writeLogo(null, serveerPath);
         } catch (IOException e) {
             Assert.assertTrue(false);
         }
@@ -150,7 +150,7 @@ public class PhotoServiceTest {
         byte[] contenido = "Hallo World".getBytes();
         boolean result = true;
         try {
-            result = photoService.writeFile(contenido, serveerPath + name);
+            result = photoService.writeFoto(contenido, serveerPath + name);
             photoService.deleteLogo(name);
         } catch (IOException e) {
             Assert.assertTrue(false);
@@ -170,7 +170,7 @@ public class PhotoServiceTest {
         byte[] contenido = "Hallo World".getBytes();
         boolean result = true;
         try {
-            result = photoService.writeFile(contenido, serveerPath + name);
+            result = photoService.writeFoto(contenido, serveerPath + name);
             photoService.deleteFoto(name);
         } catch (IOException e) {
             Assert.assertTrue(false);

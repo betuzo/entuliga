@@ -3,6 +3,8 @@ package com.codigoartesanal.entuliga.services.impl;
 import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 import com.codigoartesanal.entuliga.services.PathPhoto;
 import com.codigoartesanal.entuliga.services.PhotoService;
+import com.codigoartesanal.entuliga.services.StorageImage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,9 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Resource
     Environment env;
+
+    @Autowired
+    StorageImage storageImage;
 
     @Override
     public String getValidPathWebFoto(String path) {
@@ -83,35 +88,22 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public boolean writeFile(byte[] file, String path) throws IOException {
-        if (file == null || path == null || path.isEmpty()) {
-            return false;
-        }
+    public boolean writeLogo(byte[] file, String path) throws IOException {
+        return storageImage.writeLogo(file, path);
+    }
 
-        File serverFile = new File(path);
-        BufferedOutputStream stream = new BufferedOutputStream(
-                new FileOutputStream(serverFile));
-        stream.write(file);
-        stream.close();
-
-        return true;
+    @Override
+    public boolean writeFoto(byte[] file, String path) throws IOException {
+        return storageImage.writeFoto(file, path);
     }
 
     @Override
     public void deleteLogo(String logo) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
-                + PathPhoto.EQUIPO_BASE.getPath() + logo;
-        File dir = new File(pathFull);
-        if (dir.exists())
-            dir.delete();
+        storageImage.deleteLogo(logo);
     }
 
     @Override
     public void deleteFoto(String foto) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
-                + PathPhoto.JUGADOR_BASE.getPath() + foto;
-        File dir = new File(pathFull);
-        if (dir.exists())
-            dir.delete();
+        storageImage.deleteFoto(foto);
     }
 }

@@ -40,7 +40,7 @@ public class PersistenceConfig {
     protected Environment env;
 
     @Bean
-    @Profile("prepro")
+    @Profile({"prepro", "google"})
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
