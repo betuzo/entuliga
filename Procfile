@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar controllers/build/libs/*.jar
+web: java -Dserver.port=$PORT -jar web/build/libs/*.jar
