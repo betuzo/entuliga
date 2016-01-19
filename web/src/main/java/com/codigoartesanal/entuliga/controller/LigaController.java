@@ -29,7 +29,7 @@ public class LigaController {
             value = { "" },
             method = {RequestMethod.POST},
             produces = {"application/json;charset=UTF-8"})
-    public Liga createLiga(@RequestBody Map<String, String> liga, User user) {
+    public Map<String, Object> createLiga(@RequestBody Map<String, String> liga, User user) {
         return ligaService.createLiga(liga, user);
     }
 
@@ -38,7 +38,7 @@ public class LigaController {
             value = { "/{liga}" },
             method = {RequestMethod.PUT},
             produces = {"application/json;charset=UTF-8"})
-    public Liga updateLiga(@RequestBody Map<String, String> liga, User user) {
+    public Map<String, Object> updateLiga(@RequestBody Map<String, String> liga, User user) {
         return ligaService.createLiga(liga, user);
     }
 

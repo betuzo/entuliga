@@ -30,7 +30,7 @@ public interface LigaService {
     public static final String PROPERTY_LONGITUDE       = "longitude";
     public static final String PROPERTY_LATITUDE        = "latitude";
 
-    public Liga createLiga(Map<String, String> ligaMap, User admin);
+    Map<String,Object> createLiga(Map<String, String> ligaMap, User admin);
 
     List<Map<String,Object>> listLigaByUser(User user);
 }
