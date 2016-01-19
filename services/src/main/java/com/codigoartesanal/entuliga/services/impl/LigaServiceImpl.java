@@ -28,13 +28,11 @@ public class LigaServiceImpl implements LigaService {
 
     @Transactional
     @Override
-    public Liga createLiga(Map<String, String> ligaMap, User admin) {
+    public Map<String,Object> createLiga(Map<String, String> ligaMap, User admin) {
         Liga liga = convertMapToLiga(ligaMap);
         liga.setAdmin(admin);
         geoLocationRepository.save(liga.getGeoLocation());
-        liga = ligaRepository.save(liga);
-        liga.getAdmin().setUserRole(null);
-        return liga;
+        return convertLigaToMap(ligaRepository.save(liga));
     }
 
     @Override
