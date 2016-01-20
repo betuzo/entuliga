@@ -15,10 +15,11 @@ define([
         template: _.template(tplMainColoniaAdmin),
 
         events: {
-            'change #input-pais': 'changePais',
-            'change #input-estado': 'changeEstado',
-            'change #input-municipio': 'changeMunicipio',
-            'click #btn-aceptar': 'clickAceptar'
+            'change #input-pais'        : 'changePais',
+            'change #input-estado'      : 'changeEstado',
+            'change #input-municipio'   : 'changeMunicipio',
+            'click #btn-aceptar'        : 'clickAceptar',
+            'click .close-entuliga'     : 'clickClose'
         },
 
         initialize: function(callbackAceptar) {
@@ -45,8 +46,7 @@ define([
 
         render: function() {
             this.$el.html(this.template());
-            this.$('.modal-dialog').modal('show');
-            this.$('#colonia-dialog').modal('show');
+            this.$('#colonia-dialog').modal({backdrop: "static", keyboard: false});
             this.$('.alert-danger').hide();
             return this;
         },
@@ -125,7 +125,12 @@ define([
                 var modelo = this.colonias.get(coloniaId);
                 this.callbackAceptar(modelo);
                 this.$('#colonia-dialog').modal('hide');
+                this.undelegateEvents();
             }
+        },
+
+        clickClose: function() {
+            this.undelegateEvents();
         }
 	});
 
