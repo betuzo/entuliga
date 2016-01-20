@@ -52,11 +52,15 @@ define([
         },
 
         cancelLiga: function(){
+            var that = this;
             new ModalGenericView({
                 type: 'confirm',
                 labelConfirm: 'Si',
                 labelCancel: 'No',
-                message: '¿Desea cancelar la edición?'
+                message: '¿Desea cancelar la edición?',
+                callbackConfirm: function (data) {
+                    that.destroyView();
+                }
             });
         },
 

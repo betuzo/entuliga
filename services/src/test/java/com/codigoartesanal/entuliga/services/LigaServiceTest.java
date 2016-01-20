@@ -42,7 +42,7 @@ public class LigaServiceTest {
 
         User user = new User();
         user.setUsername("jsoto");
-        Liga liga = ligaService.createLiga(ligaMap, user);
+        Map liga = ligaService.createLiga(ligaMap, user);
         Assert.assertNotNull(liga);
     }
 }
