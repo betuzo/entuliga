@@ -48,7 +48,7 @@ define([
             } else {
                 this.btnCancel.hide();
             }
-            this.$('#modal-generic-dialog').modal('show');
+            this.$('#modal-generic-dialog').modal({backdrop: "static", keyboard: false});
         },
 
         clickCancel: function(event){
