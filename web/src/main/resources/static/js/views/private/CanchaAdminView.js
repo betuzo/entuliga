@@ -46,14 +46,16 @@ define([
         },
 
         newCancha: function() {
-            this.canchaEditView = new CanchaEditView({tipo: 'new', modelo: null});
-            $('#cancha-edit').html(this.canchaEditView.render().$el);
+            this.disabledAction(true);
+            var canchaEditView = new CanchaEditView({tipo: 'new', modelo: null});
+            $('#cancha-edit').html(canchaEditView.render().$el);
         },
 
         editCancha: function() {
+            this.disabledAction(true);
             var modelo = app.canchas.get($("#select-cancha").val());
-            this.canchaEditView = new CanchaEditView({tipo: 'edit', modelo: modelo});
-            $('#cancha-edit').html(this.canchaEditView.render().$el);
+            var canchaEditView = new CanchaEditView({tipo: 'edit', modelo: modelo});
+            $('#cancha-edit').html(canchaEditView.render().$el);
         },
 
         agregarCancha: function(modelo) {

@@ -19,6 +19,10 @@ define([
 			// Remove view from DOM
 			this.remove();
 			Backbone.View.prototype.remove.call(this);
+		},
+
+		disabledAction: function(disabled) {
+			$('.action-entuliga').prop("disabled", disabled);
 		}
 	});
 

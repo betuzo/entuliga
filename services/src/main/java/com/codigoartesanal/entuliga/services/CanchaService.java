@@ -31,7 +31,7 @@ public interface CanchaService {
     public static final String PROPERTY_LONGITUDE       = "longitude";
     public static final String PROPERTY_LATITUDE        = "latitude";
 
-    Cancha createCancha(Map<String, String> liga, User user);
+    Map<String, Object> createCancha(Map<String, String> liga, User user);
 
     List<Map<String,Object>> listCanchaByUser(User user);
 

@@ -7,15 +7,17 @@ define([
 	'models/util/PhotoModel',
 	'core/BaseView',
 	'views/private/util/UploadFileView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplEquipoEdit.html'
 ], function($, Backbone, backboneValidation, jquerySerializeObject, EquipoModel,
-                PhotoModel, BaseView, UploadFileView, tplEquipoEdit){
+                PhotoModel, BaseView, UploadFileView, ModalGenericView, tplEquipoEdit){
 
 	var EquipoEditView = BaseView.extend({
         template: _.template(tplEquipoEdit),
 
         events: {
-            'click #btn-ok': 'saveEquipo'
+            'click #btn-ok'         : 'saveEquipo',
+            'click #btn-cancel'     : 'cancelEquipo'
         },
 
         initialize: function(opts) {
@@ -28,6 +30,7 @@ define([
             this.model.once("sync", this.saveEquipoSuccess);
             this.model.once("error", this.saveEquipoError);
             Backbone.Validation.bind(this);
+            app.that = this;
         },
 
         setUpNew: function() {
@@ -73,6 +76,20 @@ define([
             return this;
         },
 
+        cancelEquipo: function(){
+            new ModalGenericView({
+                type: 'confirm',
+                labelConfirm: 'Si',
+                labelCancel: 'No',
+                message: '¿Desea cancelar la edición?',
+                callbackConfirm: function (data) {
+                    app.that.disabledAction(false);
+                    app.that.destroyView();
+                    delete app.that;
+                }
+            });
+        },
+
         saveEquipo: function(){
             var data = this.$el.find("#form-equipo").serializeObject();
             this.model.set(data);
@@ -84,13 +101,21 @@ define([
 
         saveEquipoSuccess: function(model, response, options){
             app.equipos.add(model);
-            console.log('Successfully saved!');
-            alert('Great Success!');
+            if (typeof app.that === 'undefined') {
+                return;
+            }
+            app.that.disabledAction(false);
+            new ModalGenericView({
+                message: 'Equipo registrado correctamente'
+            });
+            app.that.destroyView();
+            delete app.that;
         },
 
         saveEquipoError: function(model, response, options){
-            console.log(model.toJSON());
-            console.log('error.responseText');
+            new ModalGenericView({
+                message: 'Se presento un error al registrar el equipo'
+            });
         }
 	});
 

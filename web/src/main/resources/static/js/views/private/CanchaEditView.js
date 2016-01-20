@@ -6,16 +6,19 @@ define([
 	'models/CanchaModel',
 	'core/BaseView',
 	'views/private/MainColoniaAdminView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplCanchaEdit.html'
 ], function($, Backbone, backboneValidation, jquerySerializeObject,
-            CanchaModel, BaseView, MainColoniaAdminView, tplCanchaEdit){
+            CanchaModel, BaseView, MainColoniaAdminView, ModalGenericView,
+            tplCanchaEdit){
 
 	var CanchaEditView = BaseView.extend({
         template: _.template(tplCanchaEdit),
 
         events: {
-            'click #colonia-buscar': 'buscarColonia',
-            'click #btn-ok': 'saveCancha'
+            'click #colonia-buscar' : 'buscarColonia',
+            'click #btn-ok'         : 'saveCancha',
+            'click #btn-cancel'     : 'cancelCancha'
         },
 
         initialize: function(opts) {
@@ -28,6 +31,7 @@ define([
             this.model.once("sync", this.saveCanchaSuccess);
             this.model.once("error", this.saveCanchaError);
             Backbone.Validation.bind(this);
+            app.that = this;
         },
 
         remove: function() {
@@ -49,6 +53,20 @@ define([
             $('#cancha-colonia-desc').val(colonia.get('nombre'));
         },
 
+        cancelCancha: function(){
+            new ModalGenericView({
+                type: 'confirm',
+                labelConfirm: 'Si',
+                labelCancel: 'No',
+                message: '¿Desea cancelar la edición?',
+                callbackConfirm: function (data) {
+                    app.that.disabledAction(false);
+                    app.that.destroyView();
+                    delete app.that;
+                }
+            });
+        },
+
         saveCancha: function(){
             var data = this.$el.find("#form-cancha").serializeObject();
             this.model.set(data);
@@ -60,13 +78,21 @@ define([
 
         saveCanchaSuccess: function(model, response, options){
             app.canchas.add(model);
-            console.log('Successfully saved!');
-            alert('Great Success!');
+            if (typeof app.that === 'undefined') {
+                return;
+            }
+            app.that.disabledAction(false);
+            new ModalGenericView({
+                message: 'Cancha registrada correctamente'
+            });
+            app.that.destroyView();
+            delete app.that;
         },
 
         saveCanchaError: function(model, response, options){
-            console.log(model.toJSON());
-            console.log('error.responseText');
+            new ModalGenericView({
+                message: 'Se presento un error al registrar la cancha'
+            });
         }
 	});
 

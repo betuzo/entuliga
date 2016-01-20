@@ -46,16 +46,18 @@ define([
         },
 
         newEquipo: function() {
-            this.equipoEditView = new EquipoEditView({tipo: 'new', modelo: null});
-            $('#equipo-edit').html(this.equipoEditView.render().$el);
-            this.equipoEditView.setUpNew();
+            this.disabledAction(true);
+            var equipoEditView = new EquipoEditView({tipo: 'new', modelo: null});
+            $('#equipo-edit').html(equipoEditView.render().$el);
+            equipoEditView.setUpNew();
         },
 
         editEquipo: function() {
+            this.disabledAction(true);
             var modelo = app.equipos.get($("#select-equipo").val());
-            this.equipoEditView = new EquipoEditView({tipo: 'edit', modelo: modelo});
-            $('#equipo-edit').html(this.equipoEditView.render().$el);
-            this.equipoEditView.setUpEdit();
+            var equipoEditView = new EquipoEditView({tipo: 'edit', modelo: modelo});
+            $('#equipo-edit').html(equipoEditView.render().$el);
+            equipoEditView.setUpEdit();
         },
 
         agregarEquipo: function(modelo) {

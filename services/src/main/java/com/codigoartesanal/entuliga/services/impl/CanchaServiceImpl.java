@@ -25,13 +25,11 @@ public class CanchaServiceImpl implements CanchaService {
 
     @Transactional
     @Override
-    public Cancha createCancha(Map<String, String> canchaMap, User admin) {
+    public Map<String, Object> createCancha(Map<String, String> canchaMap, User admin) {
         Cancha cancha = convertMapToCancha(canchaMap);
         cancha.setAdmin(admin);
         geoLocationRepository.save(cancha.getGeoLocation());
-        cancha = canchaRepository.save(cancha);
-        cancha.getAdmin().setUserRole(null);
-        return cancha;
+        return convertCanchaToMap(canchaRepository.save(cancha));
     }
 
     @Override
