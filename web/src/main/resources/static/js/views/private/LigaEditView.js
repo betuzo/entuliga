@@ -30,6 +30,7 @@ define([
             this.model.once("sync", this.saveLigaSuccess);
             this.model.once("error", this.saveLigaError);
             Backbone.Validation.bind(this);
+            app.that = this;
         },
 
         remove: function() {
@@ -52,14 +53,15 @@ define([
         },
 
         cancelLiga: function(){
-            var that = this;
             new ModalGenericView({
                 type: 'confirm',
                 labelConfirm: 'Si',
                 labelCancel: 'No',
                 message: '¿Desea cancelar la edición?',
                 callbackConfirm: function (data) {
-                    that.destroyView();
+                    app.that.disabledAction(false);
+                    app.that.destroyView();
+                    delete app.that;
                 }
             });
         },
@@ -75,14 +77,18 @@ define([
 
         saveLigaSuccess: function(model, response, options){
             app.ligas.add(model);
-            console.log('Successfully saved!');
+            if (typeof app.that === 'undefined') {
+                return;
+            }
+            app.that.disabledAction(false);
             new ModalGenericView({
                 message: 'Liga registrada correctamente'
             });
+            app.that.destroyView();
+            delete app.that;
         },
 
         saveLigaError: function(model, response, options){
-            console.log(model.toJSON());
             new ModalGenericView({
                 message: 'Se presento un error al registrar la Liga'
             });

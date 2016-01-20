@@ -8,17 +8,19 @@ define([
 	'core/BaseView',
 	'views/private/MainColoniaAdminView',
 	'views/private/util/UploadFileView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplJugadorEdit.html'
 ], function($, Backbone, backboneValidation, jquerySerializeObject,
             JugadorModel, PhotoModel, BaseView, MainColoniaAdminView,
-            UploadFileView, tplJugadorEdit){
+            UploadFileView, ModalGenericView, tplJugadorEdit){
 
 	var JugadorEditView = BaseView.extend({
         template: _.template(tplJugadorEdit),
 
         events: {
-            'click #colonia-buscar': 'buscarColonia',
-            'click #btn-ok': 'saveJugador'
+            'click #colonia-buscar' : 'buscarColonia',
+            'click #btn-ok'         : 'saveJugador',
+            'click #btn-cancel'     : 'cancelJugador'
         },
 
         initialize: function(opts) {
@@ -31,6 +33,7 @@ define([
             this.model.once("sync", this.saveJugadorSuccess);
             this.model.once("error", this.saveJugadorError);
             Backbone.Validation.bind(this);
+            app.that = this;
         },
 
         setUpNew: function() {
@@ -85,6 +88,20 @@ define([
             $('#jugador-colonia-desc').val(colonia.get('nombre'));
         },
 
+        cancelJugador: function(){
+            new ModalGenericView({
+                type: 'confirm',
+                labelConfirm: 'Si',
+                labelCancel: 'No',
+                message: '¿Desea cancelar la edición?',
+                callbackConfirm: function (data) {
+                    app.that.disabledAction(false);
+                    app.that.destroyView();
+                    delete app.that;
+                }
+            });
+        },
+
         saveJugador: function(){
             var data = this.$el.find("#form-jugador").serializeObject();
             this.model.set(data);
@@ -96,13 +113,21 @@ define([
 
         saveJugadorSuccess: function(model, response, options){
             app.jugadores.add(model);
-            console.log('Successfully saved!');
-            alert('Great Success!');
+            if (typeof app.that === 'undefined') {
+                return;
+            }
+            app.that.disabledAction(false);
+            new ModalGenericView({
+                message: 'Jugador registrado correctamente'
+            });
+            app.that.destroyView();
+            delete app.that;
         },
 
         saveJugadorError: function(model, response, options){
-            console.log(model.toJSON());
-            console.log('error.responseText');
+            new ModalGenericView({
+                message: 'Se presento un error al registrar el Jugador'
+            });
         }
 	});
 

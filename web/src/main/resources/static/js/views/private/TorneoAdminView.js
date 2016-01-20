@@ -90,15 +90,17 @@ define([
         },
 
         newTorneo: function() {
+            this.disabledAction(true);
             var ligaId = this.ligas.get($("#select-liga").val()).get('id');
-            this.torneoEditView = new TorneoEditView({tipo: 'new', idLiga: ligaId});
-            $('#torneo-edit').html(this.torneoEditView.render().$el);
+            var torneoEditView = new TorneoEditView({tipo: 'new', idLiga: ligaId});
+            $('#torneo-edit').html(torneoEditView.render().$el);
         },
 
         editTorneo: function() {
+            this.disabledAction(true);
             var modelo = app.torneos.get($("#select-torneo").val());
-            this.torneoEditView = new TorneoEditView({tipo: 'edit', modelo: modelo});
-            $('#torneo-edit').html(this.torneoEditView.render().$el);
+            var torneoEditView = new TorneoEditView({tipo: 'edit', modelo: modelo});
+            $('#torneo-edit').html(torneoEditView.render().$el);
         }
 	});
 

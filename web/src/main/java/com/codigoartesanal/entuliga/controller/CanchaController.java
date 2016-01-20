@@ -25,7 +25,7 @@ public class CanchaController {
             value = { "" },
             method = {RequestMethod.POST},
             produces = {"application/json;charset=UTF-8"})
-    public Cancha createCancha(@RequestBody Map<String, String> liga, User user) {
+    public Map<String, Object> createCancha(@RequestBody Map<String, String> liga, User user) {
         return canchaService.createCancha(liga, user);
     }
 
@@ -34,7 +34,7 @@ public class CanchaController {
             value = { "/{cancha}" },
             method = {RequestMethod.PUT},
             produces = {"application/json;charset=UTF-8"})
-    public Cancha updateCancha(
+    public Map<String, Object> updateCancha(
             @PathVariable("cancha") Long idCancha,
             @RequestBody Map<String, String> cancha, User user) {
         return canchaService.createCancha(cancha, user);

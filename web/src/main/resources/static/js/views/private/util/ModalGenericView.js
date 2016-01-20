@@ -56,6 +56,7 @@ define([
             if (typeof this.callbackCancel == 'function') {
                 this.callbackCancel(event);
             }
+            this.undelegateEvents();
         },
 
         clickConfirm: function(event) {
@@ -63,6 +64,7 @@ define([
             if (typeof this.callbackConfirm == 'function') {
                 this.callbackConfirm(event);
             }
+            this.undelegateEvents();
         }
     });
 

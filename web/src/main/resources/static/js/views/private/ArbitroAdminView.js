@@ -45,14 +45,16 @@ define([
         },
 
         newArbitro: function() {
-            this.arbitroEditView = new ArbitroEditView({tipo: 'new', modelo: null});
-            $('#arbitro-edit').html(this.arbitroEditView.render().$el);
+            this.disabledAction(true);
+            var arbitroEditView = new ArbitroEditView({tipo: 'new', modelo: null});
+            $('#arbitro-edit').html(arbitroEditView.render().$el);
         },
 
         editArbitro: function() {
+            this.disabledAction(true);
             var modelo = app.arbitros.get($("#select-arbitro").val());
-            this.arbitroEditView = new ArbitroEditView({tipo: 'edit', modelo: modelo});
-            $('#arbitro-edit').html(this.arbitroEditView.render().$el);
+            var arbitroEditView = new ArbitroEditView({tipo: 'edit', modelo: modelo});
+            $('#arbitro-edit').html(arbitroEditView.render().$el);
         },
 
         agregarArbitro: function(modelo) {

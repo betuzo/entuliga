@@ -46,16 +46,18 @@ define([
         },
 
         newJugador: function() {
-            this.jugadorEditView = new JugadorEditView({tipo: 'new', modelo: null});
-            $('#jugador-edit').html(this.jugadorEditView.render().$el);
-            this.jugadorEditView.setUpNew();
+            this.disabledAction(true);
+            var jugadorEditView = new JugadorEditView({tipo: 'new', modelo: null});
+            $('#jugador-edit').html(jugadorEditView.render().$el);
+            jugadorEditView.setUpNew();
         },
 
         editJugador: function() {
+            this.disabledAction(true);
             var modelo = app.jugadores.get($("#select-jugador").val());
-            this.jugadorEditView = new JugadorEditView({tipo: 'edit', modelo: modelo});
-            $('#jugador-edit').html(this.jugadorEditView.render().$el);
-            this.jugadorEditView.setUpEdit();
+            var jugadorEditView = new JugadorEditView({tipo: 'edit', modelo: modelo});
+            $('#jugador-edit').html(jugadorEditView.render().$el);
+            jugadorEditView.setUpEdit();
         },
 
         agregarJugador: function(modelo) {

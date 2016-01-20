@@ -46,15 +46,15 @@ define([
 
         newLiga: function() {
             this.disabledAction(true);
-            this.ligaEditView = new LigaEditView({tipo: 'new', modelo: null});
-            $('#liga-edit').html(this.ligaEditView.render().$el);
+            var ligaEditView = new LigaEditView({tipo: 'new', modelo: null});
+            $('#liga-edit').html(ligaEditView.render().$el);
         },
 
         editLiga: function() {
             this.disabledAction(true);
             var modelo = app.ligas.get($("#select-liga").val());
-            this.ligaEditView = new LigaEditView({tipo: 'edit', modelo: modelo});
-            $('#liga-edit').html(this.ligaEditView.render().$el);
+            var ligaEditView = new LigaEditView({tipo: 'edit', modelo: modelo});
+            $('#liga-edit').html(ligaEditView.render().$el);
         },
 
         agregarLiga: function(modelo) {
@@ -66,12 +66,6 @@ define([
 
         syncLigas: function() {
             $('#select-liga').change();
-        },
-
-        disabledAction: function(disabled) {
-            $('#liga-nuevo').prop("disabled", disabled);
-            $('#liga-editar').prop("disabled", disabled);
-            $('#select-liga').prop("disabled", disabled);
         }
 	});
 

@@ -6,15 +6,17 @@ define([
 	'jquerySerializeObject',
 	'models/TorneoModel',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplTorneoEdit.html'
-], function($, Backbone, datepicker, backboneValidation,
-            jquerySerializeObject, TorneoModel, BaseView, tplTorneoEdit){
+], function($, Backbone, datepicker, backboneValidation, jquerySerializeObject,
+            TorneoModel, BaseView, ModalGenericView, tplTorneoEdit){
 
 	var TorneoEditView = BaseView.extend({
         template: _.template(tplTorneoEdit),
 
         events: {
-            'click #btn-ok': 'saveTorneo'
+            'click #btn-ok'         : 'saveTorneo',
+            'click #btn-cancel'     : 'cancelTorneo'
         },
 
         initialize: function(opts) {
@@ -28,6 +30,7 @@ define([
             this.model.once("sync", this.saveTorneoSuccess);
             this.model.once("error", this.saveTorneoError);
             Backbone.Validation.bind(this);
+            app.that = this;
         },
 
         remove: function() {
@@ -53,15 +56,37 @@ define([
             }
         },
 
+        cancelTorneo: function(){
+            new ModalGenericView({
+                type: 'confirm',
+                labelConfirm: 'Si',
+                labelCancel: 'No',
+                message: '¿Desea cancelar la edición?',
+                callbackConfirm: function (data) {
+                    app.that.disabledAction(false);
+                    app.that.destroyView();
+                    delete app.that;
+                }
+            });
+        },
+
         saveTorneoSuccess: function(model, response, options){
             app.torneos.add(model);
-            console.log('Successfully saved!');
-            alert('Great Success!');
+            if (typeof app.that === 'undefined') {
+                return;
+            }
+            app.that.disabledAction(false);
+            new ModalGenericView({
+                message: 'Torneo registrado correctamente'
+            });
+            app.that.destroyView();
+            delete app.that;
         },
 
         saveTorneoError: function(model, response, options){
-            console.log(model.toJSON());
-            console.log('error.responseText');
+            new ModalGenericView({
+                message: 'Se presento un error al registrar el Torneo'
+            });
         }
 	});
 
