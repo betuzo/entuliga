@@ -27,6 +27,7 @@ define([
         routes: {
             '':                             'main',
             '/':                            'main',
+            '/#':                           'main',
             'login':                        'login',
             'admin':                        'admin',
             'admin/perfil':                 'adminPerfil',

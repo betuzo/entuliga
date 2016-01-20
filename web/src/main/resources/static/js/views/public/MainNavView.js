@@ -25,7 +25,7 @@ define([
         },
 
         signin: function(){
-            Backbone.history.navigate('login', { trigger : true });
+            Backbone.history.navigate('admin', { trigger : true });
         },
 
         home: function(){
