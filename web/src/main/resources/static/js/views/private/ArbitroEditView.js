@@ -87,6 +87,9 @@ define([
             });
             app.that.destroyView();
             delete app.that;
+            if(app.arbitros.length == 1){
+                $('#select-arbitro').change();
+            }
         },
 
         saveArbitroError: function(model, response, options){

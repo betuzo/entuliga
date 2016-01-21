@@ -7,16 +7,19 @@ define([
 	'collections/ArbitrosCollection',
 	'views/private/ArbitroDetailView',
 	'views/private/ArbitroEditView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplArbitroAdmin.html'
-], function($, Backbone, bootstrap, selecter, BaseView, ArbitrosCollection, ArbitroDetailView, ArbitroEditView, tplArbitroAdmin){
+], function($, Backbone, bootstrap, selecter, BaseView, ArbitrosCollection,
+            ArbitroDetailView, ArbitroEditView, ModalGenericView, tplArbitroAdmin){
 
 	var ArbitroAdminView = BaseView.extend({
         template: _.template(tplArbitroAdmin),
 
         events: {
-            'change #select-arbitro': 'changeArbitro',
-            'click #arbitro-nuevo': 'newArbitro',
-            'click #arbitro-editar': 'editArbitro'
+            'change #select-arbitro'    : 'changeArbitro',
+            'click #arbitro-nuevo'      : 'newArbitro',
+            'click #arbitro-editar'     : 'editArbitro',
+            'click #arbitro-borrar'     : 'deleteArbitro'
         },
 
         initialize: function() {
@@ -39,8 +42,13 @@ define([
                 this.arbitroDetailView = new ArbitroDetailView({model: modelo});
                 $('#arbitro-detail').html(this.arbitroDetailView.render().$el);
                 $('#arbitro-editar').removeAttr("disabled");
+                $('#arbitro-borrar').removeAttr("disabled");
             } else {
+                if (typeof this.arbitroDetailView !== 'undefined') {
+                    this.arbitroDetailView.destroyView();
+                }
                 $('#arbitro-editar').attr("disabled", true);
+                $('#arbitro-borrar').attr("disabled", true);
             }
         },
 
@@ -55,6 +63,23 @@ define([
             var modelo = app.arbitros.get($("#select-arbitro").val());
             var arbitroEditView = new ArbitroEditView({tipo: 'edit', modelo: modelo});
             $('#arbitro-edit').html(arbitroEditView.render().$el);
+        },
+
+        deleteArbitro: function() {
+            var modelo = app.arbitros.get($("#select-arbitro").val());
+            modelo.destroy({
+                wait:true,
+                success: function(model, response) {
+                    new ModalGenericView({message: response.message});
+                    if(response.result){
+                        $("#select-arbitro option:selected").remove();
+                        $('#select-arbitro').change();
+                    }
+                },
+                error: function(model, error) {
+                    new ModalGenericView({message: error.responseJSON.message});
+                }
+            });
         },
 
         agregarArbitro: function(modelo) {

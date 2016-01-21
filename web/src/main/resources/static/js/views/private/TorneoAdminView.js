@@ -9,18 +9,21 @@ define([
 	'views/private/LigaDetailView',
 	'views/private/TorneoDetailView',
 	'views/private/TorneoEditView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplTorneoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, BaseView, LigasCollection,
-            TorneosCollection, LigaDetailView, TorneoDetailView, TorneoEditView, tplTorneoAdmin){
+            TorneosCollection, LigaDetailView, TorneoDetailView, TorneoEditView,
+            ModalGenericView, tplTorneoAdmin){
 
 	var TorneoAdminView = BaseView.extend({
         template: _.template(tplTorneoAdmin),
 
         events: {
-            'change #select-liga':      'changeLiga',
-            'change #select-torneo':    'changeTorneo',
-            'click #torneo-nuevo':      'newTorneo',
-            'click #torneo-editar':     'editTorneo'
+            'change #select-liga'       : 'changeLiga',
+            'change #select-torneo'     : 'changeTorneo',
+            'click #torneo-nuevo'       : 'newTorneo',
+            'click #torneo-editar'      : 'editTorneo',
+            'click #torneo-borrar'      : 'deleteTorneo'
         },
 
         initialize: function() {
@@ -48,11 +51,11 @@ define([
                 $('#liga-detail').html(this.ligaDetailView.render().$el);
                 app.torneos.setLiga(modelo);
                 app.torneos.fetch();
-                $('#torneo-nuevo').removeAttr("disabled");
                 $('#torneo-editar').removeAttr("disabled");
+                $('#torneo-borrar').removeAttr("disabled");
             } else {
-                $('#torneo-nuevo').attr("disabled", true);
                 $('#torneo-editar').attr("disabled", true);
+                $('#torneo-borrar').attr("disabled", true);
             }
         },
 
@@ -62,8 +65,13 @@ define([
                 this.torneoDetailView = new TorneoDetailView({model: modelo});
                 $('#torneo-detail').html(this.torneoDetailView.render().$el);
                 $('#torneo-editar').removeAttr("disabled");
+                $('#torneo-borrar').removeAttr("disabled");
             } else {
+                if (typeof this.torneoDetailView !== 'undefined') {
+                    this.torneoDetailView.destroyView();
+                }
                 $('#torneo-editar').attr("disabled", true);
+                $('#torneo-borrar').attr("disabled", true);
             }
         },
 
@@ -101,6 +109,23 @@ define([
             var modelo = app.torneos.get($("#select-torneo").val());
             var torneoEditView = new TorneoEditView({tipo: 'edit', modelo: modelo});
             $('#torneo-edit').html(torneoEditView.render().$el);
+        },
+
+        deleteTorneo: function() {
+            var modelo = app.torneos.get($("#select-torneo").val());
+            modelo.destroy({
+                wait:true,
+                success: function(model, response) {
+                    new ModalGenericView({message: response.message});
+                    if(response.result){
+                        $("#select-torneo option:selected").remove();
+                        $('#select-torneo').change();
+                    }
+                },
+                error: function(model, error) {
+                    new ModalGenericView({message: error.responseJSON.message});
+                }
+            });
         }
 	});
 

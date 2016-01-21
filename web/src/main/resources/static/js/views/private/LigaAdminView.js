@@ -7,9 +7,10 @@ define([
 	'collections/LigasCollection',
 	'views/private/LigaDetailView',
 	'views/private/LigaEditView',
+    'views/private/util/ModalGenericView',
 	'text!templates/private/tplLigaAdmin.html'
 ], function($, Backbone, bootstrap, selecter, BaseView, LigasCollection,
-            LigaDetailView, LigaEditView, tplLigaAdmin){
+            LigaDetailView, LigaEditView, ModalGenericView, tplLigaAdmin){
 
 	var LigaAdminView = BaseView.extend({
         template: _.template(tplLigaAdmin),
@@ -43,6 +44,9 @@ define([
                 $('#liga-editar').removeAttr("disabled");
                 $('#liga-borrar').removeAttr("disabled");
             } else {
+                if (typeof this.ligaDetailView !== 'undefined') {
+                    this.ligaDetailView.destroyView();
+                }
                 $('#liga-editar').attr("disabled", true);
                 $('#liga-borrar').attr("disabled", true);
             }
@@ -64,8 +68,16 @@ define([
         deleteLiga: function() {
             var modelo = app.ligas.get($("#select-liga").val());
             modelo.destroy({
-                success: function(data) {
-                    console.log(data);
+                wait:true,
+                success: function(model, response) {
+                    new ModalGenericView({message: response.message});
+                    if(response.result){
+                        $("#select-liga option:selected").remove();
+                        $('#select-liga').change();
+                    }
+                },
+                error: function(model, error) {
+                    new ModalGenericView({message: error.responseJSON.message});
                 }
             });
         },

@@ -2,7 +2,10 @@ package com.codigoartesanal.entuliga.infrastructure;
 
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.repositories.UserRepository;
+import com.codigoartesanal.entuliga.services.GeneralService;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -12,10 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * Created by betuzo on 11/05/15.
@@ -29,8 +31,15 @@ public class UserSessionAop {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    private HttpServletResponse response;
+
     @Pointcut("execution(* com.codigoartesanal.entuliga.controller.*Controller.*(..))")
     public void controllerLayer() {
+    }
+
+    @Pointcut("execution(* com.codigoartesanal.entuliga.controller.*Controller.delete*(..))")
+    public void controllerLayerDeleteMethod() {
     }
 
     @Around("controllerLayer()")
@@ -52,5 +61,15 @@ public class UserSessionAop {
 
         Object retVal = pjp.proceed();
         return retVal;
+    }
+
+    @AfterReturning(
+            pointcut = "controllerLayerDeleteMethod())",
+            returning= "result")
+    public void deleteAfterReturning(JoinPoint joinPoint, Object result) {
+        Map<String, Object> resultDelete = (Map<String, Object>) result;
+        if (!(boolean)resultDelete.get(GeneralService.PROPERTY_RESULT)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 }

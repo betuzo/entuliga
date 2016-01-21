@@ -110,6 +110,9 @@ define([
             });
             app.that.destroyView();
             delete app.that;
+            if(app.equipos.length == 1){
+                $('#select-equipo').change();
+            }
         },
 
         saveEquipoError: function(model, response, options){

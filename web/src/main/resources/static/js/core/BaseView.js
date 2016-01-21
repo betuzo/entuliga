@@ -13,6 +13,9 @@ define([
 		},
 
 		destroyView: function() {
+		    if (this.model !== 'undefined') {
+		        this.model.off();
+		    }
 			// COMPLETELY UNBIND THE VIEW
 			this.undelegateEvents();
 			this.$el.removeData().unbind();

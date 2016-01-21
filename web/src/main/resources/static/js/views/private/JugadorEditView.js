@@ -122,6 +122,9 @@ define([
             });
             app.that.destroyView();
             delete app.that;
+            if(app.jugadores.length == 1){
+                $('#select-jugador').change();
+            }
         },
 
         saveJugadorError: function(model, response, options){
