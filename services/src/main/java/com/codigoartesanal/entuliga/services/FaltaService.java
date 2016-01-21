@@ -19,9 +19,6 @@ public interface FaltaService {
     public static final String PROPERTY_RECEPTOR_ID         = "receptorId";
     public static final String PROPERTY_RECEPTOR_NOMBRE     = "receptorNombre";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     Map<String,Object> createFalta(Map<String, String> falta);
 
     void deleteFalta(Long idFalta);

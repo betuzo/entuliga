@@ -19,9 +19,6 @@ public interface MovimientoService {
     public static final String PROPERTY_SALE_ID             = "saleId";
     public static final String PROPERTY_SALE_NOMBRE         = "saleNombre";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     Map<String,Object> createMovimiento(Map<String, String> movimiento);
 
     void deleteMovimiento(Long idMovimiento);

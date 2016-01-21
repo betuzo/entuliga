@@ -2,6 +2,7 @@ package com.codigoartesanal.entuliga.services;
 
 import com.codigoartesanal.entuliga.model.Cancha;
 import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,10 @@ public interface CanchaService {
 
     Map<String, Object> createCancha(Map<String, String> liga, User user);
 
+    DeleteStatusEnum deleteCancha(Long idCancha);
+
     List<Map<String,Object>> listCanchaByUser(User user);
 
     List<Map<String,Object>> listCanchaByTorneoAndContainName(Long idTorneo, String likeName);
+
 }

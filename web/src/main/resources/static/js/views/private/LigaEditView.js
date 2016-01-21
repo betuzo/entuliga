@@ -86,11 +86,14 @@ define([
             });
             app.that.destroyView();
             delete app.that;
+            if(app.ligas.length == 1){
+                $('#select-liga').change();
+            }
         },
 
-        saveLigaError: function(model, response, options){
+        saveLigaError: function(model, error, options){
             new ModalGenericView({
-                message: 'Se presento un error al registrar la Liga'
+                message: 'Se presento un error al registrar la liga'
             });
         }
 	});

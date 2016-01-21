@@ -17,9 +17,6 @@ public interface ReboteService {
     public static final String PROPERTY_JUGADOR_ID          = "jugadorId";
     public static final String PROPERTY_JUGADOR_NOMBRE      = "jugadorNombre";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     Map<String,Object> createRebote(Map<String, String> rebote);
 
     void deleteRebote(Long idRebote);

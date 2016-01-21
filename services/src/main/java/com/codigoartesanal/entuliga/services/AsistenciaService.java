@@ -18,9 +18,6 @@ public interface AsistenciaService {
     public static final String PROPERTY_ASISTIDO_ID         = "asistidoId";
     public static final String PROPERTY_ASISTIDO_NOMBRE     = "asistidoNombre";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     Map<String,Object> createAsistencia(Map<String, String> asistencia);
 
     void deleteAsistencia(Long idAsistencia);

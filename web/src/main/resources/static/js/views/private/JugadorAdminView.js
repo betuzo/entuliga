@@ -7,16 +7,19 @@ define([
 	'collections/JugadoresCollection',
 	'views/private/JugadorDetailView',
 	'views/private/JugadorEditView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplJugadorAdmin.html'
-], function($, Backbone, bootstrap, selecter, BaseView, JugadoresCollection, JugadorDetailView, JugadorEditView, tplJugadorAdmin){
+], function($, Backbone, bootstrap, selecter, BaseView, JugadoresCollection, JugadorDetailView,
+            JugadorEditView, ModalGenericView, tplJugadorAdmin){
 
 	var JugadorAdminView = BaseView.extend({
         template: _.template(tplJugadorAdmin),
 
         events: {
-            'change #select-jugador': 'changeJugador',
-            'click #jugador-nuevo': 'newJugador',
-            'click #jugador-editar': 'editJugador'
+            'change #select-jugador'    : 'changeJugador',
+            'click #jugador-nuevo'      : 'newJugador',
+            'click #jugador-editar'     : 'editJugador',
+            'click #jugador-borrar'     : 'deleteJugador'
         },
 
         initialize: function() {
@@ -40,8 +43,13 @@ define([
                 this.jugadorDetailView = new JugadorDetailView({model: modelo});
                 $('#jugador-detail').html(this.jugadorDetailView.render().$el);
                 $('#jugador-editar').removeAttr("disabled");
+                $('#jugador-borrar').removeAttr("disabled");
             } else {
+                if (typeof this.jugadorDetailView !== 'undefined') {
+                    this.jugadorDetailView.destroyView();
+                }
                 $('#jugador-editar').attr("disabled", true);
+                $('#jugador-borrar').attr("disabled", true);
             }
         },
 
@@ -58,6 +66,23 @@ define([
             var jugadorEditView = new JugadorEditView({tipo: 'edit', modelo: modelo});
             $('#jugador-edit').html(jugadorEditView.render().$el);
             jugadorEditView.setUpEdit();
+        },
+
+        deleteJugador: function() {
+            var modelo = app.jugadores.get($("#select-jugador").val());
+            modelo.destroy({
+                wait:true,
+                success: function(model, response) {
+                    new ModalGenericView({message: response.message});
+                    if(response.result){
+                        $("#select-jugador option:selected").remove();
+                        $('#select-jugador').change();
+                    }
+                },
+                error: function(model, error) {
+                    new ModalGenericView({message: error.responseJSON.message});
+                }
+            });
         },
 
         agregarJugador: function(modelo) {

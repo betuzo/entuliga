@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.AsistenciaService;
+import com.codigoartesanal.entuliga.services.GeneralService;
 import com.codigoartesanal.entuliga.services.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +39,8 @@ public class AsistenciaController {
         Map<String, Object> response = new HashMap<>();
         response.put(AsistenciaService.PROPERTY_ID, idAsistencia);
         asistenciaService.deleteAsistencia(idAsistencia);
-        response.put(AsistenciaService.PROPERTY_RESULT, true);
-        response.put(AsistenciaService.PROPERTY_MESSAGE, "Asistencia eliminada");
+        response.put(GeneralService.PROPERTY_RESULT, true);
+        response.put(GeneralService.PROPERTY_MESSAGE, "Asistencia eliminada");
         return response;
     }
 

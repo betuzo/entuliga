@@ -5,6 +5,7 @@ import com.codigoartesanal.entuliga.repositories.CanchaRepository;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.services.CanchaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,6 +31,16 @@ public class CanchaServiceImpl implements CanchaService {
         cancha.setAdmin(admin);
         geoLocationRepository.save(cancha.getGeoLocation());
         return convertCanchaToMap(canchaRepository.save(cancha));
+    }
+
+    @Override
+    public DeleteStatusEnum deleteCancha(Long idCancha) {
+        try {
+            canchaRepository.delete(idCancha);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     @Override

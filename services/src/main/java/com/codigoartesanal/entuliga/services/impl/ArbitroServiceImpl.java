@@ -5,6 +5,7 @@ import com.codigoartesanal.entuliga.repositories.ArbitroRepository;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.services.ArbitroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,6 +29,16 @@ public class ArbitroServiceImpl implements ArbitroService {
         arbitro.setAdmin(admin);
         geoLocationRepository.save(arbitro.getGeoLocation());
         return convertArbitroToMap(arbitroRepository.save(arbitro));
+    }
+
+    @Override
+    public DeleteStatusEnum deleteArbitro(Long idArbitro) {
+        try {
+            arbitroRepository.delete(idArbitro);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     @Override

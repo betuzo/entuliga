@@ -7,6 +7,7 @@ import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.TorneoEquipoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -53,8 +54,13 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
     }
 
     @Override
-    public void deleteTorneoEquipo(Long idTorneoEquipo) {
-        torneoEquipoRepository.delete(idTorneoEquipo);
+    public DeleteStatusEnum deleteTorneoEquipo(Long idTorneoEquipo) {
+        try {
+            torneoEquipoRepository.delete(idTorneoEquipo);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     @Override

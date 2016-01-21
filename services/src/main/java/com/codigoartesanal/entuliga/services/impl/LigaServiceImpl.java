@@ -8,6 +8,7 @@ import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.repositories.LigaRepository;
 import com.codigoartesanal.entuliga.services.LigaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -45,6 +46,16 @@ public class LigaServiceImpl implements LigaService {
             copy.add(dto);
         }
         return copy;
+    }
+
+    @Override
+    public DeleteStatusEnum deleteLiga(Long idLiga) {
+        try {
+            ligaRepository.delete(idLiga);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     private Map<String, Object> convertLigaToMap(Liga liga) {

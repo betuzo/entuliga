@@ -81,6 +81,9 @@ define([
             });
             app.that.destroyView();
             delete app.that;
+            if(app.torneos.length == 1){
+                $('#select-torneo').change();
+            }
         },
 
         saveTorneoError: function(model, response, options){

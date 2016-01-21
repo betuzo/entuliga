@@ -1,5 +1,6 @@
 package com.codigoartesanal.entuliga.controller;
 
+import com.codigoartesanal.entuliga.services.GeneralService;
 import com.codigoartesanal.entuliga.services.RoboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,8 +38,8 @@ public class RoboController {
         Map<String, Object> response = new HashMap<>();
         response.put(RoboService.PROPERTY_ID, idRobo);
         roboService.deleteRobo(idRobo);
-        response.put(RoboService.PROPERTY_RESULT, true);
-        response.put(RoboService.PROPERTY_MESSAGE, "Robo eliminada");
+        response.put(GeneralService.PROPERTY_RESULT, true);
+        response.put(GeneralService.PROPERTY_MESSAGE, "Robo eliminada");
         return response;
     }
 

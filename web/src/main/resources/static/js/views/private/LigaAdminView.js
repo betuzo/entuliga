@@ -7,8 +7,10 @@ define([
 	'collections/LigasCollection',
 	'views/private/LigaDetailView',
 	'views/private/LigaEditView',
+    'views/private/util/ModalGenericView',
 	'text!templates/private/tplLigaAdmin.html'
-], function($, Backbone, bootstrap, selecter, BaseView, LigasCollection, LigaDetailView, LigaEditView, tplLigaAdmin){
+], function($, Backbone, bootstrap, selecter, BaseView, LigasCollection,
+            LigaDetailView, LigaEditView, ModalGenericView, tplLigaAdmin){
 
 	var LigaAdminView = BaseView.extend({
         template: _.template(tplLigaAdmin),
@@ -16,7 +18,8 @@ define([
         events: {
             'change #select-liga': 'changeLiga',
             'click #liga-nuevo': 'newLiga',
-            'click #liga-editar': 'editLiga'
+            'click #liga-editar': 'editLiga',
+            'click #liga-borrar': 'deleteLiga'
         },
 
         initialize: function() {
@@ -39,8 +42,13 @@ define([
                 this.ligaDetailView = new LigaDetailView({model: modelo});
                 $('#liga-detail').html(this.ligaDetailView.render().$el);
                 $('#liga-editar').removeAttr("disabled");
+                $('#liga-borrar').removeAttr("disabled");
             } else {
+                if (typeof this.ligaDetailView !== 'undefined') {
+                    this.ligaDetailView.destroyView();
+                }
                 $('#liga-editar').attr("disabled", true);
+                $('#liga-borrar').attr("disabled", true);
             }
         },
 
@@ -55,6 +63,23 @@ define([
             var modelo = app.ligas.get($("#select-liga").val());
             var ligaEditView = new LigaEditView({tipo: 'edit', modelo: modelo});
             $('#liga-edit').html(ligaEditView.render().$el);
+        },
+
+        deleteLiga: function() {
+            var modelo = app.ligas.get($("#select-liga").val());
+            modelo.destroy({
+                wait:true,
+                success: function(model, response) {
+                    new ModalGenericView({message: response.message});
+                    if(response.result){
+                        $("#select-liga option:selected").remove();
+                        $('#select-liga').change();
+                    }
+                },
+                error: function(model, error) {
+                    new ModalGenericView({message: error.responseJSON.message});
+                }
+            });
         },
 
         agregarLiga: function(modelo) {

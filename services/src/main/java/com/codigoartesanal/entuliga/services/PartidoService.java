@@ -1,5 +1,7 @@
 package com.codigoartesanal.entuliga.services;
 
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
+
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +29,11 @@ public interface PartidoService {
     public static final String PROPERTY_HORARIO             = "horario";
     public static final String PROPERTY_STATUS_PARTIDO      = "statusPartido";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     List<Map<String,Object>> listPartidoByJornada(Long idJornada);
 
     Map<String,Object> createPartido(Map<String, String> partido);
 
-    void deletePartido(Long idPartido);
+    DeleteStatusEnum deletePartido(Long idPartido);
 
     Map<String,Object> partidoById(Long idPartido);
 }

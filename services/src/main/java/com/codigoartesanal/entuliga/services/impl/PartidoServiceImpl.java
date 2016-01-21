@@ -8,6 +8,7 @@ import com.codigoartesanal.entuliga.repositories.TorneoEquipoRepository;
 import com.codigoartesanal.entuliga.services.PartidoService;
 import com.codigoartesanal.entuliga.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -55,8 +56,13 @@ public class PartidoServiceImpl implements PartidoService {
     }
 
     @Override
-    public void deletePartido(Long idPartido) {
-        partidoRepository.delete(idPartido);
+    public DeleteStatusEnum deletePartido(Long idPartido) {
+        try {
+            partidoRepository.delete(idPartido);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.codigoartesanal.entuliga.repositories.JornadaRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.JornadaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -46,8 +47,14 @@ public class JornadaServiceImpl implements JornadaService {
     }
 
     @Override
-    public void deleteJornada(Long idJornada) {
-        jornadaRepository.delete(idJornada);
+    public DeleteStatusEnum deleteJornada(Long idJornada) {
+        try {
+            jornadaRepository.delete(idJornada);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
+
     }
 
     private Jornada convertMapToJornada(Map<String, String> jornadaMap) {

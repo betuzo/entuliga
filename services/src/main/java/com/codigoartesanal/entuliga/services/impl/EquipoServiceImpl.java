@@ -8,6 +8,7 @@ import com.codigoartesanal.entuliga.services.EquipoService;
 import com.codigoartesanal.entuliga.services.PathPhoto;
 import com.codigoartesanal.entuliga.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -29,6 +30,16 @@ public class EquipoServiceImpl implements EquipoService {
         Equipo equipo = convertMapToEquipo(equipoMap);
         equipo.setAdmin(admin);
         return convertEquipoToMap(equipoRepository.save(equipo));
+    }
+
+    @Override
+    public DeleteStatusEnum deleteEquipo(Long idEquipo) {
+        try {
+            equipoRepository.delete(idEquipo);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     @Override

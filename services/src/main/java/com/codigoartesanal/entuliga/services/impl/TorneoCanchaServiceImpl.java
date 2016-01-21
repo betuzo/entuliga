@@ -9,6 +9,7 @@ import com.codigoartesanal.entuliga.repositories.TorneoCanchaRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.TorneoCanchaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -53,8 +54,13 @@ public class TorneoCanchaServiceImpl implements TorneoCanchaService {
     }
 
     @Override
-    public void deleteTorneoCancha(Long idTorneoCancha) {
-        torneoCanchaRepository.delete(idTorneoCancha);
+    public DeleteStatusEnum deleteTorneoCancha(Long idTorneoCancha) {
+        try {
+            torneoCanchaRepository.delete(idTorneoCancha);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     private TorneoCancha convertMapToTorneoCancha(Map<String, String> torneoEquipoMap) {

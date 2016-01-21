@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services;
 
 import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
 
 import java.util.List;
 import java.util.Map;
@@ -37,9 +38,12 @@ public interface JugadorService {
 
     Map<String,Object> createJugador(Map<String, String> jugador, User user);
 
+    DeleteStatusEnum deleteJugador(Long idJugador);
+
     List<Map<String,Object>> listJugadorByAdmin(User user);
 
     List<Map<String,Object>> listJugadorByTorneoAndContainName(Long idTorneo, String criterio);
 
     void updateFotoByJugador(String foto, Long idJugador);
+
 }

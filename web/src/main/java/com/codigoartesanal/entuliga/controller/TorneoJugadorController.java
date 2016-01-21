@@ -1,6 +1,8 @@
 package com.codigoartesanal.entuliga.controller;
 
+import com.codigoartesanal.entuliga.services.GeneralService;
 import com.codigoartesanal.entuliga.services.TorneoJugadorService;
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +38,15 @@ public class TorneoJugadorController {
     public Map<String, Object> deleteTorneoEquipo(@PathVariable("torneojugador") Long idTorneoJugador) {
         Map<String, Object> response = new HashMap<>();
         response.put(TorneoJugadorService.PROPERTY_ID, idTorneoJugador);
-        torneoJugadorService.deleteTorneoJugador(idTorneoJugador);
-        response.put(TorneoJugadorService.PROPERTY_RESULT, true);
-        response.put(TorneoJugadorService.PROPERTY_MESSAGE, "Jugador eliminado");
+        DeleteStatusEnum result = torneoJugadorService.deleteTorneoJugador(idTorneoJugador);
+        if (result == DeleteStatusEnum.OK) {
+            response.put(GeneralService.PROPERTY_RESULT, true);
+            response.put(GeneralService.PROPERTY_MESSAGE, "Jugador eliminado");
+        } else {
+            response.put(GeneralService.PROPERTY_RESULT, false);
+            response.put(GeneralService.PROPERTY_MESSAGE,
+                    "El jugador no se puede eliminar, ya tiene participación en un partido");
+        }
         return response;
     }
 

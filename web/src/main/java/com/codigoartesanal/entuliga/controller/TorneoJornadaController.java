@@ -1,8 +1,10 @@
 package com.codigoartesanal.entuliga.controller;
 
+import com.codigoartesanal.entuliga.services.GeneralService;
 import com.codigoartesanal.entuliga.services.JornadaService;
 import com.codigoartesanal.entuliga.services.PartidoService;
 import com.codigoartesanal.entuliga.services.TorneoEquipoService;
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +47,15 @@ public class TorneoJornadaController {
     public Map<String, Object> deleteTorneoEquipo(@PathVariable("jornada") Long jornada) {
         Map<String, Object> response = new HashMap<>();
         response.put(JornadaService.PROPERTY_ID, jornada);
-        jornadaService.deleteJornada(Long.valueOf(jornada));
-        response.put(JornadaService.PROPERTY_RESULT, true);
-        response.put(JornadaService.PROPERTY_MESSAGE, "Jornada eliminado");
+        DeleteStatusEnum result = jornadaService.deleteJornada(jornada);
+        if (result == DeleteStatusEnum.OK) {
+            response.put(GeneralService.PROPERTY_RESULT, true);
+            response.put(GeneralService.PROPERTY_MESSAGE, "Jornada eliminado");
+        } else {
+            response.put(GeneralService.PROPERTY_RESULT, false);
+            response.put(GeneralService.PROPERTY_MESSAGE,
+                    "La jornada no se puede eliminar, ya tiene partido(s) programado(s)");
+        }
         return response;
     }
 

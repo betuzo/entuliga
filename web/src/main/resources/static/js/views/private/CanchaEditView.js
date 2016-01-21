@@ -87,6 +87,9 @@ define([
             });
             app.that.destroyView();
             delete app.that;
+            if(app.canchas.length == 1){
+                $('#select-cancha').change();
+            }
         },
 
         saveCanchaError: function(model, response, options){
