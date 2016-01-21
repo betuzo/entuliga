@@ -38,6 +38,7 @@ define([
                 this.tipo = 'jornada';
                 this.torneoDetailAdminView = new TorneoJornadaAdminView({model: this.model});
                 $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+                $('#titulo-torneo-detalle').html('Jornadas');
             }
         },
 
@@ -47,6 +48,7 @@ define([
                 this.tipo = 'partido';
                 this.torneoDetailAdminView = new TorneoPartidoAdminView({model: this.model});
                 $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+                $('#titulo-torneo-detalle').html('Partidos');
             }
         },
 
@@ -56,6 +58,7 @@ define([
                 this.tipo = 'jugador';
                 this.torneoDetailAdminView = new TorneoJugadorAdminView({model: this.model});
                 $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+                $('#titulo-torneo-detalle').html('Jugadores');
             }
         },
 
@@ -65,6 +68,7 @@ define([
                 this.tipo = 'equipo';
                 this.torneoDetailAdminView = new TorneoEquipoAdminView({model: this.model});
                 $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+                $('#titulo-torneo-detalle').html('Equipos');
             }
         },
 
@@ -74,6 +78,7 @@ define([
                 this.tipo = 'cancha';
                 this.torneoDetailAdminView = new TorneoCanchaAdminView({model: this.model});
                 $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+                $('#titulo-torneo-detalle').html('Canchas');
             }
         },
 
