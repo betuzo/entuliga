@@ -1,5 +1,7 @@
 package com.codigoartesanal.entuliga.services;
 
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
+
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +36,7 @@ public interface PartidoService {
 
     Map<String,Object> createPartido(Map<String, String> partido);
 
-    void deletePartido(Long idPartido);
+    DeleteStatusEnum deletePartido(Long idPartido);
 
     Map<String,Object> partidoById(Long idPartido);
 }

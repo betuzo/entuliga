@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,15 @@ public class LigaController {
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> updateLiga(@RequestBody Map<String, String> liga, User user) {
         return ligaService.createLiga(liga, user);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{liga}" },
+            method = {RequestMethod.DELETE},
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> deleteLiga(@PathVariable("liga") Long idLiga, User user) {
+        return new HashMap<>();
     }
 
     @ResponseBody

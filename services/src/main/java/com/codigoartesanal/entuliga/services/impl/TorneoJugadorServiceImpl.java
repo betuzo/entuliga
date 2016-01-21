@@ -5,6 +5,7 @@ import com.codigoartesanal.entuliga.repositories.JugadorRepository;
 import com.codigoartesanal.entuliga.repositories.TorneoJugadorRepository;
 import com.codigoartesanal.entuliga.services.TorneoJugadorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -44,8 +45,13 @@ public class TorneoJugadorServiceImpl implements TorneoJugadorService {
     }
 
     @Override
-    public void deleteTorneoJugador(Long idTorneoJugador) {
-        torneoJugadorRepository.delete(idTorneoJugador);
+    public DeleteStatusEnum deleteTorneoJugador(Long idTorneoJugador) {
+        try {
+            torneoJugadorRepository.delete(idTorneoJugador);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     private TorneoJugador convertMapToTorneoJugador(Map<String, String> torneoJugadorMap) {

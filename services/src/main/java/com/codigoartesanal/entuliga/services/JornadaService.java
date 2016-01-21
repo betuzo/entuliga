@@ -1,5 +1,7 @@
 package com.codigoartesanal.entuliga.services;
 
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,5 +22,5 @@ public interface JornadaService {
 
     Map<String,Object> createJornada(Map<String, String> jornada);
 
-    void deleteJornada(Long idJornada);
+    DeleteStatusEnum deleteJornada(Long idJornada);
 }

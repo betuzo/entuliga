@@ -1,5 +1,7 @@
 package com.codigoartesanal.entuliga.services;
 
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
+
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,6 @@ public interface TorneoCanchaService {
     public static final String PROPERTY_MESSAGE             = "message";
 
     Map<String,Object> createTorneoCancha(Map<String, String> torneoJornada);
-    void deleteTorneoCancha(Long idTorneoJornada);
+    DeleteStatusEnum deleteTorneoCancha(Long idTorneoJornada);
     List<Map<String,Object>> listCanchaByTorneo(Long idTorneo);
 }
