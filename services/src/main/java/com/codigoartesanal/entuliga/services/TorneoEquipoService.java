@@ -16,9 +16,6 @@ public interface TorneoEquipoService {
     public static final String PROPERTY_EQUIPO_NOMBRE   = "equipoNombre";
     public static final String PROPERTY_STATUS_EQUIPO   = "statusEquipo";
 
-    public static final String PROPERTY_RESULT          = "result";
-    public static final String PROPERTY_MESSAGE         = "message";
-
     Map<String,Object> createTorneoEquipo(Map<String, String> equipo);
 
     List<Map<String,Object>> listTorneoEquipoByTorneo(Long idTorneo);

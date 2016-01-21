@@ -18,9 +18,6 @@ public interface RoboService {
     public static final String PROPERTY_PERDEDOR_ID         = "perdedorId";
     public static final String PROPERTY_PERDEDOR_NOMBRE     = "perdedorNombre";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     Map<String,Object> createRobo(Map<String, String> robo);
 
     void deleteRobo(Long idRobo);

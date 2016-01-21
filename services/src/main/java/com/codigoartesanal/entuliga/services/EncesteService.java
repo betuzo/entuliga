@@ -18,9 +18,6 @@ public interface EncesteService {
     public static final String PROPERTY_JUGADOR_ID          = "jugadorId";
     public static final String PROPERTY_JUGADOR_NOMBRE      = "jugadorNombre";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     Map<String, Object> createEnceste(Map<String, String> encesteMap);
     List<Map<String,Object>> puntosByPartido(Long idPartido);
 

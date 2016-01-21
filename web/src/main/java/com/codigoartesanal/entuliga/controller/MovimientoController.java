@@ -2,6 +2,7 @@ package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.model.Movimiento;
 import com.codigoartesanal.entuliga.services.FaltaService;
+import com.codigoartesanal.entuliga.services.GeneralService;
 import com.codigoartesanal.entuliga.services.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,8 @@ public class MovimientoController {
         Map<String, Object> response = new HashMap<>();
         response.put(MovimientoService.PROPERTY_ID, idMovimiento);
         movimientoService.deleteMovimiento(idMovimiento);
-        response.put(MovimientoService.PROPERTY_RESULT, true);
-        response.put(MovimientoService.PROPERTY_MESSAGE, "Movimiento eliminada");
+        response.put(GeneralService.PROPERTY_RESULT, true);
+        response.put(GeneralService.PROPERTY_MESSAGE, "Movimiento eliminada");
         return response;
     }
 

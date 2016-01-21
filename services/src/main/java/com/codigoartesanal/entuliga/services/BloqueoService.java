@@ -18,9 +18,6 @@ public interface BloqueoService {
     public static final String PROPERTY_BLOQUEADO_ID        = "bloqueadoId";
     public static final String PROPERTY_BLOQUEADO_NOMBRE    = "bloqueadoNombre";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     Map<String,Object> createBloqueo(Map<String, String> bloqueo);
 
     void deleteBloqueo(Long idBloqueo);

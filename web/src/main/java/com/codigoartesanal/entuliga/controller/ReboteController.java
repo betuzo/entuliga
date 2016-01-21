@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.BloqueoService;
+import com.codigoartesanal.entuliga.services.GeneralService;
 import com.codigoartesanal.entuliga.services.ReboteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,8 +39,8 @@ public class ReboteController {
         Map<String, Object> response = new HashMap<>();
         response.put(ReboteService.PROPERTY_ID, idRebote);
         reboteService.deleteRebote(idRebote);
-        response.put(ReboteService.PROPERTY_RESULT, true);
-        response.put(ReboteService.PROPERTY_MESSAGE, "Rebote eliminada");
+        response.put(GeneralService.PROPERTY_RESULT, true);
+        response.put(GeneralService.PROPERTY_MESSAGE, "Rebote eliminada");
         return response;
     }
 

@@ -2,8 +2,10 @@ package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.model.Liga;
 import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.services.GeneralService;
 import com.codigoartesanal.entuliga.services.LigaService;
 import com.codigoartesanal.entuliga.services.TorneoService;
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +51,18 @@ public class LigaController {
             method = {RequestMethod.DELETE},
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> deleteLiga(@PathVariable("liga") Long idLiga, User user) {
-        return new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
+        response.put(LigaService.PROPERTY_ID, idLiga);
+        DeleteStatusEnum result = ligaService.deleteLiga(idLiga);
+        if (result == DeleteStatusEnum.OK) {
+            response.put(GeneralService.PROPERTY_RESULT, true);
+            response.put(GeneralService.PROPERTY_MESSAGE, "Liga eliminada");
+        } else {
+            response.put(GeneralService.PROPERTY_RESULT, false);
+            response.put(GeneralService.PROPERTY_MESSAGE,
+                    "La liga no se puede eliminar, ya tiene torneo(s) programado(s)");
+        }
+        return response;
     }
 
     @ResponseBody

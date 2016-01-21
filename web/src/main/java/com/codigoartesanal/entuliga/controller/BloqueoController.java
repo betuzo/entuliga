@@ -2,6 +2,7 @@ package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.AsistenciaService;
 import com.codigoartesanal.entuliga.services.BloqueoService;
+import com.codigoartesanal.entuliga.services.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,8 @@ public class BloqueoController {
         Map<String, Object> response = new HashMap<>();
         response.put(BloqueoService.PROPERTY_ID, idBloqueo);
         bloqueoService.deleteBloqueo(idBloqueo);
-        response.put(BloqueoService.PROPERTY_RESULT, true);
-        response.put(BloqueoService.PROPERTY_MESSAGE, "Bloqueo eliminada");
+        response.put(GeneralService.PROPERTY_RESULT, true);
+        response.put(GeneralService.PROPERTY_MESSAGE, "Bloqueo eliminada");
         return response;
     }
 

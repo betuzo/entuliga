@@ -2,6 +2,7 @@ package com.codigoartesanal.entuliga.services;
 
 import com.codigoartesanal.entuliga.model.Liga;
 import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +34,7 @@ public interface LigaService {
     Map<String,Object> createLiga(Map<String, String> ligaMap, User admin);
 
     List<Map<String,Object>> listLigaByUser(User user);
+
+    DeleteStatusEnum deleteLiga(Long idLiga);
+
 }

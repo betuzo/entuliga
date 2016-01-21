@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services;
 
 import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.services.impl.DeleteStatusEnum;
 
 import java.util.List;
 import java.util.Map;
@@ -35,5 +36,8 @@ public interface ArbitroService {
 
     Map<String,Object> createArbitro(Map<String, String> arbitroMap, User user);
 
+    DeleteStatusEnum deleteArbitro(Long idArbitro);
+
     List<Map<String,Object>> listArbitroByAdmin(User user);
+
 }

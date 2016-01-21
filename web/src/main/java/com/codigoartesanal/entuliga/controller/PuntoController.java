@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.EncesteService;
+import com.codigoartesanal.entuliga.services.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +38,8 @@ public class PuntoController {
         Map<String, Object> response = new HashMap<>();
         response.put(EncesteService.PROPERTY_ID, idPunto);
         encesteService.deleteEnceste(idPunto);
-        response.put(EncesteService.PROPERTY_RESULT, true);
-        response.put(EncesteService.PROPERTY_MESSAGE, "Punto eliminado");
+        response.put(GeneralService.PROPERTY_RESULT, true);
+        response.put(GeneralService.PROPERTY_MESSAGE, "Punto eliminado");
         return response;
     }
 

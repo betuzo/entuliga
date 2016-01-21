@@ -7,6 +7,7 @@ import com.codigoartesanal.entuliga.services.JugadorService;
 import com.codigoartesanal.entuliga.services.PathPhoto;
 import com.codigoartesanal.entuliga.services.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,6 +34,16 @@ public class JugadorServiceImpl implements JugadorService {
         jugador.setAdmin(admin);
         geoLocationRepository.save(jugador.getGeoLocation());
         return convertJugadorToMap(jugadorRepository.save(jugador));
+    }
+
+    @Override
+    public DeleteStatusEnum deleteJugador(Long idJugador) {
+        try {
+            jugadorRepository.delete(idJugador);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
     }
 
     @Override

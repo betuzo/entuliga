@@ -15,9 +15,6 @@ public interface JornadaService {
     public static final String PROPERTY_NOMBRE          = "nombre";
     public static final String PROPERTY_FASE            = "fase";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     List<Map<String,Object>> listJornadaByTorneo(Long idTorneo);
 
     Map<String,Object> createJornada(Map<String, String> jornada);

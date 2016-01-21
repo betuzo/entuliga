@@ -29,9 +29,6 @@ public interface PartidoService {
     public static final String PROPERTY_HORARIO             = "horario";
     public static final String PROPERTY_STATUS_PARTIDO      = "statusPartido";
 
-    public static final String PROPERTY_RESULT              = "result";
-    public static final String PROPERTY_MESSAGE             = "message";
-
     List<Map<String,Object>> listPartidoByJornada(Long idJornada);
 
     Map<String,Object> createPartido(Map<String, String> partido);
