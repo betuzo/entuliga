@@ -5,8 +5,8 @@ server:
 security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
-spring.profiles.active: devbd
-spring.profiles.include: localbmvstorage
+spring.profiles.active: preprobd
+spring.profiles.include: googlestorage
 
 ---
 spring:
