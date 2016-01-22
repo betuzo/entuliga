@@ -11,9 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  * Created by betuzo on 28/10/15.
  */
@@ -123,58 +120,6 @@ public class PhotoServiceTest {
         String name = "jugador-test.png";
         String path = photoService.getValidPathWebFoto(name);
         Assert.assertTrue(path.contains(name));
-    }
-
-    @Test
-    public void testWriteFileNull() {
-        String serveerPath = "./src/test/resources/img/prueba.png";
-        boolean result = true;
-        try {
-            result = photoService.writeLogo(null, serveerPath);
-        } catch (IOException e) {
-            Assert.assertTrue(false);
-        }
-        Assert.assertTrue(result == false);
-    }
-
-    @Test
-    public void testWriteDeleteFilePathLogoValid() {
-        String name = "prueba.png";
-        String serveerPath ="./src/test/resources/img/photo/equipo/";
-        byte[] contenido = "Hallo World".getBytes();
-        boolean result = true;
-        try {
-            result = photoService.writeLogo(contenido, name);
-            photoService.deleteLogo(name);
-        } catch (IOException e) {
-            Assert.assertTrue(false);
-        }
-        File dir = new File(serveerPath + name);
-        if (dir.exists()) {
-            Assert.assertTrue(false);
-        } else  {
-            Assert.assertTrue(result == true);
-        }
-    }
-
-    @Test
-    public void testWriteDeleteFilePathFotoValid() {
-        String name = "prueba.png";
-        String serveerPath ="./src/test/resources/img/photo/jugador/";
-        byte[] contenido = "Hallo World".getBytes();
-        boolean result = true;
-        try {
-            result = photoService.writeFoto(contenido, name);
-            photoService.deleteFoto(name);
-        } catch (IOException e) {
-            Assert.assertTrue(false);
-        }
-        File dir = new File(serveerPath + name);
-        if (dir.exists()) {
-            Assert.assertTrue(false);
-        } else  {
-            Assert.assertTrue(result == true);
-        }
     }
 
 }

@@ -1,9 +1,9 @@
 package com.codigoartesanal.entuliga.services.impl;
 
+import com.codigoartesanal.entuliga.services.OriginPhoto;
 import com.codigoartesanal.entuliga.services.PathPhoto;
 import com.codigoartesanal.entuliga.services.PhotoService;
-import com.codigoartesanal.entuliga.services.StorageImage;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codigoartesanal.entuliga.services.StorageImageService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -16,37 +16,36 @@ import java.io.*;
  */
 @Service
 @Profile({"localbmvstorage", "localhomestorage", "test"})
-public class StorageLocalImpl implements StorageImage {
+public class StorageLocalImpl implements StorageImageService {
 
     @Resource
     Environment env;
 
     @Override
-    public boolean writeLogo(byte[] file, String path) {
-        return writeFile(file, getValidPathAbsolute(PathPhoto.EQUIPO_BASE.getPath()) + path);
+    public boolean writeImage(byte[] file, String path, OriginPhoto originPhoto) {
+        return writeFile(file, getValidPathAbsolute(getPathBaseByOriginPhoto(originPhoto)) + path);
     }
 
     @Override
-    public boolean writeFoto(byte[] file, String path)  {
-        return writeFile(file, getValidPathAbsolute(PathPhoto.JUGADOR_BASE.getPath()) + path);
-    }
-
-    @Override
-    public void deleteLogo(String logo) {
+    public void deleteImage(String logo, OriginPhoto originPhoto) {
         String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
-                + PathPhoto.EQUIPO_BASE.getPath() + logo;
+                + getPathBaseByOriginPhoto(originPhoto) + logo;
         File dir = new File(pathFull);
         if (dir.exists())
             dir.delete();
     }
 
-    @Override
-    public void deleteFoto(String foto) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
-                + PathPhoto.JUGADOR_BASE.getPath() + foto;
-        File dir = new File(pathFull);
-        if (dir.exists())
-            dir.delete();
+    private String getPathBaseByOriginPhoto(OriginPhoto originPhoto){
+        switch (originPhoto){
+            case ARBITRO:
+                return PathPhoto.EQUIPO_BASE.getPath();
+            case JUGADOR:
+                return PathPhoto.JUGADOR_BASE.getPath();
+            case EQUIPO:
+                return PathPhoto.EQUIPO_BASE.getPath();
+        }
+
+        return "";
     }
 
     private boolean writeFile(byte[] file, String path)  {

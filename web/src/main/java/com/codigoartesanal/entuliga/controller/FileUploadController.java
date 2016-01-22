@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.controller;
 
-import com.codigoartesanal.entuliga.services.EquipoService;
-import com.codigoartesanal.entuliga.services.JugadorService;
-import com.codigoartesanal.entuliga.services.PathPhoto;
-import com.codigoartesanal.entuliga.services.PhotoService;
+import com.codigoartesanal.entuliga.services.*;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +26,9 @@ public class FileUploadController {
 
     @Autowired
     PhotoService photoService;
+
+    @Autowired
+    StorageImageService storageImageServices;
 
     @Autowired
     EquipoService equipoService;
@@ -57,7 +57,7 @@ public class FileUploadController {
 
                 String nameLogo = photoService.getValidNameLogo(file.getOriginalFilename(), id);
 
-                photoService.writeLogo(bytes, nameLogo);
+                storageImageServices.writeImage(bytes, nameLogo, OriginPhoto.EQUIPO);
                 equipoService.updateLogoByEquipo(nameLogo, id);
 
                 result.put("result", "success");
@@ -94,7 +94,7 @@ public class FileUploadController {
 
                 String nameLogo = photoService.getValidNameLogo(file.getOriginalFilename(), id);
 
-                photoService.writeFoto(bytes, nameLogo);
+                storageImageServices.writeImage(bytes, nameLogo, OriginPhoto.JUGADOR);
                 jugadorService.updateFotoByJugador(nameLogo, id);
 
                 result.put("result", "success");
@@ -116,7 +116,7 @@ public class FileUploadController {
             throws IOException {
         Map<String, String> result = new HashMap<>();
 
-        photoService.deleteLogo(logo);
+        storageImageServices.deleteImage(logo, OriginPhoto.EQUIPO);
         equipoService.updateLogoByEquipo("", idEquipo);
 
         result.put("result", "success");
@@ -130,7 +130,7 @@ public class FileUploadController {
             throws IOException {
         Map<String, String> result = new HashMap<>();
 
-        photoService.deleteFoto(foto);
+        storageImageServices.deleteImage(foto, OriginPhoto.JUGADOR);
         jugadorService.updateFotoByJugador("", idJugador);
 
         result.put("result", "success");
