@@ -4,7 +4,8 @@ import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.dto.EstadisticaJugadorDTO;
 import com.codigoartesanal.entuliga.repositories.TorneoRepository;
 import com.codigoartesanal.entuliga.services.EstadisticaService;
-import com.codigoartesanal.entuliga.services.PhotoService;
+import com.codigoartesanal.entuliga.services.OriginPhoto;
+import com.codigoartesanal.entuliga.services.PathWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,7 @@ public class EstadisticaServiceImpl implements EstadisticaService{
     TorneoRepository torneoRepository;
 
     @Autowired
-    PhotoService photoService;
+    PathWebService pathWebService;
 
     @Override
     public List<EstadisticaJugadorDTO> listLideresTodosByTorneoTopFive(Long idTorneo) {
@@ -39,8 +40,8 @@ public class EstadisticaServiceImpl implements EstadisticaService{
         estadisticasTodas.addAll(torneoRepository.findLimitLideresRobosByTorneo(torneo, pageable));
 
         for(EstadisticaJugadorDTO dto : estadisticasTodas){
-            dto.setFotoJugador(photoService.getValidPathWebFoto(dto.getFotoJugador()));
-            dto.setLogoEquipo(photoService.getValidPathWebLogo(dto.getLogoEquipo(), null));
+            dto.setFotoJugador(pathWebService.getValidPathWebFoto(dto.getFotoJugador(), OriginPhoto.JUGADOR));
+            dto.setLogoEquipo(pathWebService.getValidPathWebLogo(dto.getLogoEquipo(), null));
         }
 
         return estadisticasTodas;

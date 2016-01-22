@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.services.OriginPhoto;
-import com.codigoartesanal.entuliga.services.PathPhoto;
-import com.codigoartesanal.entuliga.services.PhotoService;
-import com.codigoartesanal.entuliga.services.StorageImageService;
+import com.codigoartesanal.entuliga.services.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -28,7 +25,7 @@ public class StorageLocalImpl implements StorageImageService {
 
     @Override
     public void deleteImage(String logo, OriginPhoto originPhoto) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO)
                 + getPathBaseByOriginPhoto(originPhoto) + logo;
         File dir = new File(pathFull);
         if (dir.exists())
@@ -38,7 +35,7 @@ public class StorageLocalImpl implements StorageImageService {
     private String getPathBaseByOriginPhoto(OriginPhoto originPhoto){
         switch (originPhoto){
             case ARBITRO:
-                return PathPhoto.EQUIPO_BASE.getPath();
+                return PathPhoto.ARBITRO_BASE.getPath();
             case JUGADOR:
                 return PathPhoto.JUGADOR_BASE.getPath();
             case EQUIPO:
@@ -79,7 +76,7 @@ public class StorageLocalImpl implements StorageImageService {
     }
 
     private String getValidPathAbsolute(String base) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO)
                 + base;
         File dir = new File(pathFull);
         if (!dir.exists())

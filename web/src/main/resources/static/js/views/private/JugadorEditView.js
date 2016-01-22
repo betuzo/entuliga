@@ -46,7 +46,8 @@ define([
             photo.set({pathLogo: this.model.get('rutaLogoJugador')});
             photo.set({hasLogo: this.model.get('hasLogoJugador')});
             photo.set({idLogo: this.model.get('id')});
-            photo.set({nameLogo: this.model.get('logoJugadpr')});
+            photo.set({nameLogo: this.model.get('logoJugador')});
+            photo.set({type: 'JUGADOR'});
             var uploadFile = new UploadFileView({
                 modelo: photo,
                 urlUpload: 'file/upload/foto',
@@ -54,14 +55,14 @@ define([
                 callbackUpload:function (data) {
                     that.model.set({hasLogoJugador: true});
                     that.model.set({rutaLogoJugador: data.pathfilename});
-                    that.model.set({logoJugadpr: data.filename});
+                    that.model.set({logoJugador: data.filename});
                     app.jugadores.add(that.model);
                     $('#select-jugador').change();
                 },
                 callbackDelete:function (data) {
                     that.model.set({hasLogoJugador: false});
                     that.model.set({rutaLogoJugador: data.defaultname});
-                    that.model.set({logoJugadpr: ''});
+                    that.model.set({logoJugador: ''});
                     app.jugadores.add(that.model);
                     $('#select-jugador').change();
                 }

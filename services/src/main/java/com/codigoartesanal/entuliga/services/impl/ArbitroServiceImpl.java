@@ -4,6 +4,9 @@ import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.ArbitroRepository;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.services.ArbitroService;
+import com.codigoartesanal.entuliga.services.OriginPhoto;
+import com.codigoartesanal.entuliga.services.PathPhoto;
+import com.codigoartesanal.entuliga.services.PathWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,9 @@ public class ArbitroServiceImpl implements ArbitroService {
 
     @Autowired
     GeoLocationRepository geoLocationRepository;
+
+    @Autowired
+    PathWebService pathWebService;
 
     @Override
     public Map<String, Object> createArbitro(Map<String, String> arbitroMap, User admin) {
@@ -59,7 +65,10 @@ public class ArbitroServiceImpl implements ArbitroService {
         map.put(PROPERTY_NOMBRE, arbitro.getNombre());
         map.put(PROPERTY_PATERNO, arbitro.getPaterno());
         map.put(PROPERTY_MATERNO, arbitro.getMaterno());
-        map.put(PROPERTY_RUTA_FOTO, arbitro.getRutaFoto());
+        map.put(PROPERTY_FOTO_ARBITRO, arbitro.getRutaFoto());
+        String pathWebFull = pathWebService.getValidPathWebFoto(arbitro.getRutaFoto(), OriginPhoto.ARBITRO);
+        map.put(PROPERTY_RUTA_FOTO_ARBITRO, pathWebFull);
+        map.put(PROPERTY_HAS_FOTO_ARBITRO, !pathWebFull.contains(PathPhoto.ARBITRO_DEFAULT.getPath()));
         map.put(PROPERTY_SEXO, arbitro.getSexo());
         map.put(PROPERTY_FECHA_REGISTRO, arbitro.getFechaRegistro());
         if (arbitro.getGeoLocation() == null)
@@ -101,7 +110,7 @@ public class ArbitroServiceImpl implements ArbitroService {
         arbitro.setNombre(arbitroMap.get(PROPERTY_NOMBRE));
         arbitro.setPaterno(arbitroMap.get(PROPERTY_PATERNO));
         arbitro.setMaterno(arbitroMap.get(PROPERTY_MATERNO));
-        arbitro.setRutaFoto(arbitroMap.get(PROPERTY_RUTA_FOTO));
+        arbitro.setRutaFoto(arbitroMap.get(PROPERTY_FOTO_ARBITRO));
         arbitro.setSexo(Sexo.valueOf(arbitroMap.get(PROPERTY_SEXO)));
         arbitro.setFechaRegistro(new Date(Long.valueOf(arbitroMap.get(PROPERTY_FECHA_REGISTRO))));
 

@@ -1,9 +1,9 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.OrigenEstadistica;
+import com.codigoartesanal.entuliga.services.OriginPhoto;
 import com.codigoartesanal.entuliga.services.PathPhoto;
-import com.codigoartesanal.entuliga.services.PathWeb;
-import com.codigoartesanal.entuliga.services.PhotoService;
+import com.codigoartesanal.entuliga.services.PathWebService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -16,24 +16,31 @@ import java.io.File;
  */
 @Service
 @Profile({"localbmvstorage", "localhomestorage", "test"})
-public class PathWebLocalImpl implements PathWeb {
+public class PathWebLocalImpl implements PathWebService {
 
     @Resource
     Environment env;
 
     @Override
-    public String getValidPathWebFoto(String path) {
-        if (path == null || path.isEmpty()) {
-            return PathPhoto.JUGADOR_DEFAULT.getPath();
+    public String getValidPathWebFoto(String path, OriginPhoto originPhoto) {
+        String pathBase = PathPhoto.JUGADOR_BASE.getPath();
+        String pathDefault = PathPhoto.JUGADOR_DEFAULT.getPath();
+        if (originPhoto == OriginPhoto.ARBITRO) {
+            pathBase = PathPhoto.ARBITRO_BASE.getPath();
+            pathDefault = PathPhoto.ARBITRO_DEFAULT.getPath();
         }
 
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO);
-        pathFull = pathFull + PathPhoto.JUGADOR_BASE.getPath() + path;
+        if (path == null || path.isEmpty()) {
+            return pathDefault;
+        }
+
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO);
+        pathFull = pathFull + pathBase + path;
         File file = new File(pathFull);
         if (file == null || !file.exists()) {
-            return PathPhoto.JUGADOR_DEFAULT.getPath();
+            return pathDefault;
         }
-        return PathPhoto.PHOTO_BASE.getPath() + PathPhoto.JUGADOR_BASE.getPath() + path;
+        return PathPhoto.PHOTO_BASE.getPath() + pathBase + path;
     }
 
     @Override
@@ -47,7 +54,7 @@ public class PathWebLocalImpl implements PathWeb {
             return pathDefault;
         }
 
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO);
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO);
         pathFull = pathFull + PathPhoto.EQUIPO_BASE.getPath() + path;
         File file = new File(pathFull);
         if (file == null || !file.exists()) {

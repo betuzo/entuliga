@@ -33,7 +33,7 @@ public interface JugadorService {
     public static final String PROPERTY_LONGITUDE           = "longitude";
     public static final String PROPERTY_LATITUDE            = "latitude";
     public static final String PROPERTY_HAS_LOGO_JUGADOR    = "hasLogoJugador";
-    public static final String PROPERTY_LOGO_JUGADOR        = "logoJugadpr";
+    public static final String PROPERTY_LOGO_JUGADOR        = "logoJugador";
     public static final String PROPERTY_RUTA_LOGO_JUGADOR   = "rutaLogoJugador";
 
     Map<String,Object> createJugador(Map<String, String> jugador, User user);

@@ -6,7 +6,7 @@ security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
 spring.profiles.active: devbd
-spring.profiles.include: localhomestorage
+spring.profiles.include: localbmvstorage
 
 ---
 spring:

@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.services.OriginPhoto;
-import com.codigoartesanal.entuliga.services.PathPhoto;
-import com.codigoartesanal.entuliga.services.PhotoService;
-import com.codigoartesanal.entuliga.services.StorageImageService;
+import com.codigoartesanal.entuliga.services.*;
 import com.codigoartesanal.entuliga.services.google.GoogleCloudStorage;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
@@ -29,14 +26,14 @@ public class StorageGoogleCloudImpl implements StorageImageService {
 
     @Override
     public boolean writeImage(byte[] file, String logo, OriginPhoto originPhoto) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO) +
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO) +
                 getPathBaseByOriginPhoto(originPhoto) + logo;
         return writeFile(file, pathFull);
     }
 
     @Override
     public void deleteImage(String logo, OriginPhoto originPhoto) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO) +
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO) +
                 getPathBaseByOriginPhoto(originPhoto) + logo;
         deleteFile(pathFull);
     }
@@ -44,7 +41,7 @@ public class StorageGoogleCloudImpl implements StorageImageService {
     private String getPathBaseByOriginPhoto(OriginPhoto originPhoto){
         switch (originPhoto){
             case ARBITRO:
-                return PathPhoto.EQUIPO_BASE.getPath();
+                return PathPhoto.ARBITRO_BASE.getPath();
             case JUGADOR:
                 return PathPhoto.JUGADOR_BASE.getPath();
             case EQUIPO:

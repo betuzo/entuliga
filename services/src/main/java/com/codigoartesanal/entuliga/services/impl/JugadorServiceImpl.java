@@ -4,8 +4,9 @@ import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.repositories.JugadorRepository;
 import com.codigoartesanal.entuliga.services.JugadorService;
+import com.codigoartesanal.entuliga.services.OriginPhoto;
 import com.codigoartesanal.entuliga.services.PathPhoto;
-import com.codigoartesanal.entuliga.services.PhotoService;
+import com.codigoartesanal.entuliga.services.PathWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class JugadorServiceImpl implements JugadorService {
     GeoLocationRepository geoLocationRepository;
 
     @Autowired
-    PhotoService photoService;
+    PathWebService pathWebService;
 
     @Override
     public Map<String, Object> createJugador(Map<String, String> jugadorMap, User admin) {
@@ -85,7 +86,7 @@ public class JugadorServiceImpl implements JugadorService {
         map.put(PROPERTY_PATERNO, jugador.getPaterno());
         map.put(PROPERTY_MATERNO, jugador.getMaterno());
         map.put(PROPERTY_LOGO_JUGADOR, jugador.getRutaFoto());
-        String pathWebFull = photoService.getValidPathWebFoto(jugador.getRutaFoto());
+        String pathWebFull = pathWebService.getValidPathWebFoto(jugador.getRutaFoto(), OriginPhoto.JUGADOR);
         map.put(PROPERTY_RUTA_LOGO_JUGADOR, pathWebFull);
         map.put(PROPERTY_HAS_LOGO_JUGADOR, !pathWebFull.contains(PathPhoto.JUGADOR_DEFAULT.getPath()));
         map.put(PROPERTY_SEXO, jugador.getSexo());
