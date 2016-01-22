@@ -1,8 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.services.PathPhoto;
-import com.codigoartesanal.entuliga.services.PhotoService;
-import com.codigoartesanal.entuliga.services.StorageImage;
+import com.codigoartesanal.entuliga.services.*;
 import com.codigoartesanal.entuliga.services.google.GoogleCloudStorage;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
@@ -18,7 +16,7 @@ import java.security.GeneralSecurityException;
  */
 @Service
 @Profile("googlestorage")
-public class StorageGoogleCloudImpl implements StorageImage {
+public class StorageGoogleCloudImpl implements StorageImageService {
 
     static final String PROPERTY_STATIC_GOOGLE_BUCKET_NAME = "entuliga.service.google.bucketName";
     static final String PROPERTY_STATIC_GOOGLE_IMAGE_CONTENT_TYPE = "image/*";
@@ -27,31 +25,30 @@ public class StorageGoogleCloudImpl implements StorageImage {
     Environment env;
 
     @Override
-    public boolean writeLogo(byte[] file, String logo) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO) +
-                PathPhoto.EQUIPO_BASE.getPath() + logo;
+    public boolean writeImage(byte[] file, String logo, OriginPhoto originPhoto) {
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO) +
+                getPathBaseByOriginPhoto(originPhoto) + logo;
         return writeFile(file, pathFull);
     }
 
     @Override
-    public boolean writeFoto(byte[] file, String foto) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO) +
-                PathPhoto.JUGADOR_BASE.getPath() + foto;
-        return writeFile(file, pathFull);
-    }
-
-    @Override
-    public void deleteLogo(String logo) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
-                + PathPhoto.EQUIPO_BASE.getPath() + logo;
+    public void deleteImage(String logo, OriginPhoto originPhoto) {
+        String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO) +
+                getPathBaseByOriginPhoto(originPhoto) + logo;
         deleteFile(pathFull);
     }
 
-    @Override
-    public void deleteFoto(String foto) {
-        String pathFull = env.getRequiredProperty(PhotoService.PROPERTY_STATIC_FILE_PHOTO)
-                + PathPhoto.JUGADOR_BASE.getPath() + foto;
-        deleteFile(pathFull);
+    private String getPathBaseByOriginPhoto(OriginPhoto originPhoto){
+        switch (originPhoto){
+            case ARBITRO:
+                return PathPhoto.ARBITRO_BASE.getPath();
+            case JUGADOR:
+                return PathPhoto.JUGADOR_BASE.getPath();
+            case EQUIPO:
+                return PathPhoto.EQUIPO_BASE.getPath();
+        }
+
+        return "";
     }
 
     private void deleteFile(String path){

@@ -1,7 +1,8 @@
 define([
 	'jquery',
-	'backbone'
-], function($, Backbone){
+	'backbone',
+	'views/private/util/ModalGenericView'
+], function($, Backbone, ModalGenericView){
 
 	var SessionModel = Backbone.Model.extend({
 	    url : 'session/login',
@@ -30,8 +31,9 @@ define([
 				},
 				error: function(model, error) {
 					Session.set('authenticated', false);
-					console.log(model.toJSON());
-					console.log('error.responseText');
+					new ModalGenericView({
+						message: 'Usuario y/o contraseña incorrecta'
+					});
 				}
 			});
 		},

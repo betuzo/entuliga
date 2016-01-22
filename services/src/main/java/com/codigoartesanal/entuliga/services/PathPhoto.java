@@ -7,7 +7,9 @@ public enum PathPhoto {
     PHOTO_BASE,
     JUGADOR_BASE,
     EQUIPO_BASE,
+    ARBITRO_BASE,
     JUGADOR_DEFAULT,
+    ARBITRO_DEFAULT,
     EQUIPO_DEFAULT,
     EQUIPO_DEFAULT_LOCAL,
     EQUIPO_DEFAULT_VISITA;
@@ -18,10 +20,14 @@ public enum PathPhoto {
                 return "photo/";
             case JUGADOR_BASE:
                 return "jugador/";
+            case ARBITRO_BASE:
+                return "arbitro/";
             case EQUIPO_BASE:
                 return "equipo/";
             case JUGADOR_DEFAULT:
                 return "photo/jugador/jugador-default.png";
+            case ARBITRO_DEFAULT:
+                return "photo/arbitro/arbitro-default.png";
             case EQUIPO_DEFAULT:
                 return "photo/equipo/equipo-default.png";
             case EQUIPO_DEFAULT_LOCAL:

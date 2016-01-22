@@ -44,6 +44,7 @@ define([
             photo.set({hasLogo: this.model.get('hasLogoEquipo')});
             photo.set({idLogo: this.model.get('id')});
             photo.set({nameLogo: this.model.get('logoEquipo')});
+            photo.set({type: 'EQUIPO'});
             var uploadFile = new UploadFileView({
                 modelo: photo,
                 urlUpload: 'file/upload/logo',

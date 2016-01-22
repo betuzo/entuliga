@@ -5,9 +5,11 @@ import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 /**
  * Created by betuzo on 16/01/16.
  */
-public interface PathWeb {
+public interface PathWebService {
 
-    String getValidPathWebFoto(String path);
+    static final String PROPERTY_STATIC_FILE_PHOTO = "entuliga.web.pathPhoto";
+
+    String getValidPathWebFoto(String path, OriginPhoto originPhoto);
 
     String getValidPathWebLogo(String path, OrigenEstadistica origenEstadistica);
 }

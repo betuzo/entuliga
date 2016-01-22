@@ -56,6 +56,7 @@ define([
             this.disabledAction(true);
             var arbitroEditView = new ArbitroEditView({tipo: 'new', modelo: null});
             $('#arbitro-edit').html(arbitroEditView.render().$el);
+            arbitroEditView.setUpNew();
         },
 
         editArbitro: function() {
@@ -63,6 +64,7 @@ define([
             var modelo = app.arbitros.get($("#select-arbitro").val());
             var arbitroEditView = new ArbitroEditView({tipo: 'edit', modelo: modelo});
             $('#arbitro-edit').html(arbitroEditView.render().$el);
+            arbitroEditView.setUpEdit();
         },
 
         deleteArbitro: function() {

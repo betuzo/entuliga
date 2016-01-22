@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.controller;
 
-import com.codigoartesanal.entuliga.services.EquipoService;
-import com.codigoartesanal.entuliga.services.JugadorService;
-import com.codigoartesanal.entuliga.services.PathPhoto;
-import com.codigoartesanal.entuliga.services.PhotoService;
+import com.codigoartesanal.entuliga.services.*;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +25,10 @@ import java.util.Map;
 public class FileUploadController {
 
     @Autowired
-    PhotoService photoService;
+    PathWebService pathWebService;
+
+    @Autowired
+    StorageImageService storageImageServices;
 
     @Autowired
     EquipoService equipoService;
@@ -55,13 +55,13 @@ public class FileUploadController {
             try {
                 byte[] bytes = file.getBytes();
 
-                String nameLogo = photoService.getValidNameLogo(file.getOriginalFilename(), id);
+                String nameLogo = getValidNameLogo(file.getOriginalFilename(), id);
 
-                photoService.writeLogo(bytes, nameLogo);
+                storageImageServices.writeImage(bytes, nameLogo, OriginPhoto.EQUIPO);
                 equipoService.updateLogoByEquipo(nameLogo, id);
 
                 result.put("result", "success");
-                result.put("pathfilename", photoService.getValidPathWebLogo(nameLogo, null));
+                result.put("pathfilename", pathWebService.getValidPathWebLogo(nameLogo, null));
                 result.put("filename", nameLogo);
             } catch (Exception e) {
                 result.put("result", "fail");
@@ -76,7 +76,7 @@ public class FileUploadController {
     @RequestMapping(value = "/upload/foto", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> addFileFoto(HttpServletRequest request, HttpServletResponse response,
-                                       @RequestParam("id") Long id) throws IOException {
+                                       @RequestParam("id") Long id, @RequestParam("origin") String origin) throws IOException {
         if (!ServletFileUpload.isMultipartContent(request)) {
 
             if (!(request instanceof StandardMultipartHttpServletRequest)){
@@ -92,13 +92,13 @@ public class FileUploadController {
             try {
                 byte[] bytes = file.getBytes();
 
-                String nameLogo = photoService.getValidNameLogo(file.getOriginalFilename(), id);
+                String nameLogo = getValidNameLogo(file.getOriginalFilename(), id);
 
-                photoService.writeFoto(bytes, nameLogo);
+                storageImageServices.writeImage(bytes, nameLogo, OriginPhoto.valueOf(origin));
                 jugadorService.updateFotoByJugador(nameLogo, id);
 
                 result.put("result", "success");
-                result.put("pathfilename", photoService.getValidPathWebFoto(nameLogo));
+                result.put("pathfilename", pathWebService.getValidPathWebFoto(nameLogo, OriginPhoto.valueOf(origin)));
                 result.put("filename", nameLogo);
             } catch (Exception e) {
                 result.put("result", "fail");
@@ -112,11 +112,11 @@ public class FileUploadController {
 
     @RequestMapping(value = "/delete/logo", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> deleteFileLogo(@RequestParam("key") Long idEquipo, @RequestParam("logo") String logo)
+    public Map<String, String> removeFileLogo(@RequestParam("key") Long idEquipo, @RequestParam("logo") String logo)
             throws IOException {
         Map<String, String> result = new HashMap<>();
 
-        photoService.deleteLogo(logo);
+        storageImageServices.deleteImage(logo, OriginPhoto.EQUIPO);
         equipoService.updateLogoByEquipo("", idEquipo);
 
         result.put("result", "success");
@@ -126,15 +126,21 @@ public class FileUploadController {
 
     @RequestMapping(value = "/delete/foto", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> deleteFileFoto(@RequestParam("key") Long idJugador, @RequestParam("logo") String foto)
+    public Map<String, String> removeFileFoto(@RequestParam("key") Long idJugador,
+                                              @RequestParam("logo") String foto, @RequestParam("origin") String origin)
             throws IOException {
         Map<String, String> result = new HashMap<>();
 
-        photoService.deleteFoto(foto);
+        storageImageServices.deleteImage(foto, OriginPhoto.valueOf(origin));
         jugadorService.updateFotoByJugador("", idJugador);
 
         result.put("result", "success");
         result.put("defaultname", PathPhoto.JUGADOR_DEFAULT.getPath());
         return result;
+    }
+
+    private String getValidNameLogo(String path, Long idEquipo) {
+        String extension=path.substring(path.lastIndexOf("."));
+        return idEquipo + extension;
     }
 }

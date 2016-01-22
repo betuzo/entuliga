@@ -62,6 +62,7 @@ define([
             var data = new FormData();
             data.append('key', this.model.get('idLogo'));
             data.append('logo', this.model.get('nameLogo'));
+            data.append('origin', this.model.get('type'));
             this.servicesRemote(this.urlDelete, data, this.callbackDelete);
         },
 
@@ -70,6 +71,7 @@ define([
             var data = new FormData();
             data.append('filelogo', picture);
             data.append('id', this.model.get('idLogo'));
+            data.append('origin', this.model.get('type'));
             this.servicesRemote(this.urlUpload, data, this.callbackUpload);
         },
 

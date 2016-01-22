@@ -4,13 +4,15 @@ define([
 	'backboneValidation',
 	'jquerySerializeObject',
 	'models/ArbitroModel',
+	'models/util/PhotoModel',
 	'core/BaseView',
 	'views/private/MainColoniaAdminView',
+	'views/private/util/UploadFileView',
 	'views/private/util/ModalGenericView',
 	'text!templates/private/tplArbitroEdit.html'
 ], function($, Backbone, backboneValidation, jquerySerializeObject,
-            ArbitroModel, BaseView, MainColoniaAdminView, ModalGenericView,
-            tplArbitroEdit){
+            ArbitroModel, PhotoModel, BaseView, MainColoniaAdminView,
+            UploadFileView, ModalGenericView, tplArbitroEdit){
 
 	var ArbitroEditView = BaseView.extend({
         template: _.template(tplArbitroEdit),
@@ -32,6 +34,40 @@ define([
             this.model.once("error", this.saveArbitroError);
             Backbone.Validation.bind(this);
             app.that = this;
+        },
+
+        setUpNew: function() {
+            $('#upload-file').html('<img class="avatar avatar-sm" src="photo/arbitro/arbitro-default.png">');
+        },
+
+        setUpEdit: function() {
+            var that = this;
+            var photo = new PhotoModel();
+            photo.set({pathLogo: this.model.get('rutaLogoArbitro')});
+            photo.set({hasLogo: this.model.get('hasLogoArbitro')});
+            photo.set({idLogo: this.model.get('id')});
+            photo.set({nameLogo: this.model.get('logoArbitro')});
+            photo.set({type: 'ARBITRO'});
+            var uploadFile = new UploadFileView({
+                modelo: photo,
+                urlUpload: 'file/upload/foto',
+                urlDelete: 'file/delete/foto',
+                callbackUpload:function (data) {
+                    that.model.set({hasLogoArbitro: true});
+                    that.model.set({rutaLogoArbitro: data.pathfilename});
+                    that.model.set({logoArbitro: data.filename});
+                    app.arbitros.add(that.model);
+                    $('#select-arbitro').change();
+                },
+                callbackDelete:function (data) {
+                    that.model.set({hasLogoArbitro: false});
+                    that.model.set({rutaLogoArbitro: data.defaultname});
+                    that.model.set({logoArbitro: ''});
+                    app.arbitros.add(that.model);
+                    $('#select-arbitro').change();
+                }
+            });
+            $('#upload-file').html(uploadFile.render().$el);
         },
 
         remove: function() {
