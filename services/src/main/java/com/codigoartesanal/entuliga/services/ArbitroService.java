@@ -42,4 +42,6 @@ public interface ArbitroService {
 
     List<Map<String,Object>> listArbitroByAdmin(User user);
 
+    void updateFotoByArbitro(String foto, Long idArbitro);
+
 }

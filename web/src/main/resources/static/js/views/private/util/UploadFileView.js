@@ -87,9 +87,11 @@ define([
                 success: function(data){
                     if (this.url == that.urlDelete){
                         that.model.set({hasLogo: false});
+                        data.defaultname += that.makeId();
                         that.previewPhoto.attr('src', data.defaultname);
                     } else {
                         that.model.set({hasLogo: true});
+                        data.pathfilename += that.makeId();
                     }
                     callback(data);
                     that.setUp('Empty');
@@ -114,6 +116,17 @@ define([
                 that.setUp('Full');
             };
             reader.readAsDataURL(event.target.files[0]);
+        },
+
+        makeId: function()
+        {
+            var text = "?";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for( var i=0; i < 5; i++ )
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+            return text;
         }
     });
 

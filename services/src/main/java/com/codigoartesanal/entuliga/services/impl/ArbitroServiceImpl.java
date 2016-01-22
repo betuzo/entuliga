@@ -59,6 +59,11 @@ public class ArbitroServiceImpl implements ArbitroService {
         return copy;
     }
 
+    @Override
+    public void updateFotoByArbitro(String foto, Long idArbitro) {
+        arbitroRepository.updateFotoByIdArbitro(foto, idArbitro);
+    }
+
     private Map<String, Object> convertArbitroToMap(Arbitro arbitro) {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, arbitro.getId());

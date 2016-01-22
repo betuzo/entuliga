@@ -36,6 +36,9 @@ public class FileUploadController {
     @Autowired
     JugadorService jugadorService;
 
+    @Autowired
+    ArbitroService arbitroService;
+
     @RequestMapping(value = "/upload/logo", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> addFileLogo(HttpServletRequest request, HttpServletResponse response,
@@ -94,8 +97,13 @@ public class FileUploadController {
 
                 String nameLogo = getValidNameLogo(file.getOriginalFilename(), id);
 
-                storageImageServices.writeImage(bytes, nameLogo, OriginPhoto.valueOf(origin));
-                jugadorService.updateFotoByJugador(nameLogo, id);
+                OriginPhoto originPhoto = OriginPhoto.valueOf(origin);
+                storageImageServices.writeImage(bytes, nameLogo, originPhoto);
+                if (originPhoto == OriginPhoto.JUGADOR) {
+                    jugadorService.updateFotoByJugador(nameLogo, id);
+                } else {
+                    arbitroService.updateFotoByArbitro(nameLogo, id);
+                }
 
                 result.put("result", "success");
                 result.put("pathfilename", pathWebService.getValidPathWebFoto(nameLogo, OriginPhoto.valueOf(origin)));
@@ -131,8 +139,13 @@ public class FileUploadController {
             throws IOException {
         Map<String, String> result = new HashMap<>();
 
-        storageImageServices.deleteImage(foto, OriginPhoto.valueOf(origin));
-        jugadorService.updateFotoByJugador("", idJugador);
+        OriginPhoto originPhoto = OriginPhoto.valueOf(origin);
+        storageImageServices.deleteImage(foto, originPhoto);
+        if (originPhoto == OriginPhoto.JUGADOR) {
+            jugadorService.updateFotoByJugador("", idJugador);
+        } else {
+            arbitroService.updateFotoByArbitro("", idJugador);
+        }
 
         result.put("result", "success");
         result.put("defaultname", PathPhoto.JUGADOR_DEFAULT.getPath());

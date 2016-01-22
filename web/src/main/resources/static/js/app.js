@@ -18,6 +18,7 @@ define([
 			Backbone.history.start();
 
 			$.ajaxSetup({
+				cache: false,
 				beforeSend: function() {
 					pleaseWaitDiv.modal('show');
 					callServers = callServers + 1;
