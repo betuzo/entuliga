@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplRowEstadisticaRobo.html'
-], function($, _, BaseView, tplRowEstadisticaRobo){
+], function($, _, BaseView, ModalGenericView, tplRowEstadisticaRobo){
 
 	var RowEstadisticaRoboView = BaseView.extend({
         template: _.template(tplRowEstadisticaRobo),
@@ -32,10 +33,10 @@ define([
                 success: function(model, response) {
                     that.destroyView();
                     that.parent.successRemoveRobo(model);
-                    alert(response.message);
+                    new ModalGenericView({message: response.message});
                 },
                 error: function(model, error) {
-                    alert(error);
+                    new ModalGenericView({message: error.responseJSON.message});
                 }
             });
         },

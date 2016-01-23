@@ -7,9 +7,11 @@ define([
 	'models/TorneoEquipoModel',
 	'collections/TorneoJugadoresCollection',
     'collections/estadistica/TipoRebotesCollection',
+    'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplReboteCreate.html'
 ], function($, Backbone, bootstrap, BaseView, ReboteModel, TorneoEquipoModel,
-            TorneoJugadoresCollection, TipoRebotesCollection, tplReboteCreate){
+            TorneoJugadoresCollection, TipoRebotesCollection, ModalGenericView,
+            tplReboteCreate){
 
 	var ReboteCreateView = BaseView.extend({
 	    el: '#modal-partido',
@@ -89,13 +91,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Rebote registrado correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar el rebote'
+                        });
                     }
                 });
             }

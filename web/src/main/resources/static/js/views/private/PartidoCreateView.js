@@ -8,9 +8,10 @@ define([
 	'models/TorneoModel',
 	'collections/JornadaEquiposCollection',
 	'collections/TorneoCanchasCollection',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplPartidoCreate.html'
 ], function($, Backbone, bootstrap, datetimepicker, BaseView, TorneoPartidoModel, TorneoModel,
-            JornadaEquiposCollection, TorneoCanchasCollection, tplPartidoCreate){
+            JornadaEquiposCollection, TorneoCanchasCollection, ModalGenericView, tplPartidoCreate){
 
 	var PartidoCreateView = BaseView.extend({
 	    el: '#modal-partido-create',
@@ -113,13 +114,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Partido registrado correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar el partido'
+                        });
                     }
                 });
             }

@@ -6,9 +6,10 @@ define([
 	'models/estadistica/BloqueoModel',
 	'models/TorneoEquipoModel',
 	'collections/TorneoJugadoresCollection',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplBloqueoCreate.html'
 ], function($, Backbone, bootstrap, BaseView, BloqueoModel, TorneoEquipoModel,
-            TorneoJugadoresCollection, tplBloqueoCreate){
+            TorneoJugadoresCollection, ModalGenericView, tplBloqueoCreate){
 
 	var BloqueoCreateView = BaseView.extend({
 	    el: '#modal-partido',
@@ -100,13 +101,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Bloqueo registrado correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar el bloqueo'
+                        });
                     }
                 });
             }

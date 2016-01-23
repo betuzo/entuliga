@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplRowEstadisticaRebote.html'
-], function($, _, BaseView, tplRowEstadisticaRebote){
+], function($, _, BaseView, ModalGenericView, tplRowEstadisticaRebote){
 
 	var RowEstadisticaReboteView = BaseView.extend({
         template: _.template(tplRowEstadisticaRebote),
@@ -32,10 +33,10 @@ define([
                 success: function(model, response) {
                     that.destroyView();
                     that.parent.successRemoveRebote(model);
-                    alert(response.message);
+                    new ModalGenericView({message: response.message});
                 },
                 error: function(model, error) {
-                    alert(error);
+                    new ModalGenericView({message: error.responseJSON.message});
                 }
             });
         },

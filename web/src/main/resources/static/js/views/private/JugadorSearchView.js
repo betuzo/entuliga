@@ -6,9 +6,11 @@ define([
 	'models/TorneoJugadorModel',
 	'collections/JugadoresCollection',
 	'collections/PosicionesCollection',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplJugadorSearch.html'
 ], function($, Backbone, bootstrap, BaseView, TorneoJugadorModel,
-            JugadoresCollection, PosicionesCollection, tplJugadorSearch){
+            JugadoresCollection, PosicionesCollection, ModalGenericView,
+            tplJugadorSearch){
 
 	var EquipoSearchView = BaseView.extend({
 	    el: '#modal-jugador-search',
@@ -88,13 +90,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Jugador registrado correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar el jugador'
+                        });
                     }
                 });
             }

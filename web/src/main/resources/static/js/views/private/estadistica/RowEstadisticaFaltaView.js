@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplRowEstadisticaFalta.html'
-], function($, _, BaseView, tplRowEstadisticaFalta){
+], function($, _, BaseView, ModalGenericView, tplRowEstadisticaFalta){
 
 	var RowEstadisticaFaltaView = BaseView.extend({
         template: _.template(tplRowEstadisticaFalta),
@@ -32,10 +33,10 @@ define([
                 success: function(model, response) {
                     that.destroyView();
                     that.parent.successRemoveFalta(model);
-                    alert(response.message);
+                    new ModalGenericView({message: response.message});
                 },
                 error: function(model, error) {
-                    alert(error);
+                    new ModalGenericView({message: error.responseJSON.message});
                 }
             });
         },

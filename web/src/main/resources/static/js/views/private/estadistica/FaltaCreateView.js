@@ -7,9 +7,11 @@ define([
 	'models/TorneoEquipoModel',
 	'collections/TorneoJugadoresCollection',
     'collections/estadistica/TipoFaltasCollection',
+    'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplFaltaCreate.html'
 ], function($, Backbone, bootstrap, BaseView, FaltaModel, TorneoEquipoModel,
-            TorneoJugadoresCollection, TipoFaltasCollection, tplFaltaCreate){
+            TorneoJugadoresCollection, TipoFaltasCollection, ModalGenericView,
+            tplFaltaCreate){
 
 	var FaltaCreateView = BaseView.extend({
 	    el: '#modal-partido',
@@ -117,13 +119,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Falta registrada correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar la falta'
+                        });
                     }
                 });
             }
