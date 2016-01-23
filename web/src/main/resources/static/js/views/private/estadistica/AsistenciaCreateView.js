@@ -6,9 +6,10 @@ define([
 	'models/estadistica/AsistenciaModel',
 	'models/TorneoEquipoModel',
 	'collections/TorneoJugadoresCollection',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplAsistenciaCreate.html'
 ], function($, Backbone, bootstrap, BaseView, AsistenciaModel, TorneoEquipoModel,
-            TorneoJugadoresCollection, tplAsistenciaCreate){
+            TorneoJugadoresCollection, ModalGenericView, tplAsistenciaCreate){
 
 	var AsistenciaCreateView = BaseView.extend({
 	    el: '#modal-partido',
@@ -114,13 +115,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Asistencia registrada correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar la asistencia'
+                        });
                     }
                 });
             }

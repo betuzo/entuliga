@@ -6,9 +6,10 @@ define([
 	'core/BaseView',
 	'models/TorneoModel',
     'collections/TorneoCanchasCollection',
+    'views/private/util/ModalGenericView',
 	'text!templates/private/partido/tplPartidoEdit.html'
 ], function($, Backbone, bootstrap, datetimepicker, BaseView, TorneoModel,
-            TorneoCanchasCollection, tplPartidoEdit){
+            TorneoCanchasCollection, ModalGenericView, tplPartidoEdit){
 
 	var PartidoEditView = BaseView.extend({
 	    el: '#modal-partido',
@@ -65,13 +66,11 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({message: 'Partido registrado correctamente'});
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({message: 'Se presento un error al registrar el partido'});
                     }
                 });
             }

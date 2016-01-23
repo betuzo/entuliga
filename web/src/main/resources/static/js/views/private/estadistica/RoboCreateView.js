@@ -6,9 +6,10 @@ define([
 	'models/estadistica/RoboModel',
 	'models/TorneoEquipoModel',
 	'collections/TorneoJugadoresCollection',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplRoboCreate.html'
 ], function($, Backbone, bootstrap, BaseView, RoboModel, TorneoEquipoModel,
-            TorneoJugadoresCollection, tplRoboCreate){
+            TorneoJugadoresCollection, ModalGenericView, tplRoboCreate){
 
 	var RoboCreateView = BaseView.extend({
 	    el: '#modal-partido',
@@ -100,13 +101,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Robo registrado correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar el robo'
+                        });
                     }
                 });
             }

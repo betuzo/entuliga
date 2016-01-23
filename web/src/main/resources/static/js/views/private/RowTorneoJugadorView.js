@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplRowTorneoJugador.html'
-], function($, _, BaseView, tplRowTorneoJugador){
+], function($, _, BaseView, ModalGenericView, tplRowTorneoJugador){
 
 	var RowTorneoJugadorView = BaseView.extend({
         template: _.template(tplRowTorneoJugador),
@@ -29,10 +30,10 @@ define([
                 wait:true,
                 success: function(model, response) {
                     that.destroyView();
-                    alert(response.message);
+                    new ModalGenericView({message: response.message});
                 },
                 error: function(model, error) {
-                    alert(error);
+                    new ModalGenericView({message: error.responseJSON.message});
                 }
             });
         },

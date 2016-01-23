@@ -5,9 +5,10 @@ define([
 	'core/BaseView',
 	'models/TorneoJornadaModel',
 	'collections/FasesCollection',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/tplJornadaNew.html'
 ], function($, Backbone, bootstrap, BaseView, TorneoJornadaModel,
-            FasesCollection, tplJornadaNew){
+            FasesCollection, ModalGenericView, tplJornadaNew){
 
 	var EquipoSearchView = BaseView.extend({
 	    el: '#modal-jornada-new',
@@ -57,13 +58,15 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({
+                            message: 'Jornada registrada correctamente'
+                        });
                         that.callbackAceptar(model);
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({
+                            message: 'Se presento un error al registrar la jornada'
+                        });
                     }
                 });
             }

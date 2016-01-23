@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplRowEstadisticaPunto.html'
-], function($, _, BaseView, tplRowEstadisticaPunto){
+], function($, _, BaseView, ModalGenericView, tplRowEstadisticaPunto){
 
 	var RowEstadisticaPuntoView = BaseView.extend({
         template: _.template(tplRowEstadisticaPunto),
@@ -32,10 +33,10 @@ define([
                 success: function(model, response) {
                     that.destroyView();
                     that.parent.successRemovePunto(model);
-                    alert(response.message);
+                    new ModalGenericView({message: response.message});
                 },
                 error: function(model, error) {
-                    alert(error);
+                    new ModalGenericView({message: error.responseJSON.message});
                 }
             });
         },

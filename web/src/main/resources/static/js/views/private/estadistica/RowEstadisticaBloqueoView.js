@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/estadistica/tplRowEstadisticaBloqueo.html'
-], function($, _, BaseView, tplRowEstadisticaBloqueo){
+], function($, _, BaseView, ModalGenericView, tplRowEstadisticaBloqueo){
 
 	var RowEstadisticaBloqueoView = BaseView.extend({
         template: _.template(tplRowEstadisticaBloqueo),
@@ -32,10 +33,10 @@ define([
                 success: function(model, response) {
                     that.destroyView();
                     that.parent.successRemoveBloqueo(model);
-                    alert(response.message);
+                    new ModalGenericView({message: response.message});
                 },
                 error: function(model, error) {
-                    alert(error);
+                    new ModalGenericView({message: error.responseJSON.message});
                 }
             });
         },

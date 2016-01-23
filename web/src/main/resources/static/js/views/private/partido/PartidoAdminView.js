@@ -279,12 +279,10 @@ define([
                 this.model.save({}, {
                     wait:true,
                     success:function(model, response) {
-                        console.log('Successfully saved!');
-                        alert('Great Success!');
+                        new ModalGenericView({message: 'Partido registrado correctamente'});
                     },
                     error: function(model, error) {
-                        console.log(model.toJSON());
-                        console.log('error.responseText');
+                        new ModalGenericView({message: 'Se presento un error al registrar el partido'});
                     }
                 });
             }

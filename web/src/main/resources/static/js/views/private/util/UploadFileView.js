@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'backbone',
 	'core/BaseView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/util/tplUploadView.html'
-], function($, Backbone, BaseView, tplUploadView){
+], function($, Backbone, BaseView, ModalGenericView, tplUploadView){
 
     var UploadFileView = BaseView.extend({
         template: _.template(tplUploadView),
@@ -95,10 +96,10 @@ define([
                     }
                     callback(data);
                     that.setUp('Empty');
-                    alert('Servicio correcto');
+                    new ModalGenericView({message: 'Operación realizada con éxito'});
                 },
                 error: function(data){
-                    alert('Error servicio');
+                    new ModalGenericView({message: 'Se presentó un error, vuelva a intentar'});
                 }
             });
         },
