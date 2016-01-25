@@ -30,11 +30,6 @@ require.config({
                 'jquery'
             ]
         },
-        datepicker: {
-            deps: [
-                'jquery'
-            ]
-        },
         datetimepicker: {
             deps: [
                 'jquery'
@@ -60,7 +55,6 @@ require.config({
         underscore: 'vendor/underscore/underscore-min',
         bootstrap: 'vendor/bootstrap/bootstrap',
         selecter: 'vendor/bootstrap/select/bootstrap-select.min',
-        datepicker: 'vendor/bootstrap/datepicker/bootstrap-datepicker',
         datetimepicker: 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
         dateformat: 'vendor/date-format/date.format',
         bloodhound: 'vendor/typeahead/bloodhound',
