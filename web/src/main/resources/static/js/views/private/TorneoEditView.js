@@ -1,14 +1,14 @@
 define([
 	'jquery',
 	'backbone',
-	'datepicker',
+	'datetimepicker',
 	'backboneValidation',
 	'jquerySerializeObject',
 	'models/TorneoModel',
 	'core/BaseView',
 	'views/private/util/ModalGenericView',
 	'text!templates/private/tplTorneoEdit.html'
-], function($, Backbone, datepicker, backboneValidation, jquerySerializeObject,
+], function($, Backbone, datetimepicker, backboneValidation, jquerySerializeObject,
             TorneoModel, BaseView, ModalGenericView, tplTorneoEdit){
 
 	var TorneoEditView = BaseView.extend({
@@ -40,8 +40,21 @@ define([
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
-            this.$el.find('#dp-fecha-inicio').datepicker({format: "mm/dd/yyyy"});
-            this.$el.find('#dp-fecha-fin').datepicker({format: "mm/dd/yyyy"});
+            this.$el.find('#dp-fecha-inicio').datetimepicker({
+                format: "mm/dd/yyyy",
+                pickTime: false,
+                autoclose: true,
+                startView: 'month',
+                minView: 'month'
+            });
+            this.$el.find('#dp-fecha-fin').datetimepicker({
+                format: "mm/dd/yyyy",
+                pickTime: false,
+                autoclose: true,
+                startView: 'month',
+                minView: 'month'
+            });
+
             return this;
         },
 
