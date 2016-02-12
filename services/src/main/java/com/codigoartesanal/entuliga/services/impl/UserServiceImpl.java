@@ -27,6 +27,14 @@ public class UserServiceImpl implements UserService {
         return convertUserToDTO(userRepository.findByUsername(username));
     }
 
+    @Override
+    public Map<String, Object> createUser(Map<String, String> user) {
+        if (user.get(PROPERTY_PASSWORD).equals(user.get(PROPERTY_PASSWORD_CONFIRM))){
+            convertMapToUser(user);
+        }
+        return null;
+    }
+
     private Map<String, Object> convertUserToDTO(User user){
         Map<String, Object> sessionDTO = new HashMap<String, Object>();
 
@@ -34,6 +42,14 @@ public class UserServiceImpl implements UserService {
         sessionDTO.put(PROPERTY_ID, String.valueOf(user.getUsername()));
         sessionDTO.put(PROPERTY_USERNAME, user.getUsername());
         return sessionDTO;
+    }
+
+    private User convertMapToUser(Map<String, String> userMap) {
+        User user = new User();
+        user.setUsername(userMap.get(PROPERTY_USERNAME));
+        user.setPassword(userMap.get(PROPERTY_PASSWORD));
+        user.setEnabled(Boolean.parseBoolean(userMap.get(PROPERTY_ENABLED)));
+        return user;
     }
 
     private List<String> getRolesByUser(User user){

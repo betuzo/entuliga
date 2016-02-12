@@ -18,4 +18,46 @@ public class UserToken {
     private String token;
     @Column(name = "fecha_vigencia")
     private Date fechaVigencia;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Date getFechaVigencia() {
+        return fechaVigencia;
+    }
+
+    public void setFechaVigencia(Date fechaVigencia) {
+        this.fechaVigencia = fechaVigencia;
+    }
+
+    public UserToken() {
+    }
+
+    public UserToken(Long id, User user, String token, Date fechaVigencia) {
+        this.id = id;
+        this.user = user;
+        this.token = token;
+        this.fechaVigencia = fechaVigencia;
+    }
 }
