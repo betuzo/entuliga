@@ -6,6 +6,8 @@ import java.util.Map;
  * Created by betuzo on 07/04/15.
  */
 public interface UserService {
+    public static final int PROPERTY_TOKEN_VIGENCIA_DAYS    = 2;
+
     public static final String PROPERTY_ID                  = "id";
     public static final String PROPERTY_USERNAME            = "username";
     public static final String PROPERTY_PASSWORD            = "password";

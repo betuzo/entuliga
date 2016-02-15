@@ -1,14 +1,21 @@
 package com.codigoartesanal.entuliga.services.impl;
 
+import com.codigoartesanal.entuliga.model.TipoToken;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.model.UserRole;
+import com.codigoartesanal.entuliga.model.UserToken;
 import com.codigoartesanal.entuliga.repositories.UserRepository;
 import com.codigoartesanal.entuliga.repositories.UserRoleRepository;
+import com.codigoartesanal.entuliga.repositories.UserTokenRepository;
+import com.codigoartesanal.entuliga.services.MailService;
 import com.codigoartesanal.entuliga.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static com.codigoartesanal.entuliga.model.TipoToken.*;
 
 /**
  * Created by betuzo on 07/04/15.
@@ -17,27 +24,38 @@ import java.util.*;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
     UserRoleRepository userRoleRepository;
 
+    @Autowired
+    UserTokenRepository userTokenRepository;
+
+    @Autowired
+    MailService mailService;
+
+    @Autowired
+    SimpleMailMessage templateMessage;
+
     @Override
     public Map<String, Object> findByUsername(String username) {
-        return convertUserToDTO(userRepository.findByUsername(username));
+        return convertUserToMap(userRepository.findByUsername(username));
     }
 
     @Override
-    public Map<String, Object> createUser(Map<String, String> user) {
-        if (user.get(PROPERTY_PASSWORD).equals(user.get(PROPERTY_PASSWORD_CONFIRM))){
-            convertMapToUser(user);
+    public Map<String, Object> createUser(Map<String, String> userMap) {
+        User user = new User();
+        if (userMap.get(PROPERTY_PASSWORD).equals(userMap.get(PROPERTY_PASSWORD_CONFIRM))){
+            user = userRepository.save(convertMapToUser(userMap));
+            TipoToken tipoToken = (get(user.getUsername())==null) ? VALID_EMAIL : CHANGE_PASSWORD;
+            userTokenRepository.save(generateTokenByUserAndTipo(user, tipoToken));
         }
-        return null;
+        return convertUserToMap(user);
     }
 
-    private Map<String, Object> convertUserToDTO(User user){
+    private Map<String, Object> convertUserToMap(User user){
         Map<String, Object> sessionDTO = new HashMap<String, Object>();
-
         sessionDTO.put(PROPERTY_ROLES, getRolesByUser(user));
         sessionDTO.put(PROPERTY_ID, String.valueOf(user.getUsername()));
         sessionDTO.put(PROPERTY_USERNAME, user.getUsername());
@@ -48,7 +66,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userMap.get(PROPERTY_USERNAME));
         user.setPassword(userMap.get(PROPERTY_PASSWORD));
-        user.setEnabled(Boolean.parseBoolean(userMap.get(PROPERTY_ENABLED)));
+        user.setEnabled(false);
         return user;
     }
 
@@ -61,5 +79,20 @@ public class UserServiceImpl implements UserService {
             roles.add(userRole.getRole());
         }
         return roles;
+    }
+
+    private UserToken generateTokenByUserAndTipo(User user, TipoToken tipo) {
+        UserToken token = new UserToken();
+        Calendar fechaVigencia = Calendar.getInstance();
+        fechaVigencia.add(Calendar.DAY_OF_MONTH, PROPERTY_TOKEN_VIGENCIA_DAYS);
+        token.setUser(user);
+        token.setToken(UUID.randomUUID().toString());
+        token.setTipo(tipo);
+        token.setFechaVigencia(fechaVigencia.getTime());
+        return token;
+    }
+
+    private User get(String username){
+        return userRepository.findOne(username);
     }
 }

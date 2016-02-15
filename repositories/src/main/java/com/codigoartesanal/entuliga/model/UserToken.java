@@ -16,6 +16,8 @@ public class UserToken {
     private User user;
     @Column(name = "token", nullable = false, length = 45)
     private String token;
+    @Enumerated(EnumType.STRING)
+    private TipoToken tipo;
     @Column(name = "fecha_vigencia")
     private Date fechaVigencia;
 
@@ -43,6 +45,14 @@ public class UserToken {
         this.token = token;
     }
 
+    public TipoToken getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoToken tipo) {
+        this.tipo = tipo;
+    }
+
     public Date getFechaVigencia() {
         return fechaVigencia;
     }
@@ -54,10 +64,11 @@ public class UserToken {
     public UserToken() {
     }
 
-    public UserToken(Long id, User user, String token, Date fechaVigencia) {
+    public UserToken(Long id, User user, String token, TipoToken tipo, Date fechaVigencia) {
         this.id = id;
         this.user = user;
         this.token = token;
+        this.tipo = tipo;
         this.fechaVigencia = fechaVigencia;
     }
 }
