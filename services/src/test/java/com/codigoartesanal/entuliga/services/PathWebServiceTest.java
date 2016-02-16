@@ -1,7 +1,6 @@
 package com.codigoartesanal.entuliga.services;
 
-import com.codigoartesanal.entuliga.config.PersistenceConfig;
-import com.codigoartesanal.entuliga.config.ServicesConfig;
+import com.codigoartesanal.entuliga.config.TestConfig;
 import com.codigoartesanal.entuliga.model.OrigenEstadistica;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @ActiveProfiles(value = "test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ServicesConfig.class, PersistenceConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 public class PathWebServiceTest {
 
     @Autowired

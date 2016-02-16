@@ -49,7 +49,9 @@ public class UserServiceImpl implements UserService {
         if (userMap.get(PROPERTY_PASSWORD).equals(userMap.get(PROPERTY_PASSWORD_CONFIRM))){
             user = userRepository.save(convertMapToUser(userMap));
             TipoToken tipoToken = (get(user.getUsername())==null) ? VALID_EMAIL : CHANGE_PASSWORD;
-            userTokenRepository.save(generateTokenByUserAndTipo(user, tipoToken));
+            userRoleRepository.save(generateRoleDefaultByUser(user));
+            UserToken userToken = userTokenRepository.save(generateTokenByUserAndTipo(user, tipoToken));
+            sendMailToken(userToken, userMap.get(PROPERTY_CONTEXT));
         }
         return convertUserToMap(user);
     }
@@ -92,7 +94,24 @@ public class UserServiceImpl implements UserService {
         return token;
     }
 
+    private UserRole generateRoleDefaultByUser(User user) {
+        UserRole role = new UserRole();
+        role.setUser(user);
+        role.setRole(PROPERTY_ROLE_DEFAULT);
+        return role;
+    }
+
     private User get(String username){
         return userRepository.findOne(username);
+    }
+
+    private void sendMailToken(UserToken userToken, String context) {
+        templateMessage.setTo(userToken.getUser().getUsername());
+
+        Map<String, Object> props = new HashMap<>();
+        props.put("action", userToken.getTipo().getDescription());
+        props.put("link", context + "#token/" + userToken.getToken());
+
+        mailService.send(templateMessage, props);
     }
 }

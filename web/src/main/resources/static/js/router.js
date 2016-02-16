@@ -29,6 +29,7 @@ define([
             '/':                            'main',
             '/#':                           'main',
             'login':                        'login',
+            'signup':                       'signup',
             'admin':                        'admin',
             'admin/perfil':                 'adminPerfil',
             'admin/ligas':                  'adminLigas',
@@ -96,6 +97,11 @@ define([
         },
 
         login: function() {
+            var view = new LoginView();
+            this.changeView(view);
+        },
+
+        signup: function() {
             var view = new LoginView();
             this.changeView(view);
         },

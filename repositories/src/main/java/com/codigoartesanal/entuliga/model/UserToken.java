@@ -6,6 +6,7 @@ import java.util.Date;
 /**
  * Created by betuzo on 25/01/16.
  */
+@Entity
 public class UserToken {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="usertoken_id_seq")

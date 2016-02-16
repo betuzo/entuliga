@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -26,7 +27,8 @@ public class UserController {
             value = { "" },
             method = {RequestMethod.POST},
             produces = {"application/json;charset=UTF-8"})
-    public Map<String, Object> createUser(@RequestBody Map<String, String> user) {
+    public Map<String, Object> createUser(@RequestBody Map<String, String> user, HttpServletRequest request) {
+        user.put(UserService.PROPERTY_CONTEXT, request.getContextPath());
         return userService.createUser(user);
     }
 }

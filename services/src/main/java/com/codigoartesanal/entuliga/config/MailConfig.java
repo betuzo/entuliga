@@ -19,7 +19,7 @@ import java.util.Properties;
  */
 
 @Configuration
-@PropertySource("classpath:mail.properties")
+@PropertySource("classpath:application.properties")
 public class MailConfig {
 
     private static final String PROPERTY_NAME_HOST = "mail.host";

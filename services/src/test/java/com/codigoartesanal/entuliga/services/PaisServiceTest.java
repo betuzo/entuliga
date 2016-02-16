@@ -1,7 +1,6 @@
 package com.codigoartesanal.entuliga.services;
 
-import com.codigoartesanal.entuliga.config.PersistenceConfig;
-import com.codigoartesanal.entuliga.config.ServicesConfig;
+import com.codigoartesanal.entuliga.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +17,7 @@ import java.util.Map;
  */
 @ActiveProfiles(value = "test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ServicesConfig.class, PersistenceConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 public class PaisServiceTest {
     @Autowired
     PaisService paisService;
