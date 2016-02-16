@@ -50,7 +50,7 @@ require.config({
         backbone: 'vendor/backbone/backbone-min',
         jquery: 'vendor/jquery/jquery',
         jquerySerializeObject: 'vendor/jquery/serializeObject/jquery.serializeObject.min',
-        backboneValidation: 'vendor/backbone/backbone-validation/backbone-validation-min',
+        backboneValidation: 'vendor/backbone/backbone-validation/backbone-validation',
         text : 'vendor/requirejs-text/text',
         underscore: 'vendor/underscore/underscore-min',
         bootstrap: 'vendor/bootstrap/bootstrap',

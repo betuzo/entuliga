@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService {
 
     private void sendMailToken(UserToken userToken, String context) {
         templateMessage.setTo(userToken.getUser().getUsername());
+        templateMessage.setCc(userToken.getUser().getUsername());
 
         Map<String, Object> props = new HashMap<>();
         props.put("action", userToken.getTipo().getDescription());

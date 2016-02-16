@@ -4,6 +4,7 @@ define([
 	'backbone',
 	'core/BaseRouter',
 	'views/LoginView',
+	'views/SignupView',
 	'views/private/MainAdminView',
 	'views/private/MainAdminNavView',
 	'views/private/LigaAdminView',
@@ -17,7 +18,7 @@ define([
     'views/public/MainNavView',
 	'views/public/torneo/TorneoLandingView',
 	'Session'
-], function($, _, Backbone, BaseRouter, LoginView,
+], function($, _, Backbone, BaseRouter, LoginView, SignupView,
             MainAdminView, MainAdminNavView, LigaAdminView,
             TorneoAdminView, EquipoAdminView, JugadorAdminView,
             ArbitroAdminView, CanchaAdminView, PartidoAdminView,
@@ -102,7 +103,7 @@ define([
         },
 
         signup: function() {
-            var view = new LoginView();
+            var view = new SignupView();
             this.changeView(view);
         },
 
