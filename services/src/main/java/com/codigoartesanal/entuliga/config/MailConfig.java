@@ -29,6 +29,8 @@ public class MailConfig {
 
     private static final String PROPERTY_NAME_SMTP_AUTH = "mail.smtp.auth";
     private static final String PROPERTY_NAME_SMTP_STARTTLS_ENABLE = "mail.smtp.starttls.enable";
+    private static final String PROPERTY_NAME_SMTP_SSL_TRUST = "mail.smtp.ssl.trust";
+    private static final String PROPERTY_NAME_TRANSPORT_PROTOCOL = "mail.transport.protocol";
 
     private static final String PROPERTY_NAME_FROM_DEFAULT = "mail.from.default";
     private static final String PROPERTY_NAME_TO_DEFAULT = "mail.to.default";
@@ -51,8 +53,17 @@ public class MailConfig {
 
     private Properties javaMailProperties() {
         Properties properties = new Properties();
-        properties.put(PROPERTY_NAME_SMTP_AUTH, env.getRequiredProperty(PROPERTY_NAME_SMTP_AUTH));
-        properties.put(PROPERTY_NAME_SMTP_STARTTLS_ENABLE, env.getRequiredProperty(PROPERTY_NAME_SMTP_STARTTLS_ENABLE));
+        //properties.put(PROPERTY_NAME_SMTP_AUTH, env.getRequiredProperty(PROPERTY_NAME_SMTP_AUTH));
+        //properties.put(PROPERTY_NAME_SMTP_STARTTLS_ENABLE, env.getRequiredProperty(PROPERTY_NAME_SMTP_STARTTLS_ENABLE));
+        //properties.put(PROPERTY_NAME_SMTP_SSL_TRUST, env.getRequiredProperty(PROPERTY_NAME_SMTP_SSL_TRUST));
+        //properties.put(PROPERTY_NAME_TRANSPORT_PROTOCOL, env.getRequiredProperty(PROPERTY_NAME_TRANSPORT_PROTOCOL));
+        //properties.put("mail.smtp.socketFactory.class",
+        //        "javax.net.ssl.SSLSocketFactory");
+        //properties.put("mail.smtp.socketFactory.fallback", "true");
+        //properties.setProperty("mail.transport.protocol", "smtp");
+        properties.setProperty("mail.smtp.auth", "true");
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+        //properties.setProperty("mail.debug", "true");
 
         return properties;
     }

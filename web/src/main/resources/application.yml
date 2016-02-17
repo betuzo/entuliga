@@ -78,6 +78,8 @@ mail:
   from.default: notificacion@entuliga.com
   to.default: notificacion@entuliga.com
   subject.default: Notificacion entuliga
+  transport.protocol: smtp
   smtp:
     auth: true
     starttls.enable: true
+    ssl.trust: smtp.gmail.com
