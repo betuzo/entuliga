@@ -9,6 +9,7 @@ import com.codigoartesanal.entuliga.repositories.UserRoleRepository;
 import com.codigoartesanal.entuliga.repositories.UserTokenRepository;
 import com.codigoartesanal.entuliga.services.MailService;
 import com.codigoartesanal.entuliga.services.UserService;
+import com.codigoartesanal.entuliga.services.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     UserRoleRepository userRoleRepository;
 
     @Autowired
-    UserTokenRepository userTokenRepository;
+    UserTokenService userTokenService;
 
     @Autowired
     MailService mailService;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
             user = userRepository.save(convertMapToUser(userMap));
             TipoToken tipoToken = (get(user.getUsername())==null) ? VALID_EMAIL : CHANGE_PASSWORD;
             userRoleRepository.save(generateRoleDefaultByUser(user));
-            UserToken userToken = userTokenRepository.save(generateTokenByUserAndTipo(user, tipoToken));
+            UserToken userToken = userTokenService.createUserTokenByUserAndTipo(user, tipoToken);
             sendMailToken(userToken, userMap.get(PROPERTY_CONTEXT));
         }
         return convertUserToMap(user);
@@ -81,17 +82,6 @@ public class UserServiceImpl implements UserService {
             roles.add(userRole.getRole());
         }
         return roles;
-    }
-
-    private UserToken generateTokenByUserAndTipo(User user, TipoToken tipo) {
-        UserToken token = new UserToken();
-        Calendar fechaVigencia = Calendar.getInstance();
-        fechaVigencia.add(Calendar.DAY_OF_MONTH, PROPERTY_TOKEN_VIGENCIA_DAYS);
-        token.setUser(user);
-        token.setToken(UUID.randomUUID().toString());
-        token.setTipo(tipo);
-        token.setFechaVigencia(fechaVigencia.getTime());
-        return token;
     }
 
     private UserRole generateRoleDefaultByUser(User user) {

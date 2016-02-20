@@ -32,7 +32,7 @@ public class UserSessionAop {
     UserRepository userRepository;
 
     @Autowired
-    private HttpServletResponse response;
+    HttpServletResponse response;
 
     @Pointcut("execution(* com.codigoartesanal.entuliga.controller.*Controller.*(..))")
     public void controllerLayer() {

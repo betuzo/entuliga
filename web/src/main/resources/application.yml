@@ -73,13 +73,11 @@ spring:
 mail:
   host: smtp.gmail.com
   port: 587
-  username: sit.utec@gmail.com
-  password: situtec2015
+  username: betotsol@gmail.com
+  password: soymuyflojo
   from.default: notificacion@entuliga.com
   to.default: notificacion@entuliga.com
   subject.default: Notificacion entuliga
-  transport.protocol: smtp
   smtp:
     auth: true
     starttls.enable: true
-    ssl.trust: smtp.gmail.com

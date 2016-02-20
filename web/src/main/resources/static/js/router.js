@@ -5,6 +5,7 @@ define([
 	'core/BaseRouter',
 	'views/LoginView',
 	'views/SignupView',
+    'views/TokenValidateView',
 	'views/private/MainAdminView',
 	'views/private/MainAdminNavView',
 	'views/private/LigaAdminView',
@@ -19,10 +20,11 @@ define([
 	'views/public/torneo/TorneoLandingView',
 	'Session'
 ], function($, _, Backbone, BaseRouter, LoginView, SignupView,
-            MainAdminView, MainAdminNavView, LigaAdminView,
-            TorneoAdminView, EquipoAdminView, JugadorAdminView,
-            ArbitroAdminView, CanchaAdminView, PartidoAdminView,
-            MainView, MainNavView, TorneoLandingView, Session){
+            TokenValidateView, MainAdminView, MainAdminNavView,
+            LigaAdminView, TorneoAdminView, EquipoAdminView,
+            JugadorAdminView,ArbitroAdminView, CanchaAdminView,
+            PartidoAdminView, MainView, MainNavView, TorneoLandingView,
+            Session){
         var Router = BaseRouter.extend({
 
         routes: {
@@ -31,6 +33,7 @@ define([
             '/#':                           'main',
             'login':                        'login',
             'signup':                       'signup',
+            'token/:token':                 'token',
             'admin':                        'admin',
             'admin/perfil':                 'adminPerfil',
             'admin/ligas':                  'adminLigas',
@@ -104,6 +107,12 @@ define([
 
         signup: function() {
             var view = new SignupView();
+            this.changeView(view);
+        },
+
+        token: function(token) {
+            new MainNavView();
+            var view = new TokenValidateView({token: token});
             this.changeView(view);
         },
 

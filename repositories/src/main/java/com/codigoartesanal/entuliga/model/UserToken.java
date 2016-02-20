@@ -7,28 +7,18 @@ import java.util.Date;
  * Created by betuzo on 25/01/16.
  */
 @Entity
+@Table(	name = "USER_TOKEN" )
 public class UserToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="usertoken_id_seq")
-    @SequenceGenerator(name="usertoken_id_seq", sequenceName="usertoken_id_seq")
-    private Long id;
+    @Column(name = "token", nullable = false, length = 45)
+    private String token;
     @ManyToOne
     @JoinColumn(name = "username", nullable = false)
     private User user;
-    @Column(name = "token", nullable = false, length = 45)
-    private String token;
     @Enumerated(EnumType.STRING)
     private TipoToken tipo;
     @Column(name = "fecha_vigencia")
     private Date fechaVigencia;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public User getUser() {
         return user;
@@ -65,8 +55,7 @@ public class UserToken {
     public UserToken() {
     }
 
-    public UserToken(Long id, User user, String token, TipoToken tipo, Date fechaVigencia) {
-        this.id = id;
+    public UserToken(User user, String token, TipoToken tipo, Date fechaVigencia) {
         this.user = user;
         this.token = token;
         this.tipo = tipo;
