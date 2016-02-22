@@ -25,13 +25,16 @@ public class UserTokenServiceImpl implements UserTokenService {
     UserRepository userRepository;
 
     @Override
-    public Map<String, Object> userTokenById(String token) {
+    public Map<String, Object> userTokenByIdAndTipo(String token, TipoToken tipoToken) {
         UserToken userToken = userTokenRepository.findOne(token);
         if (userToken == null) {
             throw new TokenException("Token no existe.");
         }
         if (userToken.getFechaVigencia().compareTo(new Date()) < 0) {
             throw new TokenException("Token expirado.");
+        }
+        if (!userToken.getTipo().equals(tipoToken)) {
+            throw new TokenException("Tipo Token invalido.");
         }
         userToken.getUser().setEnabled(true);
         userRepository.save(userToken.getUser());

@@ -19,4 +19,6 @@ public interface UserService {
     Map<String, Object> findByUsername(String username);
 
     Map<String,Object> createUser(Map<String, String> user);
+
+    Map<String,Object> changePassword(Map<String, String> user);
 }

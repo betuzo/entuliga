@@ -1,5 +1,6 @@
 package com.codigoartesanal.entuliga.controller;
 
+import com.codigoartesanal.entuliga.model.TipoToken;
 import com.codigoartesanal.entuliga.model.UserToken;
 import com.codigoartesanal.entuliga.services.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class UserTokenController {
             method = RequestMethod.GET,
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> obtenerUserTokenByToken(@PathVariable("token") String token) {
-        Map<String, Object> response = userTokenService.userTokenById(token);
+        Map<String, Object> response = userTokenService.userTokenByIdAndTipo(token, TipoToken.VALID_EMAIL);
         return response;
     }
 

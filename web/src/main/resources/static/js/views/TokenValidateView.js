@@ -2,13 +2,17 @@ define([
     'jquery',
     'core/BaseView',
     'models/UserTokenModel',
-    'text!templates/tplTokenValidate.html'
-], function($, BaseView, UserTokenModel, tplTokenValidate){
+    'views/TokenChangePassView',
+    'text!templates/tplTokenValidate.html',
+    'text!templates/tplTokenInValid.html'
+], function($, BaseView, UserTokenModel, TokenChangePassView, tplTokenValidate, tplTokenInValid){
 
     var TokenValidateView = BaseView.extend({
         template: _.template(tplTokenValidate),
+        templateInValid: _.template(tplTokenInValid),
 
         events: {
+            'click #btn-ok'         : 'changePass'
         },
 
         initialize: function(opts) {;
@@ -18,6 +22,7 @@ define([
 
             this.model.set({id: opts.token});
             this.model.fetch();
+            Backbone.Validation.bind(this);
         },
 
         render: function() {
@@ -25,11 +30,15 @@ define([
         },
 
         syncUserToken: function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            if (this.model.get('tipo') === 'VALID_EMAIL') {
+                this.$el.html(this.template(this.model.toJSON()));
+            } else {
+                this.$el.html(this.templateInValid({message: 'Token no valido.'}));
+            }
         },
 
         errorUserToken: function(model, response) {
-            alert(error);
+            this.$el.html(this.templateInValid(response.responseJSON));
         }
     });
 

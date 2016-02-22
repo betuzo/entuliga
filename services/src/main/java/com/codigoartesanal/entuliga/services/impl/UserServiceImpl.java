@@ -48,11 +48,25 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> createUser(Map<String, String> userMap) {
         User user = new User();
         if (userMap.get(PROPERTY_PASSWORD).equals(userMap.get(PROPERTY_PASSWORD_CONFIRM))){
+            userMap.put(PROPERTY_ENABLED, String.valueOf(Boolean.FALSE));
             user = userRepository.save(convertMapToUser(userMap));
             TipoToken tipoToken = (get(user.getUsername())==null) ? VALID_EMAIL : CHANGE_PASSWORD;
             userRoleRepository.save(generateRoleDefaultByUser(user));
             UserToken userToken = userTokenService.createUserTokenByUserAndTipo(user, tipoToken);
             sendMailToken(userToken, userMap.get(PROPERTY_CONTEXT));
+        }
+        return convertUserToMap(user);
+    }
+
+    @Override
+    public Map<String, Object> changePassword(Map<String, String> userMap) {
+        User user = new User();
+        Map<String, Object> userToken = userTokenService.userTokenByIdAndTipo(
+                userMap.get(UserTokenService.PROPERTY_TOKEN), TipoToken.CHANGE_PASSWORD);
+        userMap.put(PROPERTY_USERNAME, (String) userToken.get(PROPERTY_USERNAME));
+        if (userMap.get(PROPERTY_PASSWORD).equals(userMap.get(PROPERTY_PASSWORD_CONFIRM))){
+            userMap.put(PROPERTY_ENABLED, String.valueOf(Boolean.TRUE));
+            user = userRepository.save(convertMapToUser(userMap));
         }
         return convertUserToMap(user);
     }
@@ -69,7 +83,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUsername(userMap.get(PROPERTY_USERNAME));
         user.setPassword(userMap.get(PROPERTY_PASSWORD));
-        user.setEnabled(false);
+        user.setEnabled(Boolean.parseBoolean(userMap.get(PROPERTY_ENABLED)));
         return user;
     }
 

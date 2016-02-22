@@ -17,7 +17,7 @@ public interface UserTokenService {
     String PROPERTY_FECHA_VIGENCIA      = "fechaVigencia";
     String PROPERTY_USERNAME            = "username";
 
-    Map<String,Object> userTokenById(String token);
+    Map<String,Object> userTokenByIdAndTipo(String token, TipoToken tipoToken);
 
     UserToken createUserTokenByUserAndTipo(User user, TipoToken tipo);
 }
