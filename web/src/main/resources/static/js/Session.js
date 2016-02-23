@@ -1,8 +1,9 @@
 define([
 	'jquery',
 	'backbone',
+    'jquerycookie',
 	'views/private/util/ModalGenericView'
-], function($, Backbone, ModalGenericView){
+], function($, Backbone, jquerycookie, ModalGenericView){
 
 	var SessionModel = Backbone.Model.extend({
 	    url : 'session/login',
@@ -21,7 +22,8 @@ define([
 				wait:true,
 				success:function(model, response) {
 					Session.set('authenticated', true);
-					Session.set('username', user);
+					Session.set('username', user)
+                    $.cookie('auth_token', JSON.stringify({username: user, token: model.get('token')}))
 					$.ajaxSetup({
 						headers: {
 							"X-Auth-Token": model.get('token')
@@ -33,6 +35,7 @@ define([
 				error: function(model, error) {
 					Session.set('authenticated', false);
 					Session.set('username', '');
+                    $.removeCookie('auth_token')
 					new ModalGenericView({
 						message: 'Usuario y/o contraseña incorrecta'
 					});
@@ -55,6 +58,8 @@ define([
 							"X-Auth-Token": ''
 						}
 					});
+                    Session.set('username', '');
+                    $.removeCookie('auth_token')
 					console.log('Successfully saved!');
 					that();
 				},

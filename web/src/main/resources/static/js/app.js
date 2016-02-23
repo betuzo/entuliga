@@ -2,10 +2,11 @@ define([
     'jquery',
     'backbone',
     'backboneValidation',
+    'jquerycookie',
     'jquerySerializeObject',
     'router',
     'Session'
-], function ($, Backbone, backboneValidation, jquerySerializeObject, Router, Session) {
+], function ($, Backbone, backboneValidation, jquerycookie, jquerySerializeObject, Router, Session) {
 
     var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" style="display: block; margin: auto;"/></div></div>');
     var callServers = 0;
@@ -13,7 +14,20 @@ define([
     var ApplicationModel = Backbone.Model.extend({
 
         start: function () {
-            $.ajaxSettings.headers = [];
+            if ($.cookie('auth_token') === undefined) { // this line is the problem
+                $.ajaxSettings.headers = [];
+                Session.set('authenticated', false);
+            } else {
+                var user = JSON.parse($.cookie('auth_token'));
+                $.ajaxSetup({
+                    headers: {
+                        "X-Auth-Token": user.token
+                    }
+                });
+                Session.set('authenticated', true);
+                Session.set('username', user.username);
+            }
+
             var router = new Router();
             Backbone.history.start();
 
@@ -34,6 +48,7 @@ define([
                         // Redirec the to the login page.
                         Session.set('authenticated', false);
                         Session.set('username', '');
+                        $.removeCookie('auth_token')
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }
@@ -44,6 +59,7 @@ define([
                         // 403 -- Access denied
                         Session.set('authenticated', false);
                         Session.set('username', '');
+                        $.removeCookie('auth_token')
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }
