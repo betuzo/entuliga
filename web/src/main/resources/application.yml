@@ -6,7 +6,7 @@ security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
 spring.profiles.active: devbd
-spring.profiles.include: localhomestorage
+spring.profiles.include: localbmvstorage,devmail
 
 ---
 spring:
@@ -65,3 +65,19 @@ spring:
   profiles: localhomestorage
 
 entuliga.web.pathPhoto: /Users/betuzo/opt/photo/
+
+---
+spring:
+  profiles: devmail
+
+mail:
+  host: smtp.gmail.com
+  port: 587
+  username: betotsol@gmail.com
+  password: soymuyflojo
+  from.default: notificacion@entuliga.com
+  to.default: notificacion@entuliga.com
+  subject.default: Notificacion entuliga
+  smtp:
+    auth: true
+    starttls.enable: true

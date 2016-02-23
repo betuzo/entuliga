@@ -11,8 +11,9 @@ define([
         template: _.template(tplMainNav),
 
         events: {
-            'click #signin': 'signin',
-            'click #home': 'home'
+            'click #signin'         : 'signin',
+            'click #signup'         : 'signup',
+            'click #home'           : 'home'
         },
 
         initialize: function() {
@@ -26,6 +27,10 @@ define([
 
         signin: function(){
             Backbone.history.navigate('admin', { trigger : true });
+        },
+
+        signup: function(){
+            Backbone.history.navigate('signup', { trigger : true });
         },
 
         home: function(){

@@ -50,6 +50,10 @@ public class DomainUsernamePasswordAuthenticationProvider implements Authenticat
             throw new BadCredentialsException("Wrong password.");
         }
 
+        if (!user.isEnabled()) {
+            throw new BadCredentialsException("Unvalidated user, check your mail.");
+        }
+
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
         AuthenticationWithToken authenticationWithToken = new AuthenticationWithToken(username, password, authorities);

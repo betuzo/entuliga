@@ -1,7 +1,6 @@
 package com.codigoartesanal.entuliga.services;
 
-import com.codigoartesanal.entuliga.config.PersistenceConfig;
-import com.codigoartesanal.entuliga.config.ServicesConfig;
+import com.codigoartesanal.entuliga.config.TestConfig;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,7 @@ import java.io.File;
  */
 @ActiveProfiles(value = "test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ServicesConfig.class, PersistenceConfig.class})
+@ContextConfiguration(classes = {TestConfig.class})
 public class StorageImageServiceTest {
 
     @Autowired
@@ -26,7 +25,7 @@ public class StorageImageServiceTest {
     @Test
     public void testWriteFileNull() {
         String serveerPath = "./src/test/resources/img/prueba.png";
-        boolean result = true;
+        boolean result;
         result = storageImageService.writeImage(null, serveerPath, OriginPhoto.JUGADOR);
         Assert.assertTrue(result == false);
     }

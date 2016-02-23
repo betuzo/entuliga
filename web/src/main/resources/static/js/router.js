@@ -4,7 +4,10 @@ define([
 	'backbone',
 	'core/BaseRouter',
 	'views/LoginView',
-	'views/private/MainAdminView',
+	'views/SignupView',
+    'views/TokenValidateView',
+    'views/TokenChangePassView',
+	'views/private/perfil/PerfilAdminView',
 	'views/private/MainAdminNavView',
 	'views/private/LigaAdminView',
 	'views/private/TorneoAdminView',
@@ -17,11 +20,12 @@ define([
     'views/public/MainNavView',
 	'views/public/torneo/TorneoLandingView',
 	'Session'
-], function($, _, Backbone, BaseRouter, LoginView,
-            MainAdminView, MainAdminNavView, LigaAdminView,
-            TorneoAdminView, EquipoAdminView, JugadorAdminView,
-            ArbitroAdminView, CanchaAdminView, PartidoAdminView,
-            MainView, MainNavView, TorneoLandingView, Session){
+], function($, _, Backbone, BaseRouter, LoginView, SignupView,
+            TokenValidateView, TokenChangePassView, PerfilAdminView,
+            MainAdminNavView, LigaAdminView, TorneoAdminView,
+            EquipoAdminView, JugadorAdminView,ArbitroAdminView,
+            CanchaAdminView, PartidoAdminView, MainView, MainNavView,
+            TorneoLandingView, Session){
         var Router = BaseRouter.extend({
 
         routes: {
@@ -29,6 +33,9 @@ define([
             '/':                            'main',
             '/#':                           'main',
             'login':                        'login',
+            'signup':                       'signup',
+            'token/:token':                 'token',
+            'change/:token':                'changeToken',
             'admin':                        'admin',
             'admin/perfil':                 'adminPerfil',
             'admin/ligas':                  'adminLigas',
@@ -100,10 +107,32 @@ define([
             this.changeView(view);
         },
 
+        signup: function() {
+            var view = new SignupView();
+            this.changeView(view);
+        },
+
+        token: function(token) {
+            new MainNavView();
+            var view = new TokenValidateView({token: token});
+            this.changeView(view);
+        },
+
+        changeToken: function(token) {
+            new MainNavView();
+            var view = new TokenChangePassView({token: token});
+            this.changeView(view);
+        },
+
         admin: function() {
-            var view = new MainAdminView();
+            var view = new PerfilAdminView();
             this.changeView(view);
             new MainAdminNavView();
+        },
+
+        adminPerfil: function() {
+            var view = new PerfilAdminView();
+            this.changeView(view);
         },
 
         adminLigas: function() {

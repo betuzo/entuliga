@@ -1,58 +1,60 @@
-
 define([
-	'jquery',
-	'backbone',
-	'backboneValidation',
-	'jquerySerializeObject',
-	'router',
-	'Session'
-], function($, Backbone, backboneValidation, jquerySerializeObject, Router, Session){
+    'jquery',
+    'backbone',
+    'backboneValidation',
+    'jquerySerializeObject',
+    'router',
+    'Session'
+], function ($, Backbone, backboneValidation, jquerySerializeObject, Router, Session) {
 
-	var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" style="display: block; margin: auto;"/></div></div>');
-	var callServers = 0;
+    var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" style="display: block; margin: auto;"/></div></div>');
+    var callServers = 0;
 
-	var ApplicationModel = Backbone.Model.extend({
+    var ApplicationModel = Backbone.Model.extend({
 
-	    start : function(){
+        start: function () {
+            $.ajaxSettings.headers = [];
             var router = new Router();
-			Backbone.history.start();
+            Backbone.history.start();
 
-			$.ajaxSetup({
-				cache: false,
-				beforeSend: function() {
-					pleaseWaitDiv.modal('show');
-					callServers = callServers + 1;
-				},
-				complete: function(){
-					if (callServers <= 1) {
-						pleaseWaitDiv.modal('hide');
-					}
-					callServers = callServers - 1;
-				},
-				statusCode: {
-					401: function(){
-						// Redirec the to the login page.
-						Session.set('authenticated', false);
-						if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
-						    delete $.ajaxSettings.headers["X-Auth-Token"];
-						}
-						Backbone.history.navigate('login', { trigger : true });
-
-					},
-					403: function() {
-						// 403 -- Access denied
-						Session.set('authenticated', false);
-						if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
+            $.ajaxSetup({
+                cache: false,
+                beforeSend: function () {
+                    pleaseWaitDiv.modal('show');
+                    callServers = callServers + 1;
+                },
+                complete: function () {
+                    if (callServers <= 1) {
+                        pleaseWaitDiv.modal('hide');
+                    }
+                    callServers = callServers - 1;
+                },
+                statusCode: {
+                    401: function () {
+                        // Redirec the to the login page.
+                        Session.set('authenticated', false);
+                        Session.set('username', '');
+                        if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }
-						Backbone.history.navigate('login', { trigger : true });
-					}
-				}
-			});
+                        Backbone.history.navigate('login', {trigger: true});
 
-			var router = new Router();
+                    },
+                    403: function () {
+                        // 403 -- Access denied
+                        Session.set('authenticated', false);
+                        Session.set('username', '');
+                        if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
+                            delete $.ajaxSettings.headers["X-Auth-Token"];
+                        }
+                        Backbone.history.navigate('login', {trigger: true});
+                    }
+                }
+            });
 
-			// Extend the callbacks to work with Bootstrap, as used in this example
+            var router = new Router();
+
+            // Extend the callbacks to work with Bootstrap, as used in this example
             // See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks
             _.extend(Backbone.Validation.callbacks, {
                 valid: function (view, attr, selector) {
@@ -79,8 +81,8 @@ define([
                 };
                 return $.each(this.serializeArray(), b), a
             };
-		}
-	});
+        }
+    });
 
-	return ApplicationModel;
+    return ApplicationModel;
 });

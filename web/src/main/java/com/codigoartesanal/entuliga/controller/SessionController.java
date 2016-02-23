@@ -3,6 +3,7 @@ package com.codigoartesanal.entuliga.controller;
 import com.codigoartesanal.entuliga.config.security.AuthenticationWithToken;
 import com.codigoartesanal.entuliga.config.security.TokenService;
 import com.codigoartesanal.entuliga.services.UserService;
+import com.codigoartesanal.entuliga.services.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -59,7 +60,7 @@ public class SessionController {
             Authentication auth = new AuthenticationWithToken(user.get("username"), user.get("password"), null);;
             Authentication authToken = domainUsernamePasswordAuthenticationProvider.authenticate(auth);
 
-            sessionDTO.put(UserService.PROPERTY_TOKEN, authToken.getDetails());
+            sessionDTO.put(UserTokenService.PROPERTY_TOKEN, authToken.getDetails());
         }
         return sessionDTO;
     }

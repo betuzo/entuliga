@@ -21,6 +21,7 @@ define([
 				wait:true,
 				success:function(model, response) {
 					Session.set('authenticated', true);
+					Session.set('username', user);
 					$.ajaxSetup({
 						headers: {
 							"X-Auth-Token": model.get('token')
@@ -31,6 +32,7 @@ define([
 				},
 				error: function(model, error) {
 					Session.set('authenticated', false);
+					Session.set('username', '');
 					new ModalGenericView({
 						message: 'Usuario y/o contraseña incorrecta'
 					});
