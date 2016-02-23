@@ -7,7 +7,7 @@ define([
 	'views/SignupView',
     'views/TokenValidateView',
     'views/TokenChangePassView',
-	'views/private/MainAdminView',
+	'views/private/perfil/PerfilAdminView',
 	'views/private/MainAdminNavView',
 	'views/private/LigaAdminView',
 	'views/private/TorneoAdminView',
@@ -21,7 +21,7 @@ define([
 	'views/public/torneo/TorneoLandingView',
 	'Session'
 ], function($, _, Backbone, BaseRouter, LoginView, SignupView,
-            TokenValidateView, TokenChangePassView, MainAdminView,
+            TokenValidateView, TokenChangePassView, PerfilAdminView,
             MainAdminNavView, LigaAdminView, TorneoAdminView,
             EquipoAdminView, JugadorAdminView,ArbitroAdminView,
             CanchaAdminView, PartidoAdminView, MainView, MainNavView,
@@ -125,9 +125,14 @@ define([
         },
 
         admin: function() {
-            var view = new MainAdminView();
+            var view = new PerfilAdminView();
             this.changeView(view);
             new MainAdminNavView();
+        },
+
+        adminPerfil: function() {
+            var view = new PerfilAdminView();
+            this.changeView(view);
         },
 
         adminLigas: function() {

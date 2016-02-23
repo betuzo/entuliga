@@ -33,6 +33,7 @@ define([
                     401: function () {
                         // Redirec the to the login page.
                         Session.set('authenticated', false);
+                        Session.set('username', '');
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }
@@ -42,6 +43,7 @@ define([
                     403: function () {
                         // 403 -- Access denied
                         Session.set('authenticated', false);
+                        Session.set('username', '');
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }

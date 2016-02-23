@@ -28,6 +28,9 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
+    UserTokenRepository userTokenRepository;
+
+    @Autowired
     UserRoleRepository userRoleRepository;
 
     @Autowired
@@ -61,9 +64,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> changePassword(Map<String, String> userMap) {
         User user = new User();
-        Map<String, Object> userToken = userTokenService.userTokenByIdAndTipo(
+        Map<String, Object> userTokenMap = userTokenService.userTokenByIdAndTipo(
                 userMap.get(UserTokenService.PROPERTY_TOKEN), TipoToken.CHANGE_PASSWORD);
-        userMap.put(PROPERTY_USERNAME, (String) userToken.get(PROPERTY_USERNAME));
+        userMap.put(PROPERTY_USERNAME, (String) userTokenMap.get(PROPERTY_USERNAME));
         if (userMap.get(PROPERTY_PASSWORD).equals(userMap.get(PROPERTY_PASSWORD_CONFIRM))){
             userMap.put(PROPERTY_ENABLED, String.valueOf(Boolean.TRUE));
             user = userRepository.save(convertMapToUser(userMap));

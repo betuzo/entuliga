@@ -38,7 +38,10 @@ define([
 
         syncUserToken: function() {
             new ModalGenericView({
-                message: 'Su password se ha restaurado'
+                message: 'Su password se ha restaurado',
+                callbackConfirm: function (data) {
+                    Backbone.history.navigate('login', { trigger : true });
+                }
             });
         },
 

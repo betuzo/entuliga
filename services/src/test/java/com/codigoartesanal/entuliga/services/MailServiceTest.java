@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services;
 
 import com.codigoartesanal.entuliga.config.TestConfig;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.Map;
 @ActiveProfiles(value = "test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
+@Ignore
 public class MailServiceTest {
 
     @Autowired

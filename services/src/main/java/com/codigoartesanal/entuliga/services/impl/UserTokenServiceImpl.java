@@ -38,6 +38,7 @@ public class UserTokenServiceImpl implements UserTokenService {
         }
         userToken.getUser().setEnabled(true);
         userRepository.save(userToken.getUser());
+        userTokenRepository.delete(userToken.getToken());
         return convertUserTokenToMap(userToken);
     }
 
