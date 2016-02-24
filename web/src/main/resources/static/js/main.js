@@ -25,6 +25,10 @@ require.config({
                 'jquery'
             ]
         },
+        jquerycookie:{
+            deps: [
+                'jquery'
+            ]        },
         jquerySerializeObject: {
             deps: [
                 'jquery'
@@ -49,6 +53,7 @@ require.config({
     paths: {
         backbone: 'vendor/backbone/backbone-min',
         jquery: 'vendor/jquery/jquery',
+        jquerycookie: 'vendor/jquery/cookie/jquery.cookie',
         jquerySerializeObject: 'vendor/jquery/serializeObject/jquery.serializeObject.min',
         backboneValidation: 'vendor/backbone/backbone-validation/backbone-validation',
         text : 'vendor/requirejs-text/text',
