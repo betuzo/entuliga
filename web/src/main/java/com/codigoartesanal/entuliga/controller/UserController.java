@@ -44,8 +44,9 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/{username}" },
+            value = "/{username:.+}",
             method = {RequestMethod.GET},
+            headers="Accept=*/*",
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> getUser(@PathVariable("username") String username) {
         return userService.findByUsername(username);

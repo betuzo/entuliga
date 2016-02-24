@@ -3,6 +3,7 @@ package com.codigoartesanal.entuliga.config;
 import com.codigoartesanal.entuliga.services.PathWebService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,5 +35,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry
             .addResourceHandler("/photo/**")
             .addResourceLocations("file:" + env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO), "classpath:/static/img/photo/");
+    }
+
+    @Override
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+        configurer.favorPathExtension(false);
+        configurer.defaultContentType(MediaType.APPLICATION_JSON);
     }
 }
