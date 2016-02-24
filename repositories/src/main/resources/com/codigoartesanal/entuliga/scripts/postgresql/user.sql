@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS USUARIO (
 );
                
 INSERT INTO USUARIO (USERNAME, PASSWORD, ENABLED) VALUES
-('jperez', '123456', true),
+('jperez@tu.me', '123456', true),
 ('jsoto', '$2a$10$GqqtbEuDi8YXzI1n8Zoqv.Upp61NP/Jy1fvPiMAgtcsyFuwc7N.AK', true),
 ('rolguin', '123456', true),
 ('sgarcia', '123456', true),
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS USER_ROLE (
 );
 
 INSERT INTO USER_ROLE (ID, USERNAME, ROLE) VALUES
-(1, 'jperez', 'ADMIN'),
+(1, 'jperez@tu.me', 'ADMIN'),
 (2, 'jsoto', 'GERENTE'),
 (3, 'rolguin', 'JUGADOR'),
 (4, 'sgarcia', 'JUGADOR'),

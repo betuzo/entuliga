@@ -1,5 +1,5 @@
 INSERT INTO USUARIO (USERNAME, PASSWORD, ENABLED) VALUES
-('jperez', '123456', 1),
+('jperez@tu.me', 'p4Ssword', 1),
 ('jsoto', '$2a$10$GqqtbEuDi8YXzI1n8Zoqv.Upp61NP/Jy1fvPiMAgtcsyFuwc7N.AK', 1),
 ('rolguin@grupobmv.com.mx', 'p4Ssword', 0),
 ('sgarcia', '123456', 1),
@@ -17,7 +17,7 @@ INSERT INTO USUARIO (USERNAME, PASSWORD, ENABLED) VALUES
 ('jlopez', '123456', 1);
 
 INSERT INTO USER_ROLE (ID, USERNAME, ROLE) VALUES
-(1, 'jperez', 'ADMIN'),
+(1, 'jperez@tu.me', 'ADMIN'),
 (2, 'jsoto', 'GERENTE'),
 (3, 'rolguin@grupobmv.com.mx', 'JUGADOR'),
 (4, 'sgarcia', 'JUGADOR'),
