@@ -57,7 +57,7 @@ define([
                 type: 'confirm',
                 labelConfirm: 'Si',
                 labelCancel: 'No',
-                message: '¿Desea cancelar la edición?',
+                message: '¿Desea cancelar la acción?',
                 callbackConfirm: function (data) {
                     app.that.disabledAction(false);
                     app.that.destroyView();
@@ -82,7 +82,7 @@ define([
             }
             app.that.disabledAction(false);
             new ModalGenericView({
-                message: 'Liga registrada correctamente'
+                message: 'Liga guardada correctamente'
             });
             app.that.destroyView();
             delete app.that;

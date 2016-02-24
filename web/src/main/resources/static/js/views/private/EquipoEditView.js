@@ -82,7 +82,7 @@ define([
                 type: 'confirm',
                 labelConfirm: 'Si',
                 labelCancel: 'No',
-                message: '¿Desea cancelar la edición?',
+                message: '¿Desea cancelar la acción?',
                 callbackConfirm: function (data) {
                     app.that.disabledAction(false);
                     app.that.destroyView();
