@@ -1,17 +1,17 @@
 <div class="row">
-    <div class="col-md-12">
-        <div id="loginForm" name="f"  class="form-signin">
+    <form class="col-md-12">
+        <form id="form-login" role="form" class="form-signin">
             <h2 class="form-signin-heading">Datos del Usuario</h2>
-            <label for="j_username" class="sr-only">Username</label>
-            <input id="j_username" name="username" class="form-control" placeholder="Username" type="text" required autofocus>
-            <label for="j_password" class="sr-only">Password</label>
-            <input type="password" id="j_password" name="password" class="form-control" placeholder="Password" required>
+            <label for="username" class="sr-only">Username</label>
+            <input id="username" name="username" class="form-control" placeholder="Username" type="text" required autofocus value="<%= username %>">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required value="<%= password %>">
             <div class="checkbox">
                 <label>
-                    <input id="j_remember" type="checkbox" value="remember-me"> Recordarme
+                    <input id="remember" type="checkbox" value="remember-me"> Recordarme
                 </label>
             </div>
             <button class="btn btn-lg btn-primary btn-block">Login</button>
-        </div>
+        </form>
     </div>
 </div>

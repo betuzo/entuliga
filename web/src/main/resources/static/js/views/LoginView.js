@@ -1,9 +1,10 @@
 define([
 	'jquery',
 	'core/BaseView',
+    'jquerySerializeObject',
 	'text!templates/tplLogin.html',
 	'Session'
-], function($, BaseView, tplLogin, Session){
+], function($, BaseView, jquerySerializeObject, tplLogin, Session){
 
 	var LoginView = BaseView.extend({
         template: _.template(tplLogin),
@@ -12,18 +13,26 @@ define([
             'click .btn.btn-lg.btn-primary.btn-block': 'login'
         },
 
-        initialize: function() {;
+        initialize: function() {
+            this.model = Session;
+            Backbone.Validation.bind(this);
         },
 
         render: function() {
-            this.$el.html(this.template());
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
 
         login: function(){
-            var user = $("#j_username").val();
-            var pass = $("#j_password").val();
-            var remember = $("#j_remember").is(":checked");
+            var data = this.$el.find("#form-login").serializeObject();
+            this.model.set(data);
+
+            if(!this.model.isValid(true)){
+                return;
+            }
+            var user = $("#username").val();
+            var pass = $("#password").val();
+            var remember = $("#remember").is(":checked");
             Session.login(function(response){
                 Backbone.history.navigate('admin', { trigger : true });
             }, user, pass, remember);

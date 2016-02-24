@@ -8,6 +8,11 @@ define([
 	var SessionModel = Backbone.Model.extend({
 	    url : 'session/login',
 
+        defaults: {
+            username: '',
+            password: ''
+        },
+
 	    initialize: function(){
 	    	this.set('authenticated', false);
 	    },
