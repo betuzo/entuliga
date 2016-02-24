@@ -12,7 +12,20 @@ define([
 	    	this.set('authenticated', false);
 	    },
 
-		login : function(callback, user, pass){
+        validation: {
+            username: {
+                required: true,
+                pattern: 'email',
+                msg: 'Por favor especifique un email correcto'
+            },
+            password: {
+                required: true,
+                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
+                msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
+            }
+        },
+
+		login : function(callback, user, pass, remember){
 			var that = callback;
 			var Session = this;
 
@@ -23,7 +36,10 @@ define([
 				success:function(model, response) {
 					Session.set('authenticated', true);
 					Session.set('username', user)
-                    $.cookie('auth_token', JSON.stringify({username: user, token: model.get('token')}))
+					if (remember) {
+						$.cookie('auth_token', JSON.stringify({username: user, token: model.get('token')}));
+					}
+
 					$.ajaxSetup({
 						headers: {
 							"X-Auth-Token": model.get('token')
