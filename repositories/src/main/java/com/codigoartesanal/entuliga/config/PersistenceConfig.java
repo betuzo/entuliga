@@ -101,7 +101,7 @@ public class PersistenceConfig {
 
     @Bean
     @Profile({"test", "devbd"})
-    public DataSourceInitializer dataSourceInitializerConfiguration() {
+    public DataSourceInitializer dataSourceInitializerConfigurationDev() {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
 
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/user.sql"));
@@ -124,6 +124,34 @@ public class PersistenceConfig {
 
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSourceDev());
+        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+        return dataSourceInitializer;
+    }
+
+    @Bean
+    @Profile("dmlpreprobd")
+    public DataSourceInitializer dataSourceInitializerConfiguration() {
+        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/user.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/pais.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/estado.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/municipio.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/colonia.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/geolocation.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/equipo.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/liga.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/torneo.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/jugador.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/cancha.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/torneoequipo.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/torneojugador.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/torneocancha.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/jornada.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/postgresql/partido.sql"));
+
+        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+        dataSourceInitializer.setDataSource(dataSource());
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
         return dataSourceInitializer;
     }
