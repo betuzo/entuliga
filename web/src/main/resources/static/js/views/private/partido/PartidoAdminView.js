@@ -24,6 +24,7 @@ define([
 	'views/private/estadistica/BloqueoCreateView',
 	'views/private/estadistica/ReboteCreateView',
 	'views/private/estadistica/RoboCreateView',
+	'views/private/util/ModalGenericView',
 	'text!templates/private/partido/tplPartidoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, BaseView, TorneoPartidoModel,
             PartidoLocalView, PartidoVisitaView, PartidoArbitrosView,
@@ -31,7 +32,8 @@ define([
             EstadisticaFaltasView, EstadisticaMovimientosView, EstadisticaAsistenciasView,
             EstadisticaBloqueosView, EstadisticaRebotesView, EstadisticaRobosView,
             PuntoCreateView, FaltaCreateView, MovimientoCreateView, AsistenciaCreateView,
-            BloqueoCreateView, ReboteCreateView, RoboCreateView, tplPartidoAdmin){
+            BloqueoCreateView, ReboteCreateView, RoboCreateView, ModalGenericView,
+            tplPartidoAdmin){
 
 	var PartidoAdminView = BaseView.extend({
         template: _.template(tplPartidoAdmin),
