@@ -33,7 +33,7 @@ public class VelocityMailServiceImpl implements MailService {
             message.setFrom(msg.getFrom());
             message.setSubject(msg.getSubject());
 
-            String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "/emailBody.vm", "UTF-8", hTemplateVariables);
+            String body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "emailBody.vm", "UTF-8", hTemplateVariables);
 
             message.setText(body, true);
         };
