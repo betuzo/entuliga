@@ -11,8 +11,8 @@ define([
         template: _.template(tplEquipoSearch),
 
         events: {
-            'click #btn-buscar': 'clickBuscar',
-            'click #btn-aceptar': 'clickAceptar',
+            'keydown #text-busqueda': 'changeBuscar',
+            'click #btn-aceptar'    : 'clickAceptar',
             'click .list-group-item': 'clickItemSearch'
         },
 
@@ -43,10 +43,10 @@ define([
             });
         },
 
-        clickBuscar: function(event) {
+        changeBuscar: function(event) {
             var textName = $('#text-busqueda').val();
             var idTorneo = this.model.get('id');
-            if (textName != '' && textName != 'undefined') {
+            if (textName != '' && textName != 'undefined' && textName.length > 2) {
                 $("#result-search").html('');
                 this.equipos.setTipo('like');
                 this.equipos.setCriterio(textName);

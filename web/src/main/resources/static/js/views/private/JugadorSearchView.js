@@ -17,8 +17,8 @@ define([
         template: _.template(tplJugadorSearch),
 
         events: {
-            'click #btn-buscar': 'clickBuscar',
-            'click #btn-aceptar': 'clickAceptar',
+            'keydown #text-busqueda' : 'changeBuscar',
+            'click #btn-aceptar'    : 'clickAceptar',
             'click .list-group-item': 'clickItemSearch'
         },
 
@@ -68,10 +68,10 @@ define([
             $('#select-posicion').change();
         },
 
-        clickBuscar: function(event) {
-            var textName = $('#text-busqueda').val();
+        changeBuscar: function(event) {
+            var textName = $(event.target).val();
             var idTorneo = this.torneoEquipo.get('torneoId');
-            if (textName != '' && textName != 'undefined') {
+            if (textName != '' && textName != 'undefined' && textName.length > 2) {
                 $("#result-search").html('');
                 this.jugadores.setTipo('like');
                 this.jugadores.setCriterio(textName);
