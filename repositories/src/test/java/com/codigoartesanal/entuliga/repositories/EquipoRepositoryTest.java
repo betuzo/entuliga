@@ -29,8 +29,8 @@ public class EquipoRepositoryTest {
     public void testFindAllNotInTorneoAndNombreContaining() {
         Torneo torneo = new Torneo();
         torneo.setId(1L);
-        String likename = "%ctivos%";
-        List<Equipo> equipos = equipoRepository.findAllNotInTorneoAndNombreContaining(torneo, likename);
+        String likename = "ctiVOs";
+        List<Equipo> equipos = equipoRepository.findAllNotInTorneoAndNombreContaining(torneo, likename.toLowerCase());
         Assert.assertNotNull(equipos);
     }
 

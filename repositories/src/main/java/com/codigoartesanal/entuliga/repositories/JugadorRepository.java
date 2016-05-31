@@ -19,7 +19,7 @@ public interface JugadorRepository extends CrudRepository<Jugador, Long> {
 
     @Query("select ju from Jugador ju where ju not in " +
             "(select tj.jugador from TorneoJugador tj where tj.torneoEquipo.torneo = :torneo) " +
-            "and ju.nombre like :likeName")
+            "and lower(ju.nombre) like :likeName")
     List<Jugador> findAllNotInTorneoAndNombreContaining(
             @Param("torneo") Torneo torneo, @Param("likeName") String likeName);
 

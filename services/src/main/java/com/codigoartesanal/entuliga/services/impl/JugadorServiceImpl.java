@@ -64,7 +64,7 @@ public class JugadorServiceImpl implements JugadorService {
         Torneo torneo = new Torneo();
         torneo.setId(idTorneo);
         Iterator<Jugador> itJugador =
-                jugadorRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName).iterator();
+                jugadorRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName.toLowerCase()).iterator();
         List<Map<String, Object>> copy = new ArrayList<>();
         while (itJugador.hasNext()) {
             Jugador jugador = itJugador.next();

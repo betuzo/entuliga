@@ -59,7 +59,7 @@ public class EquipoServiceImpl implements EquipoService {
         Torneo torneo = new Torneo();
         torneo.setId(idTorneo);
         Iterator<Equipo> itEquipo =
-                equipoRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName).iterator();
+                equipoRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName.toLowerCase()).iterator();
         List<Map<String, Object>> copy = new ArrayList<>();
         while (itEquipo.hasNext()) {
             Equipo equipo = itEquipo.next();
