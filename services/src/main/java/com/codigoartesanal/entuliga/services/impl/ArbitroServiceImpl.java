@@ -64,6 +64,20 @@ public class ArbitroServiceImpl implements ArbitroService {
         arbitroRepository.updateFotoByIdArbitro(foto, idArbitro);
     }
 
+    @Override
+    public List<Map<String, Object>> listArbitroByTorneoAndContainName(Long idTorneo, String likeName) {
+        Torneo torneo = new Torneo();
+        torneo.setId(idTorneo);
+        Iterator<Arbitro> itArbitro =
+                arbitroRepository.findAllNotInTorneoAndNombreContaining(torneo, likeName.toLowerCase()).iterator();
+        List<Map<String, Object>> copy = new ArrayList<>();
+        while (itArbitro.hasNext()) {
+            Arbitro arbitro = itArbitro.next();
+            Map<String, Object> dto = convertArbitroToMap(arbitro);
+            copy.add(dto);
+        }
+        return copy;    }
+
     private Map<String, Object> convertArbitroToMap(Arbitro arbitro) {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, arbitro.getId());

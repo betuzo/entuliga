@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.repositories;
 
 import com.codigoartesanal.entuliga.model.Arbitro;
+import com.codigoartesanal.entuliga.model.Torneo;
 import com.codigoartesanal.entuliga.model.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,12 @@ import java.util.List;
  */
 public interface ArbitroRepository extends CrudRepository<Arbitro, Long> {
     List<Arbitro> findAllByAdmin(User admin);
+
+    @Query("select ar from Arbitro ar where ar not in " +
+            "(select ta.arbitro from TorneoArbitro ta where ta.torneo = :torneo) " +
+            "and lower(ar.nombre) like :likeName")
+    List<Arbitro> findAllNotInTorneoAndNombreContaining(
+            @Param("torneo") Torneo torneo, @Param("likeName") String likeName);
 
     @Transactional
     @Modifying

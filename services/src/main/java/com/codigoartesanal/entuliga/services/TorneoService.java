@@ -10,14 +10,14 @@ import java.util.Map;
  * Created by betuzo on 18/05/15.
  */
 public interface TorneoService {
-    public static final String PROPERTY_ID              = "id";
-    public static final String PROPERTY_LIGA_ID         = "ligaId";
-    public static final String PROPERTY_NOMBRE          = "nombre";
-    public static final String PROPERTY_CLAVE           = "clave";
-    public static final String PROPERTY_DESCRIPCION     = "descripcion";
-    public static final String PROPERTY_FECHA_INICIO    = "fechaInicio";
-    public static final String PROPERTY_FECHA_FIN       = "fechaFin";
-    public static final String PROPERTY_STATUS          = "status";
+    String PROPERTY_ID              = "id";
+    String PROPERTY_LIGA_ID         = "ligaId";
+    String PROPERTY_NOMBRE          = "nombre";
+    String PROPERTY_CLAVE           = "clave";
+    String PROPERTY_DESCRIPCION     = "descripcion";
+    String PROPERTY_FECHA_INICIO    = "fechaInicio";
+    String PROPERTY_FECHA_FIN       = "fechaFin";
+    String PROPERTY_STATUS          = "status";
 
     Map<String,Object> createTorneo(Map<String, String> torneo, User user);
     DeleteStatusEnum deleteTorneo(Long idTorneo);
