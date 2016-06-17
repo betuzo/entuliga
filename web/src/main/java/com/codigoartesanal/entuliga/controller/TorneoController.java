@@ -32,6 +32,9 @@ public class TorneoController {
     TorneoCanchaService torneoCanchaService;
 
     @Autowired
+    TorneoArbitroService torneoArbitroService;
+
+    @Autowired
     ClasificacionService clasificacionService;
 
     @Autowired
@@ -118,6 +121,15 @@ public class TorneoController {
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> listCanchaByTorneo(@PathVariable("torneo") Long idTorneo) {
         return torneoCanchaService.listCanchaByTorneo(idTorneo);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/{torneo}/arbitro" },
+            method = {RequestMethod.GET},
+            produces = {"application/json;charset=UTF-8"})
+    public List<Map<String, Object>> listArbitroByTorneo(@PathVariable("torneo") Long idTorneo) {
+        return torneoArbitroService.listArbitroByTorneo(idTorneo);
     }
 
     @ResponseBody

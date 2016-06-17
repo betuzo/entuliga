@@ -7,9 +7,10 @@ define([
     'views/private/TorneoJornadaAdminView',
     'views/private/TorneoPartidoAdminView',
     'views/private/TorneoCanchaAdminView',
+    'views/private/TorneoArbitroAdminView',
 	'text!templates/private/tplTorneoDetail.html'
 ], function($, Backbone, BaseView, TorneoEquipoAdminView, TorneoJugadorAdminView, TorneoJornadaAdminView,
-            TorneoPartidoAdminView, TorneoCanchaAdminView, tplTorneoDetail){
+            TorneoPartidoAdminView, TorneoCanchaAdminView, TorneoArbitroAdminView, tplTorneoDetail){
 
 	var TorneoDetailView = BaseView.extend({
         template: _.template(tplTorneoDetail),
@@ -20,6 +21,7 @@ define([
             'click #torneo-jugador'     :   'viewJugador',
             'click #torneo-partido'     :   'viewPartido',
             'click #torneo-cancha'      :   'viewCancha',
+            'click #torneo-arbitro'     :   'viewArbitro',
             'click .list-group-item'    :   'clickOptionDetail'
         },
 
@@ -79,6 +81,16 @@ define([
                 this.torneoDetailAdminView = new TorneoCanchaAdminView({model: this.model});
                 $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
                 $('#titulo-torneo-detalle').html('Canchas');
+            }
+        },
+
+        viewArbitro: function() {
+            if (this.torneoDetailAdminView == 'undefined' || this.torneoDetailAdminView == undefined
+                || this.tipo != 'arbitro'){
+                this.tipo = 'arbitro';
+                this.torneoDetailAdminView = new TorneoArbitroAdminView({model: this.model});
+                $('#torneo-edit').html(this.torneoDetailAdminView.render().$el);
+                $('#titulo-torneo-detalle').html('Arbitros');
             }
         },
 
