@@ -48,6 +48,11 @@ require.config({
             deps: [
                 'jquery'
             ]
+        },
+        fabric: {
+            deps: [
+                'jquery'
+            ]
         }
     },
     paths: {
@@ -63,7 +68,8 @@ require.config({
         datetimepicker: 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
         dateformat: 'vendor/date-format/date.format',
         bloodhound: 'vendor/typeahead/bloodhound',
-        typeahead: 'vendor/typeahead/typeahead.jquery'
+        typeahead: 'vendor/typeahead/typeahead.jquery',
+        fabric: 'vendor/fabric/fabric.min'
     }
 });
 

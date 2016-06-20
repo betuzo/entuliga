@@ -3,6 +3,7 @@ define([
 	'backbone',
 	'bootstrap',
 	'selecter',
+	'fabric',
 	'core/BaseView',
 	'models/TorneoPartidoModel',
 	'views/private/partido/PartidoLocalView',
@@ -26,7 +27,7 @@ define([
 	'views/private/estadistica/RoboCreateView',
 	'views/private/util/ModalGenericView',
 	'text!templates/private/partido/tplPartidoAdmin.html'
-], function($, Backbone, bootstrap, selecter, BaseView, TorneoPartidoModel,
+], function($, Backbone, bootstrap, selecter, fabriclib, BaseView, TorneoPartidoModel,
             PartidoLocalView, PartidoVisitaView, PartidoArbitrosView,
             PartidoEditView, EstadisticaResumenView, EstadisticaPuntosView,
             EstadisticaFaltasView, EstadisticaMovimientosView, EstadisticaAsistenciasView,
@@ -89,6 +90,7 @@ define([
             new EstadisticaRebotesView({modelo: this.model, parent: this});
             new EstadisticaRobosView({modelo: this.model, parent: this});
             new EstadisticaResumenView(this.model);
+            this.setUpCourt();
         },
 
         setIdPartido: function(idPartido) {
@@ -288,6 +290,81 @@ define([
                     }
                 });
             }
+        },
+
+        setUpCourt: function() {
+            var canvas = new fabric.Canvas('canvas');
+            var position = {left: 0, top:0};
+            var isOver = false;
+            var strPath = 'M 192.3004,118.04878 H 196.63056 V 139.6996 C 196.63056,140.89553 197.59971,141.86468 198.79564,141.86468 H 216.1163 C 217.31223,141.86468 218.28137,140.89553 218.28137,139.6996 V 118.04878 H 222.61154 C 223.80747,118.04878 224.77662,117.07964 224.77662,115.88371 V 109.38846 C 224.77662,108.19252 223.80747,107.22338 222.61154,107.22338 H 213.95121 C 213.95121,110.81065 211.04324,113.71862 207.45597,113.71862 203.8687,113.71862 200.96072,110.81065 200.96072,107.22338 H 192.3004 C 191.10446,107.22338 190.13532,108.19252 190.13532,109.38846 V 115.88371 C 190.13532,117.07964 191.10446,118.04878 192.3004,118.04878 z';
+            var tolerancia = 20;
+
+            canvas.setBackgroundImage('img/courtbasket.png', canvas.renderAll.bind(canvas), {
+                backgroundImageOpacity: 0.5,
+                backgroundImageStretch: false
+            });
+
+            var path1 = new fabric.Path(strPath, {
+                fill: 'blue',
+                left: 50,
+                top: 50,
+                hasRotatingPoint: false,
+                hasBorders: false,
+                hasControls: false
+            });
+            canvas.add(path1);
+
+            var path2 = new fabric.Path(strPath, {
+                fill: 'red',
+                left: 150,
+                top: 150,
+                hasRotatingPoint: false,
+                hasBorders: false,
+                hasControls: false
+            });
+            canvas.add(path2);
+            canvas.renderAll();
+
+            canvas.on('object:moving', function (e) {
+                if ((e.target.left > path1.left - tolerancia && e.target.left < path1.left + tolerancia) &&
+                (e.target.top > path1.top - tolerancia && e.target.top < path1.top + tolerancia) ) {
+                    path1.setOpacity(0.5);
+                    path1.scale(1.2);
+                    isOver = true;
+                } else {
+                    path1.setOpacity(1);
+                    path1.scale(1);
+                    isOver = false;
+                }
+            });
+
+            canvas.on('mouse:down', function (e) {
+                if (e.target !== undefined) {
+                    position.left = e.target.left;
+                    position.top = e.target.top;
+                }
+            });
+
+            canvas.on('mouse:up', function (e) {
+                if (e.target === undefined) {
+                    return;
+                }
+                console.log('up: ' + e.target.fill);
+                if (isOver) {
+                    e.target.set('left', path1.left);
+                    e.target.set('top', path1.top);
+                    path1.set('left', position.left);
+                    path1.set('top', position.top);
+                    path1.setOpacity(1);
+                    path1.scale(1);
+                } else {
+                    e.target.set('left', position.left);
+                    e.target.set('top', position.top);
+                }
+                path1.setCoords();
+                e.target.setCoords();
+                canvas.renderAll();
+            });
         }
 	});
 
