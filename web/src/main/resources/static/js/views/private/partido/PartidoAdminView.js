@@ -6,8 +6,7 @@ define([
 	'fabric',
 	'core/BaseView',
 	'models/TorneoPartidoModel',
-	'views/private/partido/PartidoLocalView',
-	'views/private/partido/PartidoVisitaView',
+	'views/private/partido/PartidoEquipoView',
 	'views/private/partido/PartidoArbitrosView',
 	'views/private/partido/PartidoEditView',
 	'views/private/estadistica/EstadisticaResumenView',
@@ -28,9 +27,9 @@ define([
 	'views/private/util/ModalGenericView',
 	'text!templates/private/partido/tplPartidoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, fabriclib, BaseView, TorneoPartidoModel,
-            PartidoLocalView, PartidoVisitaView, PartidoArbitrosView,
-            PartidoEditView, EstadisticaResumenView, EstadisticaPuntosView,
-            EstadisticaFaltasView, EstadisticaMovimientosView, EstadisticaAsistenciasView,
+            PartidoEquipoView, PartidoArbitrosView, PartidoEditView,
+            EstadisticaResumenView, EstadisticaPuntosView, EstadisticaFaltasView,
+            EstadisticaMovimientosView, EstadisticaAsistenciasView,
             EstadisticaBloqueosView, EstadisticaRebotesView, EstadisticaRobosView,
             PuntoCreateView, FaltaCreateView, MovimientoCreateView, AsistenciaCreateView,
             BloqueoCreateView, ReboteCreateView, RoboCreateView, ModalGenericView,
@@ -79,8 +78,9 @@ define([
               $(this).tab('show')
             })
 
-            new PartidoLocalView(this.model);
-            new PartidoVisitaView(this.model);
+            this.strPath = 'M 192.3004,118.04878 H 196.63056 V 139.6996 C 196.63056,140.89553 197.59971,141.86468 198.79564,141.86468 H 216.1163 C 217.31223,141.86468 218.28137,140.89553 218.28137,139.6996 V 118.04878 H 222.61154 C 223.80747,118.04878 224.77662,117.07964 224.77662,115.88371 V 109.38846 C 224.77662,108.19252 223.80747,107.22338 222.61154,107.22338 H 213.95121 C 213.95121,110.81065 211.04324,113.71862 207.45597,113.71862 203.8687,113.71862 200.96072,110.81065 200.96072,107.22338 H 192.3004 C 191.10446,107.22338 190.13532,108.19252 190.13532,109.38846 V 115.88371 C 190.13532,117.07964 191.10446,118.04878 192.3004,118.04878 z';
+            this.local = new PartidoEquipoView({modelo: this.model, parent: this, type: 'local'});
+            this.visita = new PartidoEquipoView({modelo: this.model, parent: this, type: 'visita'});
             new PartidoArbitrosView(this.model);
             new EstadisticaPuntosView({modelo: this.model, parent: this});
             new EstadisticaFaltasView({modelo: this.model, parent: this});
@@ -121,7 +121,7 @@ define([
         },
 
         successAddPunto: function(punto) {
-            if (punto.get('origen') == 'LOCAL') {
+            if (punto.get('origen') === 'LOCAL') {
                 var puntoLocal = this.parent.model.get('localPuntos') + punto.get('tipoValor');
                 this.parent.model.set({localPuntos: puntoLocal});
             } else {
@@ -135,7 +135,7 @@ define([
         },
 
         successRemovePunto: function(punto) {
-            if (punto.get('origen') == 'LOCAL') {
+            if (punto.get('origen') === 'LOCAL') {
                 var puntoLocal = this.model.get('localPuntos') - punto.get('tipoValor');
                 this.model.set({localPuntos: puntoLocal});
             } else {
@@ -293,78 +293,180 @@ define([
         },
 
         setUpCourt: function() {
-            var canvas = new fabric.Canvas('canvas');
+            var pathBase = new fabric.Path(this.strPath, {});
+            this.canvas = new fabric.Canvas('canvas');
             var position = {left: 0, top:0};
-            var isOver = false;
-            var strPath = 'M 192.3004,118.04878 H 196.63056 V 139.6996 C 196.63056,140.89553 197.59971,141.86468 198.79564,141.86468 H 216.1163 C 217.31223,141.86468 218.28137,140.89553 218.28137,139.6996 V 118.04878 H 222.61154 C 223.80747,118.04878 224.77662,117.07964 224.77662,115.88371 V 109.38846 C 224.77662,108.19252 223.80747,107.22338 222.61154,107.22338 H 213.95121 C 213.95121,110.81065 211.04324,113.71862 207.45597,113.71862 203.8687,113.71862 200.96072,110.81065 200.96072,107.22338 H 192.3004 C 191.10446,107.22338 190.13532,108.19252 190.13532,109.38846 V 115.88371 C 190.13532,117.07964 191.10446,118.04878 192.3004,118.04878 z';
+            this.isOver = false;
             var tolerancia = 20;
 
-            canvas.setBackgroundImage('img/courtbasket.png', canvas.renderAll.bind(canvas), {
+            this.canvas.setBackgroundImage('img/courtbasket.png', this.canvas.renderAll.bind(this.canvas), {
                 backgroundImageOpacity: 0.5,
                 backgroundImageStretch: false
             });
 
-            var path1 = new fabric.Path(strPath, {
-                fill: 'blue',
-                left: 50,
-                top: 50,
-                hasRotatingPoint: false,
-                hasBorders: false,
-                hasControls: false
-            });
-            canvas.add(path1);
+            var positionsLocalBase = [
+                                        {left: 200, top:140, label:'B', type:0},
+                                        {left: 160, top:120, label:'AP', type:0},
+                                        {left: 170, top:180, label:'E', type:0},
+                                        {left: 120, top:110, label:'A', type:0},
+                                        {left: 45, top:175, label:'P', type:0},
+                                        {left: this.canvas.width - pathBase.width - 200, top:140, label:'B', type:1},
+                                        {left: this.canvas.width - pathBase.width - 160, top:120, label:'AP', type:1},
+                                        {left: this.canvas.width - pathBase.width - 170, top:180, label:'E', type:1},
+                                        {left: this.canvas.width - pathBase.width - 120, top:110, label:'A', type:1},
+                                        {left: this.canvas.width - pathBase.width - 45, top:175, label:'P', type:1}
+                                     ];
 
-            var path2 = new fabric.Path(strPath, {
-                fill: 'red',
-                left: 150,
-                top: 150,
-                hasRotatingPoint: false,
-                hasBorders: false,
-                hasControls: false
-            });
-            canvas.add(path2);
-            canvas.renderAll();
+            this.paths = this.addPositionBase(positionsLocalBase);
+            this.canvas.renderAll();
 
-            canvas.on('object:moving', function (e) {
-                if ((e.target.left > path1.left - tolerancia && e.target.left < path1.left + tolerancia) &&
-                (e.target.top > path1.top - tolerancia && e.target.top < path1.top + tolerancia) ) {
-                    path1.setOpacity(0.5);
-                    path1.scale(1.2);
-                    isOver = true;
-                } else {
-                    path1.setOpacity(1);
-                    path1.scale(1);
-                    isOver = false;
+            var that = this;
+            this.canvas.on('object:moving', function (e) {
+                var pathTmp = that.paths;
+                if (that.isOver){
+                    pathTmp = [that.pathOver];
+                }
+                for (path in pathTmp) {
+                    if ((e.target.typePosition === 2 && pathTmp[path].typePosition === 1) ||
+                        (e.target.typePosition === 3 && pathTmp[path].typePosition === 0)){
+                        continue;
+                    }
+                    that.pathOver = pathTmp[path];
+                    if ((e.target.left > that.pathOver.left - tolerancia && e.target.left < that.pathOver.left + tolerancia) &&
+                        (e.target.top > that.pathOver.top - tolerancia && e.target.top < that.pathOver.top + tolerancia) ) {
+                        that.pathOver.setOpacity(0.5);
+                        that.pathOver.scale(1.2);
+                        that.isOver = true;
+                        break;
+                    } else {
+                        that.pathOver.setOpacity(1);
+                        that.pathOver.scale(1);
+                        that.isOver = false;
+                    }
                 }
             });
 
-            canvas.on('mouse:down', function (e) {
-                if (e.target !== undefined) {
+            this.canvas.on('mouse:down', function (e) {
+                if (e.target !== undefined && e.target !== null) {
                     position.left = e.target.left;
                     position.top = e.target.top;
                 }
             });
-
-            canvas.on('mouse:up', function (e) {
-                if (e.target === undefined) {
+            var that = this;
+            this.canvas.on('mouse:up', function (e) {
+                if (e.target === undefined || e.target === null) {
                     return;
                 }
-                console.log('up: ' + e.target.fill);
-                if (isOver) {
-                    e.target.set('left', path1.left);
-                    e.target.set('top', path1.top);
-                    path1.set('left', position.left);
-                    path1.set('top', position.top);
-                    path1.setOpacity(1);
-                    path1.scale(1);
+                if (that.isOver) {
+                    if (that.pathOver.pathOver !== null) {
+                        that.pathOver.pathOver.left = that.pathOver.pathOver.originLeft;
+                        that.pathOver.pathOver.top = that.pathOver.pathOver.originTop;
+                    }
+                    e.target.set('left', that.pathOver.left);
+                    e.target.set('top', that.pathOver.top-15);
+                    that.pathOver.setOpacity(1);
+                    that.pathOver.scale(1);
+                    that.pathOver.set('pathOver', e.target);
+                    that.isOver = false;
                 } else {
                     e.target.set('left', position.left);
                     e.target.set('top', position.top);
                 }
-                path1.setCoords();
                 e.target.setCoords();
-                canvas.renderAll();
+                that.canvas.renderAll();
             });
+        },
+
+        addPositionBase: function(positionsBase){
+            var paths = [];
+            for (pos in positionsBase) {
+                var path = new fabric.Path(this.strPath, {
+                    fill: 'rgba(0,0,0,0)',
+                    stroke: 'black',
+                    strokeWidth: 2,
+                    originX: 'center',
+                    originY: 'center'
+                });
+                var text = new fabric.Text(positionsBase[pos].label, {
+                    fontSize: 15,
+                    fill: "#000",
+                    originX: 'center',
+                    originY: 'center'
+                });
+                var group = new fabric.Group([ path, text ], {
+                    left: positionsBase[pos].left,
+                    top: positionsBase[pos].top,
+                    height: path.height,
+                    width: path.width,
+                    hasRotatingPoint: false,
+                    hasBorders: false,
+                    hasControls: false,
+                    selectable: false
+                });
+                group.item(0).left = 0;
+                group.item(0).top = 0;
+                group.item(1).left = 0;
+                group.item(1).top = 4;
+                group.set('typePosition', positionsBase[pos].type);
+                group.set('pathOver', null);
+                this.canvas.add(group);
+                paths.push(group);
+            }
+            return paths;
+        },
+
+        addPlayers: function(players, type) {
+            var space = 10;
+            var pathBase = new fabric.Path(this.strPath, {});
+            var total = Math.floor(this.canvas.width / 2 / (pathBase.width + space));
+            var leftInit = ((this.canvas.width / 2) - ((total * pathBase.width) + ((total - 1) * space))) / 2;
+            var color = this.model.get(type + 'Color');
+            var top = 10;
+            var typePosition = 2;
+            if (type === 'visita') {
+            	leftInit = leftInit + (this.canvas.width / 2);
+            	typePosition = 3;
+            }
+            var left = leftInit;
+
+            for (player in players.models) {
+                if (parseInt(player) >= total && Math.floor((parseInt(player) + 1) % total) === 1){
+                    left = leftInit;
+                    top = top + pathBase.height + 10;
+                }
+                var path = new fabric.Path(this.strPath, {
+                    fill: color,
+                    stroke: "#000",
+                    strokeWidth: 1,
+                    originX: 'center',
+                    originY: 'center'
+                });
+                var text = new fabric.Text(players.models[player].get('numeroJugador'), {
+                  fontSize: 25,
+                  fill: "#000",
+                  stroke: "#fff",
+                  originX: 'center',
+                  originY: 'center'
+                });
+                var group = new fabric.Group([ path, text ], {
+                    left: left,
+                    top: top,
+                    height: path.height + text.height,
+                    width: path.width,
+                    hasRotatingPoint: false,
+                    hasBorders: false,
+                    hasControls: false
+                });
+                group.item(0).left = 0;
+                group.item(0).top = 0;
+                group.item(1).left = 0;
+                group.item(1).top = 5;
+                group.set('typePosition',typePosition);
+                group.set('originLeft', group.left);
+                group.set('originTop', group.top);
+                this.canvas.add(group);
+                left = left + path.width + space;
+            }
         }
 	});
 

@@ -20,6 +20,8 @@ public class Equipo {
     private String aliasEquipo;
     @Column(name = "ruta_logo_equipo")
     private String rutaLogoEquipo;
+    @Column(name = "main_color")
+    private String mainColor;
 
     public Long getId() {
         return id;
@@ -59,6 +61,14 @@ public class Equipo {
 
     public void setRutaLogoEquipo(String rutaLogoEquipo) {
         this.rutaLogoEquipo = rutaLogoEquipo;
+    }
+
+    public String getMainColor() {
+        return mainColor;
+    }
+
+    public void setMainColor(String mainColor) {
+        this.mainColor = mainColor;
     }
     
     @Override

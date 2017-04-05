@@ -13,10 +13,12 @@ define([
             localNombre: '',
             localAlias: '',
             localPuntos: 0,
+            localColor: '',
             visitaId: '',
             visitaNombre: '',
             visitaNombre: '',
             visitaPuntos: 0,
+            visitaColor: '',
             canchaId: '',
             canchaNombre: '',
             canchaDomicilio: '',
@@ -47,6 +49,9 @@ define([
             localPuntos: {
                 required: false
             },
+            localColor: {
+                required: false
+            },
             visitaId: {
                 required: true
             },
@@ -57,6 +62,9 @@ define([
                 required: false
             },
             visitaPuntos: {
+                required: false
+            },
+            visitaColor: {
                 required: false
             },
             canchaId: {

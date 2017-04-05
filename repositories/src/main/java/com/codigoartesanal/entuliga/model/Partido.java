@@ -21,11 +21,15 @@ public class Partido {
     private TorneoEquipo local;
     @Column(name = "puntos_local")
     private Long puntosLocal;
+    @Column(name = "color_local")
+    private String colorLocal;
     @ManyToOne
     @JoinColumn(name = "visitante_id", nullable = false)
     private TorneoEquipo visitante;
     @Column(name = "puntos_visitante")
     private Long puntosVisitante;
+    @Column(name = "color_visitante")
+    private String colorVisitante;
     @ManyToOne
     @JoinColumn(name = "cancha_id", nullable = false)
     private TorneoCancha cancha;
@@ -89,6 +93,14 @@ public class Partido {
         this.puntosLocal = puntosLocal;
     }
 
+    public String getColorLocal() {
+        return colorLocal;
+    }
+
+    public void setColorLocal(String colorLocal) {
+        this.colorLocal = colorLocal;
+    }
+
     public TorneoEquipo getVisitante() {
         return visitante;
     }
@@ -103,6 +115,14 @@ public class Partido {
 
     public void setPuntosVisitante(Long puntosVisitante) {
         this.puntosVisitante = puntosVisitante;
+    }
+
+    public String getColorVisitante() {
+        return colorVisitante;
+    }
+
+    public void setColorVisitante(String colorVisitante) {
+        this.colorVisitante = colorVisitante;
     }
 
     public TorneoCancha getCancha() {

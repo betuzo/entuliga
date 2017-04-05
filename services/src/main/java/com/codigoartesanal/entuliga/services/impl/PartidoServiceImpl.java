@@ -72,7 +72,9 @@ public class PartidoServiceImpl implements PartidoService {
 
     private Partido populatePartido(Partido partido) {
         partido.setLocal(torneoEquipoRepository.findOne(partido.getLocal().getId()));
+        partido.setColorLocal(partido.getLocal().getEquipo().getMainColor());
         partido.setVisitante(torneoEquipoRepository.findOne(partido.getVisitante().getId()));
+        partido.setColorVisitante(partido.getVisitante().getEquipo().getMainColor());
         partido.setCancha(torneoCanchaRepository.findOne(partido.getCancha().getId()));
         partido.setJornada(jornadaRepository.findOne(partido.getJornada().getId()));
         return partido;
@@ -91,11 +93,13 @@ public class PartidoServiceImpl implements PartidoService {
         TorneoEquipo local = new TorneoEquipo();
         local.setId(Long.valueOf(mapPartido.get(PROPERTY_LOCAL_ID)));
         partido.setLocal(local);
+        partido.setColorLocal(mapPartido.get(PROPERTY_LOCAL_COLOR));
         partido.setPuntosLocal(Long.valueOf(mapPartido.get(PROPERTY_LOCAL_PUNTOS)));
 
         TorneoEquipo visita = new TorneoEquipo();
         visita.setId(Long.valueOf(mapPartido.get(PROPERTY_VISITANTE_ID)));
         partido.setVisitante(visita);
+        partido.setColorVisitante(mapPartido.get(PROPERTY_VISITANTE_COLOR));
         partido.setPuntosVisitante(Long.valueOf(mapPartido.get(PROPERTY_VISITANTE_PUNTOS)));
 
         TorneoCancha cancha = new TorneoCancha();
@@ -121,6 +125,7 @@ public class PartidoServiceImpl implements PartidoService {
                 pathWebService.getValidPathWebLogo(partido.getLocal().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.LOCAL);
         map.put(PROPERTY_LOCAL_LOGO, logoLocal);
         map.put(PROPERTY_LOCAL_PUNTOS, partido.getPuntosLocal());
+        map.put(PROPERTY_LOCAL_COLOR, partido.getColorLocal());
         map.put(PROPERTY_VISITANTE_ID, partido.getVisitante().getId());
         map.put(PROPERTY_VISITANTE_NOMBRE, partido.getVisitante().getEquipo().getNombre());
         map.put(PROPERTY_VISITANTE_ALIAS, partido.getVisitante().getEquipo().getAliasEquipo());
@@ -128,6 +133,7 @@ public class PartidoServiceImpl implements PartidoService {
                 pathWebService.getValidPathWebLogo(partido.getVisitante().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.VISITA);
         map.put(PROPERTY_VISITANTE_LOGO, logoVisita);
         map.put(PROPERTY_VISITANTE_PUNTOS, partido.getPuntosVisitante());
+        map.put(PROPERTY_VISITANTE_COLOR, partido.getColorVisitante());
         map.put(PROPERTY_CANCHA_ID, partido.getCancha().getId());
         map.put(PROPERTY_CANCHA_NOMBRE, partido.getCancha().getCancha().getNombre());
         map.put(PROPERTY_CANCHA_DOMICILIO, partido.getCancha().getCancha().getDomicilio());
