@@ -50,6 +50,7 @@ require.config({
             ]
         }
     },
+
     paths: {
         backbone: 'vendor/backbone/backbone-min',
         jquery: 'vendor/jquery/jquery',
