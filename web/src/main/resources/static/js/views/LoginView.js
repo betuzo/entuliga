@@ -17,6 +17,8 @@ define([
         },
 
         initialize: function() {
+						this.$el.find('.tip').tooltip();
+						console.log("initialize login");
             this.model = new UserModel();
             Backbone.Validation.bind(this);
         },

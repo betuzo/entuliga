@@ -36,3 +36,22 @@ body {
 .menu-liga li.nav-item-entuliga.active a:focus {
   background: #fff;
 }
+.center-box-login {
+  margin: 50px auto;
+  max-width: 400px;
+  padding: 5px;
+}
+.form-login,
+.form-signup {
+  padding: 10px;
+}
+.form-login-heading,
+.form-signup-heading {
+  border-bottom: 1px solid #eef1f7;
+  margin-bottom: 20px;
+}
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
