@@ -3,6 +3,7 @@ $blueblack = #233245
 $bluehi = #32517f
 $bluelo = #0497df
 $grayapp = #eef1f7
+$greenapp = #07d621
 
 html
 	position relative
@@ -31,17 +32,29 @@ body
 
 .menu-liga
 	li.nav-item-entuliga
+		font-weight bold
+		border-bottom 3px invisible
 		a
-			color #ffffff
+			color $grayapp
 		&:hover
-			background $grayapp
-		&.active
+			color #ffffff
+			background $bluehi
+			border-bottom 3px solid $greenapp
 			a
-				background #fff
+				color #fff
+
+		&.active
+			border-bottom 3px solid $greenapp
+
+			a
+				background $bluehi
+				color #ffffff
 				&:hover
-					background @grayapp
+					background $bluehi
+					color $grayapp
 				&:focus
-					background #fff
+					color #ffffff
+					background $bluehi
 
 
 .center-box-login
@@ -58,6 +71,7 @@ body
 	margin-bottom 20px
 
 
+
 // .login-box
 // 	border 3px solid $bluehi
 // 	height: -o-calc(100% - 120px); /* opera */
@@ -68,3 +82,22 @@ body
 	display inline-block
 	vertical-align middle
 	float none
+
+
+.main-box
+	border 1px solid $bluehi
+	min-height calc(100vh - 9em)
+	background #ffffff
+
+
+.title-entuliga
+	font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+	font-size xx-large
+	font-weight bold
+
+
+// 	margin 0
+// 	padding 0
+// 	a
+// 		margin 0
+// 		padding 0

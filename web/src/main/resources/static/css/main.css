@@ -21,20 +21,35 @@ body {
 .starter-template {
   padding-top: 15px;
 }
+.menu-liga li.nav-item-entuliga {
+  font-weight: bold;
+  border-bottom: 3px invisible;
+}
 .menu-liga li.nav-item-entuliga a {
-  color: #fff;
+  color: #eef1f7;
 }
 .menu-liga li.nav-item-entuliga:hover {
-  background: #eef1f7;
+  color: #fff;
+  background: #32517f;
+  border-bottom: 3px solid #07d621;
+}
+.menu-liga li.nav-item-entuliga:hover a {
+  color: #fff;
+}
+.menu-liga li.nav-item-entuliga.active {
+  border-bottom: 3px solid #07d621;
 }
 .menu-liga li.nav-item-entuliga.active a {
-  background: #fff;
+  background: #32517f;
+  color: #fff;
 }
 .menu-liga li.nav-item-entuliga.active a:hover {
-  background: ;
+  background: #32517f;
+  color: #eef1f7;
 }
 .menu-liga li.nav-item-entuliga.active a:focus {
-  background: #fff;
+  color: #fff;
+  background: #32517f;
 }
 .center-box-login {
   margin: 50px auto;
@@ -54,4 +69,14 @@ body {
   display: inline-block;
   vertical-align: middle;
   float: none;
+}
+.main-box {
+  border: 1px solid #32517f;
+  min-height: calc(100vh - 9em);
+  background: #fff;
+}
+.title-entuliga {
+  font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+  font-size: xx-large;
+  font-weight: bold;
 }
