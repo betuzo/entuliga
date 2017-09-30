@@ -1,8 +1,9 @@
 define([
-    'backbone'
-], function(Backbone){
+    'backbone',
+    '../core/BaseModel'
+], function(Backbone, BaseModel){
 
-    var ArbitroModel = Backbone.Model.extend({
+    var ArbitroModel = BaseModel.extend({
 
         urlRoot: 'arbitro',
 
@@ -24,9 +25,6 @@ define([
             paisDesc: '',
             longitude: '',
             latitude: ''
-        },
-
-        initialize: function() {
         },
 
         validation: {

@@ -79,4 +79,8 @@ body {
   font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
   font-size: xx-large;
   font-weight: bold;
+  color: #fff !important;
+}
+.title-entuliga:hover {
+  color: #fff !important;
 }

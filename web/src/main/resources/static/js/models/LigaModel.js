@@ -24,7 +24,15 @@ define([
         },
 
         initialize: function() {
+          _.each(this.attributes, function (val, key) {
+            this.set(key, this.sanitize(val));
+          }, this);
         },
+
+        sanitize: function (str) {
+          return _.escape(str);
+        },
+
 
         validation: {
             nombre: {

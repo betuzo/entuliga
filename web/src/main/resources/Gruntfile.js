@@ -27,8 +27,12 @@ module.exports = function(grunt) {
             scripts:{
                 files:[
                     './static/css/main.styl',
+                    './static/js/collections/**/*.js',
+                    './static/js/core/**/*.js',
+                    './static/js/models/**/*.js',
                     './static/js/templates/**/*.html',
                     './static/js/views/**/*.js',
+                    './static/js/*.js',
                     './static/js/index.html'
 
                 ],
