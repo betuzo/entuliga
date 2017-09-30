@@ -52,7 +52,14 @@ define([
 
         clickAceptar: function(event) {
             var data = this.$el.find("#form-torneo-jornada").serializeObject();
-            this.model.set(data);
+						for (var k in data){
+							console.log(k);
+							if (data.hasOwnProperty(k)) {
+								data[k] = _.escape(data[k]);
+							}
+						}
+
+						this.model.set(data);
             that = this;
             if(this.model.isValid(true)){
                 this.model.save({}, {

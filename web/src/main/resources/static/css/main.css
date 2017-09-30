@@ -71,8 +71,7 @@ body {
   float: none;
 }
 .main-box {
-  border: 1px solid #32517f;
-  min-height: calc(100vh - 9em);
+  min-height: calc(100vh - 10em);
   background: #fff;
 }
 .title-entuliga {

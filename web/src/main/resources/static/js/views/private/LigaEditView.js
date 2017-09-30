@@ -69,13 +69,11 @@ define([
 
         saveLiga: function(){
             var data = this.$el.find("#form-liga").serializeObject();
-
 						for (var k in data){
 							if (data.hasOwnProperty(k)) {
 								data[k] = _.escape(data[k]);
 							}
 						}
-
             this.model.set(data);
             if(this.model.isValid(true)){
                 this.model.save();

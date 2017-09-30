@@ -1,9 +1,10 @@
 define([
     'backbone',
-    'dateformat'
-], function(Backbone, dateformat){
+    'dateformat',
+    '../core/BaseModel'
+], function(Backbone, dateformat, BaseModel){
 
-    var TorneoModel = Backbone.Model.extend({
+    var TorneoModel = BaseModel.extend({
 
         urlRoot: 'torneo',
 
@@ -16,9 +17,6 @@ define([
             fechaFin: (new Date()).getTime(),
             fechaFinDes: (new Date()).format("mm/dd/yyyy"),
             status: 'ENPROCESO'
-        },
-
-        initialize: function() {
         },
 
         validation: {

@@ -61,12 +61,19 @@ define([
         saveTorneo: function(){
             var data = this.$el.find("#form-torneo").serializeObject();
             this.model.set(data);
-            var fechaInicio = new Date(this.model.get('fechaInicioDes'));
+						for (var k in data){
+							if (data.hasOwnProperty(k)) {
+								data[k] = _.escape(data[k]);
+							}
+						}
+						var fechaInicio = new Date(this.model.get('fechaInicioDes'));
             var fechaFin = new Date(this.model.get('fechaFinDes'));
             this.model.set({fechaInicio: fechaInicio.getTime(), fechaFin: fechaFin.getTime()});
-            if(this.model.isValid(true)){
+
+						if(this.model.isValid(true)){
                 this.model.save();
             }
+
         },
 
         cancelTorneo: function(){
@@ -84,6 +91,12 @@ define([
         },
 
         saveTorneoSuccess: function(model, response, options){
+						for (var m in model.attributes) {
+							if (model.attributes.hasOwnProperty(m)) {
+								model.attributes[m] = _.escape(model.attributes[m])
+							}
+						}
+
             app.torneos.add(model);
             if (typeof app.that === 'undefined') {
                 return;

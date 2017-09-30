@@ -10,11 +10,16 @@ define([
             token: '',
             username: '',
             tipo: '',
-            fechaVigencia: (new Date()).getTime()
+            fechaVigencia: (new Date()).getTime() + 5
+            // fechaVigencia: (new Date()).getTime()
         },
 
-        initialize: function() {
+
+
+        isAuthorized: function(){
+          return Boolean(this.get("token"));
         },
+
 
         validation: {
             token: {
