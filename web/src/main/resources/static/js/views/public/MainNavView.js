@@ -34,7 +34,7 @@ define([
         },
 
         home: function(){
-            Backbone.history.navigate('', { trigger : true });
+            Backbone.history.navigate('#', { trigger : true });
         }
 	});
 

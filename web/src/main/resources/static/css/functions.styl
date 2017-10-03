@@ -1,0 +1,58 @@
+box-shadow(args...)
+	-webkit-box-shadow args
+	-moz-box-shadow args
+	box-shadow args
+
+vendor(prop, args)
+	-webkit-{prop} args
+	-moz-{prop} args
+	-ms-{prop} args
+	-o-{prop} args
+	{prop} args
+
+text-shadow(args...)
+	value = args == '' ? 1px 1px 1px rgba(white, 0.8) : arguments
+	text-shadow value
+
+border-radius()
+	vendor('border-radius', arguments)
+
+background-image()
+	vendor('background-image', arguments)
+
+transform-origin()
+	vendor('transform-origin', arguments)
+
+transform-style()
+	vendor('transform-style', arguments)
+
+transform()
+	vendor('transform', arguments)
+
+perspective()
+	vendor(perspective, arguments)
+
+transition()
+	vendor('transition', arguments)
+
+
+opacity(val)
+	opacity val
+	filter unquote('alpha(opacity=' + val * 100 + ')')
+
+background-radial-gradient(topColor, bottomColor)
+	background -webkit-radial-gradient(topColor, bottomColor)
+	background -moz-radial-gradient(topColor, bottomColor)
+	background -ms-radial-gradient(topColor, bottomColor)
+	background -o-radial-gradient(topColor, bottomColor)
+	background radial-gradient(topColor, bottomColor)
+
+background-linear-gradient(topColor, bottomColor)
+	background-image -webkit-linear-gradient(top, topColor, bottomColor)
+	background-image -moz-linear-gradient(top, topColor, bottomColor)
+	background-image -ms-linear-gradient(top, topColor, bottomColor)
+	background-image -o-linear-gradient(top, topColor, bottomColor)
+	background-image linear-gradient(top, topColor, bottomColor)
+
+user-select()
+	vendor('user-select', arguments)
