@@ -11,6 +11,7 @@ gradle-app.settinga
 web/*.iml
 web/build/
 web/*.log
+web/src/main/resources/node_modules
 
 repositories/*.iml
 repositories/build/

@@ -24,12 +24,14 @@ define([
             app.that = this;
         },
 
+
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
 
         signup: function(){
+						console.log("signup");
             var data = this.$el.find("#form-user").serializeObject();
             this.model.set(data);
 
