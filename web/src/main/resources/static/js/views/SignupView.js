@@ -27,6 +27,9 @@ define([
             this.model = new UserModel();
             this.model.once("sync", this.saveUserSuccess);
             this.model.once("error", this.saveUserError);
+
+            this.$("input[name='username']").focus();
+
             Backbone.Validation.bind(this, {
                 valid: function(view, attr, selector) {
                     var $el = view.$('[name=' + attr + ']'),  $group = $el.closest('.form-group');
@@ -34,22 +37,38 @@ define([
                         return;
                     }
                     $group.removeClass('has-error');
-                    $group.find('.help-block').html('').addClass('hidden');
+                    $group.addClass('has-success');
                 },
 
                 invalid: function(view, attr, error, selector) {
                     var $el = view.$('[name=' + attr + ']'),
                     $group = $el.closest('.form-group');
+                    $el.popover({
+                        content: error,
+                        placement: 'left'
+                    });
+                    $el.popover('show');
                     $group.addClass('has-error');
-                    $group.find('.help-block').html(error).removeClass('hidden');
                 }
+
             });
             app.that = this;
 
         },
 
+        onDomRefresh: function(){
+            console.log("onDomRefresh");
+            this.focusFirstInput();
+        },
+
+        focusFirstInput: function() {
+            this.$(':input:visible:enabled:first').focus();
+        },
+
 
         render: function() {
+            this.$('[name=username]').focus();
+
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
@@ -81,6 +100,16 @@ define([
         },
 
         showDetailsUsername : function() {
+            this.model.preValidate('username', this.$(".signup-username").val());
+            console.log(this.$("input.signup-username").val());
+            console.log(this.model.preValidate('username', this.$("input.signup-username").val()) );
+
+            if (!this.model.preValidate('username', this.$("input.signup-username").val() )) {
+                console.log("true");
+            }else {
+                console.log("false");
+            }
+
             this.$(".signup-username").popover({
                 content: 'Ingresa tu dirección de correo electronico.',
                 placement: 'left'
@@ -88,7 +117,9 @@ define([
             this.$(".signup-username").popover('show');
         },
         hideDetailsUsername : function() {
-            this.$(".signup-username").popover('hide');
+            this.$(".signup-username").popover('destroy');
+
+
         },
 
         showDetailsPass : function() {
@@ -100,7 +131,7 @@ define([
             this.$(".signup-pass").popover('show');
         },
         hideDetailsPass : function() {
-            this.$(".signup-pass").popover('hide');
+            this.$(".signup-pass").popover('destroy');
         },
 
         showDetailsPassConfirm : function() {
@@ -111,7 +142,7 @@ define([
             this.$(".signup-pass-confirm").popover('show');
         },
         hideDetailsPassConfirm : function() {
-            this.$(".signup-pass-confirm").popover('hide');
+            this.$(".signup-pass-confirm").popover('destroy');
         }
 	});
 
