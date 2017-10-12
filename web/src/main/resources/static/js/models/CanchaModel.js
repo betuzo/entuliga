@@ -1,8 +1,9 @@
 define([
-    'backbone'
-], function(Backbone){
+    'backbone',
+    '../core/BaseModel'
+], function(Backbone, BaseModel){
 
-    var CanchaModel = Backbone.Model.extend({
+    var CanchaModel = BaseModel.extend({
 
         urlRoot: 'cancha',
 
@@ -21,9 +22,6 @@ define([
             paisDesc: '',
             longitude: '',
             latitude: ''
-        },
-
-        initialize: function() {
         },
 
         validation: {

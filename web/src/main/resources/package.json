@@ -1,0 +1,21 @@
+{
+  "name": "entuliga",
+  "version": "1.0.0",
+  "description": "",
+  "main": "indexbuild.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt-exec": "^3.0.0",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-stylus": "^1.2.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-newer": "^1.3.0",
+    "grunt-regarde": "^0.1.1",
+    "grunt-run": "^0.8.0"
+  }
+}

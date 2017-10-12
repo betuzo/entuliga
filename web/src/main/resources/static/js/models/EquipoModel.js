@@ -1,8 +1,9 @@
 define([
-    'backbone'
-], function(Backbone){
+    'backbone',
+    '../core/BaseModel'
+], function(Backbone, BaseModel){
 
-    var EquipoModel = Backbone.Model.extend({
+    var EquipoModel = BaseModel.extend({
 
         urlRoot: 'equipo',
 
@@ -12,8 +13,6 @@ define([
             logoEquipo: 'novalid'
         },
 
-        initialize: function() {
-        },
 
         validation: {
             nombre: {

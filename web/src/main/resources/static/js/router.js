@@ -78,7 +78,8 @@ define([
         },
 
         after : function() {
-            console.log('after');
+
+            console.log('after router');
         },
 
         changeView : function(view) {

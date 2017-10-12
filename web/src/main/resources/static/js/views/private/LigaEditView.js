@@ -19,7 +19,6 @@ define([
             'click #btn-ok'         : 'saveLiga',
             'click #btn-cancel'     : 'cancelLiga'
         },
-
         initialize: function(opts) {
             if (opts.tipo == 'new') {
                 this.model = new LigaModel();
@@ -66,10 +65,16 @@ define([
             });
         },
 
+
+
         saveLiga: function(){
             var data = this.$el.find("#form-liga").serializeObject();
+						for (var k in data){
+							if (data.hasOwnProperty(k)) {
+								data[k] = _.escape(data[k]);
+							}
+						}
             this.model.set(data);
-
             if(this.model.isValid(true)){
                 this.model.save();
             }

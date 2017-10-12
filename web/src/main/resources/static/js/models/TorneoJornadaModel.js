@@ -1,8 +1,9 @@
 define([
-    'backbone'
-], function(Backbone){
+    'backbone',
+    '../core/BaseModel'
+], function(Backbone, BaseModel){
 
-    var TorneoJornadaModel = Backbone.Model.extend({
+    var TorneoJornadaModel = BaseModel.extend({
 
         urlRoot: 'torneojornada',
 
@@ -12,8 +13,6 @@ define([
             fase: 'REGULAR'
         },
 
-        initialize: function() {
-        },
 
         validation: {
             torneoId: {

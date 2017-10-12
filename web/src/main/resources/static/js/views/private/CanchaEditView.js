@@ -69,8 +69,13 @@ define([
 
         saveCancha: function(){
             var data = this.$el.find("#form-cancha").serializeObject();
-            this.model.set(data);
-
+						for (var k in data){
+							console.log(k);
+							if (data.hasOwnProperty(k)) {
+								data[k] = _.escape(data[k]);
+							}
+						}
+						this.model.set(data);
             if(this.model.isValid(true)){
                 this.model.save();
             }

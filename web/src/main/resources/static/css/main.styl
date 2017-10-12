@@ -1,0 +1,100 @@
+@import 'functions.styl'
+
+$blueblack = #233245
+$bluehi = #32517f
+$bluelo = #0497df
+$grayapp = #eef1f7
+$greenapp = #07d621
+
+html
+	position relative
+	min-height 100%
+
+body
+	margin-bottom 50px //Margin bottom by footer height
+	padding-top 50px
+
+
+.footer
+	position absolute
+	bottom 0
+	width 100%
+	height 50px //Set the fixed height of the footer here
+	background #32517f
+
+	span
+		color #fff
+		position absolute
+		bottom 15px
+
+
+.starter-template
+	padding-top 15px
+
+.menu-liga
+	li.nav-item-entuliga
+		font-weight bold
+		border-bottom 3px invisible
+		a
+			color $grayapp
+		&:hover
+			color #ffffff
+			background $bluehi
+			border-bottom 3px solid $greenapp
+			a
+				color #fff
+
+		&.active
+			border-bottom 3px solid $greenapp
+
+			a
+				background $bluehi
+				color #ffffff
+				&:hover
+					background $bluehi
+					color $grayapp
+				&:focus
+					color #ffffff
+					background $bluehi
+
+
+.center-box-login
+	margin 50px auto
+	max-width 400px
+	padding 5px
+
+
+.form-login, .form-signup
+	padding 10px
+
+.form-login-heading, .form-signup-heading
+	border-bottom 1px solid $grayapp
+	margin-bottom 20px
+
+
+
+// .login-box
+// 	border 3px solid $bluehi
+// 	height: -o-calc(100% - 120px); /* opera */
+// 	height: -webkit-calc(100% - 120px); /* google, safari */
+// 	height: -moz-calc(100% - 120px); /* firefox */
+
+.vcenter
+	display inline-block
+	vertical-align middle
+	float none
+
+.main-box
+	min-height calc(100vh - 10em)
+	background #ffffff
+	box-shadow 1px 1px 1px $grayapp
+	padding 5px
+
+
+.title-entuliga
+	font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+	font-size xx-large
+	font-weight bold
+	color #ffffff !important
+	&:hover
+		color: #ffffff !important

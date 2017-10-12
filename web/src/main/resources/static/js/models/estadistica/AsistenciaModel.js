@@ -19,7 +19,11 @@ define([
         },
 
         initialize: function() {
+          _.each(this.attributes, function (val, key) {
+            this.set(key, _.escape(val));
+          }, this);
         },
+
 
         validation: {
             partidoId: {

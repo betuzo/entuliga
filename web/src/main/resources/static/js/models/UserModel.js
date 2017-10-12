@@ -27,6 +27,7 @@ define([
                 msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
             },
             passwordConfirm: {
+                required: true,
                 equalTo: 'password',
                 msg: 'El password no coincide'
             }
