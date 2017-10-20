@@ -81,6 +81,7 @@ public class TorneoJugadorServiceImpl implements TorneoJugadorService {
         map.put(PROPERTY_STATUS_JUGADOR, torneoJugador.getStatusJugador().getDescription());
         map.put(PROPERTY_POSICION_JUGADOR, torneoJugador.getPosicionJugador().getDescription());
         map.put(PROPERTY_NUMERO_JUGADOR, torneoJugador.getNumero());
+        map.put(PROPERTY_ALIAS_JUGADOR, torneoJugador.getJugador().getPaterno());
 
         return map;
     }

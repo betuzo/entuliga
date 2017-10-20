@@ -361,6 +361,7 @@ define([
                     if (that.pathOver.pathOver !== null) {
                         that.pathOver.pathOver.left = that.pathOver.pathOver.originLeft;
                         that.pathOver.pathOver.top = that.pathOver.pathOver.originTop;
+                        that.pathOver.pathOver.setCoords();
                     }
                     e.target.set('left', that.pathOver.left);
                     e.target.set('top', that.pathOver.top-15);
@@ -441,17 +442,23 @@ define([
                     originX: 'center',
                     originY: 'center'
                 });
-                var text = new fabric.Text(players.models[player].get('numeroJugador'), {
-                  fontSize: 25,
-                  fill: "#000",
-                  stroke: "#fff",
-                  originX: 'center',
-                  originY: 'center'
+                var numero = new fabric.Text(players.models[player].get('numeroJugador'), {
+                    fontSize: 25,
+                    fill: "#000",
+                    stroke: "#fff",
+                    originX: 'center',
+                    originY: 'center'
                 });
-                var group = new fabric.Group([ path, text ], {
+                var alias = new fabric.Text(players.models[player].get('aliasJugador'), {
+                    fontSize: 11,
+                    fill: "#000",
+                    originX: 'center',
+                    originY: 'bottom'
+                });
+                var group = new fabric.Group([ path, numero, alias ], {
                     left: left,
                     top: top,
-                    height: path.height + text.height,
+                    height: path.height + numero.height,
                     width: path.width,
                     hasRotatingPoint: false,
                     hasBorders: false,
@@ -461,6 +468,8 @@ define([
                 group.item(0).top = 0;
                 group.item(1).left = 0;
                 group.item(1).top = 5;
+                group.item(2).left = 0;
+                group.item(2).top = numero.height + 5;
                 group.set('typePosition',typePosition);
                 group.set('originLeft', group.left);
                 group.set('originTop', group.top);
