@@ -5,7 +5,7 @@ server:
 security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
-spring.profiles.active: preprobd
+spring.profiles.active: devbd
 spring.profiles.include: googlestorage,devmail
 
 ---
@@ -16,6 +16,7 @@ spring:
     showSql: true
     dataBase: H2
     hibernate.generateDdl: true
+
 
 backend:
   admin:
