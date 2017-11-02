@@ -3,14 +3,14 @@ html {
   min-height: 100%;
 }
 body {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   padding-top: 50px;
 }
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 50px;
+  height: 40px;
   background: #32517f;
 }
 .footer span {
@@ -19,11 +19,11 @@ body {
   bottom: 15px;
 }
 .starter-template {
-  padding-top: 15px;
+  padding-top: 0px;
 }
 .menu-liga li.nav-item-entuliga {
   font-weight: bold;
-  border-bottom: 3px invisible;
+  border-bottom: 3px solid transparent;
 }
 .menu-liga li.nav-item-entuliga a {
   color: #eef1f7;
@@ -71,12 +71,14 @@ body {
   float: none;
 }
 .main-box {
-  min-height: calc(100vh - 10em);
+  min-height: calc(100vh - 6.95em);
   background: #fff;
   -webkit-box-shadow: 1px 1px 1px #eef1f7;
   -moz-box-shadow: 1px 1px 1px #eef1f7;
   box-shadow: 1px 1px 1px #eef1f7;
   padding: 5px;
+  padding-top: 15px;
+  border: 1px solid transparent;
 }
 .title-entuliga {
   font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
@@ -86,4 +88,7 @@ body {
 }
 .title-entuliga:hover {
   color: #fff !important;
+}
+.minus-right {
+  margin-right: 0;
 }

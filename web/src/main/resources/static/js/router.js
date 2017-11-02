@@ -134,42 +134,50 @@ define([
         adminPerfil: function() {
             var view = new PerfilAdminView();
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         adminLigas: function() {
             var view = new LigaAdminView();
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         adminTorneos: function() {
             var view = new TorneoAdminView();
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         adminEquipos: function() {
             var view = new EquipoAdminView();
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         adminJugadores: function() {
             var view = new JugadorAdminView();
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         adminArbitros: function() {
             var view = new ArbitroAdminView();
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         adminCanchas: function() {
             var view = new CanchaAdminView();
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         adminPartido: function(partido) {
             var view = new PartidoAdminView();
             view.setIdPartido(partido);
             this.changeView(view);
+            new MainAdminNavView();
         },
 
         publicTorneo: function(clave) {

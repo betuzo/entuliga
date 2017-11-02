@@ -11,7 +11,7 @@ html
 	min-height 100%
 
 body
-	margin-bottom 50px //Margin bottom by footer height
+	margin-bottom 40px //Margin bottom by footer height
 	padding-top 50px
 
 
@@ -19,22 +19,20 @@ body
 	position absolute
 	bottom 0
 	width 100%
-	height 50px //Set the fixed height of the footer here
+	height 40px //Set the fixed height of the footer here
 	background #32517f
-
 	span
 		color #fff
 		position absolute
 		bottom 15px
 
-
 .starter-template
-	padding-top 15px
+	padding-top 0px
 
 .menu-liga
 	li.nav-item-entuliga
 		font-weight bold
-		border-bottom 3px invisible
+		border-bottom 3px solid transparent
 		a
 			color $grayapp
 		&:hover
@@ -84,12 +82,14 @@ body
 	vertical-align middle
 	float none
 
+
 .main-box
-	min-height calc(100vh - 10em)
+	min-height calc(100vh - 6.95em)
 	background #ffffff
 	box-shadow 1px 1px 1px $grayapp
 	padding 5px
-
+	padding-top 15px
+	border 1px solid transparent
 
 .title-entuliga
 	font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
@@ -98,3 +98,6 @@ body
 	color #ffffff !important
 	&:hover
 		color: #ffffff !important
+
+.minus-right
+	margin-right 0
