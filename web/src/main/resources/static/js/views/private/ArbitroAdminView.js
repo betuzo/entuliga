@@ -87,7 +87,7 @@ define([
         agregarArbitro: function(modelo) {
             $('#select-arbitro').append($('<option>', {
                 value: modelo.get('id'),
-                text : modelo.get('nombre')
+                text : modelo.get('nombre') + " " + modelo.get('paterno') + " " + modelo.get('paterno')
             }));
         },
 

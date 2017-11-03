@@ -44,7 +44,6 @@ define([
             console.log(event);
             console.log($(event.target).parent());
             $(event.target).parent().addClass('active');
-
             // $('.nav-item-entuliga').removeClass('active');
         },
 

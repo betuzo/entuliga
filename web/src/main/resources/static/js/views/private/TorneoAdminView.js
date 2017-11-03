@@ -79,7 +79,6 @@ define([
         agregarLiga: function(collection) {
           $('#select-liga').empty();
           for(var i=0; i<collection.length; i++) {
-            myModel = collection.models[i];
             $('#select-liga').append($('<option>', {
                 value: collection.models[i].get('id'),
                 text : collection.models[i].get('nombre')
