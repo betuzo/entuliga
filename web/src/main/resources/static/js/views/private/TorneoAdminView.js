@@ -58,6 +58,7 @@ define([
               $('#torneo-editar').attr("disabled", true);
               $('#torneo-borrar').attr("disabled", true);
           }
+          $('#torneo-edit').html('');
         },
 
         changeTorneo: function(event) {
@@ -74,6 +75,9 @@ define([
               $('#torneo-editar').attr("disabled", true);
               $('#torneo-borrar').attr("disabled", true);
           }
+
+          $('#torneo-edit').html('');
+          $("#torneo-detail ul a:first-child").click();
         },
 
         agregarLiga: function(collection) {
@@ -88,12 +92,12 @@ define([
 
         syncLigas: function() {
             $('#select-liga').change();
+            $('#torneo-edit').html('');
         },
 
         agregarTorneo: function(collection) {
           $('#select-torneo').empty();
           for(var i=0; i<collection.length; i++) {
-            myModel = collection.models[i];
             $('#select-torneo').append($('<option>', {
                 value: collection.models[i].get('id'),
                 text : collection.models[i].get('nombre')
@@ -109,8 +113,11 @@ define([
         newTorneo: function() {
             this.disabledAction(true);
             var ligaId = this.ligas.get($("#select-liga").val()).get('id');
-            var torneoEditView = new TorneoEditView({tipo: 'new', idLiga: ligaId});
+            var torneoEditView = new TorneoEditView({tipo: 'new', idLiga: ligaId, tha:this});
+            $('#torneo-edit').html('');
             $('#torneo-edit').html(torneoEditView.render().$el);
+            $('#titulo-torneo-detalle').html('Nuevo torneo');
+
         },
 
         editTorneo: function() {
@@ -118,6 +125,7 @@ define([
             var modelo = app.torneos.get($("#select-torneo").val());
             var torneoEditView = new TorneoEditView({tipo: 'edit', modelo: modelo});
             $('#torneo-edit').html(torneoEditView.render().$el);
+            $('#titulo-torneo-detalle').html('Editar torneo');
         },
 
         deleteTorneo: function() {
