@@ -8,7 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
+
+import static com.codigoartesanal.entuliga.services.UserService.PROPERTY_USERNAME;
 
 /**
  * Created by betuzo on 10/02/16.
@@ -26,8 +29,17 @@ public class UserController {
             method = {RequestMethod.POST},
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> createUser(@RequestBody Map<String, String> user, HttpServletRequest request) {
+        boolean existsuser = false;
+        Map<String, Object> userMap = new HashMap<String, Object>();
         user.put(UserService.PROPERTY_CONTEXT, request.getContextPath());
-        return userService.createUser(user);
+        existsuser = userService.existsUsername(user.get(PROPERTY_USERNAME));
+
+        if (!existsuser){
+            userMap = userService.createUser(user);
+        } else {
+            userMap.put("message", "La direccion de correo ya esta registrada");
+        }
+        return userMap;
     }
 
     @ResponseBody

@@ -43,6 +43,16 @@ public class UserServiceImpl implements UserService {
     SimpleMailMessage templateMessage;
 
     @Override
+    public boolean existsUsername(String username) {
+        boolean exists = false;
+        User user = new User();
+        user = userRepository.findByUsername(username);
+        if (user != null)
+            exists = true;
+        return exists;
+    }
+
+    @Override
     public Map<String, Object> findByUsername(String username) {
         return convertUserToMap(userRepository.findByUsername(username));
     }
