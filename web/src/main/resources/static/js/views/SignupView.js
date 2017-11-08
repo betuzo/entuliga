@@ -57,7 +57,6 @@ define([
         },
 
         onDomRefresh: function(){
-            console.log("onDomRefresh");
             this.focusFirstInput();
         },
 
@@ -83,6 +82,9 @@ define([
         },
 
         saveUserSuccess: function(model, response, options){
+          console.log('OPTIONS', options);
+          console.log('RESPONSE', response);
+          console.log('MODEL', model);
             if (typeof app.that === 'undefined') {
                 return;
             }
@@ -101,14 +103,12 @@ define([
 
         showDetailsUsername : function() {
             this.model.preValidate('username', this.$(".signup-username").val());
-            console.log(this.$("input.signup-username").val());
-            console.log(this.model.preValidate('username', this.$("input.signup-username").val()) );
 
-            if (!this.model.preValidate('username', this.$("input.signup-username").val() )) {
-                console.log("true");
-            }else {
-                console.log("false");
-            }
+            // if (!this.model.preValidate('username', this.$("input.signup-username").val() )) {
+            //     console.log("true");
+            // }else {
+            //     console.log("false");
+            // }
 
             this.$(".signup-username").popover({
                 content: 'Ingresa tu dirección de correo electronico.',
@@ -118,8 +118,6 @@ define([
         },
         hideDetailsUsername : function() {
             this.$(".signup-username").popover('destroy');
-
-
         },
 
         showDetailsPass : function() {
