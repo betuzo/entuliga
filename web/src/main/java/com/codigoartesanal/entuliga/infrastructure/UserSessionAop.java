@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by betuzo on 11/05/15.
@@ -50,8 +51,9 @@ public class UserSessionAop {
 
         for(Object arg :pjp.getArgs()){
             if(arg instanceof User && username != null && !username.isEmpty()) {
-                User user = userRepository.findOne(username);
-                if (user != null) {
+                Optional<User> opUser = userRepository.findById(username);
+                if (opUser.isPresent()) {
+                    User user = opUser.get();
                     ((User) arg).setUsername(user.getUsername());
                     ((User) arg).setEnabled(user.isEnabled());
                     ((User) arg).setUserRole(user.getUserRole());
