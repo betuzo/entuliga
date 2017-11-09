@@ -28,7 +28,7 @@ define([
             this.listenTo(this.jugadores, 'sync', this.syncJugadores);
             this.render();
 
-            var local = new TorneoEquipoModel({ id : this.model.get(this.type + 'Id') });
+            var local = new TorneoEquipoModel({ id : this.model.get(this.type.toLowerCase() + 'Id') });
             this.jugadores.setTorneoEquipo(local);
             this.jugadores.fetch();
         },

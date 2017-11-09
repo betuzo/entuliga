@@ -79,8 +79,8 @@ define([
             })
 
             this.strPath = 'M 192.3004,118.04878 H 196.63056 V 139.6996 C 196.63056,140.89553 197.59971,141.86468 198.79564,141.86468 H 216.1163 C 217.31223,141.86468 218.28137,140.89553 218.28137,139.6996 V 118.04878 H 222.61154 C 223.80747,118.04878 224.77662,117.07964 224.77662,115.88371 V 109.38846 C 224.77662,108.19252 223.80747,107.22338 222.61154,107.22338 H 213.95121 C 213.95121,110.81065 211.04324,113.71862 207.45597,113.71862 203.8687,113.71862 200.96072,110.81065 200.96072,107.22338 H 192.3004 C 191.10446,107.22338 190.13532,108.19252 190.13532,109.38846 V 115.88371 C 190.13532,117.07964 191.10446,118.04878 192.3004,118.04878 z';
-            this.local = new PartidoEquipoView({modelo: this.model, parent: this, type: 'local'});
-            this.visita = new PartidoEquipoView({modelo: this.model, parent: this, type: 'visita'});
+            this.local = new PartidoEquipoView({modelo: this.model, parent: this, type: 'LOCAL'});
+            this.visita = new PartidoEquipoView({modelo: this.model, parent: this, type: 'VISITA'});
             new PartidoArbitrosView(this.model);
             new EstadisticaPuntosView({modelo: this.model, parent: this});
             new EstadisticaFaltasView({modelo: this.model, parent: this});
@@ -168,12 +168,17 @@ define([
 
         partidoCambiosLocal: function() {
             new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
-                                              origen: 'LOCAL', parent: this});
+                                              tipo: 'MANUAL', origen: 'LOCAL', parent: this});
         },
 
         partidoCambiosVisita: function() {
             new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
-                                              origen: 'VISITA', parent: this});
+                                              tipo: 'MANUAL', origen: 'VISITA', parent: this});
+        },
+
+        partidoCambiosDirect: function(entraModel, saleModel, tipo, origen) {
+            new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
+                                tipo: tipo, origen: origen, parent: this, entra: entraModel, sale: saleModel});
         },
 
         successAddMovimiento: function(movimiento) {
@@ -318,6 +323,7 @@ define([
                                      ];
 
             this.paths = this.addPositionBase(positionsLocalBase);
+            this.addStatistics();
             this.canvas.renderAll();
 
             var that = this;
@@ -337,7 +343,7 @@ define([
                         that.pathOver.setOpacity(0.5);
                         that.pathOver.scale(1.2);
                         that.isOver = true;
-                        if(that.pathOver.pathOver === e.target){
+                        if(that.pathOver.pathOver != null && that.pathOver.pathOver.player === e.target.player){
                             that.prevPathOver = that.pathOver;
                         }
                         break;
@@ -360,21 +366,31 @@ define([
                 if (e.target === undefined || e.target === null) {
                     return;
                 }
+                var entraModel = null;
+                var saleModel = null;
+                var tipo = null;
+                var origen = null;
                 if (that.isOver) {
+                    tipo = 'DIRECT_INIT';
                     if (that.pathOver.pathOver !== null) {
                         if (that.prevPathOver != undefined && that.prevPathOver != null){
                             that.pathOver.pathOver.left = that.prevPathOver.left;
                             that.pathOver.pathOver.top = that.prevPathOver.top-15;
-                            that.prevPathOver.set('pathOver', that.pathOver.pathOvergit );
+                            that.prevPathOver.set('pathOver', that.pathOver.pathOver);
                             that.prevPathOver = null;
+                            tipo = null;
                         } else {
                             that.pathOver.pathOver.left = that.pathOver.pathOver.originLeft;
                             that.pathOver.pathOver.top = that.pathOver.pathOver.originTop;
+                            saleModel = that.pathOver.pathOver.player;
+                            tipo = 'DIRECT_OTHER';
                         }
                         that.pathOver.pathOver.setCoords();
                     }
                     e.target.set('left', that.pathOver.left);
                     e.target.set('top', that.pathOver.top-15);
+                    entraModel = e.target.player;
+                    origen = e.target.typeTeam;
                     that.pathOver.setOpacity(1);
                     that.pathOver.scale(1);
                     that.pathOver.set('pathOver', e.target);
@@ -385,6 +401,9 @@ define([
                 }
                 e.target.setCoords();
                 that.canvas.renderAll();
+                if (tipo != null) {
+                    that.partidoCambiosDirect(entraModel, saleModel, tipo, origen);
+                }
             });
         },
 
@@ -431,10 +450,10 @@ define([
             var pathBase = new fabric.Path(this.strPath, {});
             var total = Math.floor(this.canvas.width / 2 / (pathBase.width + space));
             var leftInit = ((this.canvas.width / 2) - ((total * pathBase.width) + ((total - 1) * space))) / 2;
-            var color = this.model.get(type + 'Color');
+            var color = this.model.get(type.toLowerCase() + 'Color');
             var top = 10;
             var typePosition = 2;
-            if (type === 'visita') {
+            if (type === 'VISITA') {
             	leftInit = leftInit + (this.canvas.width / 2);
             	typePosition = 3;
             }
@@ -481,13 +500,24 @@ define([
                 group.item(2).left = 0;
                 group.item(2).top = numero.height + 5;
                 group.set('typePosition',typePosition);
+                group.set('typeTeam',type);
                 group.set('originLeft', group.left);
                 group.set('originTop', group.top);
-                group.set('id', players.models[player].get('id'));
-                group.set('jugadorId', players.models[player].get('jugadorId'));
+                group.set('player', players.models[player]);
                 this.canvas.add(group);
                 left = left + path.width + space;
             }
+        },
+
+        addStatistics: function() {
+            var that = this;
+            fabric.Image.fromURL('img/eceste.jpg', function(oImg) {
+                oImg.height = oImg.height / 2;
+                oImg.width = oImg.width / 2;
+                oImg.left = (that.canvas.width / 2) - (oImg.width / 2);
+                oImg.top = that.canvas.height - oImg.height;
+                that.canvas.add(oImg);
+            });
         }
 	});
 
