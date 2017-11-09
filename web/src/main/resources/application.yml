@@ -75,7 +75,7 @@ mail:
   host: smtp.gmail.com
   port: 587
   username: betotsol@gmail.com
-  password: soymuyflojo
+  password: password
   from.default: notificacion@entuliga.com
   to.default: notificacion@entuliga.com
   subject.default: Notificacion entuliga
