@@ -35,7 +35,7 @@ public class ReboteServiceImpl implements ReboteService {
 
     @Override
     public void deleteRebote(Long idRebote) {
-        reboteRepository.delete(idRebote);
+        reboteRepository.deleteById(idRebote);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class ReboteServiceImpl implements ReboteService {
     }
 
     private Rebote populateRebote(Rebote rebote){
-        rebote.setPartido(partidoRepository.findOne(rebote.getPartido().getId()));
-        rebote.setJugador(torneoJugadorRepository.findOne(rebote.getJugador().getId()));
+        rebote.setPartido(partidoRepository.findById(rebote.getPartido().getId()).get());
+        rebote.setJugador(torneoJugadorRepository.findById(rebote.getJugador().getId()).get());
 
         return rebote;
     }

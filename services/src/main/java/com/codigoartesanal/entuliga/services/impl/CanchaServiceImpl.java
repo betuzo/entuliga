@@ -36,7 +36,7 @@ public class CanchaServiceImpl implements CanchaService {
     @Override
     public DeleteStatusEnum deleteCancha(Long idCancha) {
         try {
-            canchaRepository.delete(idCancha);
+            canchaRepository.deleteById(idCancha);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -138,6 +138,6 @@ public class CanchaServiceImpl implements CanchaService {
     }
 
     private Cancha get(Long idLiga){
-        return this.canchaRepository.findOne(idLiga);
+        return this.canchaRepository.findById(idLiga).get();
     }
 }

@@ -40,7 +40,7 @@ public class JugadorServiceImpl implements JugadorService {
     @Override
     public DeleteStatusEnum deleteJugador(Long idJugador) {
         try {
-            jugadorRepository.delete(idJugador);
+            jugadorRepository.deleteById(idJugador);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -157,6 +157,6 @@ public class JugadorServiceImpl implements JugadorService {
     }
 
     private Jugador get(Long idJugador){
-        return this.jugadorRepository.findOne(idJugador);
+        return this.jugadorRepository.findById(idJugador).get();
     }
 }

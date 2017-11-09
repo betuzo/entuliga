@@ -35,7 +35,7 @@ public class EquipoServiceImpl implements EquipoService {
     @Override
     public DeleteStatusEnum deleteEquipo(Long idEquipo) {
         try {
-            equipoRepository.delete(idEquipo);
+            equipoRepository.deleteById(idEquipo);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -100,6 +100,6 @@ public class EquipoServiceImpl implements EquipoService {
     }
 
     private Equipo get(Long idEquipo) {
-        return this.equipoRepository.findOne(idEquipo);
+        return this.equipoRepository.findById(idEquipo).get();
     }
 }

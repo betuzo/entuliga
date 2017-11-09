@@ -34,8 +34,8 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
     public Map<String, Object> createTorneoEquipo(Map<String, String> equipo) {
         TorneoEquipo torneoEquipo = convertMapToTorneoEquipo(equipo);
         torneoEquipo = torneoEquipoRepository.save(torneoEquipo);
-        torneoEquipo.setEquipo(equipoRepository.findOne(torneoEquipo.getEquipo().getId()));
-        torneoEquipo.setTorneo(torneoRepository.findOne(torneoEquipo.getTorneo().getId()));
+        torneoEquipo.setEquipo(equipoRepository.findById(torneoEquipo.getEquipo().getId()).get());
+        torneoEquipo.setTorneo(torneoRepository.findById(torneoEquipo.getTorneo().getId()).get());
         return convertTorneoEquipoToMap(torneoEquipo);
     }
 
@@ -56,7 +56,7 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
     @Override
     public DeleteStatusEnum deleteTorneoEquipo(Long idTorneoEquipo) {
         try {
-            torneoEquipoRepository.delete(idTorneoEquipo);
+            torneoEquipoRepository.deleteById(idTorneoEquipo);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -65,7 +65,7 @@ public class TorneoEquipoServiceImpl implements TorneoEquipoService {
 
     @Override
     public List<Map<String, Object>> listTorneoEquipoByJornada(Long idJornada) {
-        Jornada jornada = jornadaRepository.findOne(idJornada);
+        Jornada jornada = jornadaRepository.findById(idJornada).get();
         Iterator<TorneoEquipo> itTorneoEquipo = torneoEquipoRepository.findAllByTorneoNotInJornada(jornada.getTorneo(), jornada).iterator();
         List<Map<String, Object>> copy = new ArrayList<>();
         while (itTorneoEquipo.hasNext()) {

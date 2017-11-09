@@ -31,15 +31,15 @@ public class TorneoArbitroServiceImpl implements TorneoArbitroService {
     public Map<String, Object> createTorneoArbitro(Map<String, String> mapTorneoArbitro) {
         TorneoArbitro torneoArbitro = convertMapToTorneoArbitro(mapTorneoArbitro);
         torneoArbitro = torneoArbitroRepository.save(torneoArbitro);
-        torneoArbitro.setArbitro(arbitroRepository.findOne(torneoArbitro.getArbitro().getId()));
-        torneoArbitro.setTorneo(torneoRepository.findOne(torneoArbitro.getTorneo().getId()));
+        torneoArbitro.setArbitro(arbitroRepository.findById(torneoArbitro.getArbitro().getId()).get());
+        torneoArbitro.setTorneo(torneoRepository.findById(torneoArbitro.getTorneo().getId()).get());
         return convertTorneoArbitroToMap(torneoArbitro);
     }
 
     @Override
     public DeleteStatusEnum deleteTorneoArbitro(Long idTorneoArbitro) {
         try {
-            torneoArbitroRepository.delete(idTorneoArbitro);
+            torneoArbitroRepository.deleteById(idTorneoArbitro);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }

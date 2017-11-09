@@ -12,14 +12,17 @@ web/*.iml
 web/build/
 web/*.log
 web/src/main/resources/node_modules
+web/out
 
 repositories/*.iml
 repositories/build/
 repositories/*.log
+repositories/out
 
 services/*.iml
 services/build/
 services/*.log
+services/out
 
 gradle/wrapper/gradle-wrapper.jar
 

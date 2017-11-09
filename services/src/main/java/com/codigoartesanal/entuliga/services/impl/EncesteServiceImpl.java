@@ -50,14 +50,14 @@ public class EncesteServiceImpl implements EncesteService {
 
     @Override
     public void deleteEnceste(Long idEnceste) {
-        Enceste enceste = encesteRepository.findOne(idEnceste);
-        encesteRepository.delete(idEnceste);
+        Enceste enceste = encesteRepository.findById(idEnceste).get();
+        encesteRepository.deleteById(idEnceste);
         reducePunto(enceste);
     }
 
     private Enceste populateEnceste(Enceste enceste){
-        enceste.setPartido(partidoRepository.findOne(enceste.getPartido().getId()));
-        enceste.setTirador(torneoJugadorRepository.findOne(enceste.getTirador().getId()));
+        enceste.setPartido(partidoRepository.findById(enceste.getPartido().getId()).get());
+        enceste.setTirador(torneoJugadorRepository.findById(enceste.getTirador().getId()).get());
 
         return enceste;
     }

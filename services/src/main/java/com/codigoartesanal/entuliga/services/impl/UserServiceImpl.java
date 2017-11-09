@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User get(String username){
-        return userRepository.findOne(username);
+        return userRepository.findById(username).get();
     }
 
     private void sendMailToken(UserToken userToken, String context) {

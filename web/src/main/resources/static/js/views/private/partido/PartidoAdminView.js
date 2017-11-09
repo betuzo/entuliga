@@ -337,6 +337,9 @@ define([
                         that.pathOver.setOpacity(0.5);
                         that.pathOver.scale(1.2);
                         that.isOver = true;
+                        if(that.pathOver.pathOver === e.target){
+                            that.prevPathOver = that.pathOver;
+                        }
                         break;
                     } else {
                         that.pathOver.setOpacity(1);
@@ -359,8 +362,15 @@ define([
                 }
                 if (that.isOver) {
                     if (that.pathOver.pathOver !== null) {
-                        that.pathOver.pathOver.left = that.pathOver.pathOver.originLeft;
-                        that.pathOver.pathOver.top = that.pathOver.pathOver.originTop;
+                        if (that.prevPathOver != undefined && that.prevPathOver != null){
+                            that.pathOver.pathOver.left = that.prevPathOver.left;
+                            that.pathOver.pathOver.top = that.prevPathOver.top-15;
+                            that.prevPathOver.set('pathOver', that.pathOver.pathOvergit );
+                            that.prevPathOver = null;
+                        } else {
+                            that.pathOver.pathOver.left = that.pathOver.pathOver.originLeft;
+                            that.pathOver.pathOver.top = that.pathOver.pathOver.originTop;
+                        }
                         that.pathOver.pathOver.setCoords();
                     }
                     e.target.set('left', that.pathOver.left);
@@ -473,6 +483,8 @@ define([
                 group.set('typePosition',typePosition);
                 group.set('originLeft', group.left);
                 group.set('originTop', group.top);
+                group.set('id', players.models[player].get('id'));
+                group.set('jugadorId', players.models[player].get('jugadorId'));
                 this.canvas.add(group);
                 left = left + path.width + space;
             }

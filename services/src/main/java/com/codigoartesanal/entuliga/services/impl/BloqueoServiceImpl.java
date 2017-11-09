@@ -38,7 +38,7 @@ public class BloqueoServiceImpl implements BloqueoService {
 
     @Override
     public void deleteBloqueo(Long idBloqueo) {
-        bloqueoRepository.delete(idBloqueo);
+        bloqueoRepository.deleteById(idBloqueo);
     }
 
     @Override
@@ -56,9 +56,9 @@ public class BloqueoServiceImpl implements BloqueoService {
     }
 
     private Bloqueo populateBloqueo(Bloqueo bloqueo){
-        bloqueo.setPartido(partidoRepository.findOne(bloqueo.getPartido().getId()));
-        bloqueo.setBloquea(torneoJugadorRepository.findOne(bloqueo.getBloquea().getId()));
-        bloqueo.setBloqueado(torneoJugadorRepository.findOne(bloqueo.getBloqueado().getId()));
+        bloqueo.setPartido(partidoRepository.findById(bloqueo.getPartido().getId()).get());
+        bloqueo.setBloquea(torneoJugadorRepository.findById(bloqueo.getBloquea().getId()).get());
+        bloqueo.setBloqueado(torneoJugadorRepository.findById(bloqueo.getBloqueado().getId()).get());
 
         return bloqueo;
     }

@@ -40,7 +40,7 @@ public class ArbitroServiceImpl implements ArbitroService {
     @Override
     public DeleteStatusEnum deleteArbitro(Long idArbitro) {
         try {
-            arbitroRepository.delete(idArbitro);
+            arbitroRepository.deleteById(idArbitro);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -156,6 +156,6 @@ public class ArbitroServiceImpl implements ArbitroService {
     }
 
     private Arbitro get(Long idArbitro){
-        return this.arbitroRepository.findOne(idArbitro);
+        return this.arbitroRepository.findById(idArbitro).get();
     }
 }

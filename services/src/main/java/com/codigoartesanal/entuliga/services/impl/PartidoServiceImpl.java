@@ -58,7 +58,7 @@ public class PartidoServiceImpl implements PartidoService {
     @Override
     public DeleteStatusEnum deletePartido(Long idPartido) {
         try {
-            partidoRepository.delete(idPartido);
+            partidoRepository.deleteById(idPartido);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -67,16 +67,19 @@ public class PartidoServiceImpl implements PartidoService {
 
     @Override
     public Map<String, Object> partidoById(Long idPartido) {
-        return convertPartidoToMap(partidoRepository.findOne(idPartido));
+        Optional<Partido> opPartido = partidoRepository.findById(idPartido);
+        if (opPartido.isPresent())
+            return convertPartidoToMap(opPartido.get());
+        return new HashMap<>();
     }
 
     private Partido populatePartido(Partido partido) {
-        partido.setLocal(torneoEquipoRepository.findOne(partido.getLocal().getId()));
+        partido.setLocal(torneoEquipoRepository.findById(partido.getLocal().getId()).get());
         partido.setColorLocal(partido.getLocal().getEquipo().getMainColor());
-        partido.setVisitante(torneoEquipoRepository.findOne(partido.getVisitante().getId()));
+        partido.setVisitante(torneoEquipoRepository.findById(partido.getVisitante().getId()).get());
         partido.setColorVisitante(partido.getVisitante().getEquipo().getMainColor());
-        partido.setCancha(torneoCanchaRepository.findOne(partido.getCancha().getId()));
-        partido.setJornada(jornadaRepository.findOne(partido.getJornada().getId()));
+        partido.setCancha(torneoCanchaRepository.findById(partido.getCancha().getId()).get());
+        partido.setJornada(jornadaRepository.findById(partido.getJornada().getId()).get());
         return partido;
     }
 
@@ -142,7 +145,7 @@ public class PartidoServiceImpl implements PartidoService {
         return map;
     }
     private Partido get(Long idPartido){
-        return this.partidoRepository.findOne(idPartido);
+        return this.partidoRepository.findById(idPartido).get();
     }
 
 }

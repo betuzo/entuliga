@@ -26,7 +26,7 @@ public class UserTokenServiceImpl implements UserTokenService {
 
     @Override
     public Map<String, Object> userTokenByIdAndTipo(String token, TipoToken tipoToken) {
-        UserToken userToken = userTokenRepository.findOne(token);
+        UserToken userToken = userTokenRepository.findById(token).get();
         if (userToken == null) {
             throw new TokenException("Token no existe.");
         }
@@ -38,7 +38,7 @@ public class UserTokenServiceImpl implements UserTokenService {
         }
         userToken.getUser().setEnabled(true);
         userRepository.save(userToken.getUser());
-        userTokenRepository.delete(userToken.getToken());
+        userTokenRepository.deleteById(userToken.getToken());
         return convertUserTokenToMap(userToken);
     }
 

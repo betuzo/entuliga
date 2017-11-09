@@ -38,7 +38,7 @@ public class RoboServiceImpl implements RoboService{
 
     @Override
     public void deleteRobo(Long idRobo) {
-        roboRepository.delete(idRobo);
+        roboRepository.deleteById(idRobo);
     }
 
     @Override
@@ -56,9 +56,9 @@ public class RoboServiceImpl implements RoboService{
     }
 
     private Robo populateRobo(Robo robo){
-        robo.setPartido(partidoRepository.findOne(robo.getPartido().getId()));
-        robo.setRobador(torneoJugadorRepository.findOne(robo.getRobador().getId()));
-        robo.setPerdedor(torneoJugadorRepository.findOne(robo.getPerdedor().getId()));
+        robo.setPartido(partidoRepository.findById(robo.getPartido().getId()).get());
+        robo.setRobador(torneoJugadorRepository.findById(robo.getRobador().getId()).get());
+        robo.setPerdedor(torneoJugadorRepository.findById(robo.getPerdedor().getId()).get());
 
         return robo;
     }

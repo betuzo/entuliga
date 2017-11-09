@@ -51,7 +51,7 @@ public class LigaServiceImpl implements LigaService {
     @Override
     public DeleteStatusEnum deleteLiga(Long idLiga) {
         try {
-            ligaRepository.delete(idLiga);
+            ligaRepository.deleteById(idLiga);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -127,6 +127,6 @@ public class LigaServiceImpl implements LigaService {
     }
 
     private Liga get(Long idLiga){
-        return this.ligaRepository.findOne(idLiga);
+        return this.ligaRepository.findById(idLiga).get();
     }
 }

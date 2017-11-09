@@ -38,7 +38,7 @@ public class AsistenciaServiceImpl implements AsistenciaService {
 
     @Override
     public void deleteAsistencia(Long idAsistencia) {
-        asistenciaRepository.delete(idAsistencia);
+        asistenciaRepository.deleteById(idAsistencia);
     }
 
     @Override
@@ -56,9 +56,9 @@ public class AsistenciaServiceImpl implements AsistenciaService {
     }
 
     private Asistencia populateAsistencia(Asistencia asistencia){
-        asistencia.setPartido(partidoRepository.findOne(asistencia.getPartido().getId()));
-        asistencia.setAsiste(torneoJugadorRepository.findOne(asistencia.getAsiste().getId()));
-        asistencia.setAsistido(torneoJugadorRepository.findOne(asistencia.getAsistido().getId()));
+        asistencia.setPartido(partidoRepository.findById(asistencia.getPartido().getId()).get());
+        asistencia.setAsiste(torneoJugadorRepository.findById(asistencia.getAsiste().getId()).get());
+        asistencia.setAsistido(torneoJugadorRepository.findById(asistencia.getAsistido().getId()).get());
 
         return asistencia;
     }

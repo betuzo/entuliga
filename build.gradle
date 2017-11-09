@@ -1,5 +1,4 @@
-ext.springVersion = "4.0.0.RELEASE"
-ext.googleApis = "v1-rev58-1.21.0"
+
 
 buildscript {
     ext {
@@ -29,6 +28,11 @@ subprojects {
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
     version = '0.0.1'
+
+    ext {
+        springVersion = "4.0.0.RELEASE"
+        googleApis = "v1-rev58-1.21.0"
+    }
 
     repositories {
         mavenCentral()
