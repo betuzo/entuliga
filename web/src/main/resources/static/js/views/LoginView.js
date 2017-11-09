@@ -17,15 +17,44 @@ define([
         },
 
         initialize: function() {
-						this.$el.find('.tip').tooltip();
-						console.log("initialize login");
+            this.$el.find('.tip').tooltip();
+            console.log("initialize login");
             this.model = new UserModel();
-            Backbone.Validation.bind(this);
+
+            Backbone.Validation.bind(this, {
+                valid: function(view, attr, selector) {
+                    var $el = view.$('[name=' + attr + ']'),  $group = $el.closest('.form-group');
+                    if (view.model.preValidate(attr, $el.val())) {
+                        return;
+                    }
+                    $group.removeClass('has-error');
+                    $group.addClass('has-success');
+                },
+
+                invalid: function(view, attr, error, selector) {
+                    var $el = view.$('[name=' + attr + ']'),
+                    $group = $el.closest('.form-group');
+                    $el.popover({
+                        content: error,
+                        placement: 'left'
+                    });
+                    $el.popover('show');
+                    $group.addClass('has-error');
+                }
+
+            });
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        remove: function() {
+            // Remove the validation binding
+            // See: http://thedersen.com/projects/backbone-validation/#using-form-model-validation/unbinding
+            Backbone.Validation.unbind(this);
+            return Backbone.View.prototype.remove.apply(this, arguments);
         },
 
         login: function(){

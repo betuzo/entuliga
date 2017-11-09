@@ -52,7 +52,7 @@ define([
         syncJugadores: function() {
             $("#result-search").html('');
             this.jugadores.forEach(function(jugador) {
-                var liitem = "<a class='list-group-item' id='" + jugador.get('id') + "'>" + jugador.get('nombre') +"</a>";
+                var liitem = "<a class='list-group-item' id='" + jugador.get('id') + "'>" + jugador.get('nombre') +" "+jugador.get('paterno') + " " + jugador.get('materno')+ "</a>";
                 $(liitem).appendTo("#result-search");
             });
         },

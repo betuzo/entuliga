@@ -85,10 +85,11 @@ define([
             });
         },
 
+
         agregarJugador: function(modelo) {
             $('#select-jugador').append($('<option>', {
                 value: modelo.get('id'),
-                text : modelo.get('nombre')
+                text : modelo.get('nombre') + " " + modelo.get('paterno') + " " + modelo.get('paterno')
             }));
         },
 

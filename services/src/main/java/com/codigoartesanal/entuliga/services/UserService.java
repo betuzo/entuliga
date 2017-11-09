@@ -16,6 +16,8 @@ public interface UserService {
 
     String PROPERTY_ROLE_DEFAULT        = "PUBLIC";
 
+    boolean existsUsername(String username);
+
     Map<String, Object> findByUsername(String username);
 
     Map<String,Object> createUser(Map<String, String> user);

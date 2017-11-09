@@ -8,7 +8,6 @@ define([
         },
 
         initialize: function() {
-          console.log("initialize global for inputs xss");
           _.each(this.attributes, function (val, key) {
             this.set(key, _.escape(val));
           }, this);

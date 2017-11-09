@@ -8,7 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.ui.velocity.VelocityEngineFactoryBean;
+import org.springframework.ui.velocity.VelocityEngineFactory;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -59,11 +59,10 @@ public class MailConfig {
 
     @Bean
     public VelocityEngine velocityEngine() throws IOException {
-        VelocityEngineFactoryBean velocityEngine = new VelocityEngineFactoryBean();
-        velocityEngine.setResourceLoaderPath("classpath:/email");
-        velocityEngine.setPreferFileSystemAccess(false);
+        VelocityEngine velocityEngine = new VelocityEngine();
+        velocityEngine.resourceExists("classpath:/email");
 
-        return velocityEngine.createVelocityEngine();
+        return velocityEngine;
     }
 
     @Bean

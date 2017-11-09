@@ -1,27 +1,32 @@
 <div class="row">
     <div class="col-md-12">
+      <div class="main-box">
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title">Liga Admin</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <select class="form-control action-entuliga" id="select-liga" placeholder="Liga...">
-                            </select>
-                        </div>
-                        <div class="panel panel-default">
-                            <div id="liga-detail" class="panel-body">
-                            </div>
-                        </div>
-                        <div class="btn-group-horizontal" role="group" aria-label="...">
-                            <button id="liga-nuevo" type="button" class="btn btn-primary action-entuliga">Registrar</button>
-                            <button id="liga-editar" type="button" class="btn btn-primary action-entuliga">Editar</button>
-                            <button id="liga-borrar" type="button" class="btn btn-danger action-entuliga">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </button>
-                        </div>
+                  <div class="col-md-6">
+                    <div class="form-inline">
+                      <div class="form-group">
+                        <label for="select-liga">Selecciona una liga</label>
+                        <select name="select-liga" class="form-control action-entuliga" id="select-liga" placeholder="Liga...">
+                        </select>
+                      </div>
+                    </div>
+
+                      <div class="panel panel-default">
+                          <div id="liga-detail" class="panel-body">
+                          </div>
+                      </div>
+                      <div class="btn-group-horizontal" role="group" aria-label="...">
+                          <button id="liga-nuevo" type="button" class="btn btn-primary action-entuliga">Registrar</button>
+                          <button id="liga-editar" type="button" class="btn btn-primary action-entuliga">Editar</button>
+                          <button id="liga-borrar" type="button" class="btn btn-danger action-entuliga">
+                              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                          </button>
+                      </div>
                     </div>
                     <div class="col-md-6">
                         <div class="panel panel-default">
@@ -35,5 +40,6 @@
                 </div>
             </div>
         </div>
+      </div>
     </div>
 </div>

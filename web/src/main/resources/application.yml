@@ -17,6 +17,7 @@ spring:
     dataBase: H2
     hibernate.generateDdl: true
 
+
 backend:
   admin:
     username: backendadmin

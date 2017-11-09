@@ -28,11 +28,11 @@ define([
 
         initialize: function() {
             this.ligas = new LigasCollection();
-            this.listenTo(this.ligas, 'add', this.agregarLiga);
+            this.listenTo(this.ligas, 'sync', this.agregarLiga);
             this.listenTo(this.ligas, 'sync', this.syncLigas);
 
             app.torneos = new TorneosCollection();
-            this.listenTo(app.torneos, 'add', this.agregarTorneo);
+            this.listenTo(app.torneos, 'sync', this.agregarTorneo);
             this.listenTo(app.torneos, 'sync', this.syncTorneos);
 
             this.ligas.fetch();
@@ -40,68 +40,84 @@ define([
 
         render: function() {
             this.$el.html(this.template());
-            this.$el.find(".selecter_liga").select();
+            // this.$el.find(".selecter_liga").select();
             return this;
         },
 
         changeLiga: function(event) {
-            var modelo = this.ligas.get($(event.target).val());
-            if (typeof modelo != 'undefined') {
-                this.ligaDetailView = new LigaDetailView({model: modelo});
-                $('#liga-detail').html(this.ligaDetailView.render().$el);
-                app.torneos.setLiga(modelo);
-                app.torneos.fetch();
-                $('#torneo-editar').removeAttr("disabled");
-                $('#torneo-borrar').removeAttr("disabled");
-            } else {
-                $('#torneo-editar').attr("disabled", true);
-                $('#torneo-borrar').attr("disabled", true);
-            }
+          var modelo = this.ligas.get($(event.target).val());
+
+          if (typeof modelo != 'undefined') {
+              this.ligaDetailView = new LigaDetailView({model: modelo});
+              $('#liga-detail').html(this.ligaDetailView.render().$el);
+              app.torneos.setLiga(modelo);
+              app.torneos.fetch();
+              $('#torneo-editar').removeAttr("disabled");
+              $('#torneo-borrar').removeAttr("disabled");
+          } else {
+              $('#torneo-editar').attr("disabled", true);
+              $('#torneo-borrar').attr("disabled", true);
+          }
+          $('#torneo-edit').html('');
         },
 
         changeTorneo: function(event) {
-            var modelo = app.torneos.get($(event.target).val());
-            if (typeof modelo != 'undefined') {
-                this.torneoDetailView = new TorneoDetailView({model: modelo});
-                $('#torneo-detail').html(this.torneoDetailView.render().$el);
-                $('#torneo-editar').removeAttr("disabled");
-                $('#torneo-borrar').removeAttr("disabled");
-            } else {
-                if (typeof this.torneoDetailView !== 'undefined') {
-                    this.torneoDetailView.destroyView();
-                }
-                $('#torneo-editar').attr("disabled", true);
-                $('#torneo-borrar').attr("disabled", true);
-            }
+          var modelo = app.torneos.get($(event.target).val());
+          if (typeof modelo != 'undefined') {
+              this.torneoDetailView = new TorneoDetailView({model: modelo});
+              $('#torneo-detail').html(this.torneoDetailView.render().$el);
+              $('#torneo-editar').removeAttr("disabled");
+              $('#torneo-borrar').removeAttr("disabled");
+          } else {
+              if (typeof this.torneoDetailView !== 'undefined') {
+                  this.torneoDetailView.destroyView();
+              }
+              $('#torneo-editar').attr("disabled", true);
+              $('#torneo-borrar').attr("disabled", true);
+          }
+
+          $('#torneo-edit').html('');
+          $("#torneo-detail ul a:first-child").click();
         },
 
-        agregarLiga: function(modelo) {
+        agregarLiga: function(collection) {
+          $('#select-liga').empty();
+          for(var i=0; i<collection.length; i++) {
             $('#select-liga').append($('<option>', {
-                value: modelo.get('id'),
-                text : modelo.get('nombre')
+                value: collection.models[i].get('id'),
+                text : collection.models[i].get('nombre')
             }));
+          }
         },
 
         syncLigas: function() {
             $('#select-liga').change();
+            $('#torneo-edit').html('');
         },
 
-        agregarTorneo: function(modelo) {
+        agregarTorneo: function(collection) {
+          $('#select-torneo').empty();
+          for(var i=0; i<collection.length; i++) {
             $('#select-torneo').append($('<option>', {
-                value: modelo.get('id'),
-                text : modelo.get('nombre')
+                value: collection.models[i].get('id'),
+                text : collection.models[i].get('nombre')
             }));
+          }
         },
+
 
         syncTorneos: function() {
-            $('#select-torneo').change();
+          $('#select-torneo').change();
         },
 
         newTorneo: function() {
             this.disabledAction(true);
             var ligaId = this.ligas.get($("#select-liga").val()).get('id');
-            var torneoEditView = new TorneoEditView({tipo: 'new', idLiga: ligaId});
+            var torneoEditView = new TorneoEditView({tipo: 'new', idLiga: ligaId, tha:this});
+            $('#torneo-edit').html('');
             $('#torneo-edit').html(torneoEditView.render().$el);
+            $('#titulo-torneo-detalle').html('Nuevo torneo');
+
         },
 
         editTorneo: function() {
@@ -109,6 +125,7 @@ define([
             var modelo = app.torneos.get($("#select-torneo").val());
             var torneoEditView = new TorneoEditView({tipo: 'edit', modelo: modelo});
             $('#torneo-edit').html(torneoEditView.render().$el);
+            $('#titulo-torneo-detalle').html('Editar torneo');
         },
 
         deleteTorneo: function() {

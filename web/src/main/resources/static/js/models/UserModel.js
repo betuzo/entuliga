@@ -15,12 +15,16 @@ define([
         initialize: function() {
         },
 
+
         validation: {
-            username: {
+            username: [{
                 required: true,
+                maxLength: 50,
+                msg: 'El campo es requerido'
+              },{
                 pattern: 'email',
-                msg: 'Por favor especifique un email correcto'
-            },
+                msg: 'Por favor especifique un email correcto.....'
+              }],
             password: {
                 required: true,
                 pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
@@ -30,6 +34,7 @@ define([
                 required: true,
                 equalTo: 'password',
                 msg: 'El password no coincide'
+
             }
         }
 
