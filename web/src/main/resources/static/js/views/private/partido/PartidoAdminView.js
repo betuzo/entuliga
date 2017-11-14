@@ -514,8 +514,25 @@ define([
             fabric.Image.fromURL('img/eceste.jpg', function(oImg) {
                 oImg.height = oImg.height / 2;
                 oImg.width = oImg.width / 2;
-                oImg.left = (that.canvas.width / 2) - (oImg.width / 2);
+                oImg.left = (that.canvas.width / 2) - oImg.width;
                 oImg.top = that.canvas.height - oImg.height;
+                oImg.hasRotatingPoint = false;
+                oImg.hasBorders = false;
+                oImg.hasControls = false;
+                oImg.set('typeAction', 'ENCESTE');
+
+                that.canvas.add(oImg);
+            });
+
+            fabric.Image.fromURL('img/eceste.jpg', function(oImg) {
+                oImg.height = oImg.height / 2;
+                oImg.width = oImg.width / 2;
+                oImg.left = (that.canvas.width / 2);
+                oImg.top = that.canvas.height - oImg.height;
+                oImg.hasRotatingPoint = false;
+                oImg.hasBorders = false;
+                oImg.hasControls = false;
+                oImg.set('typeAction', 'ENCESTE_FAIL');
                 that.canvas.add(oImg);
             });
         }
