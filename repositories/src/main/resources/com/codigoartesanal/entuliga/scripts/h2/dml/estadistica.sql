@@ -1,2 +1,3 @@
+alter sequence enceste_id_seq restart with 2;
 INSERT INTO ENCESTE (ID, PARTIDO_ID, MINUTO, SEGUNDO, TIPO, ORIGEN, TIRADOR_ID, VALOR, SUCCESS)
 VALUES (1,1,0,12,'DOS','LOCAL',1,2,true);

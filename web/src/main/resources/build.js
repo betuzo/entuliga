@@ -5,6 +5,8 @@
         jquery: 'vendor/jquery/jquery',
         underscore: 'vendor/underscore/underscore-min',
         backbone: 'vendor/backbone/backbone-min',
+        marionette: 'vendor/backbone/backbone-marionette/backbone.marionette',
+        radio: 'vendor/backbone/backbone.radio/backbone.radio',
         bootstrap: 'vendor/bootstrap/bootstrap',
         jquerycookie: 'vendor/jquery/cookie/jquery.cookie',
         jquerySerializeObject: 'vendor/jquery/serializeObject/jquery.serializeObject.min',
@@ -27,6 +29,13 @@
                  'jquery'
              ],
              exports: 'Backbone'
+         },
+         marionette:{
+            deps: [
+                'radio',
+                'backbone'
+            ],
+            exports: 'Mn'
          },
          backboneValidation: {
              deps: [

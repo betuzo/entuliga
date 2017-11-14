@@ -1,3 +1,5 @@
+alter sequence jugador_id_seq restart with 16;
+
 INSERT INTO JUGADOR (ID, ADMIN_ID, NOMBRE, PATERNO, MATERNO, RUTA_FOTO, SEXO, FECHA_REGISTRO, GEOLOCATION_ID) VALUES
 (1, 'rolguin@grupobmv.com.mx', 'Roberto Salvador', 'Olguin', 'Lozano', '1.png', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 1),
 (2, 'sgarcia', 'Salvador Isaias', 'Garcia', 'Olguin', '2.png', 'MASCULINO', TIMESTAMP '2015-01-01 14:25:00.000', 2),

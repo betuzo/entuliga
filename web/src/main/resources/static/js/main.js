@@ -10,6 +10,14 @@ require.config({
             ],
             exports: 'Backbone'
         },
+        marionette:{
+            deps: [
+                'radio',
+                'backbone'
+            ],
+            exports: 'Mn'
+        },
+
         backboneValidation: {
             deps: [
                 'backbone'
@@ -56,8 +64,11 @@ require.config({
         }
     },
 
+
     paths: {
-        backbone: 'vendor/backbone/backbone-min',
+        backbone: 'vendor/backbone/backbone',
+        marionette: 'vendor/backbone/backbone-marionette/backbone.marionette',
+        radio: 'vendor/backbone/backbone.radio/backbone.radio',
         jquery: 'vendor/jquery/jquery',
         jquerycookie: 'vendor/jquery/cookie/jquery.cookie',
         jquerySerializeObject: 'vendor/jquery/serializeObject/jquery.serializeObject.min',
@@ -71,8 +82,10 @@ require.config({
         bloodhound: 'vendor/typeahead/bloodhound',
         typeahead: 'vendor/typeahead/typeahead.jquery',
         fabric: 'vendor/fabric/fabric.min'
+
     }
 });
+
 
 require([
     'app'
