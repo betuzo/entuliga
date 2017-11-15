@@ -92,3 +92,7 @@ body {
 .minus-right {
   margin-right: 0;
 }
+#result-search {
+  overflow-y: auto;
+  max-height: 200px;
+}

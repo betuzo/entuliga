@@ -1,37 +1,19 @@
 define([
     'jquery',
     'backbone',
-    'marionette',
     'backboneValidation',
     'jquerycookie',
     'jquerySerializeObject',
     'router',
-    'Session',
-    'views/public/MainNavView'
-], function ($, Backbone, Mn, backboneValidation, jquerycookie, jquerySerializeObject, Router, Session, MainNavView) {
+    'Session'
+], function ($, Backbone, backboneValidation, jquerycookie, jquerySerializeObject, Router, Session) {
 
     var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" height="150px" width="150px" style="display: block; margin: auto;"/></div></div>');
     var callServers = 0;
 
-    var ApplicationModel = Mn.Application.extend({
+    var ApplicationModel = Backbone.Model.extend({
 
-        // regions: {
-        //     main: '#container',
-        //     header: '#hotel-nav',
-        //     // sidebar: '.sidebar',
-        // },
-        
-        initialize: function() {
-            console.log('initialize marionette');
-        },
-
-        onBeforeStart: function() {
-            console.log('onBeforeStart marionette');            
-        },
-
-        onStart: function() {
-            console.log('onStart marionette');
-            
+        start: function () {
             if ($.cookie('auth_token') === undefined) { // this line is the problem
                 $.ajaxSettings.headers = [];
                 Session.set('authenticated', false);
@@ -42,15 +24,12 @@ define([
                         "X-Auth-Token": user.token
                     }
                 });
-
                 Session.set('authenticated', true);
                 Session.set('username', user.username);
             }
 
-
             var router = new Router();
             Backbone.history.start();
-            
 
             $.ajaxSetup({
                 cache: false,
@@ -89,7 +68,7 @@ define([
                 }
             });
 
-            // var router = new Router();
+            var router = new Router();
 
             // Extend the callbacks to work with Bootstrap, as used in this example
             // See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks
@@ -122,5 +101,4 @@ define([
     });
 
     return ApplicationModel;
-    
 });

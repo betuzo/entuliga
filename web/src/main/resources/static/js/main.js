@@ -12,7 +12,6 @@ require.config({
         },
         marionette:{
             deps: [
-                'radio',
                 'backbone'
             ],
             exports: 'Mn'
@@ -61,27 +60,27 @@ require.config({
             deps: [
                 'jquery'
             ]
-        }
+        },
+
     },
 
-
     paths: {
-        backbone: 'vendor/backbone/backbone',
-        marionette: 'vendor/backbone/backbone-marionette/backbone.marionette',
-        radio: 'vendor/backbone/backbone.radio/backbone.radio',
-        jquery: 'vendor/jquery/jquery',
-        jquerycookie: 'vendor/jquery/cookie/jquery.cookie',
-        jquerySerializeObject: 'vendor/jquery/serializeObject/jquery.serializeObject.min',
-        backboneValidation: 'vendor/backbone/backbone-validation/backbone-validation',
-        text : 'vendor/requirejs-text/text',
-        underscore: 'vendor/underscore/underscore-min',
-        bootstrap: 'vendor/bootstrap/bootstrap',
-        selecter: 'vendor/bootstrap/select/bootstrap-select.min',
-        datetimepicker: 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
-        dateformat: 'vendor/date-format/date.format',
-        bloodhound: 'vendor/typeahead/bloodhound',
-        typeahead: 'vendor/typeahead/typeahead.jquery',
-        fabric: 'vendor/fabric/fabric.min'
+        'jquery': 'vendor/jquery/jquery',
+        'backbone': 'vendor/backbone/backbone',
+        'marionette': 'vendor/backbone/backbone-marionette/backbone.marionette',
+        'backbone.radio': 'vendor/backbone/backbone-radio/backbone.radio.min',
+        'jquerycookie': 'vendor/jquery/cookie/jquery.cookie',
+        'jquerySerializeObject': 'vendor/jquery/serializeObject/jquery.serializeObject.min',
+        'backboneValidation': 'vendor/backbone/backbone-validation/backbone-validation',
+        'text' : 'vendor/requirejs-text/text',
+        'underscore': 'vendor/underscore/underscore-min',
+        'bootstrap': 'vendor/bootstrap/bootstrap',
+        'selecter': 'vendor/bootstrap/select/bootstrap-select.min',
+        'datetimepicker': 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
+        'dateformat': 'vendor/date-format/date.format',
+        'bloodhound': 'vendor/typeahead/bloodhound',
+        'typeahead': 'vendor/typeahead/typeahead.jquery',
+        'fabric': 'vendor/fabric/fabric.min'
 
     }
 });
