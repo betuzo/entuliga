@@ -10,7 +10,7 @@
         'bootstrap': 'vendor/bootstrap/bootstrap',
         'jquerycookie': 'vendor/jquery/cookie/jquery.cookie',
         'jquerySerializeObject': 'vendor/jquery/serializeObject/jquery.serializeObject.min',
-        'backboneValidation': 'vendor/backbone/backbone-validation/backbone-validation',
+        'backboneValidation': 'vendor/backbone/backbone-validation/backbone-validation-amd-min',
         'text' : 'vendor/requirejs-text/text',
         'selecter': 'vendor/bootstrap/select/bootstrap-select.min',
         'datetimepicker': 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',
@@ -19,8 +19,8 @@
         'typeahead': 'vendor/typeahead/typeahead.jquery',
         'fabric': 'vendor/fabric/fabric.min'
      },
-     enforceDefine: true,
-     waitSeconds: 20,
+     //enforceDefine: true,
+     waitSeconds: 200,
      map: {
         '*': {
                 'backbone.wreqr': 'backbone.radio'
@@ -37,17 +37,19 @@
              ],
              exports: 'Backbone'
          },
+         backboneValidation: {
+              deps: [
+                  'jquery',
+                  'underscore',
+                  'backbone'
+              ],
+              exports: 'Backbone.Validation'
+          },
          marionette:{
-            deps: [
-                'backbone'
-            ],
+            deps : ['jquery', 'underscore', 'backbone'],
             exports: 'Mn'
          },
-         backboneValidation: {
-             deps: [
-                 'backbone'
-             ]
-         },
+
          bootstrap: {
              deps: [
                  'jquery'
@@ -90,4 +92,5 @@
      },
       name: "main",
       out: "static/js/main-built.js"
+
  }

@@ -10,18 +10,21 @@ require.config({
             ],
             exports: 'Backbone'
         },
-        marionette:{
-            deps: [
-                'backbone'
-            ],
-            exports: 'Mn'
-        },
 
         backboneValidation: {
             deps: [
+                'jquery',
+                'underscore',
                 'backbone'
-            ]
+            ],
+            exports: 'Backbone.Validation'
         },
+
+        marionette:{
+            deps : ['jquery', 'underscore', 'backbone'],
+            exports : 'Mn'
+        },
+
         bootstrap: {
             deps: [
                 'jquery'
@@ -65,15 +68,15 @@ require.config({
     },
 
     paths: {
+        'backbone': 'vendor/backbone/backbone-min',
         'jquery': 'vendor/jquery/jquery',
-        'backbone': 'vendor/backbone/backbone',
+        'underscore': 'vendor/underscore/underscore-min',
         'marionette': 'vendor/backbone/backbone-marionette/backbone.marionette',
         'backbone.radio': 'vendor/backbone/backbone-radio/backbone.radio.min',
         'jquerycookie': 'vendor/jquery/cookie/jquery.cookie',
         'jquerySerializeObject': 'vendor/jquery/serializeObject/jquery.serializeObject.min',
-        'backboneValidation': 'vendor/backbone/backbone-validation/backbone-validation',
+        'backboneValidation': 'vendor/backbone/backbone-validation/backbone-validation-amd-min',
         'text' : 'vendor/requirejs-text/text',
-        'underscore': 'vendor/underscore/underscore-min',
         'bootstrap': 'vendor/bootstrap/bootstrap',
         'selecter': 'vendor/bootstrap/select/bootstrap-select.min',
         'datetimepicker': 'vendor/bootstrap/datetimepicker/bootstrap-datetimepicker',

@@ -121,6 +121,6 @@ define([
         }
     });
 
+
     return ApplicationModel;
-    
 });
