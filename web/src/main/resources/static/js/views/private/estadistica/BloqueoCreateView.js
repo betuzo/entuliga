@@ -16,7 +16,9 @@ define([
         template: _.template(tplBloqueoCreate),
 
         events: {
-            'click #btn-aceptar': 'clickAceptar'
+            'click #btn-aceptar': 'clickAceptar',
+            'change .validate-number':'validateNumber',
+            'keyup .validate-number':'validateNumber'
         },
 
         initialize: function(opts) {
@@ -112,6 +114,26 @@ define([
                         });
                     }
                 });
+            }
+        },
+
+        validateNumber: function(event){
+            if ($.isNumeric($(event.currentTarget).val())) {
+                if ($(event.currentTarget).val() != $(event.currentTarget).val().replace(/[^0-9\.]/g, '')) {
+                    var value = $(event.currentTarget).val().replace(/[^0-9.]/g, '');
+                    $(event.currentTarget).val(value);
+                }else{
+                    var max = parseInt($(event.currentTarget).attr('max'));
+                    var min = parseInt($(event.currentTarget).attr('min'));
+                    if ( $(event.currentTarget).val() > max){
+                        $(event.currentTarget).val(max);
+                    } else if ($(event.currentTarget).val() < min){
+                        $(event.currentTarget).val(min);
+                    }
+                }
+            }else{
+                var value = $(event.currentTarget).val().replace(/[^0-9.]/g, '');
+                $(event.currentTarget).val(value);
             }
         },
 
