@@ -1,4 +1,3 @@
-//alter sequence usuario_id_seq restart with 17;
 INSERT INTO USUARIO (USERNAME, PASSWORD, ENABLED) VALUES
 ('jperez@tu.me', 'p4Ssword', 1),
 ('jsoto', '$2a$10$GqqtbEuDi8YXzI1n8Zoqv.Upp61NP/Jy1fvPiMAgtcsyFuwc7N.AK', 1),
@@ -17,7 +16,6 @@ INSERT INTO USUARIO (USERNAME, PASSWORD, ENABLED) VALUES
 ('atabares', '123456', 1),
 ('jlopez', '123456', 1);
 
-//alter sequence usuario_role_id_seq restart with 17;
 INSERT INTO USER_ROLE (ID, USERNAME, ROLE) VALUES
 (1, 'jperez@tu.me', 'ADMIN'),
 (2, 'jsoto', 'GERENTE'),
@@ -36,8 +34,6 @@ INSERT INTO USER_ROLE (ID, USERNAME, ROLE) VALUES
 (15, 'atabares', 'JUGADOR'),
 (16, 'jlopez', 'JUGADOR');
 
-
-//alter sequence user_token_id_seq restart with 6;
 
 INSERT INTO USER_TOKEN (TOKEN, USERNAME, TIPO, FECHA_VIGENCIA) VALUES
 ('ae3594d9-caf8-4563-9498-7096a4f08b5e', 'rolguin@grupobmv.com.mx', 'VALID_EMAIL', TIMESTAMP '2050-02-18 14:25:00.000');

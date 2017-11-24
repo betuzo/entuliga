@@ -1,3 +1,4 @@
+alter sequence torneojugador_id_seq restart with 15;
 INSERT INTO TORNEOJUGADOR (ID, TORNEO_EQUIPO_ID, JUGADOR_ID, STATUS_JUGADOR, POSICION_JUGADOR, NUMERO) VALUES
 (1, 1, 1, 'INSCRITO', 'BASE', '1'),
 (2, 1, 2, 'INSCRITO', 'ALERO', '3'),

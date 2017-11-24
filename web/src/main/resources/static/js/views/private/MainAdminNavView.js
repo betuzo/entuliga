@@ -40,15 +40,15 @@ define([
         },
 
         activeMenu: function(event){
-            console.log("click");
-            console.log(event);
-            console.log($(event.target).parent());
+            // console.log("click");
+            // console.log(event);
+            // console.log($(event.target).parent());
             $(event.target).parent().addClass('active');
             // $('.nav-item-entuliga').removeClass('active');
         },
 
         destroy_view: function() {
-          console.log("remove");
+          // console.log("remove");
           // COMPLETELY UNBIND THE VIEW
           this.undelegateEvents();
 
