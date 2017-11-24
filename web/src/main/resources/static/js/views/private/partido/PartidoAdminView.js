@@ -511,29 +511,29 @@ define([
 
         addStatistics: function() {
             var that = this;
-            fabric.Image.fromURL('img/eceste.jpg', function(oImg) {
-                oImg.height = oImg.height / 2;
-                oImg.width = oImg.width / 2;
+            fabric.Image.fromURL('img/enceste-ok.png', function(oImg) {
                 oImg.left = (that.canvas.width / 2) - oImg.width;
                 oImg.top = that.canvas.height - oImg.height;
                 oImg.hasRotatingPoint = false;
                 oImg.hasBorders = false;
                 oImg.hasControls = false;
+                oImg.selectable = false;
                 oImg.set('typeAction', 'ENCESTE');
 
                 that.canvas.add(oImg);
+                that.paths.push(oImg);
             });
 
-            fabric.Image.fromURL('img/eceste.jpg', function(oImg) {
-                oImg.height = oImg.height / 2;
-                oImg.width = oImg.width / 2;
+            fabric.Image.fromURL('img/enceste-fail.png', function(oImg) {
                 oImg.left = (that.canvas.width / 2);
                 oImg.top = that.canvas.height - oImg.height;
                 oImg.hasRotatingPoint = false;
                 oImg.hasBorders = false;
                 oImg.hasControls = false;
+                oImg.selectable = false;
                 oImg.set('typeAction', 'ENCESTE_FAIL');
                 that.canvas.add(oImg);
+                that.paths.push(oImg);
             });
         }
 	});
