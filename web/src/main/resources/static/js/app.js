@@ -31,10 +31,11 @@ define([
 
         onStart: function() {
             console.log('onStart marionette');
-            
+            console.log($.cookie('auth_token'));
             if ($.cookie('auth_token') === undefined) { // this line is the problem
                 $.ajaxSettings.headers = [];
                 Session.set('authenticated', false);
+                $.cookie("auth_token", null, { path: '/' }); 
             } else {
                 var user = JSON.parse($.cookie('auth_token'));
                 $.ajaxSetup({
@@ -66,10 +67,12 @@ define([
                 },
                 statusCode: {
                     401: function () {
+                        console.log("Error 401 borrar cookie");
                         // Redirec the to the login page.
                         Session.set('authenticated', false);
                         Session.set('username', '');
-                        $.removeCookie('auth_token')
+                        $.cookie("auth_token", null, { path: '/' });
+                        $.removeCookie('auth_token');
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }
@@ -80,7 +83,8 @@ define([
                         // 403 -- Access denied
                         Session.set('authenticated', false);
                         Session.set('username', '');
-                        $.removeCookie('auth_token')
+                        $.removeCookie('auth_token');
+                        $.cookie("auth_token", null, { path: '/' });
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }

@@ -1,33 +1,34 @@
 define([
-	'jquery',
-	'backbone',
-	'bootstrap',
-	'selecter',
-	'fabric',
-	'core/BaseView',
-	'models/TorneoPartidoModel',
-	'views/private/partido/PartidoEquipoView',
-	'views/private/partido/PartidoArbitrosView',
-	'views/private/partido/PartidoEditView',
-	'views/private/estadistica/EstadisticaResumenView',
-	'views/private/estadistica/EstadisticaPuntosView',
-	'views/private/estadistica/EstadisticaFaltasView',
-	'views/private/estadistica/EstadisticaMovimientosView',
-	'views/private/estadistica/EstadisticaAsistenciasView',
-	'views/private/estadistica/EstadisticaBloqueosView',
-	'views/private/estadistica/EstadisticaRebotesView',
-	'views/private/estadistica/EstadisticaRobosView',
-	'views/private/estadistica/PuntoCreateView',
-	'views/private/estadistica/FaltaCreateView',
-	'views/private/estadistica/MovimientoCreateView',
-	'views/private/estadistica/AsistenciaCreateView',
-	'views/private/estadistica/BloqueoCreateView',
-	'views/private/estadistica/ReboteCreateView',
-	'views/private/estadistica/RoboCreateView',
-	'views/private/util/ModalGenericView',
-	'text!templates/private/partido/tplPartidoAdmin.html'
+    'jquery',
+    'backbone',
+    'bootstrap',
+    'selecter',
+    'fabric',
+    'core/BaseView',
+    'models/TorneoPartidoModel',
+    'views/private/partido/PartidoEquipoView',
+    'views/private/partido/PartidoArbitrosView',
+    'views/private/partido/PartidoEditView',
+    'views/private/partido/NewArbitroPartidoView',
+    'views/private/estadistica/EstadisticaResumenView',
+    'views/private/estadistica/EstadisticaPuntosView',
+    'views/private/estadistica/EstadisticaFaltasView',
+    'views/private/estadistica/EstadisticaMovimientosView',
+    'views/private/estadistica/EstadisticaAsistenciasView',
+    'views/private/estadistica/EstadisticaBloqueosView',
+    'views/private/estadistica/EstadisticaRebotesView',
+    'views/private/estadistica/EstadisticaRobosView',
+    'views/private/estadistica/PuntoCreateView',
+    'views/private/estadistica/FaltaCreateView',
+    'views/private/estadistica/MovimientoCreateView',
+    'views/private/estadistica/AsistenciaCreateView',
+    'views/private/estadistica/BloqueoCreateView',
+    'views/private/estadistica/ReboteCreateView',
+    'views/private/estadistica/RoboCreateView',
+    'views/private/util/ModalGenericView',
+    'text!templates/private/partido/tplPartidoAdmin.html'
 ], function($, Backbone, bootstrap, selecter, fabriclib, BaseView, TorneoPartidoModel,
-            PartidoEquipoView, PartidoArbitrosView, PartidoEditView,
+            PartidoEquipoView, PartidoArbitrosView, PartidoEditView, NewArbitroPartidoView,
             EstadisticaResumenView, EstadisticaPuntosView, EstadisticaFaltasView,
             EstadisticaMovimientosView, EstadisticaAsistenciasView,
             EstadisticaBloqueosView, EstadisticaRebotesView, EstadisticaRobosView,
@@ -109,6 +110,11 @@ define([
 
         agregarArbitro: function() {
             console.log("agregar arbitro");
+            new NewArbitroPartidoView({modelo: this.model, callbackAceptar: this.successSavePartido}).render().$el;
+            console.log("agregar arbitro");
+
+
+
         },
 
         partidoPuntosLocal: function() {
@@ -168,13 +174,21 @@ define([
         },
 
         partidoCambiosLocal: function() {
-            new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
+            new MovimientoCreateView({modelo: this. model, callbackAceptar: this.successAddMovimiento,
                                               tipo: 'MANUAL', origen: 'LOCAL', parent: this});
         },
 
         partidoCambiosVisita: function() {
+            console.log("movimiento create");
             new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
                                               tipo: 'MANUAL', origen: 'VISITA', parent: this});
+            console.log("***************");
+
+            console.log($('#tiempofocus'));
+            console.log(this.$('#tiempofocus'));
+            $('#tiempofocus').focus();
+            this.$('#tiempofocus').focus();
+            console.log("end movimiento create");
         },
 
         partidoCambiosDirect: function(entraModel, saleModel, tipo, origen) {

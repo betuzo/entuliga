@@ -20,8 +20,8 @@ define([
         events: {
             'click #btn-aceptar': 'clickAceptar',
             'change #select-entra': 'changeEntra',
-            'change .validate-number':'validateNumber',
-            'keyup .validate-number':'validateNumber'
+            'change .validate-time':'validateTime',
+            'keyup .validate-time':'validateTime'
         },
 
         initialize: function(opts) {
@@ -34,7 +34,6 @@ define([
             this.model.set({origen : opts.origen});
             this.model.set({partidoId : opts.modelo.get('id')});
             this.render();
-
             this.tipos = new TipoMovimientosCollection();
             this.listenTo(this.tipos, 'add', this.agregarTipoMovimiento);
             this.listenTo(this.tipos, 'sync', this.syncTipoMovimientos);
@@ -150,8 +149,58 @@ define([
             this.fetchEntraesByOrigen(this.origen);
         },
 
+        validateTime: function(event){
+            var valtime = $(event.currentTarget).val();
+            var regChar = /^[\d:]$/;
+            var regtwo =/^([0-9]?\d|[0-9]\d)$/;
+            var regthre =/^([0-9]?\d|[0-9]\d):$/;
+            var regfour = /^([0-9]?\d|[0-9]\d):?([0-5])$/;
+            var reg = /^([0-9]?\d|[0-9]\d):?([0-5]\d)$/;
+
+            if ( valtime.length <= 5 && valtime.length > 0 ) {
+                var caracter = valtime.substring(valtime.length -1 ,valtime.length)
+                if (regChar.test(caracter)) {
+                    if (valtime.length == 2 ) {
+                        if (!regtwo.test(valtime)) {
+                            $(event.currentTarget).val('');
+                        }else{
+                            $(event.currentTarget).val(valtime +":");
+                        }
+                    }
+                    if (valtime.length == 3) {
+                        if (!regthre.test(valtime)) {
+                            var cadena = valtime.substring(0, valtime.length -1);
+                            $(event.currentTarget).val(cadena);
+                        }
+                    }
+                    if (valtime.length == 4) {
+                        if (!regfour.test(valtime)) {
+                            var cadena = valtime.substring(0, valtime.length -1);
+                            $(event.currentTarget).val(cadena);
+                        }
+                    }
+                    if (valtime.length == 5) {
+                        if (!reg.test(valtime)) {
+                            $(event.currentTarget).val('');
+                        }
+                    }
+                } else {
+                    var cadena = valtime.substring(0, valtime.length -1);
+                    $(event.currentTarget).val(cadena);
+                }
+            } else {
+                if (valtime.length > 0) {
+                    var subCadena = valtime.substring(0, 5);
+                    $(event.currentTarget).val(subCadena);
+                }
+            }
+        },
+        
         clickAceptar: function(event) {
             var data = this.$el.find("#form-movimiento").serializeObject();
+            var strdate = data.tiempo.split(':');
+            data.minuto = strdate[0];
+            data.segundo = strdate[1];
             this.model.set(data);
             that = this;
             if(this.model.isValid(true)){
@@ -172,25 +221,6 @@ define([
             }
         },
 
-        validateNumber: function(event){
-            if ($.isNumeric($(event.currentTarget).val())) {
-                if ($(event.currentTarget).val() != $(event.currentTarget).val().replace(/[^0-9\.]/g, '')) {
-                    var value = $(event.currentTarget).val().replace(/[^0-9.]/g, '');
-                    $(event.currentTarget).val(value);
-                }else{
-                    var max = parseInt($(event.currentTarget).attr('max'));
-                    var min = parseInt($(event.currentTarget).attr('min'));
-                    if ( $(event.currentTarget).val() > max){
-                        $(event.currentTarget).val(max);
-                    } else if ($(event.currentTarget).val() < min){
-                        $(event.currentTarget).val(min);
-                    }
-                }
-            }else{
-                var value = $(event.currentTarget).val().replace(/[^0-9.]/g, '');
-                $(event.currentTarget).val(value);
-            }
-        },
 
         destroyView: function() {
             $("body").removeClass("modal-open");
