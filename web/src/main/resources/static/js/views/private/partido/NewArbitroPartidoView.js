@@ -5,9 +5,11 @@ define([
 	'bootstrap',
 	'models/TorneoArbitroModel',
 	'collections/TorneoArbitrosCollection',
+	'views/private/partido/ItemArbitroPartidoView',
+	'views/private/partido/ListArbitroPartidoView',
 	'text!templates/private/partido/tplNewArbitroPartido.html'
 ], function($, Backbone, Mn, bootstrap, TorneoArbitroModel,
-						TorneoCanchasCollection, tplNewArbitroPartido){
+						TorneoArbitrosCollection, ItemArbitroPartidoView, ListArbitroPartidoView, tplNewArbitroPartido){
 
 
 	var NewArbitroPartidoView = Mn.View.extend({
@@ -15,31 +17,27 @@ define([
 		el: '#modal-partido',
 		
 		regions: {
-			region1: '#buscarArbitro',
-			region2: '#listArbitro'
+			listBody: {
+				el: 'ul',
+				replaceElement: true
+			}
 		},
 
-		onBeforeRender: function() {
-			console.log('before:render');
+		onBeforeRender: function(opts) {
+			this.torneoarbitros = new TorneoArbitrosCollection();
+			this.torneoarbitros.setTorneo(new TorneoArbitroModel({id: opts.options.modelo.attributes.torneoId}));
+			this.torneoarbitros.fetch();
 		},
 
-		onRender: function() {
-			console.log('render');
+		onRender: function(opts) {
+			this.showChildView('listBody', new ListArbitroPartidoView({
+				collection: this.torneoarbitros
+			}));
+
+			this.$('.alert-danger').hide();
 			this.$('#new-arbitro-partido').modal('show');
-		},
-
-		onBeforeDetach: function() {
-			console.log('before:detach');
-		},
-
-		onDetach: function() {
-			console.log('detach');
-		},
-
-		onDomRemove: function() {
-			console.log('dom:remove');
 		}
-
+		
 	});
 
 	return NewArbitroPartidoView;

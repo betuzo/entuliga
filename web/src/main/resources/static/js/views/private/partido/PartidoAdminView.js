@@ -109,12 +109,7 @@ define([
         },
 
         agregarArbitro: function() {
-            console.log("agregar arbitro");
             new NewArbitroPartidoView({modelo: this.model, callbackAceptar: this.successSavePartido}).render().$el;
-            console.log("agregar arbitro");
-
-
-
         },
 
         partidoPuntosLocal: function() {

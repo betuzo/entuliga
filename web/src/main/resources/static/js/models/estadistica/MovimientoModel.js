@@ -11,6 +11,7 @@ define([
             tiempoDes: '',
             minuto: '',
             segundo: '',
+            tiempo: '',
             tipo: '',
             origen: '',
             entraId: '',
@@ -24,6 +25,9 @@ define([
 
         validation: {
             partidoId: {
+                required: true
+            },
+            tiempo: {
                 required: true
             },
             tiempoDes: {

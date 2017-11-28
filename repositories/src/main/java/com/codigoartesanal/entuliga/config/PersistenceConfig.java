@@ -91,6 +91,8 @@ public class PersistenceConfig {
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/torneocancha.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/jornada.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/partido.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/arbitro.sql");
+        builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/torneoarbitro.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/clasificacion.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/estadistica.sql");
         builder.addScript("classpath:/com/codigoartesanal/entuliga/scripts/h2/ddl/sequence.sql");
@@ -120,6 +122,8 @@ public class PersistenceConfig {
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/torneocancha.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/jornada.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/partido.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/arbitro.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/torneoarbitro.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("/com/codigoartesanal/entuliga/scripts/h2/dml/estadistica.sql"));
 
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
