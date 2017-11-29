@@ -174,16 +174,8 @@ define([
         },
 
         partidoCambiosVisita: function() {
-            console.log("movimiento create");
             new MovimientoCreateView({modelo: this.model, callbackAceptar: this.successAddMovimiento,
                                               tipo: 'MANUAL', origen: 'VISITA', parent: this});
-            console.log("***************");
-
-            console.log($('#tiempofocus'));
-            console.log(this.$('#tiempofocus'));
-            $('#tiempofocus').focus();
-            this.$('#tiempofocus').focus();
-            console.log("end movimiento create");
         },
 
         partidoCambiosDirect: function(entraModel, saleModel, tipo, origen) {
@@ -195,6 +187,7 @@ define([
             app.movimientosPartido.add(movimiento);
             this.destroyView();
         },
+
 
         successRemoveMovimiento: function(movimiento) {
             app.movimientosPartido.remove(movimiento);

@@ -1,3 +1,4 @@
+DROP TABLE partidoarbitro;
 DROP TABLE torneoarbitro;
 DROP TABLE arbitro;
 DROP TABLE falta;
