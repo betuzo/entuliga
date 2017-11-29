@@ -339,8 +339,10 @@ define([
                         continue;
                     }
                     that.pathOver = pathTmp[path];
-                    if ((e.target.left > that.pathOver.left - tolerancia && e.target.left < that.pathOver.left + tolerancia) &&
-                        (e.target.top > that.pathOver.top - tolerancia && e.target.top < that.pathOver.top + tolerancia) ) {
+                    if (((e.target.left > that.pathOver.left - tolerancia && e.target.left < that.pathOver.left + tolerancia) &&
+                        (e.target.top > that.pathOver.top - tolerancia && e.target.top < that.pathOver.top + tolerancia)) ||
+                         ((e.target.left > that.pathOver.left - tolerancia && e.target.left < that.pathOver.left + tolerancia) &&
+                         (e.target.top > that.pathOver.top - tolerancia && e.target.top < that.pathOver.top + tolerancia)) ) {
                         that.pathOver.setOpacity(0.5);
                         that.pathOver.scale(1.2);
                         that.isOver = true;
@@ -440,6 +442,7 @@ define([
                 group.item(1).top = 4;
                 group.set('typePosition', positionsBase[pos].type);
                 group.set('pathOver', null);
+                group.set('typeAction', 'POSITION_BASE');
                 this.canvas.add(group);
                 paths.push(group);
             }
@@ -505,6 +508,7 @@ define([
                 group.set('originLeft', group.left);
                 group.set('originTop', group.top);
                 group.set('player', players.models[player]);
+                group.set('typeAction', 'PLAYER');
                 this.canvas.add(group);
                 left = left + path.width + space;
             }
