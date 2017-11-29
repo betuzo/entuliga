@@ -7,8 +7,9 @@ define([
     'jquerySerializeObject',
     'router',
     'Session',
+    'models/UserTokenModel',
     'views/public/MainNavView'
-], function ($, Backbone, Mn, backboneValidation, jquerycookie, jquerySerializeObject, Router, Session, MainNavView) {
+], function ($, Backbone, Mn, backboneValidation, jquerycookie, jquerySerializeObject, Router, Session, UserTokenModel, MainNavView) {
 
     var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" height="150px" width="150px" style="display: block; margin: auto;"/></div></div>');
     var callServers = 0;
@@ -29,22 +30,46 @@ define([
             console.log('onBeforeStart marionette');            
         },
 
+        syncUserToken: function(){
+            console.log("syncUserToken");
+        },
+
+        errorUserToken: function(){
+            Session.set('authenticated', false);
+            Session.set('username', '');
+            $.cookie("auth_token", null, { path: '/' });
+            if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
+                delete $.ajaxSettings.headers["X-Auth-Token"];
+            }
+            Backbone.history.navigate('login', {trigger: true});
+        },
+
         onStart: function() {
             console.log('onStart marionette');
-            
             if ($.cookie('auth_token') === undefined) { // this line is the problem
                 $.ajaxSettings.headers = [];
                 Session.set('authenticated', false);
+                $.cookie("auth_token", null, { path: '/' }); 
             } else {
                 var user = JSON.parse($.cookie('auth_token'));
-                $.ajaxSetup({
-                    headers: {
-                        "X-Auth-Token": user.token
-                    }
-                });
+                if(user != null){
+                    this.modeltoken = new UserTokenModel();
+                    this.listenTo(this.modeltoken, 'sync', this.syncUserToken);
+                    this.listenTo(this.modeltoken, 'error', this.errorUserToken);
 
-                Session.set('authenticated', true);
-                Session.set('username', user.username);
+                    this.modeltoken.set({token: user.token});
+                    this.modeltoken.fetch();
+                    
+                    $.ajaxSetup({
+                        headers: {
+                            "X-Auth-Token": user.token
+                        }
+                    });
+
+                    Session.set('authenticated', true);
+                    Session.set('username', user.username);
+                }
+
             }
 
 
@@ -69,7 +94,7 @@ define([
                         // Redirec the to the login page.
                         Session.set('authenticated', false);
                         Session.set('username', '');
-                        $.removeCookie('auth_token')
+                        $.cookie("auth_token", null, { path: '/' });
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }
@@ -80,7 +105,7 @@ define([
                         // 403 -- Access denied
                         Session.set('authenticated', false);
                         Session.set('username', '');
-                        $.removeCookie('auth_token')
+                        $.cookie("auth_token", null, { path: '/' });
                         if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
                             delete $.ajaxSettings.headers["X-Auth-Token"];
                         }

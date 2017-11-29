@@ -144,6 +144,7 @@ public class PartidoServiceImpl implements PartidoService {
         map.put(PROPERTY_STATUS_PARTIDO, partido.getStatus());
         return map;
     }
+
     private Partido get(Long idPartido){
         return this.partidoRepository.findById(idPartido).get();
     }
