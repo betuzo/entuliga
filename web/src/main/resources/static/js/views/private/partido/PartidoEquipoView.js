@@ -40,6 +40,7 @@ define([
         agregarJugador: function(model) {
             var vista = new RowPartidoTorneoJugadorView(model);
             this.$el.find("#all-jugadores").find('tbody:last').append(vista.render().$el);
+            
         },
 
         syncJugadores: function() {

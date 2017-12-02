@@ -5,14 +5,14 @@ define([
 	'bootstrap',
 	'models/TorneoArbitroModel',
 	'collections/TorneoArbitrosCollection',
-	'text!templates/private/partido/tplItemArbitroPartido.html'
+	'text!templates/private/partido/tplItemArbitroTorneo.html'
 ], function($, Backbone, Mn, bootstrap, TorneoArbitroModel,
-						TorneoArbitrosCollection, tplItemArbitroPartido){
+						TorneoArbitrosCollection, tplItemArbitroTorneo){
 
 
-	var ItemArbitroPartidoView = Mn.View.extend({
+	var ItemArbitroTorneoView = Mn.View.extend({
 		tagName: 'li',
-		template: _.template(tplItemArbitroPartido),
+		template: _.template(tplItemArbitroTorneo),
 		ui:{
 			toggle: '.toggle'
 		},
@@ -22,16 +22,14 @@ define([
 		},
 
 		toggle: function(){
-			console.log("toggle arbitro partido");
+			console.log("toggle arbitro torneo");
 		},
 
 		onRender: function(opts) {
 			this.$el.html(this.template(this.model.toJSON()));			
-		},
-
-
+		}
 	});
 
-	return ItemArbitroPartidoView;
+	return ItemArbitroTorneoView;
 
 });

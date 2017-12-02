@@ -4,17 +4,23 @@ define([
 ], function(Backbone, BaseModel){
 
 	var ArbitroPartidoModel = BaseModel.extend({
-		urlRoot: 'torneopartido',
+		urlRoot: 'partidoarbitro',
 
 		defaults: {
-		    tipoArbitro: 'PRINCIPAL'
+			partidoId:'',
+			torneoArbitroId:'',
+			nombre: '',
+			paterno: '',
+			materno: '',
+			tipoArbitro: 'PRINCIPAL'
 		},
 
 		initialize: function() {
-
+			console.log('initialize model');
 		},
 
 		validate: function(atributos) {
+				console.log("atributos");
 				console.log("validate attributos arbitroPartidoModel");
 		}
 

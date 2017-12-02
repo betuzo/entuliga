@@ -9,8 +9,7 @@ import com.codigoartesanal.entuliga.services.PartidoArbitroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by adan on 29/11/17.
@@ -23,12 +22,28 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
 
     @Override
     public Map<String, Object> createPartidoArbitro(Map<String, String> mapPartidoArbitro) {
-        PartidoArbitro partidoArbitro = converMapToPartidoArbitro(mapPartidoArbitro);
+        PartidoArbitro partidoArbitro = convertMapToPartidoArbitro(mapPartidoArbitro);
         System.out.println("createPartidoArbitro Implementacion del servicio");
         return convertPartidoArbitroToMap(partidoArbitroRepository.save(partidoArbitro));
     }
 
-    private PartidoArbitro converMapToPartidoArbitro(Map<String,String> mapPartidoArbitro){
+    @Override
+    public List<Map<String, Object>> arbitrosByPartido(Long idPartido) {
+        Partido partido = new Partido();
+        partido.setId(idPartido);
+        Iterator<PartidoArbitro> partidoArbitroIterator = partidoArbitroRepository.findAllByPartido(partido).iterator();
+        List<Map<String, Object>> listPartidoArbitro = new ArrayList<>();
+        while (partidoArbitroIterator.hasNext()){
+            PartidoArbitro arbitro = partidoArbitroIterator.next();
+            Map<String, Object> dto = convertPartidoArbitroToMap(arbitro);
+            listPartidoArbitro.add(dto);
+        }
+        return listPartidoArbitro;
+    }
+
+
+
+    private PartidoArbitro convertMapToPartidoArbitro(Map<String,String> mapPartidoArbitro){
         System.out.println("convertir el mapa a objeto arbitro partido");
 
         PartidoArbitro partidoArbitro = new PartidoArbitro();
@@ -53,6 +68,7 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
         map.put(PROPERTY_TIPO_ARBITRO, partidoArbitro.getTipoArbitro());
         map.put(PROPERTY_PARTIDO_ID, partidoArbitro.getPartido().getId());
         map.put(PROPERTY_TORNEO_ARBITRO_ID, partidoArbitro.getArbitro().getId());
+        map.put("nombre", partidoArbitro.getArbitro().getArbitro().getNombre());
         return map;
     }
 

@@ -21,6 +21,9 @@ public class TorneoPartidoController {
     PartidoService partidoService;
 
     @Autowired
+    PartidoArbitroService partidoArbitroService;
+
+    @Autowired
     EncesteService encesteService;
 
     @Autowired
@@ -161,6 +164,10 @@ public class TorneoPartidoController {
         return response;
     }
 
-
-
+    @ResponseBody
+    @RequestMapping(value = {"{torneopartido}/partidoarbitro"}, method = RequestMethod.GET, produces = {"application/json;charset=UTF-8"})
+    public  List<Map<String, Object>> obtenerArbitrosByPartido(@PathVariable("torneopartido") Long idPartido){
+        List<Map<String,Object>> response = partidoArbitroService.arbitrosByPartido(idPartido);
+        return response;
+    }
 }
