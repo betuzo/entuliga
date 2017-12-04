@@ -4,7 +4,7 @@ define([
     'marionette',
 	'core/BaseView',
     'models/ArbitroPartidoModel',
-    'views/private/partido/ListArbitroPartidoView'
+    'views/private/partido/ListArbitroPartidoView',
 	'text!templates/private/partido/tplPartidoArbitros.html'
 ], function($, Backbone, Mn, BaseView, ArbitroPartidoModel, ArbitrosPartidoCollection, tplPartidoArbitros){
 
