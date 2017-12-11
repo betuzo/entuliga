@@ -2,16 +2,25 @@ define([
 	'jquery',
 	'backbone',
     'marionette',
-	'core/BaseView',
     'models/ArbitroPartidoModel',
+    'collections/ArbitrosPartidoCollection',
+
     'views/private/partido/ListArbitroPartidoView',
+    
 	'text!templates/private/partido/tplPartidoArbitros.html'
-], function($, Backbone, Mn, BaseView, ArbitroPartidoModel, ArbitrosPartidoCollection, tplPartidoArbitros){
+], function($, Backbone, Mn, ArbitroPartidoModel, ArbitrosPartidoCollection, ListArbitroPartidoView, tplPartidoArbitros){
 
 	var PartidoArbitrosView = Mn.View.extend({
 	    el: '#section-arbitros',
 
         template: _.template(tplPartidoArbitros),
+
+        regions: {
+            listBody: {
+                el: '#list-arbitros-partido',
+                replaceElement: true
+            }
+        },
 
         modelEvents: {
             'change:someattribute': 'changeMyAttribute'
@@ -27,7 +36,6 @@ define([
 
         initialize: function(opts) {
             console.log(opts);
-
             this.modelPartido = opts.modelo;
             this.parent = opts.parent;
             this.partidoArbitroCollection = new ArbitrosPartidoCollection();
@@ -43,45 +51,18 @@ define([
 
 
         onRender: function(opts) {
-            console.log("render view marionette PartidoArbitrosView");
-
-            // this.$el.html(this.template(this.model.toJSON()));          
+            this.showChildView('listBody', new ListArbitroPartidoView({
+                collection: this.partidoArbitroCollection
+            }));
         },
 
         changeMyAttribute: function() {
-        console.log('someattribute was changed');
+            console.log('someattribute was changed');
         },
 
         modelsChanged: function() {
-        console.log('models were added or removed in the collection');
+            console.log('models were added or removed in the collection');
         }
-
-
-
-        // initialize: function(modelo) {
-        //     console.log("partidoArbitrosView **** " ,  modelo);
-
-        //     this.model = modelo;
-        //     this.render();
-
-
-        //     // this.model = opts.modelo;
-        //     // this.parent = opts.parent;
-        //     // app.puntosPartido = new PuntosCollection();
-        //     // this.listenTo(app.puntosPartido, 'add', this.agregarPunto);
-        //     // this.listenTo(app.puntosPartido, 'sync', this.syncPuntos);
-        //     // this.render();
-
-        //     // app.puntosPartido.setTorneoPartido(this.model);
-        //     // app.puntosPartido.fetch();
-
-        // },
-
-        // render: function() {
-        //     this.$el.html(this.template(this.model.toJSON()));
-        // }
-
-
 
 	});
 

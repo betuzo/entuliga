@@ -13,9 +13,6 @@ public interface PartidoArbitroService {
     public static final String PROPERTY_TIPO_ARBITRO        ="tipoArbitro";
 
     Map<String,Object> createPartidoArbitro(Map<String, String> partidoArbitro);
-
     List<Map<String,Object>> arbitrosByPartido(Long idPartido);
-
-
 
 }

@@ -4,12 +4,11 @@ define([
 	'marionette',
 	'bootstrap',
 	'models/TorneoArbitroModel',
-	'models/ArbitroPartidoModel',
 	'collections/TorneoArbitrosCollection',
 	'views/private/partido/ItemArbitroPartidoView',
 	'views/private/partido/ListArbitroTorneoView',
 	'text!templates/private/partido/tplNewArbitroPartido.html'
-], function($, Backbone, Mn, bootstrap, TorneoArbitroModel, ArbitroPartidoModel, TorneoArbitrosCollection, ItemArbitroPartidoView, ListArbitroTorneoView, tplNewArbitroPartido){
+], function($, Backbone, Mn, bootstrap, TorneoArbitroModel, TorneoArbitrosCollection, ItemArbitroPartidoView, ListArbitroTorneoView, tplNewArbitroPartido){
 
 
 	var NewArbitroPartidoView = Mn.View.extend({
@@ -35,21 +34,17 @@ define([
 		},
 
 		guardarArbitro: function(){
-			console.log("guardar arbitros");
-			console.log("listBody");			
-			var listBody = this.getChildView('listBody');
-			console.log(listBody);			
-			console.log(listBody.children);			
-			console.log(listBody.children._views);
-			var viewschild = listBody.children._views;
-			console.log(viewschild.length);
-			console.log("For*******************");
-
-			for (key in viewschild) {
-				console.log("For*******************", key);
-
-			// Hacer algo con la clave key
-			}
+			// console.log("guardar arbitros");
+			// console.log("listBody");			
+			// var listBody = this.getChildView('listBody');
+			// console.log(listBody);			
+			// console.log(listBody.children);			
+			// console.log(listBody.children._views);
+			// var viewschild = listBody.children._views;
+			// console.log(viewschild.length);
+			// for (key in viewschild) {
+			// 	// Hacer algo con la clave key
+			// }
 
 			// for (var i = 0; i < viewschild.length; i++) {
 			// 	console.log("For*******************", viewschild[0]);

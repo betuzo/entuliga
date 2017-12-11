@@ -1,2 +1,19 @@
-<%= arbitroNombre %>
-<input class="toggle" type="checkbox" <% if (false) { %>checked<% } %>>
+<div class="form-inline">
+	<div class="checkbox">
+    <label>
+				<input class="toggle" type="checkbox" <% if (false) { %>checked<% } %>>
+    </label>
+  </div>
+
+  <div class="form-group">
+		<%= arbitroNombre %>	
+  </div>
+  <div class="form-group">
+  	<select class="list-tipo-arbitro selectpicker form-control" name="list-tipo-arbitro" >
+			<option value="PRINCIPAL">PRINCIPAL</option>
+			<option value="ANOTADOR">ANOTADOR</option>
+			<option value="CRONOMETRADOR">CRONOMETRADOR</option>
+			<option value="AUXILIAR">AUXILIAR</option>
+		</select>
+  </div>
+</div>

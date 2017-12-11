@@ -75,8 +75,8 @@ define([
         syncPartido: function() {
             this.$el.html(this.template(this.model.toJSON()));
             $('#estadistica-tab a').click(function (e) {
-              e.preventDefault()
-              $(this).tab('show')
+              e.preventDefault();
+              $(this).tab('show');
             })
             this.$el.find('[data-toggle="tooltip"]').tooltip();
 
@@ -84,7 +84,7 @@ define([
             this.local = new PartidoEquipoView({modelo: this.model, parent: this, type: 'LOCAL'});
             this.visita = new PartidoEquipoView({modelo: this.model, parent: this, type: 'VISITA'});
             
-            // new PartidoArbitrosView({modelo:this.model, parent:this}).render();//render Marionette view
+            new PartidoArbitrosView({modelo:this.model, parent:this}).render();//render Marionette view
             new EstadisticaPuntosView({modelo: this.model, parent: this});
             new EstadisticaFaltasView({modelo: this.model, parent: this});
             new EstadisticaMovimientosView({modelo: this.model, parent: this});

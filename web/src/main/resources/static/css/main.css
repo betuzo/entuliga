@@ -96,3 +96,6 @@ body {
   overflow-y: auto;
   max-height: 200px;
 }
+#list-arbitros-torneo {
+  width: 70%;
+}

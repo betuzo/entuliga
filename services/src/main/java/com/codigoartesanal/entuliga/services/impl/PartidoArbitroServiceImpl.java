@@ -44,8 +44,6 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
 
 
     private PartidoArbitro convertMapToPartidoArbitro(Map<String,String> mapPartidoArbitro){
-        System.out.println("convertir el mapa a objeto arbitro partido");
-
         PartidoArbitro partidoArbitro = new PartidoArbitro();
         if (mapPartidoArbitro.containsKey(PROPERTY_ID)){
             partidoArbitro = this.getPartidoArbitro(Long.valueOf(mapPartidoArbitro.get(PROPERTY_ID)));
@@ -68,7 +66,7 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
         map.put(PROPERTY_TIPO_ARBITRO, partidoArbitro.getTipoArbitro());
         map.put(PROPERTY_PARTIDO_ID, partidoArbitro.getPartido().getId());
         map.put(PROPERTY_TORNEO_ARBITRO_ID, partidoArbitro.getArbitro().getId());
-        map.put("nombre", partidoArbitro.getArbitro().getArbitro().getNombre());
+        map.put("nombre", partidoArbitro.getArbitro().getArbitro().getNombre()+" "+ partidoArbitro.getArbitro().getArbitro().getPaterno() +" "+ partidoArbitro.getArbitro().getArbitro().getMaterno());
         return map;
     }
 

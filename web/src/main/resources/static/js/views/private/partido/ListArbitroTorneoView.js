@@ -13,7 +13,7 @@ define([
 
 	var ListArbitroTorneoView = Mn.CollectionView.extend({
 		tagName: 'ul',
-
+		className: "list-group",
 		template: _.template(tplListArbitroTorneo),
 
 		childView: ItemArbitroTorneoView

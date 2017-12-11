@@ -80,7 +80,7 @@ public class TorneoArbitroServiceImpl implements TorneoArbitroService {
         Map<String, Object> map = new HashMap<>();
         map.put(PROPERTY_ID, torneoArbitro.getId());
         map.put(PROPERTY_ARBITRO_ID, torneoArbitro.getArbitro().getId());
-        map.put(PROPERTY_ARBITRO_NOMBRE, torneoArbitro.getArbitro().getNombre());
+        map.put(PROPERTY_ARBITRO_NOMBRE, torneoArbitro.getArbitro().getNombre() +" "+ torneoArbitro.getArbitro().getPaterno() +" "+ torneoArbitro.getArbitro().getMaterno());
         map.put(PROPERTY_TORNEO_ID, torneoArbitro.getTorneo().getId());
         map.put(PROPERTY_TORNEO_NOMBRE, torneoArbitro.getTorneo().getNombre());
         map.put(PROPERTY_STATUS_ARBITRO, torneoArbitro.getStatusArbitro());
