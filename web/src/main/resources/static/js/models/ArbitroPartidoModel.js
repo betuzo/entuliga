@@ -19,7 +19,6 @@ define([
 		},
 
 		validate: function(atributos) {
-				console.log("atributos");
 		}
 
 	});
