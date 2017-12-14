@@ -13,7 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.UrlPathHelper;
@@ -80,7 +80,7 @@ public class AuthenticationFilter extends GenericFilterBean {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String tokenValue = "EMPTY";
         if (authentication != null && !Strings.isNullOrEmpty(authentication.getDetails().toString())) {
-            MessageDigestPasswordEncoder encoder = new MessageDigestPasswordEncoder("SHA-1");
+            StandardPasswordEncoder encoder = new StandardPasswordEncoder("SHA-1");
             tokenValue = encoder.encode(authentication.getDetails().toString());
         }
         MDC.put(TOKEN_SESSION_KEY, tokenValue);
