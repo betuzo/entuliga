@@ -28,6 +28,7 @@ define([
         },
 
         initialize: function() {
+            
         },
 
         validation: {

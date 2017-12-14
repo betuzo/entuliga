@@ -17,7 +17,7 @@ define([
 
         regions: {
             listBody: {
-                el: '#list-arbitros-partido',
+                el: '.list-arbitros-partido',
                 replaceElement: true
             }
         },
@@ -35,19 +35,18 @@ define([
         },
 
         initialize: function(opts) {
-            console.log(opts);
             this.modelPartido = opts.modelo;
             this.parent = opts.parent;
             this.partidoArbitroCollection = new ArbitrosPartidoCollection();
-            this.listenTo(this.partidoArbitroCollection, 'sync', this.syncArbitrosPartido);
+            // this.listenTo(this.partidoArbitroCollection, 'sync', this.syncArbitrosPartido);
             this.partidoArbitroCollection.setTorneoPartido(this.modelPartido);
             this.partidoArbitroCollection.fetch();
         },
 
-        syncArbitrosPartido: function(opts){
-            console.log("syncArbitrosPartido");
-            console.log(opts);
-        },
+        // syncArbitrosPartido: function(opts){
+        //     console.log("syncArbitrosPartido");
+        //     console.log(opts);
+        // },
 
 
         onRender: function(opts) {
