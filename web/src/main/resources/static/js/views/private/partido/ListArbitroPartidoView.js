@@ -10,9 +10,10 @@ define([
 ], function($, Backbone, Mn, bootstrap, TorneoArbitroModel,
 						TorneoArbitrosCollection, ItemArbitroPartidoView, tplListArbitroPartido){
 
-
 	var ListArbitroPartidoView = Mn.CollectionView.extend({
-		tagName: 'ul',
+		tagName: 'tbody',
+
+		className: "list-arbitro-partido",
 
 		template: _.template(tplListArbitroPartido),
 

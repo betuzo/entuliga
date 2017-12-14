@@ -1,5 +1,6 @@
 package com.codigoartesanal.entuliga.services;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,4 +13,6 @@ public interface PartidoArbitroService {
     public static final String PROPERTY_TIPO_ARBITRO        ="tipoArbitro";
 
     Map<String,Object> createPartidoArbitro(Map<String, String> partidoArbitro);
+    List<Map<String,Object>> arbitrosByPartido(Long idPartido);
+
 }
