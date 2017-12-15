@@ -6,6 +6,7 @@ define([
     'fabric',
     'core/BaseView',
     'models/TorneoPartidoModel',
+    'models/ArbitroPartidoModel',
     'views/private/partido/PartidoEquipoView',
     'views/private/partido/PartidoArbitrosView',
     'views/private/partido/PartidoEditView',
@@ -27,7 +28,7 @@ define([
     'views/private/estadistica/RoboCreateView',
     'views/private/util/ModalGenericView',
     'text!templates/private/partido/tplPartidoAdmin.html'
-], function($, Backbone, bootstrap, selecter, fabriclib, BaseView, TorneoPartidoModel,
+], function($, Backbone, bootstrap, selecter, fabriclib, BaseView, TorneoPartidoModel, ArbitroPartidoModel, 
             PartidoEquipoView, PartidoArbitrosView, PartidoEditView, NewArbitroPartidoView,
             EstadisticaResumenView, EstadisticaPuntosView, EstadisticaFaltasView,
             EstadisticaMovimientosView, EstadisticaAsistenciasView,
@@ -83,8 +84,8 @@ define([
             this.strPath = 'M 192.3004,118.04878 H 196.63056 V 139.6996 C 196.63056,140.89553 197.59971,141.86468 198.79564,141.86468 H 216.1163 C 217.31223,141.86468 218.28137,140.89553 218.28137,139.6996 V 118.04878 H 222.61154 C 223.80747,118.04878 224.77662,117.07964 224.77662,115.88371 V 109.38846 C 224.77662,108.19252 223.80747,107.22338 222.61154,107.22338 H 213.95121 C 213.95121,110.81065 211.04324,113.71862 207.45597,113.71862 203.8687,113.71862 200.96072,110.81065 200.96072,107.22338 H 192.3004 C 191.10446,107.22338 190.13532,108.19252 190.13532,109.38846 V 115.88371 C 190.13532,117.07964 191.10446,118.04878 192.3004,118.04878 z';
             this.local = new PartidoEquipoView({modelo: this.model, parent: this, type: 'LOCAL'});
             this.visita = new PartidoEquipoView({modelo: this.model, parent: this, type: 'VISITA'});
+            this.viewPartidoArbitro = new PartidoArbitrosView({modelo:this.model, parent:this}).render();//render Marionette view
             
-            new PartidoArbitrosView({modelo:this.model, parent:this}).render();//render Marionette view
             new EstadisticaPuntosView({modelo: this.model, parent: this});
             new EstadisticaFaltasView({modelo: this.model, parent: this});
             new EstadisticaMovimientosView({modelo: this.model, parent: this});
@@ -105,12 +106,12 @@ define([
             new PartidoEditView({modelo: this.model, callbackAceptar: this.successSavePartido});
         },
 
-        successSavePartido: function(partido) {
+        successSavePartido: function(arbitropartido) {
 
         },
 
         agregarArbitro: function() {
-            new NewArbitroPartidoView({modelo: this.model, callbackAceptar: this.successSavePartido}).render().$el;
+            new NewArbitroPartidoView({modelo: this.model, parent:this}).render().$el;
         },
 
         partidoPuntosLocal: function() {
