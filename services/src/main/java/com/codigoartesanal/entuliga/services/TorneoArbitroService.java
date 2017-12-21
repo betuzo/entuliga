@@ -14,6 +14,8 @@ public interface TorneoArbitroService {
     String PROPERTY_TORNEO_NOMBRE       = "torneoNombre";
     String PROPERTY_ARBITRO_ID           = "arbitroId";
     String PROPERTY_ARBITRO_NOMBRE       = "arbitroNombre";
+    String PROPERTY_ARBITRO_PATERNO       = "arbitroPaterno";
+    String PROPERTY_ARBITRO_MATERNO       = "arbitroMaterno";
     String PROPERTY_STATUS_ARBITRO       = "statusArbitro";
 
     Map<String,Object> createTorneoArbitro(Map<String, String> torneoArbitro);

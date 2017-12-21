@@ -18,9 +18,7 @@ define([
 
         initialize: function() {
             this.$el.find('.tip').tooltip();
-            console.log("initialize login");
             this.model = new UserModel();
-
             Backbone.Validation.bind(this, {
                 valid: function(view, attr, selector) {
                     var $el = view.$('[name=' + attr + ']'),  $group = $el.closest('.form-group');
@@ -44,6 +42,7 @@ define([
 
             });
         },
+
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));

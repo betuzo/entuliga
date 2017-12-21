@@ -1,9 +1,6 @@
 package com.codigoartesanal.entuliga.services.impl;
 
-import com.codigoartesanal.entuliga.model.Partido;
-import com.codigoartesanal.entuliga.model.PartidoArbitro;
-import com.codigoartesanal.entuliga.model.TipoArbitro;
-import com.codigoartesanal.entuliga.model.TorneoArbitro;
+import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.PartidoArbitroRepository;
 import com.codigoartesanal.entuliga.services.PartidoArbitroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,6 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
     @Override
     public Map<String, Object> createPartidoArbitro(Map<String, String> mapPartidoArbitro) {
         PartidoArbitro partidoArbitro = convertMapToPartidoArbitro(mapPartidoArbitro);
-        System.out.println("createPartidoArbitro Implementacion del servicio");
         return convertPartidoArbitroToMap(partidoArbitroRepository.save(partidoArbitro));
     }
 
@@ -51,12 +47,21 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
         Partido partido = new Partido();
         partido.setId(Long.valueOf(mapPartidoArbitro.get(PROPERTY_PARTIDO_ID)));
 
+        Arbitro arbitro = new Arbitro();
+        arbitro.setId(Long.valueOf(mapPartidoArbitro.get(PROPERTY_ARBITRO_ID)));
+        arbitro.setNombre(mapPartidoArbitro.get(PROPERTY_NOMBRE_ARBITRO));
+        arbitro.setPaterno(mapPartidoArbitro.get(PROPERTY_PATERNO_ARBITRO));
+        arbitro.setMaterno(mapPartidoArbitro.get(PROPERTY_MATERNO_ARBITRO));
+
         TorneoArbitro torneoArbitro = new TorneoArbitro();
         torneoArbitro.setId(Long.valueOf(mapPartidoArbitro.get(PROPERTY_TORNEO_ARBITRO_ID)));
+        torneoArbitro.setArbitro(arbitro);
 
         partidoArbitro.setPartido(partido);
         partidoArbitro.setArbitro(torneoArbitro);
         partidoArbitro.setTipoArbitro(TipoArbitro.valueOf(mapPartidoArbitro.get(PROPERTY_TIPO_ARBITRO)));
+
+
         return partidoArbitro;
     }
 
@@ -67,7 +72,9 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
         map.put(PROPERTY_PARTIDO_ID, partidoArbitro.getPartido().getId());
         map.put(PROPERTY_TORNEO_ARBITRO_ID, partidoArbitro.getArbitro().getId());
         if (partidoArbitro.getArbitro().getArbitro() != null){
-            map.put("nombre", partidoArbitro.getArbitro().getArbitro().getNombre()+" "+ partidoArbitro.getArbitro().getArbitro().getPaterno() +" "+ partidoArbitro.getArbitro().getArbitro().getMaterno());
+            map.put(PROPERTY_NOMBRE_ARBITRO, partidoArbitro.getArbitro().getArbitro().getNombre());
+            map.put(PROPERTY_MATERNO_ARBITRO, partidoArbitro.getArbitro().getArbitro().getMaterno());
+            map.put(PROPERTY_PATERNO_ARBITRO, partidoArbitro.getArbitro().getArbitro().getPaterno());
         }
         return map;
     }

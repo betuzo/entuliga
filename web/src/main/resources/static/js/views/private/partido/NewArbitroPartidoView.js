@@ -29,10 +29,9 @@ define([
 		},
 
 		initialize: function(opts) {
+			this.parentView = opts.parent;
 			this.modelPartido = opts.modelo;
 			this.model = new ArbitroPartidoModel();
-
-			
 			this.torneoarbitros = new TorneoArbitrosCollection();
 			this.torneoarbitros.setTorneo(new ArbitroPartidoModel({id: this.modelPartido.get('id') }));
 			this.torneoarbitros.fetch();
@@ -44,41 +43,31 @@ define([
 		},
 
 		guardarArbitro: function(){
-			console.log("guardar arbitros");
-			if (this.model.get("id") != null) {
-				delete this.model.attributes.id;
-			}
-
+			
 			var listBody = this.getChildView('listBody');
-			// var arrayArbitros = [];
-
 			var idPartidoModel =  this.modelPartido.get('id');
 			that = this;
-			
+
 			listBody.children.each(function(childView) {
 				var objectArbitro = childView.$el.find("select,input").serializeObject();
 				objectArbitro.partidoId = idPartidoModel;
 				
 				if (childView.$el.find(".togglecheckbox").is(":checked")) {
-
-					// arrayArbitros.push(objectArbitro);
 					that.model.set(objectArbitro);
+
 					if (that.model.isValid(true)) {
-						that.model.save();
+						var modelsavetest = that.model.save();
+						modelsavetest.complete(function(model) {
+							that.parentView.viewPartidoArbitro.getChildView('listBody').collection.add(new ArbitroPartidoModel(model.responseJSON));
+						});
 						childView.$el.find("select,input").remove();
 						childView.destroy();
 					}
 				}
 			});
 
-			// for (var i = 0; i < arrayArbitros.length; i++) {
-			// 	this.model.set(arrayArbitros[i]);
-			// 	if (this.model.isValid(true)) {
-			// 		this.model.save();
-			// 		childView.destroy();
-			// 		// this.model.destroy();
-			// 	}
-			// }
+			this.destroy();
+			$("#modal-partido-parent").append('<div id="modal-partido"></div>');
 		},
 
 

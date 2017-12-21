@@ -7,7 +7,9 @@
 
   <div class="form-group">
     <label>
-			<%= arbitroNombre %>	
+      <%= arbitroNombre %>  
+      <%= arbitroPaterno %>  
+			<%= arbitroMaterno %>	
 		</label>
   </div>
 
@@ -22,4 +24,7 @@
   <input name="torneoArbitroId" type="hidden" value="<%= id %>">
   <input name="arbitroId" type="hidden" value="<%= arbitroId %>">
   <input name="torneoId" type="hidden" value="<%= torneoId %>">
+  <input name="nombre" type="hidden" value="<%= arbitroNombre %>">
+  <input name="paterno" type="hidden" value="<%= arbitroPaterno %>">
+  <input name="materno" type="hidden" value="<%= arbitroMaterno %>">
 </div>
