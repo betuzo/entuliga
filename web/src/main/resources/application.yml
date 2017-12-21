@@ -5,7 +5,7 @@ server:
 security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
-spring.profiles.active: prodbd
+spring.profiles.active: devbd
 spring.profiles.include: googlestorage,devmail
 
 ---
@@ -52,7 +52,7 @@ spring:
   jpa:
     showSql: false
     dataBase: POSTGRESQL
-    hibernate.generateDdl: true
+    hibernate.generateDdl: false
 
   datasource:
     driverClassName: org.postgresql.Driver
