@@ -12,19 +12,18 @@ define([
 		tagName: 'tr',
 		template: _.template(tplItemArbitroPartido),
 
-		// ui:{
-		// 	toggle: '.toggle'
-		// },
+		ui:{
+			eliminarArbitro: '#eliminar-arbitro-partido'
+		},
 
-		// events:{
-		// 	'click @ui.toggle' : 'toggle'
-		// },
+		events:{
+			'click @ui.eliminarArbitro' : 'deleteArbitroPartido'
+		},
 
-		// toggle: function(){
-		// 	console.log("toggle arbitro partido");
-		// },
+		deleteArbitroPartido: function(){
+			console.log("delte arbitro partido");
+		},
 
-		
 		onRender: function(opts) {
 			this.$el.html(this.template(this.model.toJSON()));			
 		},
