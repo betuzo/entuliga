@@ -1,96 +1,98 @@
 define([
-	'jquery',
-	'backbone',
-    'jquerycookie',
-	'views/private/util/ModalGenericView'
-], function($, Backbone, jquerycookie, ModalGenericView){
+  'jquery',
+  'backbone',
+  'views/private/util/ModalGenericView',
+  'jscookie'
+], function($, Backbone, ModalGenericView, Cookies) {
 
-	var SessionModel = Backbone.Model.extend({
-	    url : 'session/login',
+  var SessionModel = Backbone.Model.extend({
+    url: 'session/login',
 
-        defaults: {
-            username: '',
-            password: ''
-        },
+    defaults: {
+      username: '',
+      password: '',
+      authenticated: false,
+      user_id: ''
+    },
 
-	    initialize: function(){
-	    	this.set('authenticated', false);
-	    },
+    initialize: function() {
+    },
 
-        validation: {
-            username: {
-                required: true,
-                pattern: 'email',
-                msg: 'Por favor especifique un email correcto'
-            },
-            password: {
-                required: true,
-                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
-                msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
+    validation: {
+      username: {
+        required: true,
+        pattern: 'email',
+        msg: 'Por favor especifique un email correcto'
+      },
+      password: {
+        required: true,
+        pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
+        msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
+      }
+    },
+
+
+
+    login: function(callback, user, pass, remember) {
+      var thatCallback = callback;
+      var self = this;
+
+      this.save({ username: user, password: pass }, {
+        wait: true,
+
+        success: function(model, response) {
+          Cookies.set('auth_token', JSON.stringify({ username: user, token: model.get('token') }));
+
+          self.set('authenticated', true);
+          self.set('username', user)
+
+          $.ajaxSetup({
+            headers: {
+              "X-Auth-Token": model.get('token')
             }
+          });
+          console.log('Successfully saved!');
+          thatCallback();
         },
+        error: function(model, error) {
+          console.log("Error autenthication");
+          Session.set('authenticated', false);
+          Session.set('username', '');
+          Cookies.remove('auth_token')
+          new ModalGenericView({
+            message: 'Usuario y/o contraseña incorrecta'
+          });
+        }
+      });
+    },
 
-		login : function(callback, user, pass, remember){
-			var that = callback;
-			var Session = this;
+    logout: function(callback) {
+      var thisSession = this;
+      var that = callback;
+      var Session = new SessionModel();
 
-			this.save({
-						username: user,
-						password: pass}, {
-				wait:true,
-				success:function(model, response) {
-					Session.set('authenticated', true);
-					Session.set('username', user)
-					if (remember) {
-						$.cookie('auth_token', JSON.stringify({username: user, token: model.get('token')}));
-					}
+      Session.save({ username: this.get('username'), logout: 'logout' }, {
+        wait: true,
+        success: function(model, response) {
 
-					$.ajaxSetup({
-						headers: {
-							"X-Auth-Token": model.get('token')
-						}
-					});
-					console.log('Successfully saved!');
-					that();
-				},
-				error: function(model, error) {
-					Session.set('authenticated', false);
-					Session.set('username', '');
-                    $.removeCookie('auth_token')
-					new ModalGenericView({
-						message: 'Usuario y/o contraseña incorrecta'
-					});
-				}
-			});
-		},
+          thisSession.clear();
+          $.ajaxSetup({
+            headers: {
+              "X-Auth-Token": ''
+            }
+          });
+          Session.set('username', '');
+          $.removeCookie('auth_token')
+          console.log('Successfully saved!');
+          that();
+        },
+        error: function(model, error) {
+          console.log(model.toJSON());
+          console.log('error.responseText');
+        }
+      });
+    }
+  });
 
-		logout : function(callback){
-			var thisSession = this;
-			var that = callback;
-			var Session = new SessionModel();
-
-			Session.save({ username: this.get('username'),
-						   logout: 'logout'}, {
-				wait:true,
-				success:function(model, response) {
-					thisSession.clear();
-					$.ajaxSetup({
-						headers: {
-							"X-Auth-Token": ''
-						}
-					});
-                    Session.set('username', '');
-                    $.removeCookie('auth_token')
-					console.log('Successfully saved!');
-					that();
-				},
-				error: function(model, error) {
-					console.log(model.toJSON());
-					console.log('error.responseText');
-				}
-			});
-		}
-	});
-
-	return new SessionModel();
+  return new SessionModel();
 });

@@ -1,41 +1,40 @@
 define([
 	'jquery',
+	'backbone',
+	'marionette',
 	'core/BaseView',
 	'text!templates/public/tplMainNav.html',
 	'Session'
-], function($, BaseView, tplMainNav, Session){
+], function($, Backbone, Mn, BaseView, tplMainNav, Session) {
 
-	var MainNavView = BaseView.extend({
-	    el: $("#hotel-nav"),
+	var MainNavView = Mn.View.extend({
+		// el: $("#header-general"),
 
-        template: _.template(tplMainNav),
+		template: _.template(tplMainNav),
 
-        events: {
-            'click #signin'         : 'signin',
-            'click #signup'         : 'signup',
-            'click #home'           : 'home'
-        },
+		events: {
+			'click #signin': 'signin',
+			'click #signup': 'signup',
+			'click #home': 'home'
+		},
 
-        initialize: function() {
-            this.render();
-        },
+		initialize: function() {},
 
-        render: function() {
-            this.$el.html(this.template());
-            return this;
-        },
+		onBeforeRender: function() {},
 
-        signin: function(){
-            Backbone.history.navigate('admin', { trigger : true });
-        },
+		onRender: function() {},
 
-        signup: function(){
-            Backbone.history.navigate('signup', { trigger : true });
-        },
+		signin: function() {
+			Backbone.history.navigate('login', { trigger: true });
+		},
 
-        home: function(){
-            Backbone.history.navigate('#', { trigger : true });
-        }
+		signup: function() {
+			Backbone.history.navigate('signup', { trigger: true });
+		},
+
+		home: function() {
+			Backbone.history.navigate('#', { trigger: true });
+		}
 	});
 
 	return MainNavView;

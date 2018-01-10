@@ -82,9 +82,6 @@ define([
         },
 
         saveUserSuccess: function(model, response, options){
-          console.log('OPTIONS', options);
-          console.log('RESPONSE', response);
-          console.log('MODEL', model);
             if (typeof app.that === 'undefined') {
                 return;
             }
