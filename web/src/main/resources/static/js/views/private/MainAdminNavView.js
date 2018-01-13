@@ -27,6 +27,7 @@ define([
     logout: function() {
       Session.logout(function(response) {
         Backbone.history.navigate('', { trigger: true });
+        window.location.reload();
       });
     },
 

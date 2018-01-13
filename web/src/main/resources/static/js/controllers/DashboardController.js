@@ -6,9 +6,13 @@ define([
 ], function($, Backbone, Mn, Subroute) {
 
   var DashBoardController = Mn.Object.extend({
-    initialize: function() {},
+    initialize: function() {
+      console.log("initialize controller Dashboard");
+    },
 
-    showuser: function() {},
+    showuser: function() {
+      
+    },
 
   });
 

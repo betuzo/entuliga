@@ -20,13 +20,14 @@ define([
   'views/public/MainNavView',
   'views/public/torneo/TorneoLandingView',
   'Session',
-  'routers/DashboardRoute'
+  'routers/DashboardRoute',
+  'core/ViewManager'
 ], function($, _, Backbone, BaseRouter, LoginView, SignupView,
   TokenValidateView, TokenChangePassView, PerfilAdminView,
   MainAdminNavView, LigaAdminView, TorneoAdminView,
   EquipoAdminView, JugadorAdminView, ArbitroAdminView,
   CanchaAdminView, PartidoAdminView, MainView, MainNavView,
-  TorneoLandingView, Session, DashboardRoute) {
+  TorneoLandingView, Session, DashboardRoute, ViewManager) {
   var Router = BaseRouter.extend({
 
     routes: {
@@ -47,10 +48,8 @@ define([
       'admin/arbitros': 'adminArbitros',
       'admin/canchas': 'adminCanchas',
       'admin/partido/:partido': 'adminPartido',
-
       'torneo/:clave': 'publicTorneo',
-
-
+      'dashboard*subroute': 'showDashboard'
     },
 
     requresAuth: ['#admin'],
@@ -67,7 +66,7 @@ define([
       var path = Backbone.history.location.hash;
       var needAuth = path.indexOf(this.requresAuth) > -1;
       var cancleAccess = _.contains(this.preventAccessWhenAuth, path);
-      console.log(cancleAccess);
+
 
       if(needAuth && !isAuth) {
         //If user gets redirect to login because wanted to access
@@ -103,6 +102,9 @@ define([
     },
 
 
+    showDashboard: function(subroute) {
+      new DashboardRoute('dashboard');
+    },
 
     main: function() {
       var view = new MainView();
@@ -189,7 +191,6 @@ define([
     },
 
     publicTorneo: function(clave) {
-      console.log('Selection: ' + clave);
       var view = new TorneoLandingView({ clave: clave });
       this.changeView(view);
     }

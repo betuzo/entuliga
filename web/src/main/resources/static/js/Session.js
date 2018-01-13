@@ -41,7 +41,7 @@ define([
         wait: true,
 
         success: function(model, response) {
-          Cookies.set('auth_token', JSON.stringify({ username: user, token: model.get('token') }));
+          Cookies.set('auth_token', JSON.stringify({ username: user, token: model.get('token') }), { expires: 365 });
 
           self.set('authenticated', true);
           self.set('username', user)
@@ -56,6 +56,7 @@ define([
         },
         error: function(model, error) {
           console.log("Error autenthication");
+          // la parte de session esta mal Session
           Session.set('authenticated', false);
           Session.set('username', '');
           Cookies.remove('auth_token')
@@ -70,6 +71,9 @@ define([
       var thisSession = this;
       var that = callback;
       var Session = new SessionModel();
+      Cookies.remove('auth_token');
+
+
 
       Session.save({ username: this.get('username'), logout: 'logout' }, {
         wait: true,
@@ -82,13 +86,15 @@ define([
             }
           });
           Session.set('username', '');
-          $.removeCookie('auth_token')
-          console.log('Successfully saved!');
+          Cookies.remove('auth_token');
+          console.log('Successfully Remove cookie!');
           that();
         },
         error: function(model, error) {
           console.log(model.toJSON());
           console.log('error.responseText');
+          window.location.reload();
+
         }
       });
     }

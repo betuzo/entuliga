@@ -93,10 +93,7 @@ require.config({
 
 require([
     'app',
-    'session'
-], function (App, Session) {
-  console.log("**Main**");
+], function (App) {
     var app = new App();
-    app.ADN = "ADN";
     app.start();
 });

@@ -8,7 +8,7 @@ define([
   'text!templates/tplLogin.html',
   'Session',
   'app'
-], function($, BaseView, backbone, backboneValidation, jquerySerializeObject, UserModel, tplLogin, Session,app) {
+], function($, BaseView, backbone, backboneValidation, jquerySerializeObject, UserModel, tplLogin, Session, app) {
 
   var LoginView = BaseView.extend({
     template: _.template(tplLogin),
@@ -18,8 +18,6 @@ define([
     },
 
     initialize: function() {
-      console.log("initialize login");
-      console.log(app);
       this.$el.find('.tip').tooltip();
       this.model = new UserModel();
       Backbone.Validation.bind(this, {
