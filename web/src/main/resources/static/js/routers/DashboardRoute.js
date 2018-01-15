@@ -4,8 +4,10 @@ define([
   'marionette',
   'subroute',
   'core/ViewManager',
-  'views/private/MainAdminView'
-], function($, Backbone, Mn, Subroute, ViewManager, MainAdminView) {
+  'views/private/MainAdminView',
+  'views/private/LigaAdminView',
+  'views/private/dashboard/LigasListView'
+], function($, Backbone, Mn, Subroute, ViewManager, MainAdminView, LigaAdminView, LigasListView) {
 
   var DashBoardRoute = Backbone.SubRoute.extend({
     routes : {
@@ -15,26 +17,24 @@ define([
 
 
     dashboard : function (opt) {
-      console.log("index dashboard");
-      console.log('opt');
-      console.log(opt);
 
+      this.viewMana.showView(new LigaAdminView());
       // var vm = new ViewManager();
 
-      this.viewMana.showView(new MainAdminView().render());
-      console.log("after dashboard route");
+      // this.viewMana.showView(new MainAdminView().render());
+      // console.log("after dashboard route");
     },
 
     configDashboard: function(){
-
-      console.log("config dashboard");
-      this.viewMana.showView(new MainAdminView().render());
+      // console.log("config dashboard");
+      this.viewMana.showView(new LigasListView());
+      // this.viewMana.showView(new MainAdminView().render());
 
 
     },
 
     initialize: function() {
-      this.viewMana = new ViewManager();
+      this.viewMana = ViewManager;
     },
 
 

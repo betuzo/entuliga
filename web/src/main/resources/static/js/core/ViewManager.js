@@ -11,10 +11,13 @@ define([
 
   var ViewManager = Mn.Object.extend({
     initialize: function() {
+      console.log("initialize View Manager");
       this.transitionType = $('#container-body').data('transition');
     },
 
     showView: function(view) {
+      this.transitionType = $('#container-body').data('transition');
+
       var that = this;
       this.disposeView(currentView, function() {
         that.renderView(view);
@@ -23,6 +26,7 @@ define([
 
 
     disposeView: function(view, callback) {
+      console.log("disposeView");
       if(!view) {
         return callback();
       }
@@ -50,10 +54,10 @@ define([
 
     renderView: function(view) {
       currentView = view;
-      $("#container-body").html(currentView.render().el);
+      $("#container-body").html(currentView.render().$el);
     }
 
   });
 
-  return ViewManager;
+  return new ViewManager();
 });

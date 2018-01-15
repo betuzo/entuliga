@@ -21,13 +21,15 @@ define([
   'views/public/torneo/TorneoLandingView',
   'Session',
   'routers/DashboardRoute',
-  'core/ViewManager'
+  'routers/AdminRoute',
+  'core/ViewManager',
+  'views/private/dashboard/LigasListView'
 ], function($, _, Backbone, BaseRouter, LoginView, SignupView,
   TokenValidateView, TokenChangePassView, PerfilAdminView,
   MainAdminNavView, LigaAdminView, TorneoAdminView,
   EquipoAdminView, JugadorAdminView, ArbitroAdminView,
   CanchaAdminView, PartidoAdminView, MainView, MainNavView,
-  TorneoLandingView, Session, DashboardRoute, ViewManager) {
+  TorneoLandingView, Session, DashboardRoute, AdminRoute, ViewManager, LigasListView) {
   var Router = BaseRouter.extend({
 
     routes: {
@@ -48,8 +50,11 @@ define([
       'admin/arbitros': 'adminArbitros',
       'admin/canchas': 'adminCanchas',
       'admin/partido/:partido': 'adminPartido',
+      // 'admin*subroute': 'showAdminView',
       'torneo/:clave': 'publicTorneo',
-      'dashboard*subroute': 'showDashboard'
+      'dashboard': 'showDashboard',
+      'dashboard/config': 'showDashboardConfig'
+      // 'dashboard*subroute': 'showDashboard'
     },
 
     requresAuth: ['#admin'],
@@ -59,7 +64,7 @@ define([
     initialize: function() {},
 
     before: function(params, next) {
-      console.log("berore router");
+      console.log("BEFORE ROUTER");
       //Checking if user is authenticated or not
       //then check the path if the path requires authentication
       var isAuth = Session.get('authenticated');
@@ -85,26 +90,35 @@ define([
     },
 
     after: function() {
-
-      console.log('after router');
+      console.log('AFTER ROUTER');
     },
 
     changeView: function(view) {
       function setView(view) {
         if(this.currentView) {
-          this.currentView.close();
+          if(typeof this.currentView.close === "function") {
+            this.currentView.close();
+          }else{
+            if(typeof this.currentView.destroy === "function") {
+              this.currentView.destroy(); //cerrar vistas de marionette
+            }
+          }
         }
         this.currentView = view;
         $('#container-body').html(view.render().$el);
       }
-
       setView(view);
     },
 
 
-    showDashboard: function(subroute) {
-      new DashboardRoute('dashboard');
+    // showDashboard: function(subroute) {
+    //   new DashboardRoute('dashboard');
+    // },
+
+    showAdminView: function(subroute) {
+      new AdminRoute('admin');
     },
+
 
     main: function() {
       var view = new MainView();
@@ -192,6 +206,18 @@ define([
 
     publicTorneo: function(clave) {
       var view = new TorneoLandingView({ clave: clave });
+      this.changeView(view);
+    },
+
+    //dashboard
+
+    showDashboard: function(clave) {
+      var view = new LigaAdminView();
+      this.changeView(view);
+    },
+
+    showDashboardConfig: function(clave) {
+      var view = new LigasListView();
       this.changeView(view);
     }
   });

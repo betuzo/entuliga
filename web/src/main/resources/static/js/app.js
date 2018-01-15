@@ -23,7 +23,7 @@ define([
 
 
     initialize: function() {
-      console.log('initialize marionette');
+      // console.log('initialize marionette');
       this.controllers = {
         dashboard: new DashBoardController(),
       };
@@ -31,11 +31,11 @@ define([
     },
 
     onBeforeStart: function() {
-      console.log('onBeforeStart marionette');
+      // console.log('onBeforeStart marionette');
     },
 
     onStart: function() {
-      console.log('onStart marionette');
+      // console.log('onStart marionette');
       var that = this;
 
       if(Cookie.get('auth_token') !== undefined) {
@@ -44,7 +44,7 @@ define([
         if(user != null) {
           //TODO Se tiene que verificar el token que contiene la cookie con el servidor
           // var resToken = this.modeltoken.checkAuth(user.token, function(){
-          //   console.log("callback");
+          //   // console.log("callback");
           // });
 
           //Si es valido el token lo ponemos en el encabezado
@@ -80,7 +80,7 @@ define([
         },
         statusCode: {
           401: function() {
-            console.log("ERROR 401");
+            // console.log("ERROR 401");
             // Redirec the to the login page.
             Session.set('authenticated', false);
             Session.set('username', '');
@@ -94,7 +94,7 @@ define([
           },
           403: function() {
             // 403 -- Access denied
-            console.log("ERROR 403");
+            // console.log("ERROR 403");
             //
             // Session.set('authenticated', false);
             // Session.set('username', '');
