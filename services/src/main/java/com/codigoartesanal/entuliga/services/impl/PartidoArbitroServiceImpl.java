@@ -4,6 +4,7 @@ import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.PartidoArbitroRepository;
 import com.codigoartesanal.entuliga.services.PartidoArbitroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -37,6 +38,15 @@ public class PartidoArbitroServiceImpl implements PartidoArbitroService {
         return listPartidoArbitro;
     }
 
+    @Override
+    public DeleteStatusEnum deleteArbitroPartido(Long idArbitroPartido) {
+        try {
+            partidoArbitroRepository.deleteById(idArbitroPartido);
+        } catch (DataIntegrityViolationException exception){
+            return DeleteStatusEnum.VIOLATION;
+        }
+        return DeleteStatusEnum.OK;
+    }
 
 
     private PartidoArbitro convertMapToPartidoArbitro(Map<String,String> mapPartidoArbitro){

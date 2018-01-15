@@ -12,6 +12,7 @@ define([
         },
 
         initialize: function() {
+          console.log("initialize MainAdminView");
         },
 
         render: function() {

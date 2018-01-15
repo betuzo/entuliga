@@ -1,65 +1,46 @@
 define([
-	'jquery',
-	'core/BaseView',
-	'text!templates/private/tplMainAdminNav.html',
-	'Session'
-], function($, BaseView, tplMainAdminNav, Session){
+  'jquery',
+  'core/BaseView',
+  'text!templates/private/tplMainAdminNav.html',
+  'Session'
+], function($, BaseView, tplMainAdminNav, Session) {
 
-	var MainAdminNavView = BaseView.extend({
-	    el: $("#hotel-nav"),
+  var MainAdminNavView = BaseView.extend({
 
-        template: _.template(tplMainAdminNav),
+    template: _.template(tplMainAdminNav),
 
-        events: {
-            'click #logout'             : 'logout',
-            'click #home'               : 'homeAdmin',
-            'click li.nav-item-entuliga'  : 'activeMenu'
-        },
+    events: {
+      'click #logout': 'logout',
+      'click #home': 'homeAdmin',
+      'click .nav-item-entuliga': 'activeMenu'
+    },
 
-        initialize: function() {
-          // this.listenTo("reset", this.updateView);
-          // this.listenTo('destroy', this.remove);
-          // this.bind("reset", this.remove());
-          this.render();
-        },
+    initialize: function() {
+      this.render();
+    },
 
-        render: function() {
-            this.$el.html(this.template());
-            // this.remove();
-            return this;
-        },
+    render: function() {
+      this.$el.html(this.template());
+      return this;
+    },
 
-        logout: function(){
-            Session.logout(function(response){
-                Backbone.history.navigate('', { trigger : true });
-            });
-        },
+    logout: function() {
+      Session.logout(function(response) {
+        Backbone.history.navigate('', { trigger: true });
+        window.location.reload();
+      });
+    },
 
-        homeAdmin: function(){
-            Backbone.history.navigate('admin', { trigger : true });
-        },
+    homeAdmin: function() {
+      Backbone.history.navigate('admin', { trigger: true });
+    },
 
-        activeMenu: function(event){
-            // console.log("click");
-            // console.log(event);
-            // console.log($(event.target).parent());
-            $(event.target).parent().addClass('active');
-            // $('.nav-item-entuliga').removeClass('active');
-        },
+    activeMenu: function(event) {
+      $('.nav-item-entuliga').removeClass('active');
+      $(event.target).parent().addClass('active');
+    },
+  });
 
-        destroy_view: function() {
-          // console.log("remove");
-          // COMPLETELY UNBIND THE VIEW
-          this.undelegateEvents();
-
-          this.$el.removeData().unbind();
-
-          // Remove view from DOM
-          this.remove();
-          Backbone.View.prototype.remove.call(this);
-        }
-	});
-
-	return MainAdminNavView;
+  return MainAdminNavView;
 
 });

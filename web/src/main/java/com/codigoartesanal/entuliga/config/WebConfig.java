@@ -42,4 +42,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.favorPathExtension(false);
         configurer.defaultContentType(MediaType.APPLICATION_JSON);
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedHeaders("*")
+                .allowedMethods("*")
+                .allowCredentials(true).maxAge(3600);
+        //.allowedMethods("PUT", "DELETE", "POST", "GET")
+    }
 }

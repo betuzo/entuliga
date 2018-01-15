@@ -1,6 +1,7 @@
 define([
-    'backbone'
-], function(Backbone){
+    'backbone',
+    'session',
+], function(Backbone, Session){
 
     var UserTokenModel = Backbone.Model.extend({
 
@@ -14,11 +15,33 @@ define([
             // fechaVigencia: (new Date()).getTime()
         },
 
+        initialize: function(){
 
+        },
 
         isAuthorized: function(){
           return Boolean(this.get("token"));
         },
+
+        checkAuth: function( token , callback) {
+          this.set({ id : token });
+          this.set({ token : token });
+          var thatCallback = callback
+          this.fetch({
+            success: function(mod, res){
+              console.log("success token checkout");
+            },
+            error: function(mod, res){
+              console.log("error token checkout");
+            }
+          })
+
+          thatCallback();
+
+        },
+
+
+
 
 
         validation: {
