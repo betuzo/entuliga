@@ -97,7 +97,7 @@ public class JugadorServiceImpl implements JugadorService {
         map.put(PROPERTY_CALLE, jugador.getGeoLocation().getCalle());
         map.put(PROPERTY_NO_EXTERIOR, jugador.getGeoLocation().getNoExterior());
         map.put(PROPERTY_NO_INTERIOR, jugador.getGeoLocation().getNoInterior());
-        map.put(PROPERTY_CODIGO_POSTAL, jugador.getGeoLocation().getCodigoPostal());
+        map.put(PROPERTY_CODIGO_POSTAL, jugador.getGeoLocation().getColonia().getCodigoPostal());
         map.put(PROPERTY_LATITUDE, jugador.getGeoLocation().getLatitude());
         map.put(PROPERTY_LONGITUDE, jugador.getGeoLocation().getLongitude());
         if (jugador.getGeoLocation().getColonia() == null)
@@ -140,7 +140,6 @@ public class JugadorServiceImpl implements JugadorService {
         if (noInterior != null && !noInterior.isEmpty()) {
             geoLocation.setNoInterior(noInterior);
         }
-        geoLocation.setCodigoPostal(ligaMap.get(PROPERTY_CODIGO_POSTAL));
         String latitude = ligaMap.get(PROPERTY_LATITUDE);
         if (latitude != null && !latitude.isEmpty()) {
             geoLocation.setLatitude(BigDecimal.valueOf(Double.parseDouble(latitude)));

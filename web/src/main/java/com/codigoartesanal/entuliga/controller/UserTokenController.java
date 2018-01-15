@@ -1,7 +1,6 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.model.TipoToken;
-import com.codigoartesanal.entuliga.model.UserToken;
 import com.codigoartesanal.entuliga.services.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,5 +30,4 @@ public class UserTokenController {
         Map<String, Object> response = userTokenService.userTokenByIdAndTipo(token, TipoToken.VALID_EMAIL);
         return response;
     }
-
 }

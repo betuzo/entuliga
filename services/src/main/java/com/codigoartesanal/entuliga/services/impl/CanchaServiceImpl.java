@@ -81,7 +81,7 @@ public class CanchaServiceImpl implements CanchaService {
         map.put(PROPERTY_CALLE, cancha.getGeoLocation().getCalle());
         map.put(PROPERTY_NO_EXTERIOR, cancha.getGeoLocation().getNoExterior());
         map.put(PROPERTY_NO_INTERIOR, cancha.getGeoLocation().getNoInterior());
-        map.put(PROPERTY_CODIGO_POSTAL, cancha.getGeoLocation().getCodigoPostal());
+        map.put(PROPERTY_CODIGO_POSTAL, cancha.getGeoLocation().getColonia().getCodigoPostal());
         map.put(PROPERTY_LATITUDE, cancha.getGeoLocation().getLatitude());
         map.put(PROPERTY_LONGITUDE, cancha.getGeoLocation().getLongitude());
         if (cancha.getGeoLocation().getColonia() == null)
@@ -121,7 +121,6 @@ public class CanchaServiceImpl implements CanchaService {
         if (noInterior != null && !noInterior.isEmpty()) {
             geoLocation.setNoInterior(noInterior);
         }
-        geoLocation.setCodigoPostal(canchaMap.get(PROPERTY_CODIGO_POSTAL));
         String latitude = canchaMap.get(PROPERTY_LATITUDE);
         if (latitude != null && !latitude.isEmpty()) {
             geoLocation.setLatitude(BigDecimal.valueOf(Double.parseDouble(latitude)));

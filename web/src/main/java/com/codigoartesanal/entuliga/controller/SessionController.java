@@ -65,4 +65,16 @@ public class SessionController {
         return sessionDTO;
     }
 
+    @ResponseBody
+    @RequestMapping(
+            value = { "/valid/{token}" },
+            method = RequestMethod.GET,
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> isValidToken(@PathVariable("token") String token) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", "token");
+        return response;
+    }
+
+
 }

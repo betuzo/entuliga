@@ -70,7 +70,7 @@ public class LigaServiceImpl implements LigaService {
         map.put(PROPERTY_CALLE, liga.getGeoLocation().getCalle());
         map.put(PROPERTY_NO_EXTERIOR, liga.getGeoLocation().getNoExterior());
         map.put(PROPERTY_NO_INTERIOR, liga.getGeoLocation().getNoInterior());
-        map.put(PROPERTY_CODIGO_POSTAL, liga.getGeoLocation().getCodigoPostal());
+        map.put(PROPERTY_CODIGO_POSTAL, liga.getGeoLocation().getColonia().getCodigoPostal());
         map.put(PROPERTY_LATITUDE, liga.getGeoLocation().getLatitude());
         map.put(PROPERTY_LONGITUDE, liga.getGeoLocation().getLongitude());
         if (liga.getGeoLocation().getColonia() == null)
@@ -110,7 +110,6 @@ public class LigaServiceImpl implements LigaService {
         if (noInterior != null && !noInterior.isEmpty()) {
             geoLocation.setNoInterior(noInterior);
         }
-        geoLocation.setCodigoPostal(ligaMap.get(PROPERTY_CODIGO_POSTAL));
         String latitude = ligaMap.get(PROPERTY_LATITUDE);
         if (latitude != null && !latitude.isEmpty()) {
             geoLocation.setLatitude(BigDecimal.valueOf(Double.parseDouble(latitude)));
