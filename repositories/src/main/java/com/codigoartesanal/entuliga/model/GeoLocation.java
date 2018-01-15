@@ -16,8 +16,6 @@ public class GeoLocation {
     private String noExterior;
     @Column(name = "no_interior")
     private String noInterior;
-    @Column(name = "codigo_postal")
-    private String codigoPostal;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "colonia_id", nullable = false)
     private Colonia colonia;
@@ -56,14 +54,6 @@ public class GeoLocation {
         this.noInterior = noInterior;
     }
 
-    public String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
-
     public Colonia getColonia() {
         return colonia;
     }
@@ -95,7 +85,6 @@ public class GeoLocation {
                 ", calle='" + calle + '\'' +
                 ", noExterior='" + noExterior + '\'' +
                 ", noInterior='" + noInterior + '\'' +
-                ", codigoPostal='" + codigoPostal + '\'' +
                 ", colonia=" + colonia +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
