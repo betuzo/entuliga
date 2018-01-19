@@ -19,17 +19,15 @@ define([
   'views/public/MainView',
   'views/public/MainNavView',
   'views/public/torneo/TorneoLandingView',
-  'Session',
   'routers/DashboardRoute',
   'routers/AdminRoute',
-  'core/ViewManager',
   'views/private/dashboard/LigasListView'
 ], function($, _, Backbone, BaseRouter, LoginView, SignupView,
   TokenValidateView, TokenChangePassView, PerfilAdminView,
   MainAdminNavView, LigaAdminView, TorneoAdminView,
   EquipoAdminView, JugadorAdminView, ArbitroAdminView,
   CanchaAdminView, PartidoAdminView, MainView, MainNavView,
-  TorneoLandingView, Session, DashboardRoute, AdminRoute, ViewManager, LigasListView) {
+  TorneoLandingView, DashboardRoute, AdminRoute, LigasListView) {
   var Router = BaseRouter.extend({
 
     routes: {
@@ -67,7 +65,7 @@ define([
       console.log("BEFORE ROUTER");
       //Checking if user is authenticated or not
       //then check the path if the path requires authentication
-      var isAuth = Session.get('authenticated');
+      var isAuth = Backbone.Radio.channel('app').request('session').get('logged_in');
       var path = Backbone.history.location.hash;
       var needAuth = path.indexOf(this.requresAuth) > -1;
       var cancleAccess = _.contains(this.preventAccessWhenAuth, path);
@@ -123,7 +121,6 @@ define([
     main: function() {
       var view = new MainView();
       this.changeView(view);
-      new MainAdminNavView();
 
     },
 
@@ -152,56 +149,47 @@ define([
     admin: function() {
       var view = new PerfilAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminPerfil: function() {
       var view = new PerfilAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminLigas: function() {
       var view = new LigaAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminTorneos: function() {
       var view = new TorneoAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminEquipos: function() {
       var view = new EquipoAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminJugadores: function() {
       var view = new JugadorAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminArbitros: function() {
       var view = new ArbitroAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminCanchas: function() {
       var view = new CanchaAdminView();
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     adminPartido: function(partido) {
       var view = new PartidoAdminView();
       view.setIdPartido(partido);
       this.changeView(view);
-      new MainAdminNavView();
     },
 
     publicTorneo: function(clave) {

@@ -6,9 +6,9 @@ define([
   'jquerySerializeObject',
   'models/UserModel',
   'text!templates/tplLogin.html',
-  'Session',
-  'app'
-], function($, BaseView, backbone, backboneValidation, jquerySerializeObject, UserModel, tplLogin, Session, app) {
+  'jscookie',
+  'views/RootAdminView'
+], function($, BaseView, Backbone, backboneValidation, jquerySerializeObject, UserModel, tplLogin, Cookies, RootAdminView) {
 
   var LoginView = BaseView.extend({
     template: _.template(tplLogin),
@@ -18,6 +18,7 @@ define([
     },
 
     initialize: function() {
+      this.layoutMaster = Backbone.Radio.channel('app').request('appMn');
       this.$el.find('.tip').tooltip();
       this.model = new UserModel();
       Backbone.Validation.bind(this, {
@@ -59,7 +60,10 @@ define([
     },
 
     login: function() {
+      var that = this;
+
       var data = this.$el.find("#form-login").serializeObject();
+
       this.model.set(data);
       this.model.set({ passwordConfirm: this.model.get('password') });
 
@@ -67,19 +71,34 @@ define([
         var user = this.model.get('username');
         var pass = this.model.get('password');
         var remember = $("#remember").is(":checked");
-        Session.login(function(response) {
-          Backbone.history.navigate('admin', { trigger: true });
-          window.location.reload();
+        var rootLayout = Backbone.Radio.channel('app').request('rootLayout');
 
-          // var newFragment = Backbone.history.getFragment($(this).attr('href'));
-          // if(Backbone.history.fragment == newFragment) {
-          //   // need to null out Backbone.history.fragement because
-          //   // navigate method will ignore when it is the same as newFragment
-          //   Backbone.history.fragment = null;
-          //   Backbone.history.navigate(newFragment, true);
-          // }
+        Backbone.Radio.channel('app').request('session').login({
+          username: user,
+          password: pass
+        }, {
+          success: function(res) {
+            Cookies.set('auth_token', JSON.stringify({ username: res.username, token: res.token }), { expires: 365 });
 
-        }, user, pass, remember);
+            $.ajaxSetup({
+              headers: {
+                "X-Auth-Token": res.token
+              }
+            });
+            //Render master view
+            //TODO verificar los roles en esta parte y al iniciar se redireccionara a su dashboard
+            var regionMaster = that.layoutMaster.getRegion();
+            regionMaster.show(new RootAdminView());
+            Backbone.history.navigate('', { trigger: true });
+          },
+          error: function(err) {
+            //TODO Redireccionar de nuevo a login o mandar mensaje de error.
+            console.log("Error on login");
+          },
+          complete: function() {
+            console.log("Complete login");
+          }
+        });
       }
 
     }

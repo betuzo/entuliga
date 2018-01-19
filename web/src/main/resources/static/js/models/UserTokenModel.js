@@ -24,19 +24,31 @@ define([
         },
 
         checkAuth: function( token , callback) {
-          this.set({ id : token });
+          console.log("token checkout ");
+          console.log(token);
+          var status = true;
+          // this.model.set('id', token );
           this.set({ token : token });
-          var thatCallback = callback
+
+          // this.model.id = token;
+          var thatCallback = callback;
+
           this.fetch({
             success: function(mod, res){
+
               console.log("success token checkout");
+              var status = true;
+              thatCallback(status);
             },
+
             error: function(mod, res){
               console.log("error token checkout");
+              status = false;
+              thatCallback(status);
             }
-          })
 
-          thatCallback();
+          });
+
 
         },
 

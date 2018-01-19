@@ -59,5 +59,5 @@ define([
 
   });
 
-  return new ViewManager();
+  return ViewManager;
 });

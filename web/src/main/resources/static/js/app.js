@@ -5,14 +5,15 @@ define([
   'backboneValidation',
   'jquerySerializeObject',
   'router',
-  'Session',
-  'models/UserTokenModel',
   'views/public/MainNavView',
   'views/RootView',
   'views/RootAdminView',
-  'controllers/DashBoardController',
-  'jscookie'
-], function($, Backbone, Mn, backboneValidation, jquerySerializeObject, Router, Session, UserTokenModel, MainNavView, RootView, RootAdminView, DashBoardController, Cookie) {
+  'jscookie',
+  'core/SessionModel',
+  'backbone.radio',
+  'ControllerRoute',
+  'core/CoreRouterMn'
+], function($, Backbone, Mn, backboneValidation, jquerySerializeObject, Router, MainNavView, RootView, RootAdminView, Cookie, SessionModel, Radio, ControllerRoute, CoreRouterMn) {
 
   var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" height="150px" width="150px" style="display: block; margin: auto;"/></div></div>');
   var callServers = 0;
@@ -21,50 +22,14 @@ define([
 
     region: '#app',
 
+    urlRoot: 'http://localhost:8090/', //CORS mientras
 
     initialize: function() {
-      // console.log('initialize marionette');
-      this.controllers = {
-        dashboard: new DashBoardController(),
-      };
-      this.modeltoken = new UserTokenModel();
     },
 
     onBeforeStart: function() {
       // console.log('onBeforeStart marionette');
-    },
-
-    onStart: function() {
-      // console.log('onStart marionette');
       var that = this;
-
-      if(Cookie.get('auth_token') !== undefined) {
-        this.showView(new RootAdminView());
-        var user = JSON.parse(Cookie.get('auth_token'));
-        if(user != null) {
-          //TODO Se tiene que verificar el token que contiene la cookie con el servidor
-          // var resToken = this.modeltoken.checkAuth(user.token, function(){
-          //   // console.log("callback");
-          // });
-
-          //Si es valido el token lo ponemos en el encabezado
-          $.ajaxSetup({
-            headers: {
-              "X-Auth-Token": user.token
-            }
-          });
-          Session.set('authenticated', true);
-          Session.set('username', user.username);
-        }
-      }else{
-        $.ajaxSettings.headers = [];
-        Session.set('authenticated', false);
-        this.showView(new RootView());
-      }
-
-      var router = new Router();
-      Backbone.history.start();
-
 
       $.ajaxSetup({
         cache: false,
@@ -80,33 +45,15 @@ define([
         },
         statusCode: {
           401: function() {
-            // console.log("ERROR 401");
-            // Redirec the to the login page.
-            Session.set('authenticated', false);
-            Session.set('username', '');
-            Cookie.remove('auth_token');
-            if($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
-              delete $.ajaxSettings.headers["X-Auth-Token"];
-            }
-            Backbone.history.navigate('login', { trigger: true });
-            window.location.reload();
+            console.log("ERROR 401");
 
           },
           403: function() {
-            // 403 -- Access denied
-            // console.log("ERROR 403");
-            //
-            // Session.set('authenticated', false);
-            // Session.set('username', '');
-            // $.cookie("auth_token", null, { path: '/' });
-            // if($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
-            //   delete $.ajaxSettings.headers["X-Auth-Token"];
-            // }
-            // Backbone.history.navigate('login', { trigger: true });
+            console.log("ERROR 403");
           }
+
         }
       });
-
 
       // Extend the callbacks to work with Bootstrap, as used in this example
       // See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks
@@ -138,19 +85,69 @@ define([
       };
 
       //REST URL
-
       var sync = Backbone.sync;
       Backbone.sync = function(method, model, options) {
         options.beforeSend = function() {
-          this.url = 'http://localhost:8090/' + this.url;
+          this.url = that.urlRoot + this.url;
         };
         return sync.call(this, method, model, options);
       };
+
+      this.rootLayout = new RootView();
+      this.session = new SessionModel();
+      this.controlllerRoute = new ControllerRoute({that: this});
+
+      this.channel = Backbone.Radio.channel('app');
+      this.channel.reply('session', this.session);
+      this.channel.reply('configval', { urlRoot: this.urlRoot });
+      this.channel.reply('rootLayout', this.rootLayout);
+      this.channel.reply('controllerRoute', this.controlllerRoute);
+      this.channel.reply('appMn', this);
+    },
+
+    onStart: function() {
+      // console.log('onStart marionette');
+      var that = this;
+      if(Cookie.get('auth_token') !== undefined) {
+        var user = JSON.parse(Cookie.get('auth_token'));
+
+        if(user != null) {
+          this.session.set('username', user.username);
+          this.session.checkAuth({token: user.token },{
+            //la respuesta al verificar el token deben venir el username, roles, token y los roles, por que se esta recuperando del la cookie
+            // Start the backbone routing once we have captured a user's auth status
+            success: function(mod, res){
+              that.rootLayout = new RootAdminView();
+              that.showView(that.rootLayout);
+              $.ajaxSetup({
+                headers: {
+                  "X-Auth-Token": user.token
+                }
+              });
+            },
+            error: function(mod, res) {
+              console.log("Error al verificar el token");
+            },
+            complete: function() {
+              // console.log("complete checkaut");
+            }
+          });
+        }
+      } else {
+        this.showView(this.rootLayout);
+      }
+
+      // var router = new Router();
+      // Backbone.history.start();
+      this.controlllerRoute.router = new CoreRouterMn({
+        controller: this.controlllerRoute
+      });
+
+      this.controlllerRoute.start();
+      Backbone.history.start();
+
+
     }
-
   });
-
-
-
   return ApplicationModel;
 });

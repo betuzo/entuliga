@@ -29,7 +29,7 @@ define([
 
     initialize: function() {
       console.log("initialize router admin");
-      this.viewMana = ViewManager;
+      this.viewMana = new ViewManager();
     },
 
 
