@@ -25,6 +25,7 @@ define([
     },
 
     logout: function() {
+      //cambiar este logout
       Session.logout(function(response) {
         Backbone.history.navigate('', { trigger: true });
         window.location.reload();
@@ -32,7 +33,7 @@ define([
     },
 
     homeAdmin: function() {
-      Backbone.history.navigate('admin', { trigger: true });
+      Backbone.history.navigate('', { trigger: true });
     },
 
     activeMenu: function(event) {

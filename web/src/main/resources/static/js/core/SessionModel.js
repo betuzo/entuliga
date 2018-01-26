@@ -37,7 +37,7 @@ define([
       var token = opts.token
       var self = this;
       this.set('id', token);
-      this.url = this.url +'/valid/' + token;
+      this.url = 'session/valid/' + token;
       this.fetch({
         success: function(mod, res) {
           if(res.token) {

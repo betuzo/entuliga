@@ -12,35 +12,64 @@ define([
       // console.log(opts.that.session.get('username'));
       this.session = opts.that.session;
     },
-    // Action that need authentication and if user is not authenticated
-    // gets redirect to login page
-    requresAuth: function() {
+
+    defaultAdminList: function() {
       return [];
     },
 
-    // Routes that should not be accessible if user is authenticated
-    // for example, login, register, forgetpasword ...
-    preventAccessWhenAuth: function() {
+    defaultAnonUserUrl: function() {
       return [];
     },
 
-    filter: function(filter) {
+
+
+
+    filterurl: function(filter) {
       filter = filter || '#';
       let options = {};
 
-      if(this[filter] && typeof this[filter] === 'function') {
+      var arrayAdmin = this.defaultAdminUrl();
+      var arrayUser = this.defaultAnonUserUrl();
 
-        if(~this.requresAuth().indexOf(filter)) {
-          options = _.extend(options, { requiresAuth: true });
-        }
 
-        if(~this.preventAccessWhenAuth().indexOf(filter)) {
-          options = _.extend(options, { preventAccessWhenAuth: true });
-        }
-
-        this.checkAccess(filter, options, () => this[filter](options));
+      if(_.where(this.defaultAdminUrl(), { 'url': filter }).length) {
+        options = _.extend(options, { requiresAuth: true });
       }
 
+      if(_.where(this.defaultAnonUserUrl(), { 'url': filter }).length) {
+        options = _.extend(options, { preventAccessWhenAuth: true });
+      }
+
+      if(options.requiresAuth) {
+        var urlAdmin = arrayAdmin.filter(function(obj) {
+          return obj.url == filter;
+        });
+
+        if(urlAdmin.length > 0) {
+          this.checkAccess(urlAdmin[0].method, options, () => this[urlAdmin[0].method](options)); //llamar a esta linea solo cuando alla alguna cookie
+
+        } else {
+          Backbone.history.navigate('', { trigger: true });
+          console.log("algo no esta definido en array admin");
+        }
+
+      } else if(options.preventAccessWhenAuth) {
+        var urlUser = arrayUser.filter(function(obj) {
+          return obj.url == filter;
+        });
+
+        if(urlUser.length > 0) {
+          this.checkAccess(urlUser[0].method, options, () => this[urlUser[0].method](options)); //llamar a esta linea solo cuando alla alguna cookie
+        } else {
+          //se podria llamar a alguna pagina de error
+          Backbone.history.navigate('', { trigger: true });
+          console.log("algo no esta definido en array user");
+        }
+
+      } else {
+        Backbone.history.navigate('', { trigger: true });
+        console.log("no hay match de esta url");
+      }
     },
 
 
@@ -48,65 +77,69 @@ define([
       var that = this;
       // Need to be authenticated before rendering view.
       // For cases like a user's settings page where we need to double check against the server.
-      if(Cookie.get('auth_token') !== undefined) {
-        var user = JSON.parse(Cookie.get('auth_token'));
 
-        this.session.checkAuth({token: user.token },{
-          success: (res => {
-            if(opt.preventAccessWhenAuth) {
-              Backbone.history.navigate('', { trigger: true });
-            } else {
-              callback();
-            }
-          }),
-          error: (res => {
-            console.log("error app session");
-            if(opt.requiresAuth) {
+      //verificar en la session principal
+      if(opt.preventAccessWhenAuth) {
+
+        // console.log("hay que verificar si esta logueado ");
+        if(Cookie.get('auth_token') !== undefined) {
+          var user = JSON.parse(Cookie.get('auth_token'));
+
+          this.session.checkAuth({ token: user.token }, {
+            success: (res => {
+              if(opt.preventAccessWhenAuth) {
+                Backbone.history.navigate('', { trigger: true });
+              } else {
+                callback();
+              }
+            }),
+            error: (res => {
+              console.log("error app session");
+              if(opt.requiresAuth) {
+                Backbone.history.navigate('login', { trigger: true });
+              } else {
+                callback();
+              }
+            })
+          });
+
+        } else {
+          callback(); //dejamos que pase el route
+        }
+      } else if(opt.requiresAuth) {
+        //requiere autenticacion
+        if(Cookie.get('auth_token') !== undefined) {
+          var user = JSON.parse(Cookie.get('auth_token'));
+
+          this.session.checkAuth({ token: user.token }, {
+            success: (res => {
+              callback();//dejamos pasar la url
+            }),
+            error: (res => {
+              //regresamos al login
               Backbone.history.navigate('login', { trigger: true });
-            } else {
-              callback();
-            }
-          })
-        });
-      }else{
-        Backbone.history.navigate('', { trigger: true });
-        console.log("no existe cokkie y lo enviamos al indexdefault");
-      }
+            })
+          });
 
-
-      if(opt.requiresAuth || opt.preventAccessWhenAuth) {
-
-
+        } else {
+          //no esta definido en los arrays
+          Backbone.history.navigate('', { trigger: true });
+          // callback(); //dejamos que pase el route
+        }
 
       } else {
-        callback();
+        console.log("no entra en filter");
+        callback(); //dejamos pasar el callback
       }
-    },
 
-    // // if we change route, then to need change current view
-    // changeView: function(view) {
-    //   console.log("change view");
-    //   // Close and unbind any existing page view
-    //   if(this.currentView && _.isFunction(this.currentView.close)) {
-    //     this.currentView.close();
-    //   }
-    //
-    //   // Establish the requested view into scope
-    //   this.currentView = view;
-    //
-    //   // Re-delegate events (unbound when closed)
-    //   //this.currentView.delegateEvents(this.currentView.events)
-    //
-    //   //En esta parte recuperar el layout principal que va en el rror de marionette js
-    //   // Backbone.Radio.channel('app').request('layout').showChildView('main', view);
-    // }
+    },
 
     changeView: function(view) {
       function setView(view) {
         if(this.currentView) {
           if(typeof this.currentView.close === "function") {
             this.currentView.close();
-          }else{
+          } else {
             if(typeof this.currentView.destroy === "function") {
               this.currentView.destroy(); //cerrar vistas de marionette
             }

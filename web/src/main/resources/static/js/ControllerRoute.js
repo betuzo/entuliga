@@ -23,8 +23,6 @@ define([
 ], function($, Backbone, Mn, Subroute, BaseRouterController, MainView, LoginView, TorneoLandingView, SignupView, LigaAdminView, TorneoAdminView, EquipoAdminView, JugadorAdminView, ArbitroAdminView, CanchaAdminView, PartidoAdminView, PerfilAdminView, LigasListView) {
 
   var ControllerRoute = BaseRouterController.extend({
-    // initialize: function() {
-    // },
 
     start: function() {
 
@@ -34,9 +32,9 @@ define([
     // gets redirect to login page
     requresAuth: function() {
       return [
-        // 'login',
-        'home',
-        'logout'
+        'admin',
+        'logout',
+        'admin/perfil'
       ];
     },
 
@@ -45,10 +43,33 @@ define([
     preventAccessWhenAuth: function() {
       return [
         'login',
-        // 'home',
-        // 'logoulogint'
+        'signup'
       ];
     },
+
+    defaultAdminUrl: function(){
+      return [
+        {url:'admin/perfil', method:'adminPerfil'},
+        {url:'admin', method:'admin'},
+        {url:'admin/torneos', method:'adminTorneos'},
+        {url:'admin/ligas', method:'adminLigas'},
+        {url:'admin/equipos', method:'adminEquipos'},
+        {url:'admin/jugadores', method:'adminJugadores'},
+        {url:'admin/arbitros', method:'adminArbitros'},
+        {url:'admin/canchas', method:'adminCanchas'},
+      ];
+
+    },
+
+    defaultAnonUserUrl: function(){
+      return [
+        // {url:'#', method:'main'},
+        // {url:"/", method:"main"},
+        {url:"signup", method:"signup"},
+        {url:"login", method:"login"},
+      ];
+    },
+
 
     main() {
       this.changeView(new MainView());
@@ -59,9 +80,6 @@ define([
       this.changeView(view);
     },
 
-    home: function() {
-      this.changeView(new MainView());
-    },
 
     login: function() {
       this.changeView(new LoginView());

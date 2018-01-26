@@ -24,8 +24,7 @@ define([
 
     urlRoot: 'http://localhost:8090/', //CORS mientras
 
-    initialize: function() {
-    },
+    initialize: function() {},
 
     onBeforeStart: function() {
       // console.log('onBeforeStart marionette');
@@ -95,7 +94,7 @@ define([
 
       this.rootLayout = new RootView();
       this.session = new SessionModel();
-      this.controlllerRoute = new ControllerRoute({that: this});
+      this.controlllerRoute = new ControllerRoute({ that: this });
 
       this.channel = Backbone.Radio.channel('app');
       this.channel.reply('session', this.session);
@@ -113,10 +112,10 @@ define([
 
         if(user != null) {
           this.session.set('username', user.username);
-          this.session.checkAuth({token: user.token },{
+          this.session.checkAuth({ token: user.token }, {
             //la respuesta al verificar el token deben venir el username, roles, token y los roles, por que se esta recuperando del la cookie
             // Start the backbone routing once we have captured a user's auth status
-            success: function(mod, res){
+            success: function(mod, res) {
               that.rootLayout = new RootAdminView();
               that.showView(that.rootLayout);
               $.ajaxSetup({
