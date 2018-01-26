@@ -116,13 +116,14 @@ define([
             //la respuesta al verificar el token deben venir el username, roles, token y los roles, por que se esta recuperando del la cookie
             // Start the backbone routing once we have captured a user's auth status
             success: function(mod, res) {
-              that.rootLayout = new RootAdminView();
-              that.showView(that.rootLayout);
+              
               $.ajaxSetup({
                 headers: {
                   "X-Auth-Token": user.token
                 }
               });
+              that.rootLayout = new RootAdminView();
+              that.showView(that.rootLayout);
             },
             error: function(mod, res) {
               console.log("Error al verificar el token");

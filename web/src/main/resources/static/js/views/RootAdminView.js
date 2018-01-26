@@ -4,8 +4,9 @@ define([
   'marionette',
   'bootstrap',
   'text!templates/private/tplRootAdmin.html',
-  'views/private/MainAdminNavView'
-], function($, Backbone, Mn, bootstrap, tplRootAdmin, MainAdminNavView){
+  'views/private/MainAdminNavView',
+  'views/public/MainView'
+], function($, Backbone, Mn, bootstrap, tplRootAdmin, MainAdminNavView, MainView){
 
   var RootAdminView = Mn.View.extend({
 
@@ -13,12 +14,13 @@ define([
 
     regions: {
       headerWrap: '#header-region',
-      containerWrap: '#container-region',
+      containerWrap: '#container-body',
       footerWrap: '#footer-region'
     },
 
     onRender : function () {
       this.showChildView('headerWrap', new MainAdminNavView());
+      this.showChildView('containerWrap', new MainView());
     },
 
   });

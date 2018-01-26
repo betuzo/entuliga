@@ -14,6 +14,8 @@ define([
       '': 'main',
       '/#': 'main',
       'torneo/:clave': 'publicTorneo',
+      'admin/partido/:partido': 'adminPartido',
+
       // 'login': 'login',
       // 'admin': 'admin',
       // 'admin/perfil': 'adminPerfil',
@@ -24,7 +26,6 @@ define([
       // 'admin/jugadores': 'adminJugadores',
       // 'admin/arbitros': 'adminArbitros',
       // 'admin/canchas': 'adminCanchas',
-      // 'admin/partido/:partido': 'adminPartido',
       // 'dashboard/config': 'showDashboardConfig',
       '*action': 'filterurl',
     }
