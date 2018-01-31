@@ -87,19 +87,14 @@ define([
 
           this.session.checkAuth({ token: user.token }, {
             success: (res => {
-              if(opt.preventAccessWhenAuth) {
-                Backbone.history.navigate('', { trigger: true });
-              } else {
-                callback();
-              }
+
+              callback();
             }),
             error: (res => {
               console.log("error app session");
-              if(opt.requiresAuth) {
-                Backbone.history.navigate('login', { trigger: true });
-              } else {
-                callback();
-              }
+              Cookies.remove('auth_token');
+              Backbone.history.navigate('login', { trigger: true });
+              // callback();
             })
           });
 
@@ -113,10 +108,11 @@ define([
 
           this.session.checkAuth({ token: user.token }, {
             success: (res => {
-              callback();//dejamos pasar la url
+              callback(); //dejamos pasar la url
             }),
             error: (res => {
               //regresamos al login
+              console.log("error en base route");
               Backbone.history.navigate('login', { trigger: true });
             })
           });

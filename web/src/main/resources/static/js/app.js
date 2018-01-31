@@ -105,8 +105,9 @@ define([
     },
 
     onStart: function() {
-      // console.log('onStart marionette');
+      console.log('onStart marionette');
       var that = this;
+
       if(Cookie.get('auth_token') !== undefined) {
         var user = JSON.parse(Cookie.get('auth_token'));
 
@@ -116,7 +117,8 @@ define([
             //la respuesta al verificar el token deben venir el username, roles, token y los roles, por que se esta recuperando del la cookie
             // Start the backbone routing once we have captured a user's auth status
             success: function(mod, res) {
-              
+              console.log("seccess al verificar el token");
+
               $.ajaxSetup({
                 headers: {
                   "X-Auth-Token": user.token
@@ -128,8 +130,8 @@ define([
             error: function(mod, res) {
               console.log("Error al verificar el token");
             },
-            complete: function() {
-              // console.log("complete checkaut");
+            complete: function(mod, res) {
+              console.log("complete checkaut");
             }
           });
         }

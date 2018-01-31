@@ -36,7 +36,7 @@ define([
     checkAuth(opts,callback, args) {
       var token = opts.token
       var self = this;
-      this.set('id', token);
+      // this.set('id', token);
       this.url = 'session/valid/' + token;
       this.fetch({
         success: function(mod, res) {
@@ -52,7 +52,7 @@ define([
           self.set({ logged_in: false });
           if('error' in callback) callback.error(mod, res);
         }
-      }).done(function() {
+      }).done(function(mod, res) {
         if('complete' in callback) callback.complete();
       });
     },
