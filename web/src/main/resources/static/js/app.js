@@ -22,7 +22,7 @@ define([
 
     region: '#app',
 
-    urlRoot: 'http://localhost:8090/', //CORS mientras
+    urlRoot: 'https://entuliga.herokuapp.com/', //CORS mientras
 
     initialize: function() {},
 
@@ -84,13 +84,13 @@ define([
       };
 
       //REST URL
-      var sync = Backbone.sync;
-      Backbone.sync = function(method, model, options) {
-        options.beforeSend = function() {
-          this.url = that.urlRoot + this.url;
-        };
-        return sync.call(this, method, model, options);
-      };
+//      var sync = Backbone.sync;
+//      Backbone.sync = function(method, model, options) {
+//        options.beforeSend = function() {
+//          this.url = that.urlRoot + this.url;
+//        };
+//        return sync.call(this, method, model, options);
+//      };
 
       this.rootLayout = new RootView();
       this.session = new SessionModel();
