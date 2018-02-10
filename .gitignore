@@ -27,5 +27,4 @@ services/out
 gradlew.bat
 
 .DS_Store
-web/src/main/resources/node_modules/
 velocity*
