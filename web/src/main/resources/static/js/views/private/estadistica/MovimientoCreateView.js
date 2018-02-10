@@ -19,7 +19,9 @@ define([
 
         events: {
             'click #btn-aceptar': 'clickAceptar',
-            'change #select-entra': 'changeEntra'
+            'change #select-entra': 'changeEntra',
+            'change .validate-time':'validateTime',
+            'keyup .validate-time':'validateTime'
         },
 
         initialize: function(opts) {
@@ -28,10 +30,10 @@ define([
             this.callbackAceptar = opts.callbackAceptar;
             this.parent = opts.parent;
             this.origen = opts.origen;
+            this.tipo = opts.tipo;
             this.model.set({origen : opts.origen});
             this.model.set({partidoId : opts.modelo.get('id')});
             this.render();
-
             this.tipos = new TipoMovimientosCollection();
             this.listenTo(this.tipos, 'add', this.agregarTipoMovimiento);
             this.listenTo(this.tipos, 'sync', this.syncTipoMovimientos);
@@ -44,7 +46,16 @@ define([
             this.salen = new TorneoJugadoresCollection();
             this.listenTo(this.salen, 'add', this.agregarSale);
             this.listenTo(this.salen, 'sync', this.syncSalees);
-            this.fetchSaleesByOrigen(this.origen);
+            if (this.tipo != 'DIRECT_INIT' && this.tipo != 'DIRECT_OTHER') {
+                this.fetchSaleesByOrigen(this.origen);
+            } else {
+                this.entran.add(opts.entra);
+                if (this.tipo == 'DIRECT_OTHER') {
+                    this.salen.add(opts.sale);
+                } else {
+                    this.agregarSaleDefault();
+                }
+            }
 
             Backbone.Validation.bind(this);
         },
@@ -80,6 +91,12 @@ define([
         },
 
         agregarTipoMovimiento: function(modelo) {
+            if (this.tipo == 'DIRECT_INIT' && modelo.get('clave') != 'INICIO'){
+                return;
+            }
+            if (this.tipo == 'DIRECT_OTHER' && modelo.get('clave') == 'INICIO'){
+                return;
+            }
             $('#select-tipo-movimiento').append($('<option>', {
                 value: modelo.get('clave'),
                 text : modelo.get('descripcion')
@@ -104,7 +121,6 @@ define([
         changeEntra: function(event) {
             var entra = this.entran.get($(event.target).val());
             $('#select-sale').html('');
-            this.agregarSaleDefault();
             that = this;
             this.salen.each(function(modelo){
                 if (entra.get('id') == modelo.get('id')) {
@@ -133,8 +149,58 @@ define([
             this.fetchEntraesByOrigen(this.origen);
         },
 
+        validateTime: function(event){
+            var valtime = $(event.currentTarget).val();
+            var regChar = /^[\d:]$/;
+            var regtwo =/^([0-9]?\d|[0-9]\d)$/;
+            var regthre =/^([0-9]?\d|[0-9]\d):$/;
+            var regfour = /^([0-9]?\d|[0-9]\d):?([0-5])$/;
+            var reg = /^([0-9]?\d|[0-9]\d):?([0-5]\d)$/;
+
+            if ( valtime.length <= 5 && valtime.length > 0 ) {
+                var caracter = valtime.substring(valtime.length -1 ,valtime.length)
+                if (regChar.test(caracter)) {
+                    if (valtime.length == 2 ) {
+                        if (!regtwo.test(valtime)) {
+                            $(event.currentTarget).val('');
+                        }else{
+                            $(event.currentTarget).val(valtime +":");
+                        }
+                    }
+                    if (valtime.length == 3) {
+                        if (!regthre.test(valtime)) {
+                            var cadena = valtime.substring(0, valtime.length -1);
+                            $(event.currentTarget).val(cadena);
+                        }
+                    }
+                    if (valtime.length == 4) {
+                        if (!regfour.test(valtime)) {
+                            var cadena = valtime.substring(0, valtime.length -1);
+                            $(event.currentTarget).val(cadena);
+                        }
+                    }
+                    if (valtime.length == 5) {
+                        if (!reg.test(valtime)) {
+                            $(event.currentTarget).val('');
+                        }
+                    }
+                } else {
+                    var cadena = valtime.substring(0, valtime.length -1);
+                    $(event.currentTarget).val(cadena);
+                }
+            } else {
+                if (valtime.length > 0) {
+                    var subCadena = valtime.substring(0, 5);
+                    $(event.currentTarget).val(subCadena);
+                }
+            }
+        },
+        
         clickAceptar: function(event) {
             var data = this.$el.find("#form-movimiento").serializeObject();
+            var strdate = data.tiempo.split(':');
+            data.minuto = strdate[0];
+            data.segundo = strdate[1];
             this.model.set(data);
             that = this;
             if(this.model.isValid(true)){
@@ -154,6 +220,7 @@ define([
                 });
             }
         },
+
 
         destroyView: function() {
             $("body").removeClass("modal-open");

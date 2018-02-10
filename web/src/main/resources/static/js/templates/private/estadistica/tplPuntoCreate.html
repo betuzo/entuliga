@@ -31,14 +31,13 @@
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label>Minuto</label>
-                                <input class="form-control" type="text" name="minuto" value="<%= minuto %>">
-                                </select>
+                                <input  type="number" min="0" max="100" step="1" class="form-control validate-number" name="minuto" value="<%= minuto %>"/>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label>Segundo</label>
-                                <input class="form-control" type="text" name="segundo" value="<%= segundo %>">
+                                <input type="number" min="0" max="59" step="1" class="form-control validate-number" name="segundo" value="<%= segundo %>"/>
                             </div>
                         </div>
                     </div>
@@ -51,3 +50,5 @@
         </div>
     </div>
 </div>
+
+

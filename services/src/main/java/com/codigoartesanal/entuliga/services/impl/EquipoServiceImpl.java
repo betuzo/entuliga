@@ -35,7 +35,7 @@ public class EquipoServiceImpl implements EquipoService {
     @Override
     public DeleteStatusEnum deleteEquipo(Long idEquipo) {
         try {
-            equipoRepository.delete(idEquipo);
+            equipoRepository.deleteById(idEquipo);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -80,6 +80,7 @@ public class EquipoServiceImpl implements EquipoService {
         map.put(PROPERTY_NOMBRE, equipo.getNombre());
         map.put(PROPERTY_ALIAS_EQUIPO, equipo.getAliasEquipo());
         map.put(PROPERTY_LOGO_EQUIPO, equipo.getRutaLogoEquipo());
+        map.put(PROPERTY_MAIN_COLOR, equipo.getMainColor());
         String pathWebFull = pathWebService.getValidPathWebLogo(equipo.getRutaLogoEquipo(), null);
         map.put(PROPERTY_RUTA_LOGO_EQUIPO, pathWebFull);
         map.put(PROPERTY_HAS_LOGO_EQUIPO, !pathWebFull.contains(PathPhoto.EQUIPO_DEFAULT.getPath()));
@@ -94,10 +95,11 @@ public class EquipoServiceImpl implements EquipoService {
         equipo.setNombre(equipoMap.get(PROPERTY_NOMBRE));
         equipo.setAliasEquipo(equipoMap.get(PROPERTY_ALIAS_EQUIPO));
         equipo.setRutaLogoEquipo(equipoMap.get(PROPERTY_LOGO_EQUIPO));
+        equipo.setMainColor(equipoMap.get(PROPERTY_MAIN_COLOR));
         return equipo;
     }
 
     private Equipo get(Long idEquipo) {
-        return this.equipoRepository.findOne(idEquipo);
+        return this.equipoRepository.findById(idEquipo).get();
     }
 }

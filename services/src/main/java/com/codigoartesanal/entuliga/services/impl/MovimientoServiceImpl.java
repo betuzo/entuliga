@@ -35,7 +35,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public void deleteMovimiento(Long idMovimiento) {
-        movimientoRepository.delete(idMovimiento);
+        movimientoRepository.deleteById(idMovimiento);
     }
 
     @Override
@@ -53,10 +53,10 @@ public class MovimientoServiceImpl implements MovimientoService {
     }
 
     private Movimiento populateMovimiento(Movimiento movimiento){
-        movimiento.setPartido(partidoRepository.findOne(movimiento.getPartido().getId()));
-        movimiento.setEntra(torneoJugadorRepository.findOne(movimiento.getEntra().getId()));
+        movimiento.setPartido(partidoRepository.findById(movimiento.getPartido().getId()).get());
+        movimiento.setEntra(torneoJugadorRepository.findById(movimiento.getEntra().getId()).get());
         if (movimiento.getSale() != null) {
-            movimiento.setSale(torneoJugadorRepository.findOne(movimiento.getSale().getId()));
+            movimiento.setSale(torneoJugadorRepository.findById(movimiento.getSale().getId()).get());
         }
 
         return movimiento;

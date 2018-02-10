@@ -7,13 +7,17 @@ define([
         urlRoot: 'torneoarbitro',
 
         defaults: {
-            statusArbitro: 'INSCRITO'
+            statusArbitro: 'INSCRITO',
+            tipoArbitro: 'PRINCIPAL'
         },
 
         initialize: function() {
         },
 
         validate: function(atributos) {
+            console.log("validar torneoarbitro");
+            console.log(atributos);
+            
             if(!atributos.torneoId) {
                 return 'Debe tener un Torneo.';
             }

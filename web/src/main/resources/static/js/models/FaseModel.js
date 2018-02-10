@@ -1,6 +1,8 @@
 define([
+    'underscore',
     'backbone'
-], function(Backbone){
+
+], function(_, Backbone){
 
     var FaseModel = Backbone.Model.extend({
 
@@ -13,7 +15,7 @@ define([
 
         initialize: function() {
         },
-
+        
         validation: {
             clave: {
                 required: true

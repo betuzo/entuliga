@@ -24,6 +24,8 @@ public class Enceste {
     @JoinColumn(name = "tirador_id", nullable = false)
     private TorneoJugador tirador;
     private Integer valor;
+    @Column(name = "success", nullable = false)
+    private boolean success;
 
     public Long getId() {
         return id;

@@ -16,6 +16,7 @@ public interface TorneoJugadorService {
     public static final String PROPERTY_STATUS_JUGADOR      = "statusJugador";
     public static final String PROPERTY_POSICION_JUGADOR    = "posicionJugador";
     public static final String PROPERTY_NUMERO_JUGADOR      = "numeroJugador";
+    public static final String PROPERTY_ALIAS_JUGADOR       = "aliasJugador";
 
     List<Map<String,Object>> listTorneoJugadorByTorneoEquipo(Long idTorneoEquipo);
 

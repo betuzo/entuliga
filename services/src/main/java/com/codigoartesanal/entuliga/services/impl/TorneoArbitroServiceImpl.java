@@ -31,15 +31,15 @@ public class TorneoArbitroServiceImpl implements TorneoArbitroService {
     public Map<String, Object> createTorneoArbitro(Map<String, String> mapTorneoArbitro) {
         TorneoArbitro torneoArbitro = convertMapToTorneoArbitro(mapTorneoArbitro);
         torneoArbitro = torneoArbitroRepository.save(torneoArbitro);
-        torneoArbitro.setArbitro(arbitroRepository.findOne(torneoArbitro.getArbitro().getId()));
-        torneoArbitro.setTorneo(torneoRepository.findOne(torneoArbitro.getTorneo().getId()));
+        torneoArbitro.setArbitro(arbitroRepository.findById(torneoArbitro.getArbitro().getId()).get());
+        torneoArbitro.setTorneo(torneoRepository.findById(torneoArbitro.getTorneo().getId()).get());
         return convertTorneoArbitroToMap(torneoArbitro);
     }
 
     @Override
     public DeleteStatusEnum deleteTorneoArbitro(Long idTorneoArbitro) {
         try {
-            torneoArbitroRepository.delete(idTorneoArbitro);
+            torneoArbitroRepository.deleteById(idTorneoArbitro);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -81,6 +81,8 @@ public class TorneoArbitroServiceImpl implements TorneoArbitroService {
         map.put(PROPERTY_ID, torneoArbitro.getId());
         map.put(PROPERTY_ARBITRO_ID, torneoArbitro.getArbitro().getId());
         map.put(PROPERTY_ARBITRO_NOMBRE, torneoArbitro.getArbitro().getNombre());
+        map.put(PROPERTY_ARBITRO_PATERNO, torneoArbitro.getArbitro().getPaterno());
+        map.put(PROPERTY_ARBITRO_MATERNO, torneoArbitro.getArbitro().getMaterno());
         map.put(PROPERTY_TORNEO_ID, torneoArbitro.getTorneo().getId());
         map.put(PROPERTY_TORNEO_NOMBRE, torneoArbitro.getTorneo().getNombre());
         map.put(PROPERTY_STATUS_ARBITRO, torneoArbitro.getStatusArbitro());

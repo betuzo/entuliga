@@ -58,7 +58,7 @@ public class PartidoServiceImpl implements PartidoService {
     @Override
     public DeleteStatusEnum deletePartido(Long idPartido) {
         try {
-            partidoRepository.delete(idPartido);
+            partidoRepository.deleteById(idPartido);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -67,14 +67,19 @@ public class PartidoServiceImpl implements PartidoService {
 
     @Override
     public Map<String, Object> partidoById(Long idPartido) {
-        return convertPartidoToMap(partidoRepository.findOne(idPartido));
+        Optional<Partido> opPartido = partidoRepository.findById(idPartido);
+        if (opPartido.isPresent())
+            return convertPartidoToMap(opPartido.get());
+        return new HashMap<>();
     }
 
     private Partido populatePartido(Partido partido) {
-        partido.setLocal(torneoEquipoRepository.findOne(partido.getLocal().getId()));
-        partido.setVisitante(torneoEquipoRepository.findOne(partido.getVisitante().getId()));
-        partido.setCancha(torneoCanchaRepository.findOne(partido.getCancha().getId()));
-        partido.setJornada(jornadaRepository.findOne(partido.getJornada().getId()));
+        partido.setLocal(torneoEquipoRepository.findById(partido.getLocal().getId()).get());
+        partido.setColorLocal(partido.getLocal().getEquipo().getMainColor());
+        partido.setVisitante(torneoEquipoRepository.findById(partido.getVisitante().getId()).get());
+        partido.setColorVisitante(partido.getVisitante().getEquipo().getMainColor());
+        partido.setCancha(torneoCanchaRepository.findById(partido.getCancha().getId()).get());
+        partido.setJornada(jornadaRepository.findById(partido.getJornada().getId()).get());
         return partido;
     }
 
@@ -91,11 +96,13 @@ public class PartidoServiceImpl implements PartidoService {
         TorneoEquipo local = new TorneoEquipo();
         local.setId(Long.valueOf(mapPartido.get(PROPERTY_LOCAL_ID)));
         partido.setLocal(local);
+        partido.setColorLocal(mapPartido.get(PROPERTY_LOCAL_COLOR));
         partido.setPuntosLocal(Long.valueOf(mapPartido.get(PROPERTY_LOCAL_PUNTOS)));
 
         TorneoEquipo visita = new TorneoEquipo();
         visita.setId(Long.valueOf(mapPartido.get(PROPERTY_VISITANTE_ID)));
         partido.setVisitante(visita);
+        partido.setColorVisitante(mapPartido.get(PROPERTY_VISITANTE_COLOR));
         partido.setPuntosVisitante(Long.valueOf(mapPartido.get(PROPERTY_VISITANTE_PUNTOS)));
 
         TorneoCancha cancha = new TorneoCancha();
@@ -121,6 +128,7 @@ public class PartidoServiceImpl implements PartidoService {
                 pathWebService.getValidPathWebLogo(partido.getLocal().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.LOCAL);
         map.put(PROPERTY_LOCAL_LOGO, logoLocal);
         map.put(PROPERTY_LOCAL_PUNTOS, partido.getPuntosLocal());
+        map.put(PROPERTY_LOCAL_COLOR, partido.getColorLocal());
         map.put(PROPERTY_VISITANTE_ID, partido.getVisitante().getId());
         map.put(PROPERTY_VISITANTE_NOMBRE, partido.getVisitante().getEquipo().getNombre());
         map.put(PROPERTY_VISITANTE_ALIAS, partido.getVisitante().getEquipo().getAliasEquipo());
@@ -128,15 +136,17 @@ public class PartidoServiceImpl implements PartidoService {
                 pathWebService.getValidPathWebLogo(partido.getVisitante().getEquipo().getRutaLogoEquipo(), OrigenEstadistica.VISITA);
         map.put(PROPERTY_VISITANTE_LOGO, logoVisita);
         map.put(PROPERTY_VISITANTE_PUNTOS, partido.getPuntosVisitante());
+        map.put(PROPERTY_VISITANTE_COLOR, partido.getColorVisitante());
         map.put(PROPERTY_CANCHA_ID, partido.getCancha().getId());
         map.put(PROPERTY_CANCHA_NOMBRE, partido.getCancha().getCancha().getNombre());
         map.put(PROPERTY_CANCHA_DOMICILIO, partido.getCancha().getCancha().getDomicilio());
-        map.put(PROPERTY_HORARIO, partido.getHorario());
+        map.put(PROPERTY_HORARIO, partido.getHorario().getTime());
         map.put(PROPERTY_STATUS_PARTIDO, partido.getStatus());
         return map;
     }
+
     private Partido get(Long idPartido){
-        return this.partidoRepository.findOne(idPartido);
+        return this.partidoRepository.findById(idPartido).get();
     }
 
 }

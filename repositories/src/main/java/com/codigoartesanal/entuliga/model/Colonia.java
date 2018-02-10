@@ -12,6 +12,8 @@ public class Colonia {
     @SequenceGenerator(name="colonia_id_seq", sequenceName="colonia_id_seq")
     private Long id;
     private String nombre;
+    @Column(name = "codigo_postal")
+    private String codigoPostal;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "municipio_id", nullable = false)
     private Municipio municipio;
@@ -32,6 +34,14 @@ public class Colonia {
         this.nombre = nombre;
     }
 
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
     public Municipio getMunicipio() {
         return municipio;
     }
@@ -45,6 +55,7 @@ public class Colonia {
         return "Colonia{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
+                ", codigoPostal='" + codigoPostal + '\'' +
                 ", municipio=" + municipio +
                 '}';
     }

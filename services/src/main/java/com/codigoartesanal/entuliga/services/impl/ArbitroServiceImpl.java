@@ -40,7 +40,7 @@ public class ArbitroServiceImpl implements ArbitroService {
     @Override
     public DeleteStatusEnum deleteArbitro(Long idArbitro) {
         try {
-            arbitroRepository.delete(idArbitro);
+            arbitroRepository.deleteById(idArbitro);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -96,7 +96,7 @@ public class ArbitroServiceImpl implements ArbitroService {
         map.put(PROPERTY_CALLE, arbitro.getGeoLocation().getCalle());
         map.put(PROPERTY_NO_EXTERIOR, arbitro.getGeoLocation().getNoExterior());
         map.put(PROPERTY_NO_INTERIOR, arbitro.getGeoLocation().getNoInterior());
-        map.put(PROPERTY_CODIGO_POSTAL, arbitro.getGeoLocation().getCodigoPostal());
+        map.put(PROPERTY_CODIGO_POSTAL, arbitro.getGeoLocation().getColonia().getCodigoPostal());
         map.put(PROPERTY_LATITUDE, arbitro.getGeoLocation().getLatitude());
         map.put(PROPERTY_LONGITUDE, arbitro.getGeoLocation().getLongitude());
         if (arbitro.getGeoLocation().getColonia() == null)
@@ -139,7 +139,6 @@ public class ArbitroServiceImpl implements ArbitroService {
         if (noInterior != null && !noInterior.isEmpty()) {
             geoLocation.setNoInterior(noInterior);
         }
-        geoLocation.setCodigoPostal(arbitroMap.get(PROPERTY_CODIGO_POSTAL));
         String latitude = arbitroMap.get(PROPERTY_LATITUDE);
         if (latitude != null && !latitude.isEmpty()) {
             geoLocation.setLatitude(BigDecimal.valueOf(Double.parseDouble(latitude)));
@@ -156,6 +155,6 @@ public class ArbitroServiceImpl implements ArbitroService {
     }
 
     private Arbitro get(Long idArbitro){
-        return this.arbitroRepository.findOne(idArbitro);
+        return this.arbitroRepository.findById(idArbitro).get();
     }
 }

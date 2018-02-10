@@ -34,8 +34,8 @@ public class TorneoCanchaServiceImpl implements TorneoCanchaService {
     public Map<String, Object> createTorneoCancha(Map<String, String> mapTorneoCancha) {
         TorneoCancha torneoCancha = convertMapToTorneoCancha(mapTorneoCancha);
         torneoCancha = torneoCanchaRepository.save(torneoCancha);
-        torneoCancha.setCancha(canchaRepository.findOne(torneoCancha.getCancha().getId()));
-        torneoCancha.setTorneo(torneoRepository.findOne(torneoCancha.getTorneo().getId()));
+        torneoCancha.setCancha(canchaRepository.findById(torneoCancha.getCancha().getId()).get());
+        torneoCancha.setTorneo(torneoRepository.findById(torneoCancha.getTorneo().getId()).get());
         return convertTorneoCanchaToMap(torneoCancha);
     }
 
@@ -56,7 +56,7 @@ public class TorneoCanchaServiceImpl implements TorneoCanchaService {
     @Override
     public DeleteStatusEnum deleteTorneoCancha(Long idTorneoCancha) {
         try {
-            torneoCanchaRepository.delete(idTorneoCancha);
+            torneoCanchaRepository.deleteById(idTorneoCancha);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }

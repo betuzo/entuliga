@@ -1,0 +1,30 @@
+<div class="form-inline">
+	<div class="checkbox">
+    <label>
+				<input class="togglecheckbox" name="toggleArbitro" type="checkbox" >
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label>
+      <%= arbitroNombre %>  
+      <%= arbitroPaterno %>  
+			<%= arbitroMaterno %>	
+		</label>
+  </div>
+
+  <div class="form-group">
+  	<select class="list-tipo-arbitro selectpicker form-control" name="tipoArbitro" >
+			<option value="PRINCIPAL">PRINCIPAL</option>
+			<option value="ANOTADOR">ANOTADOR</option>
+			<option value="CRONOMETRADOR">CRONOMETRADOR</option>
+			<option value="AUXILIAR">AUXILIAR</option>
+		</select>
+  </div>
+  <input name="torneoArbitroId" type="hidden" value="<%= id %>">
+  <input name="arbitroId" type="hidden" value="<%= arbitroId %>">
+  <input name="torneoId" type="hidden" value="<%= torneoId %>">
+  <input name="nombre" type="hidden" value="<%= arbitroNombre %>">
+  <input name="paterno" type="hidden" value="<%= arbitroPaterno %>">
+  <input name="materno" type="hidden" value="<%= arbitroMaterno %>">
+</div>

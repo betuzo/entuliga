@@ -40,14 +40,14 @@ public class TorneoJugadorServiceImpl implements TorneoJugadorService {
     public Map<String, Object> createTorneoJugador(Map<String, String> jugador) {
         TorneoJugador torneoJugador = convertMapToTorneoJugador(jugador);
         torneoJugador = torneoJugadorRepository.save(torneoJugador);
-        torneoJugador.setJugador(jugadorRepository.findOne(torneoJugador.getJugador().getId()));
+        torneoJugador.setJugador(jugadorRepository.findById(torneoJugador.getJugador().getId()).get());
         return convertTorneoJugadorToMap(torneoJugador);
     }
 
     @Override
     public DeleteStatusEnum deleteTorneoJugador(Long idTorneoJugador) {
         try {
-            torneoJugadorRepository.delete(idTorneoJugador);
+            torneoJugadorRepository.deleteById(idTorneoJugador);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -81,6 +81,7 @@ public class TorneoJugadorServiceImpl implements TorneoJugadorService {
         map.put(PROPERTY_STATUS_JUGADOR, torneoJugador.getStatusJugador().getDescription());
         map.put(PROPERTY_POSICION_JUGADOR, torneoJugador.getPosicionJugador().getDescription());
         map.put(PROPERTY_NUMERO_JUGADOR, torneoJugador.getNumero());
+        map.put(PROPERTY_ALIAS_JUGADOR, torneoJugador.getJugador().getPaterno());
 
         return map;
     }

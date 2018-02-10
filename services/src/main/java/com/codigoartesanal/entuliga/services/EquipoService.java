@@ -10,12 +10,13 @@ import java.util.Map;
  * Created by betuzo on 21/05/15.
  */
 public interface EquipoService {
-    public static final String PROPERTY_ID                  = "id";
-    public static final String PROPERTY_NOMBRE              = "nombre";
-    public static final String PROPERTY_ALIAS_EQUIPO        = "aliasEquipo";
-    public static final String PROPERTY_HAS_LOGO_EQUIPO     = "hasLogoEquipo";
-    public static final String PROPERTY_LOGO_EQUIPO         = "logoEquipo";
-    public static final String PROPERTY_RUTA_LOGO_EQUIPO    = "rutaLogoEquipo";
+    String PROPERTY_ID                  = "id";
+    String PROPERTY_NOMBRE              = "nombre";
+    String PROPERTY_ALIAS_EQUIPO        = "aliasEquipo";
+    String PROPERTY_HAS_LOGO_EQUIPO     = "hasLogoEquipo";
+    String PROPERTY_LOGO_EQUIPO         = "logoEquipo";
+    String PROPERTY_RUTA_LOGO_EQUIPO    = "rutaLogoEquipo";
+    String PROPERTY_MAIN_COLOR          = "mainColor";
 
     Map<String,Object> createEquipo(Map<String, String> equipo, User user);
 

@@ -42,14 +42,14 @@ public class JornadaServiceImpl implements JornadaService {
     public Map<String, Object> createJornada(Map<String, String> jornadaMap) {
         Jornada jornada = convertMapToJornada(jornadaMap);
         jornada = jornadaRepository.save(jornada);
-        jornada.setTorneo(torneoRepository.findOne(jornada.getTorneo().getId()));
+        jornada.setTorneo(torneoRepository.findById(jornada.getTorneo().getId()).get());
         return convertJornadaToMap(jornada);
     }
 
     @Override
     public DeleteStatusEnum deleteJornada(Long idJornada) {
         try {
-            jornadaRepository.delete(idJornada);
+            jornadaRepository.deleteById(idJornada);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }

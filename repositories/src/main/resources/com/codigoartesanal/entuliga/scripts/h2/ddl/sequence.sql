@@ -1,4 +1,6 @@
+CREATE SEQUENCE IF NOT EXISTS partidoarbitro_id_seq;
 CREATE SEQUENCE IF NOT EXISTS arbitro_id_seq;
+CREATE SEQUENCE IF NOT EXISTS torneoarbitro_id_seq;
 CREATE SEQUENCE IF NOT EXISTS asistencia_id_seq;
 CREATE SEQUENCE IF NOT EXISTS bloqueo_id_seq;
 CREATE SEQUENCE IF NOT EXISTS cancha_id_seq;

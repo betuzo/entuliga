@@ -1,27 +1,9 @@
-ext.springVersion = "4.0.0.RELEASE"
-ext.googleApis = "v1-rev58-1.21.0"
-
-buildscript {
-    ext {
-        springBootVersion = '1.2.5.RELEASE'
-    }
-    repositories {
-        maven { url "http://repo.spring.io/libs-release" }
-        maven { url "http://repo.spring.io/libs-snapshot" }
-        mavenCentral()
-        mavenLocal()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
 
 subprojects {
-    apply plugin:"java"
     apply plugin:"groovy"
     apply plugin:"java"
     apply plugin:"idea"
-    apply plugin: 'project-report'
+    apply plugin:'project-report'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -30,9 +12,17 @@ subprojects {
 
     version = '0.0.1'
 
+    ext {
+        springVersion = "4.0.0.RELEASE"
+        googleApis = "v1-rev58-1.21.0"
+    }
+
     repositories {
         mavenCentral()
         maven { url "http://repo.spring.io/release/" }
         maven { url "http://repo.spring.io/milestone/" }
     }
+
+    task stage(dependsOn: ['build', 'clean'])
+    build.mustRunAfter clean
 }

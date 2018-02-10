@@ -1,24 +1,26 @@
 define([
-	'jquery',
-	'backbone',
+    'jquery',
+    'backbone',
     'bootstrap',
-	'core/BaseView',
-	'models/estadistica/PuntoModel',
-	'models/TorneoEquipoModel',
-	'collections/TorneoJugadoresCollection',
+    'core/BaseView',
+    'models/estadistica/PuntoModel',
+    'models/TorneoEquipoModel',
+    'collections/TorneoJugadoresCollection',
     'collections/estadistica/TipoEncestesCollection',
     'views/private/util/ModalGenericView',
-	'text!templates/private/estadistica/tplPuntoCreate.html'
+    'text!templates/private/estadistica/tplPuntoCreate.html'
 ], function($, Backbone, bootstrap, BaseView, PuntoModel, TorneoEquipoModel,
             TorneoJugadoresCollection, TipoEncestesCollection, ModalGenericView,
             tplPuntoCreate){
 
-	var PuntoCreateView = BaseView.extend({
-	    el: '#modal-partido',
+    var PuntoCreateView = BaseView.extend({
+        el: '#modal-partido',
         template: _.template(tplPuntoCreate),
 
         events: {
-            'click #btn-aceptar': 'clickAceptar'
+            'click #btn-aceptar': 'clickAceptar',
+            'change .validate-number':'validateNumber',
+            'keyup .validate-number':'validateNumber'
         },
 
         initialize: function(opts) {
@@ -105,6 +107,27 @@ define([
             }
         },
 
+
+        validateNumber: function(event){
+            if ($.isNumeric($(event.currentTarget).val())) {
+                if ($(event.currentTarget).val() != $(event.currentTarget).val().replace(/[^0-9\.]/g, '')) {
+                    var value = $(event.currentTarget).val().replace(/[^0-9.]/g, '');
+                    $(event.currentTarget).val(value);
+                }else{
+                    var max = parseInt($(event.currentTarget).attr('max'));
+                    var min = parseInt($(event.currentTarget).attr('min'));
+                    if ( $(event.currentTarget).val() > max){
+                        $(event.currentTarget).val(max);
+                    } else if ($(event.currentTarget).val() < min){
+                        $(event.currentTarget).val(min);
+                    }
+                }
+            }else{
+                var value = $(event.currentTarget).val().replace(/[^0-9.]/g, '');
+                $(event.currentTarget).val(value);
+            }
+        },
+
         destroyView: function() {
             $("body").removeClass("modal-open");
             // COMPLETELY UNBIND THE VIEW
@@ -115,8 +138,8 @@ define([
             Backbone.View.prototype.remove.call(this);
             $("<div id='modal-partido'></div>").appendTo('#modal-partido-parent');
         }
-	});
+    });
 
-	return PuntoCreateView;
+    return PuntoCreateView;
 
 });

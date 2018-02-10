@@ -31,7 +31,7 @@ public class TorneoServiceImpl implements TorneoService {
     @Override
     public DeleteStatusEnum deleteTorneo(Long idTorneo) {
         try {
-            torneoRepository.delete(idTorneo);
+            torneoRepository.deleteById(idTorneo);
         } catch (DataIntegrityViolationException exception){
             return DeleteStatusEnum.VIOLATION;
         }
@@ -107,6 +107,6 @@ public class TorneoServiceImpl implements TorneoService {
     }
 
     private Torneo get(Long idTorneo){
-        return this.torneoRepository.findOne(idTorneo);
+        return this.torneoRepository.findById(idTorneo).get();
     }
 }

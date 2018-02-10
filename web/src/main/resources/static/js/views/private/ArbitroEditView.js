@@ -112,7 +112,6 @@ define([
 							}
 						}
             this.model.set(data);
-
             if(this.model.isValid(true)){
                 this.model.save();
             }

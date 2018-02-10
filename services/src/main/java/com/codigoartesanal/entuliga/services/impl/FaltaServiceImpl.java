@@ -35,7 +35,7 @@ public class FaltaServiceImpl implements FaltaService {
 
     @Override
     public void deleteFalta(Long idFalta) {
-        faltaRepository.delete(idFalta);
+        faltaRepository.deleteById(idFalta);
     }
 
     @Override
@@ -53,9 +53,9 @@ public class FaltaServiceImpl implements FaltaService {
     }
 
     private Falta populateFalta(Falta falta){
-        falta.setPartido(partidoRepository.findOne(falta.getPartido().getId()));
-        falta.setRecibe(torneoJugadorRepository.findOne(falta.getRecibe().getId()));
-        falta.setInfractor(torneoJugadorRepository.findOne(falta.getInfractor().getId()));
+        falta.setPartido(partidoRepository.findById(falta.getPartido().getId()).get());
+        falta.setRecibe(torneoJugadorRepository.findById(falta.getRecibe().getId()).get());
+        falta.setInfractor(torneoJugadorRepository.findById(falta.getInfractor().getId()).get());
 
         return falta;
     }

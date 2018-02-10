@@ -26,6 +26,28 @@ backend:
 
 ---
 spring:
+  profiles: docker
+
+  jpa:
+    showSql: false
+    dataBase: POSTGRESQL
+    hibernate.generateDdl: false
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${datasource.host}:${datasource.port}/${datasource.database}?sslmode=require
+    username: ${datasource.username}
+    password: ${datasource.password}
+
+backend:
+  admin:
+    username: backendadmin
+    password: betuzo
+    backend.admin.role: BACKEND_ADMIN
+
+
+---
+spring:
   profiles: preprobd
 
   jpa:
@@ -38,6 +60,27 @@ spring:
     url: jdbc:postgresql://ec2-54-225-199-108.compute-1.amazonaws.com:5432/d2s0bat8nnmlr7?sslmode=require
     username: lvqqialdspisrm
     password: lt2X_hajbja1u4RqkJbj4VgfX8
+
+backend:
+  admin:
+    username: backendadmin
+    password: betuzo
+    backend.admin.role: BACKEND_ADMIN
+
+---
+spring:
+  profiles: prodbd
+
+  jpa:
+    showSql: false
+    dataBase: POSTGRESQL
+    hibernate.generateDdl: false
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://ec2-107-21-201-57.compute-1.amazonaws.com:5432/ddg0rtuo0jlusu?sslmode=require
+    username: pqqngsfucxwznf
+    password: ef2417171737db74759d8b81e124649962c9cd3b2b45e25d94619c4dc498002d
 
 backend:
   admin:
