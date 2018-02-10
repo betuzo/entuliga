@@ -26,6 +26,28 @@ backend:
 
 ---
 spring:
+  profiles: docker
+
+  jpa:
+    showSql: false
+    dataBase: POSTGRESQL
+    hibernate.generateDdl: false
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${datasource.host}:${datasource.port}/${datasource.database}?sslmode=require
+    username: ${datasource.username}
+    password: ${datasource.password}
+
+backend:
+  admin:
+    username: backendadmin
+    password: betuzo
+    backend.admin.role: BACKEND_ADMIN
+
+
+---
+spring:
   profiles: preprobd
 
   jpa:
