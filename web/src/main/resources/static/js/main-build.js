@@ -33428,7 +33428,7 @@ define('app',[
 
     region: '#app',
 
-    urlRoot: 'http://localhost:8090/', //CORS mientras
+    urlRoot: 'https://entuliga.herokuapp.com/', //CORS mientras
 
     initialize: function() {},
 
