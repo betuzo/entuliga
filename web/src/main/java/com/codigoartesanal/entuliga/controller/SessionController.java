@@ -1,19 +1,25 @@
 package com.codigoartesanal.entuliga.controller;
 
-import com.codigoartesanal.entuliga.config.security.AuthenticationWithToken;
-import com.codigoartesanal.entuliga.config.security.TokenService;
-import com.codigoartesanal.entuliga.services.UserService;
-import com.codigoartesanal.entuliga.services.UserTokenService;
+import com.codigoartesanal.entuliga.config.security.JwtTokenUtil;
+import com.codigoartesanal.entuliga.config.security.JwtUserFactory;
+import com.codigoartesanal.entuliga.model.User;
+import com.codigoartesanal.entuliga.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static com.codigoartesanal.entuliga.services.UserService.*;
+import static com.codigoartesanal.entuliga.services.UserTokenService.PROPERTY_TOKEN;
 
 /**
  * Created by betuzo on 07/04/15.
@@ -23,13 +29,13 @@ import java.util.Map;
 public class SessionController {
 
     @Autowired
-    UserService userService;
+    UserRepository userService;
 
     @Autowired
-    AuthenticationProvider domainUsernamePasswordAuthenticationProvider;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
-    TokenService tokenService;
+    JwtTokenUtil jwtTokenUtil;
 
     @ResponseBody
     @RequestMapping(
@@ -38,30 +44,24 @@ public class SessionController {
             produces = {"application/json;charset=UTF-8"})
     public Map<String, Object> login(
             @RequestBody Map<String, String> user, HttpServletRequest httpRequest) {
+        Device device = DeviceUtils.getCurrentDevice(httpRequest);
 
-        if (((!user.containsKey("username") || !user.containsKey("password"))
-                && !user.containsKey("logout"))){
+        if (!user.containsKey(PROPERTY_USERNAME) || !user.containsKey(PROPERTY_PASSWORD)){
             throw new BadCredentialsException("Username or password not found.");
         }
 
-        if (user.containsKey("logout") && httpRequest.getHeader("X-Auth-Token") == null){
-            throw new BadCredentialsException("token not found.");
+        final User usuario = userService.findByUsername(user.get(PROPERTY_USERNAME));
+        if (usuario == null || !passwordEncoder.matches(user.get(PROPERTY_PASSWORD), usuario.getPassword())){
+            throw new BadCredentialsException("Username or password incorrect.");
         }
+        List<GrantedAuthority> roles = JwtUserFactory.mapToGrantedAuthorities(usuario.getUserRole());
+        final String token = jwtTokenUtil.generateToken(usuario.getUsername(), device, roles);
+        final Map<String, Object> sessionDTO = new HashMap<>();
+        sessionDTO.put(PROPERTY_USERNAME, usuario.getUsername());
+        sessionDTO.put(PROPERTY_EMAIL, usuario.getUsername());
+        sessionDTO.put(PROPERTY_ROLES, roles);
+        sessionDTO.put(PROPERTY_TOKEN, token);
 
-        Map<String, Object> sessionDTO = new HashMap<String, Object>();
-        sessionDTO = userService.findByUsername(user.get("username"));
-
-        if (user.containsKey("logout")) {
-            if (sessionDTO != null){
-                tokenService.delete(httpRequest.getHeader("X-Auth-Token"));
-            }
-            return new HashMap<String, Object>();
-        } else {
-            Authentication auth = new AuthenticationWithToken(user.get("username"), user.get("password"), null);;
-            Authentication authToken = domainUsernamePasswordAuthenticationProvider.authenticate(auth);
-
-            sessionDTO.put(UserTokenService.PROPERTY_TOKEN, authToken.getDetails());
-        }
         return sessionDTO;
     }
 

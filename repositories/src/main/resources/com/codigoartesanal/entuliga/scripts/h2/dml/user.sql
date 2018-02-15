@@ -1,5 +1,5 @@
 INSERT INTO USUARIO (USERNAME, PASSWORD, ENABLED) VALUES
-('jperez@tu.me', 'p4Ssword', 1),
+('jperez@tu.me', '$2a$10$Zah8wiwQ4lo9ZoGubLjQSOsPj7KTahQcTqJV0U6J/iLqOmmYfbG96', 1),
 ('jsoto', '$2a$10$GqqtbEuDi8YXzI1n8Zoqv.Upp61NP/Jy1fvPiMAgtcsyFuwc7N.AK', 1),
 ('rolguin@grupobmv.com.mx', 'p4Ssword', 0),
 ('sgarcia', '123456', 1),

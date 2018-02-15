@@ -5,8 +5,8 @@ server:
 security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
-spring.profiles.active: preprobd
-spring.profiles.include: googlestorage,devmail
+spring.profiles.active: devbd
+spring.profiles.include: security,localhomestorage,devmail
 
 ---
 spring:
@@ -125,3 +125,12 @@ mail:
   smtp:
     auth: true
     starttls.enable: true
+
+---
+spring:
+  profiles: security
+
+jwt:
+  header: X-Auth-Token
+  secret: mySecret
+  expiration: 604800
