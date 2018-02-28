@@ -47,6 +47,17 @@ public class JwtTokenUtil implements Serializable {
         return username;
     }
 
+    public List<GrantedAuthority> getRolesFromToken(String token) {
+        List<GrantedAuthority> roles;
+        try {
+            final Claims claims = getClaimsFromToken(token);
+            roles = (List<GrantedAuthority>) claims.get(CLAIM_KEY_ENTULIGA_ROLES);
+        } catch (Exception e) {
+            roles = null;
+        }
+        return roles;
+    }
+
     public Date getCreatedDateFromToken(String token) {
         Date created;
         try {

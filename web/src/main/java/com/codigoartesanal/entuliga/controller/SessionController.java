@@ -5,6 +5,7 @@ import com.codigoartesanal.entuliga.config.security.JwtUserFactory;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,6 +38,9 @@ public class SessionController {
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
+    @Value("${jwt.header}")
+    String tokenHeader;
+
     @ResponseBody
     @RequestMapping(
             value = { "/login" },
@@ -56,25 +60,29 @@ public class SessionController {
         }
         List<GrantedAuthority> roles = JwtUserFactory.mapToGrantedAuthorities(usuario.getUserRole());
         final String token = jwtTokenUtil.generateToken(usuario.getUsername(), device, roles);
+
+        return createSessionDTO(usuario.getUsername(), roles, token);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+            value = { "/valid/token" },
+            method = RequestMethod.POST,
+            produces = {"application/json;charset=UTF-8"})
+    public Map<String, Object> isValidToken(HttpServletRequest httpRequest) {
+        String token = httpRequest.getHeader(this.tokenHeader);
+        return createSessionDTO(this.jwtTokenUtil.getUsernameFromToken(token),
+                this.jwtTokenUtil.getRolesFromToken(token), token);
+    }
+
+    private Map<String, Object> createSessionDTO(
+            final String username, final List<GrantedAuthority> roles, final String token){
         final Map<String, Object> sessionDTO = new HashMap<>();
-        sessionDTO.put(PROPERTY_USERNAME, usuario.getUsername());
-        sessionDTO.put(PROPERTY_EMAIL, usuario.getUsername());
+        sessionDTO.put(PROPERTY_USERNAME, username);
+        sessionDTO.put(PROPERTY_EMAIL, username);
         sessionDTO.put(PROPERTY_ROLES, roles);
         sessionDTO.put(PROPERTY_TOKEN, token);
 
         return sessionDTO;
     }
-
-    @ResponseBody
-    @RequestMapping(
-            value = { "/valid/{token}" },
-            method = RequestMethod.GET,
-            produces = {"application/json;charset=UTF-8"})
-    public Map<String, Object> isValidToken(@PathVariable("token") String token) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", "token");
-        return response;
-    }
-
-
 }
