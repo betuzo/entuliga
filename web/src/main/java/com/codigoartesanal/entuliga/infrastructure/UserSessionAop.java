@@ -47,12 +47,17 @@ public class UserSessionAop {
     @Around("controllerLayer()")
     public Object aroundControllerMethod(ProceedingJoinPoint pjp) throws Throwable{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        JwtUser jwtUser = (JwtUser) authentication.getPrincipal();
-        logger.info("Argumento " + jwtUser);
+        String username = "";
+        if (authentication.getPrincipal() instanceof JwtUser){
+            username = ((JwtUser) authentication.getPrincipal()).getUsername();
+        } else {
+            username = (String) authentication.getPrincipal();
+        }
+        logger.info("Argumento " + username);
 
         for(Object arg :pjp.getArgs()){
-            if(arg instanceof User && jwtUser != null) {
-                Optional<User> opUser = userRepository.findById(jwtUser.getUsername());
+            if(arg instanceof User && username != null && !username.isEmpty()) {
+                Optional<User> opUser = userRepository.findById(username);
                 if (opUser.isPresent()) {
                     User user = opUser.get();
                     ((User) arg).setUsername(user.getUsername());
