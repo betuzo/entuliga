@@ -25,17 +25,14 @@ public class MailServiceTest {
     @Autowired
     MailService mailService;
 
-    @Autowired
-    SimpleMailMessage templateMessage;
-
     @Test
     public void testSend() {
-        templateMessage.setTo("rolguin@grupobmv.com.mx");
-        templateMessage.setCc("rolguin@grupobmv.com.mx");
+        Map<String, String> to = new HashMap<>();
+        to.put("betotsol@gmail.com", "Roberto Olguin");
 
-        Map<String, Object> props = new HashMap<>();
+        Map<String, String> props = new HashMap<>();
         props.put("action", "Registrar");
         props.put("link", "lcalhosto:8090/#token/SDFSADF34FHF435YT67KJ45");
-        mailService.send(templateMessage, props);
+        mailService.sendTempleate("entuliga-signup-prepro", to, props);
     }
 }

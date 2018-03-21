@@ -7,10 +7,10 @@ dependencies {
     compile 'org.springframework.security:spring-security-web:3.2.5.RELEASE'
     compile "org.springframework:spring-context-support:$springVersion"
     compile 'org.slf4j:slf4j-log4j12:1.7.12'
-    compile "com.google.apis:google-api-services-storage:$googleApis"
-    compile 'org.apache.velocity:velocity:1.7'
-    compile 'org.apache.velocity:velocity-tools:2.0'
-    compile 'javax.mail:mail:1.4.3'
+    compile ("com.google.apis:google-api-services-storage:$googleApis") {
+        exclude module: "httpclient"
+    }
+    compile 'com.mandrillapp.wrapper.lutung:lutung:0.0.8'
 
     testCompile "org.springframework:spring-test:5.0.1.RELEASE"
     testCompile 'junit:junit:4.12'

@@ -11,9 +11,11 @@ import com.codigoartesanal.entuliga.services.MailService;
 import com.codigoartesanal.entuliga.services.UserService;
 import com.codigoartesanal.entuliga.services.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 import static com.codigoartesanal.entuliga.model.TipoToken.*;
@@ -24,11 +26,10 @@ import static com.codigoartesanal.entuliga.model.TipoToken.*;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    UserRepository userRepository;
+    private static final String PROPERTY_NAME_MAIL_TEMPLEATE_SIGNUP = "mail.templeate.signup";
 
     @Autowired
-    UserTokenRepository userTokenRepository;
+    UserRepository userRepository;
 
     @Autowired
     UserRoleRepository userRoleRepository;
@@ -39,8 +40,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     MailService mailService;
 
-    @Autowired
-    SimpleMailMessage templateMessage;
+    @Resource
+    Environment env;
 
     @Override
     public boolean existsUsername(String username) {
@@ -123,13 +124,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private void sendMailToken(UserToken userToken, String context) {
-        templateMessage.setTo(userToken.getUser().getUsername());
-        templateMessage.setCc(userToken.getUser().getUsername());
+        Map<String, String> to = new HashMap<>();
+        to.put(userToken.getUser().getUsername(), userToken.getUser().getUsername());
 
-        Map<String, Object> props = new HashMap<>();
-        props.put("action", userToken.getTipo().getDescription());
-        props.put("link", context + "#token/" + userToken.getToken());
+        Map<String, String> props = new HashMap<>();
+        props.put("PACTION", userToken.getTipo().getDescription());
+        props.put("PLINK", context + "#token/" + userToken.getToken());
 
-        mailService.send(templateMessage, props);
+        mailService.sendTempleate(env.getRequiredProperty(PROPERTY_NAME_MAIL_TEMPLEATE_SIGNUP), to, props);
     }
 }

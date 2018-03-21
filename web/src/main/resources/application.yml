@@ -24,6 +24,9 @@ backend:
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
 
+mail:
+  templeate.signup: entuliga-signup-prepro
+
 ---
 spring:
   profiles: docker
@@ -67,6 +70,9 @@ backend:
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
 
+mail:
+  templeate.signup: entuliga-signup-prepro
+
 ---
 spring:
   profiles: prodbd
@@ -87,6 +93,9 @@ backend:
     username: backendadmin
     password: betuzo
     backend.admin.role: BACKEND_ADMIN
+
+mail:
+  templeate.signup: entuliga-signup-prod
 
 ---
 spring:
@@ -115,16 +124,7 @@ spring:
   profiles: devmail
 
 mail:
-  host: smtp.gmail.com
-  port: 587
-  username: betotsol@gmail.com
-  password: password
-  from.default: notificacion@entuliga.com
-  to.default: notificacion@entuliga.com
-  subject.default: Notificacion entuliga
-  smtp:
-    auth: true
-    starttls.enable: true
+  key: vqe5VUPLJLMpzJI-EYD63A
 
 ---
 spring:
