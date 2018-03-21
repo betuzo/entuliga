@@ -34,6 +34,7 @@ INSERT INTO USER_ROLE (ID, USERNAME, ROLE) VALUES
 (15, 'atabares', 'JUGADOR'),
 (16, 'jlopez', 'JUGADOR');
 
+alter sequence userrole_id_seq restart with 17;
 
 INSERT INTO USER_TOKEN (TOKEN, USERNAME, TIPO, FECHA_VIGENCIA) VALUES
 ('ae3594d9-caf8-4563-9498-7096a4f08b5e', 'rolguin@grupobmv.com.mx', 'VALID_EMAIL', TIMESTAMP '2050-02-18 14:25:00.000');

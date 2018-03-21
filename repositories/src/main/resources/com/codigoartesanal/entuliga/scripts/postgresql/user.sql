@@ -46,6 +46,8 @@ INSERT INTO USER_ROLE (ID, USERNAME, ROLE) VALUES
 (15, 'atabares', 'JUGADOR'),
 (16, 'jlopez', 'JUGADOR');
 
+alter sequence userrole_id_seq restart with 17;
+
 CREATE TABLE IF NOT EXISTS USER_TOKEN (
     TOKEN VARCHAR(45) PRIMARY KEY,
     USERNAME VARCHAR(20) NOT NULL,

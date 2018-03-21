@@ -131,6 +131,7 @@ public class CanchaServiceImpl implements CanchaService {
         }
         Colonia colonia = new Colonia();
         colonia.setId(Long.valueOf(canchaMap.get(PROPERTY_COLONIA_ID)));
+        colonia.setCodigoPostal(canchaMap.get(PROPERTY_CODIGO_POSTAL));
         geoLocation.setColonia(colonia);
         cancha.setGeoLocation(geoLocation);
         return cancha;
