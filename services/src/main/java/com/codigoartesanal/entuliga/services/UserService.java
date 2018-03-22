@@ -8,6 +8,7 @@ import java.util.Map;
 public interface UserService {
     String PROPERTY_ID                  = "id";
     String PROPERTY_USERNAME            = "username";
+    String PROPERTY_EMAIL               = "email";
     String PROPERTY_PASSWORD            = "password";
     String PROPERTY_PASSWORD_CONFIRM    = "passwordConfirm";
     String PROPERTY_ENABLED             = "enabled";

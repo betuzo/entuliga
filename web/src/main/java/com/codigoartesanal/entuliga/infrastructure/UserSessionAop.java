@@ -1,5 +1,6 @@
 package com.codigoartesanal.entuliga.infrastructure;
 
+import com.codigoartesanal.entuliga.config.security.JwtUser;
 import com.codigoartesanal.entuliga.model.User;
 import com.codigoartesanal.entuliga.repositories.UserRepository;
 import com.codigoartesanal.entuliga.services.GeneralService;
@@ -46,7 +47,12 @@ public class UserSessionAop {
     @Around("controllerLayer()")
     public Object aroundControllerMethod(ProceedingJoinPoint pjp) throws Throwable{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = (String) authentication.getPrincipal();
+        String username = "";
+        if (authentication.getPrincipal() instanceof JwtUser){
+            username = ((JwtUser) authentication.getPrincipal()).getUsername();
+        } else {
+            username = (String) authentication.getPrincipal();
+        }
         logger.info("Argumento " + username);
 
         for(Object arg :pjp.getArgs()){

@@ -15014,173 +15014,81 @@ this && this.Marionette && (this.Mn = this.Marionette);
 // Documentation and full license available at:
 // http://thedersen.com/projects/backbone-validation
 !function(a){"object"==typeof exports?module.exports=a(require("backbone"),require("underscore")):"function"==typeof define&&define.amd&&define('backboneValidation',["backbone","underscore"],a)}(function(a,b){return a.Validation=function(a){"use strict";var b={forceUpdate:!1,selector:"name",labelFormatter:"sentenceCase",valid:Function.prototype,invalid:Function.prototype},c={formatLabel:function(a,c){return i[b.labelFormatter](a,c)},format:function(){var a=Array.prototype.slice.call(arguments),b=a.shift();return b.replace(/\{(\d+)\}/g,function(b,c){return"undefined"!=typeof a[c]?a[c]:b})}},d=function(b,c,e){return c=c||{},e=e||"",a.each(b,function(f,g){b.hasOwnProperty(g)&&(f&&a.isArray(f)?a.forEach(f,function(a,b){d(a,c,e+g+"."+b+"."),c[e+g+"."+b]=a}):f&&"object"==typeof f&&f.constructor===Object&&d(f,c,e+g+"."),c[e+g]=f)}),c},e=function(){var e=function(b,c){return c=c||a.keys(a.result(b,"validation")||{}),a.reduce(c,function(a,b){return a[b]=void 0,a},{})},g=function(b,c){var d=b.attributes;return a.isFunction(d)?d=d(c):a.isString(d)&&a.isFunction(j[d])&&(d=j[d](c)),a.isArray(d)?d:void 0},h=function(b,c){var d=b.validation?a.result(b,"validation")[c]||{}:{};return(a.isFunction(d)||a.isString(d))&&(d={fn:d}),a.isArray(d)||(d=[d]),a.reduce(d,function(b,c){return a.each(a.without(a.keys(c),"msg"),function(a){b.push({fn:k[a],val:c[a],msg:c.msg})}),b},[])},i=function(b,d,e,f){return a.reduce(h(b,d),function(g,h){var i=a.extend({},c,k),j=h.fn.call(i,e,d,h.val,b,f);return j===!1||g===!1?!1:j&&!g?a.result(h,"msg")||j:g},"")},l=function(b,c,d){var e,f={},g=!0,h=a.clone(c);return a.each(d,function(a,c){e=i(b,c,a,h),e&&(f[c]=e,g=!1)}),{invalidAttrs:f,isValid:g}},m=function(b,c){return{preValidate:function(b,c){var d,e=this,f={};return a.isObject(b)?(a.each(b,function(a,b){d=e.preValidate(b,a),d&&(f[b]=d)}),a.isEmpty(f)?void 0:f):i(this,b,c,a.extend({},this.attributes))},isValid:function(e){var f,h,j,k;return e=e||g(c,b),a.isString(e)?h=[e]:a.isArray(e)&&(h=e),h&&(f=d(this.attributes),a.each(this.associatedViews,function(b){a.each(h,function(d){j=i(this,d,f[d],a.extend({},this.attributes)),j?(c.invalid(b,d,j,c.selector),k=k||{},k[d]=j):c.valid(b,d,c.selector)},this)},this)),e===!0&&(k=this.validate()),k&&this.trigger("invalid",this,k,{validationError:k}),h?!k:this.validation?this._isValid:!0},validate:function(f,h){var i=this,j=!f,k=a.extend({},c,h),m=e(i,g(c,b)),n=a.extend({},m,i.attributes,f),o=d(n),p=f?d(f):o,q=l(i,n,a.pick(o,a.keys(m)));return i._isValid=q.isValid,a.each(i.associatedViews,function(b){a.each(m,function(a,c){var d=q.invalidAttrs.hasOwnProperty(c),e=p.hasOwnProperty(c);d||k.valid(b,c,k.selector),d&&(e||j)&&k.invalid(b,c,q.invalidAttrs[c],k.selector)})}),a.defer(function(){i.trigger("validated",i._isValid,i,q.invalidAttrs),i.trigger("validated:"+(i._isValid?"valid":"invalid"),i,q.invalidAttrs)}),!k.forceUpdate&&a.intersection(a.keys(q.invalidAttrs),a.keys(p)).length>0?q.invalidAttrs:void 0}}},n=function(b,c,d){c.associatedViews?c.associatedViews.push(b):c.associatedViews=[b],a.extend(c,m(b,d))},o=function(b,c){c&&b.associatedViews&&b.associatedViews.length>1?b.associatedViews=a.without(b.associatedViews,c):(delete b.validate,delete b.preValidate,delete b.isValid,delete b.associatedViews)},p=function(a){n(this.view,a,this.options)},q=function(a){o(a)};return{version:"0.11.3",configure:function(c){a.extend(b,c)},bind:function(c,d){d=a.extend({},b,f,d);var e=d.model||c.model,g=d.collection||c.collection;if("undefined"==typeof e&&"undefined"==typeof g)throw"Before you execute the binding your view must have a model or a collection.\nSee http://thedersen.com/projects/backbone-validation/#using-form-model-validation for more information.";e?n(c,e,d):g&&(g.each(function(a){n(c,a,d)}),g.bind("add",p,{view:c,options:d}),g.bind("remove",q))},unbind:function(b,c){c=a.extend({},c);var d=c.model||b.model,e=c.collection||b.collection;d?o(d,b):e&&(e.each(function(a){o(a,b)}),e.unbind("add",p),e.unbind("remove",q))},mixin:m(null,b)}}(),f=e.callbacks={valid:function(a,b,c){a.$("["+c+'~="'+b+'"]').removeClass("invalid").removeAttr("data-error")},invalid:function(a,b,c,d){a.$("["+d+'~="'+b+'"]').addClass("invalid").attr("data-error",c)}},g=e.patterns={digits:/^\d+$/,number:/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/,email:/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i,url:/^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i},h=e.messages={required:"{0} is required",acceptance:"{0} must be accepted",min:"{0} must be greater than or equal to {1}",max:"{0} must be less than or equal to {1}",range:"{0} must be between {1} and {2}",length:"{0} must be {1} characters",minLength:"{0} must be at least {1} characters",maxLength:"{0} must be at most {1} characters",rangeLength:"{0} must be between {1} and {2} characters",oneOf:"{0} must be one of: {1}",equalTo:"{0} must be the same as {1}",digits:"{0} must only contain digits",number:"{0} must be a number",email:"{0} must be a valid email",url:"{0} must be a valid url",inlinePattern:"{0} is invalid"},i=e.labelFormatters={none:function(a){return a},sentenceCase:function(a){return a.replace(/(?:^\w|[A-Z]|\b\w)/g,function(a,b){return 0===b?a.toUpperCase():" "+a.toLowerCase()}).replace(/_/g," ")},label:function(a,b){return b.labels&&b.labels[a]||i.sentenceCase(a,b)}},j=e.attributeLoaders={inputNames:function(a){var b=[];return a&&a.$("form [name]").each(function(){/^(?:input|select|textarea)$/i.test(this.nodeName)&&this.name&&"submit"!==this.type&&-1===b.indexOf(this.name)&&b.push(this.name)}),b}},k=e.validators=function(){var b=String.prototype.trim?function(a){return null===a?"":String.prototype.trim.call(a)}:function(a){var b=/^\s+/,c=/\s+$/;return null===a?"":a.toString().replace(b,"").replace(c,"")},c=function(b){return a.isNumber(b)||a.isString(b)&&b.match(g.number)},d=function(c){return!(a.isNull(c)||a.isUndefined(c)||a.isString(c)&&""===b(c)||a.isArray(c)&&a.isEmpty(c))};return{fn:function(b,c,d,e,f){return a.isString(d)&&(d=e[d]),d.call(e,b,c,f)},required:function(b,c,e,f,g){var i=a.isFunction(e)?e.call(f,b,c,g):e;return i||d(b)?i&&!d(b)?this.format(h.required,this.formatLabel(c,f)):void 0:!1},acceptance:function(b,c,d,e){return"true"===b||a.isBoolean(b)&&b!==!1?void 0:this.format(h.acceptance,this.formatLabel(c,e))},min:function(a,b,d,e){return!c(a)||d>a?this.format(h.min,this.formatLabel(b,e),d):void 0},max:function(a,b,d,e){return!c(a)||a>d?this.format(h.max,this.formatLabel(b,e),d):void 0},range:function(a,b,d,e){return!c(a)||a<d[0]||a>d[1]?this.format(h.range,this.formatLabel(b,e),d[0],d[1]):void 0},length:function(b,c,d,e){return a.isString(b)&&b.length===d?void 0:this.format(h.length,this.formatLabel(c,e),d)},minLength:function(b,c,d,e){return!a.isString(b)||b.length<d?this.format(h.minLength,this.formatLabel(c,e),d):void 0},maxLength:function(b,c,d,e){return!a.isString(b)||b.length>d?this.format(h.maxLength,this.formatLabel(c,e),d):void 0},rangeLength:function(b,c,d,e){return!a.isString(b)||b.length<d[0]||b.length>d[1]?this.format(h.rangeLength,this.formatLabel(c,e),d[0],d[1]):void 0},oneOf:function(b,c,d,e){return a.include(d,b)?void 0:this.format(h.oneOf,this.formatLabel(c,e),d.join(", "))},equalTo:function(a,b,c,d,e){return a!==e[c]?this.format(h.equalTo,this.formatLabel(b,d),this.formatLabel(c,d)):void 0},pattern:function(a,b,c,e){return d(a)&&a.toString().match(g[c]||c)?void 0:this.format(h[c]||h.inlinePattern,this.formatLabel(b,e),c)}}}();return a.each(k,function(b,d){k[d]=a.bind(k[d],a.extend({},c,k))}),e}(b),a.Validation});
-/*!
- * jQuery Cookie Plugin v1.4.1
- * https://github.com/carhartl/jquery-cookie
- *
- * Copyright 2013 Klaus Hartl
- * Released under the MIT license
- */
-(function (factory) {
-	if (typeof define === 'function' && define.amd) {
-		// AMD
-		define('jquerycookie',['jquery'], factory);
-	} else if (typeof exports === 'object') {
-		// CommonJS
-		factory(require('jquery'));
-	} else {
-		// Browser globals
-		factory(jQuery);
-	}
-}(function ($) {
-
-	var pluses = /\+/g;
-
-	function encode(s) {
-		return config.raw ? s : encodeURIComponent(s);
-	}
-
-	function decode(s) {
-		return config.raw ? s : decodeURIComponent(s);
-	}
-
-	function stringifyCookieValue(value) {
-		return encode(config.json ? JSON.stringify(value) : String(value));
-	}
-
-	function parseCookieValue(s) {
-		if (s.indexOf('"') === 0) {
-			// This is a quoted cookie as according to RFC2068, unescape...
-			s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-		}
-
-		try {
-			// Replace server-side written pluses with spaces.
-			// If we can't decode the cookie, ignore it, it's unusable.
-			// If we can't parse the cookie, ignore it, it's unusable.
-			s = decodeURIComponent(s.replace(pluses, ' '));
-			return config.json ? JSON.parse(s) : s;
-		} catch(e) {}
-	}
-
-	function read(s, converter) {
-		var value = config.raw ? s : parseCookieValue(s);
-		return $.isFunction(converter) ? converter(value) : value;
-	}
-
-	var config = $.cookie = function (key, value, options) {
-
-		// Write
-
-		if (value !== undefined && !$.isFunction(value)) {
-			options = $.extend({}, config.defaults, options);
-
-			if (typeof options.expires === 'number') {
-				var days = options.expires, t = options.expires = new Date();
-				t.setTime(+t + days * 864e+5);
-			}
-
-			return (document.cookie = [
-				encode(key), '=', stringifyCookieValue(value),
-				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-				options.path    ? '; path=' + options.path : '',
-				options.domain  ? '; domain=' + options.domain : '',
-				options.secure  ? '; secure' : ''
-			].join(''));
-		}
-
-		// Read
-
-		var result = key ? undefined : {};
-
-		// To prevent the for loop in the first place assign an empty array
-		// in case there are no cookies at all. Also prevents odd result when
-		// calling $.cookie().
-		var cookies = document.cookie ? document.cookie.split('; ') : [];
-
-		for (var i = 0, l = cookies.length; i < l; i++) {
-			var parts = cookies[i].split('=');
-			var name = decode(parts.shift());
-			var cookie = parts.join('=');
-
-			if (key && key === name) {
-				// If second argument (value) is a function it's a converter...
-				result = read(cookie, value);
-				break;
-			}
-
-			// Prevent storing a cookie that we couldn't decode.
-			if (!key && (cookie = read(cookie)) !== undefined) {
-				result[name] = cookie;
-			}
-		}
-
-		return result;
-	};
-
-	config.defaults = {};
-
-	$.removeCookie = function (key, options) {
-		if ($.cookie(key) === undefined) {
-			return false;
-		}
-
-		// Must not alter options, thus extending a fresh object...
-		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
-		return !$.cookie(key);
-	};
-
-}));
-
 $.fn.serializeObject=function(){"use strict";var a={},b=function(b,c){var d=a[c.name];"undefined"!=typeof d&&d!==null?$.isArray(d)?d.push(c.value):a[c.name]=[d,c.value]:a[c.name]=c.value};return $.each(this.serializeArray(),b),a};
 define("jquerySerializeObject", ["jquery"], function(){});
 
 define('core/BaseRouter',[
-	'underscore',
-	'backbone'
-], function(_, Backbone){
+  'underscore',
+  'backbone'
+], function(_, Backbone) {
 
-	var BaseRouter = Backbone.Router.extend({
-		before: function(router, args){	},
-		after: function(router, args){	},
-		route : function (route, name, callback) {
-			if (!_.isRegExp(route)) route = this._routeToRegExp(route);
-			if (_.isFunction(name)) {
-				callback = name;
-				name = '';
-			}
-			if (!callback) callback = this[name];
+  var BaseRouter = Backbone.Router.extend({
+    before: function(router, args) {},
+    after: function(router, args) {},
+    route : function(route, name, callback) {
+      if(!_.isRegExp(route)) route = this._routeToRegExp(route);
+      if(_.isFunction(name)) {
+        callback = name;
+        name = '';
+      }
+      if(!callback) callback = this[name];
 
-			var router = this;
+      var router = this;
 
-			Backbone.history.route(route, function(fragment) {
-				/*var args = router._extractParameters(route, fragment);
+      Backbone.history.route(route, function(fragment) {
+        var args = router._extractParameters(route, fragment);
 
-				router.before.apply(router, args);
-				callback && callback.apply(router, args);
-				router.after.apply(router, args);
+        router.before.apply(router, arguments);
+        callback && callback.apply(router, args);
+        router.after.apply(router, arguments);
 
-				router.trigger.apply(router, ['route:' + name].concat(args));
-				router.trigger('route', name, args);
-				Backbone.history.trigger('route', router, name, args);*/
+        router.trigger.apply(router, ['route:' + name].concat(args));
+        router.trigger('route', name, args);
+        Backbone.history.trigger('route', router, name, args);
+      });
+      return this;
+    }
 
-				var args = router._extractParameters(route, fragment);
-				var next = function(){
-					callback && callback.apply(router, args);
-					router.trigger.apply(router, ['route:' + name].concat(args));
-					router.trigger('route', name, args);
-					Backbone.history.trigger('route', router, name, args);
-					router.after.apply(router, args);
-				}
-				router.before.apply(router, [args, next]);
-			});
-			return this;
-		}
 
-	});
+    // route : function (route, name, callback) {
+    // 	if (!_.isRegExp(route)) route = this._routeToRegExp(route);
+    // 	if (_.isFunction(name)) {
+    // 		callback = name;
+    // 		name = '';
+    // 	}
+    // 	if (!callback) callback = this[name];
+    //
+    // 	var router = this;
+    //
+    // 	Backbone.history.route(route, function(fragment) {
+    // 		/*var args = router._extractParameters(route, fragment);
+    //
+    // 		router.before.apply(router, args);
+    // 		callback && callback.apply(router, args);
+    // 		router.after.apply(router, args);
+    //
+    // 		router.trigger.apply(router, ['route:' + name].concat(args));
+    // 		router.trigger('route', name, args);
+    // 		Backbone.history.trigger('route', router, name, args);*/
+    //
+    // 		var args = router._extractParameters(route, fragment);
+    // 		var next = function(){
+    // 			callback && callback.apply(router, args);
+    // 			router.trigger.apply(router, ['route:' + name].concat(args));
+    // 			router.trigger('route', name, args);
+    // 			Backbone.history.trigger('route', router, name, args);
+    // 			router.after.apply(router, args);
+    // 		}
+    // 		router.before.apply(router, [args, next]);
+    // 	});
+    // 	return this;
+    // }
 
-	return BaseRouter;
+  });
+
+  return BaseRouter;
 });
+
 define('core/BaseView',[
 	'underscore',
 	'backbone'
@@ -15216,48 +15124,52 @@ define('core/BaseView',[
 
 });
 define('models/UserModel',[
-    'backbone'
-], function(Backbone){
+  'backbone'
+], function(Backbone) {
 
-    var UserModel = Backbone.Model.extend({
+  var UserModel = Backbone.Model.extend({
 
-        urlRoot: 'user',
+    urlRoot: 'user',
 
-        defaults: {
-            username: '',
-            password: '',
-            passwordConfirm: ''
-        },
+    defaults: {
 
-        initialize: function() {
-        },
+      username: '',
+      roles: '',
+      password: '',
+      passwordConfirm: '',
+      name: '',
+      email: '',
+      is_admin: false
+    },
+
+    initialize: function() {},
 
 
-        validation: {
-            username: [{
-                required: true,
-                maxLength: 50,
-                msg: 'El campo es requerido'
-              },{
-                pattern: 'email',
-                msg: 'Por favor especifique un email correcto.....'
-              }],
-            password: {
-                required: true,
-                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
-                msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
-            },
-            passwordConfirm: {
-                required: true,
-                equalTo: 'password',
-                msg: 'El password no coincide'
+    validation: {
+      username: [{
+        required: true,
+        maxLength: 50,
+        msg: 'El campo es requerido'
+      }, {
+        pattern: 'email',
+        msg: 'Por favor especifique un email correcto.....'
+      }],
+      password: {
+        required: true,
+        pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
+        msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
+      },
+      passwordConfirm: {
+        required: true,
+        equalTo: 'password',
+        msg: 'El password no coincide'
 
-            }
-        }
+      }
+    }
 
-    });
+  });
 
-	return UserModel;
+  return UserModel;
 });
 
 /**
@@ -15654,699 +15566,171 @@ define('text',['module'], function (module) {
 
 define('text!templates/tplLogin.html',[],function () { return '\n<div class="row login-box">\n  <div class="center-box-login">\n    <div class="panel panel-default">\n      <form id="form-login" role="form" class="form-login">\n          <div class="form-login-heading">\n            <h3 class="text-center">Bienvenido a entuliga!</h3>\n          </div>\n          <div class="row">\n              <div class="col-xs-12">\n                  <div class="form-group">\n                      <label>Email</label>\n                      <input class="form-control" placeholder="Email" type="text" name="username" value="<%= username %>">\n                      <p class="help-block"></p>\n                  </div>\n              </div>\n          </div>\n          <div class="row">\n              <div class="col-xs-12">\n                  <div class="form-group">\n                      <label>Password</label>\n                      <input class="form-control" placeholder="Password" type="password" name="password" value="<%= password %>" >\n                      <p class="help-block"></p>\n                  </div>\n              </div>\n          </div>\n          <div class="row">\n              <div class="col-xs-12">\n                  <div class="form-group">\n                      <label>Recordarme</label>\n                      <input id="remember" type="checkbox" value="remember-me" checked="true">\n                      <p class="help-block"></p>\n                  </div>\n              </div>\n          </div>\n          <button type="button" class="btn btn-lg btn-primary btn-block">Login</button>\n      </form>\n\n\n    </div>\n\n\n\n  </div>\n</div>\n';});
 
-define('models/util/ModalGenericModel',[
-    'backbone'
-], function(Backbone){
+/*!
+ * JavaScript Cookie v2.2.0
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+;(function (factory) {
+	var registeredInModuleLoader = false;
+	if (typeof define === 'function' && define.amd) {
+		define('jscookie',factory);
+		registeredInModuleLoader = true;
+	}
+	if (typeof exports === 'object') {
+		module.exports = factory();
+		registeredInModuleLoader = true;
+	}
+	if (!registeredInModuleLoader) {
+		var OldCookies = window.Cookies;
+		var api = window.Cookies = factory();
+		api.noConflict = function () {
+			window.Cookies = OldCookies;
+			return api;
+		};
+	}
+}(function () {
+	function extend () {
+		var i = 0;
+		var result = {};
+		for (; i < arguments.length; i++) {
+			var attributes = arguments[ i ];
+			for (var key in attributes) {
+				result[key] = attributes[key];
+			}
+		}
+		return result;
+	}
 
-    var ModalGenericModel = Backbone.Model.extend({
+	function init (converter) {
+		function api (key, value, attributes) {
+			var result;
+			if (typeof document === 'undefined') {
+				return;
+			}
 
-        urlRoot: 'modal',
+			// Write
 
-        defaults: {
-        },
+			if (arguments.length > 1) {
+				attributes = extend({
+					path: '/'
+				}, api.defaults, attributes);
 
-        initialize: function() {
-        }
+				if (typeof attributes.expires === 'number') {
+					var expires = new Date();
+					expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+					attributes.expires = expires;
+				}
 
-    });
+				// We're using "expires" because "max-age" is not supported by IE
+				attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
 
-	return ModalGenericModel;
-});
+				try {
+					result = JSON.stringify(value);
+					if (/^[\{\[]/.test(result)) {
+						value = result;
+					}
+				} catch (e) {}
 
-define('text!templates/private/util/tplModalGeneric.html',[],function () { return '<div class="modal fade" id="modal-generic-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\n    <div class="modal-dialog">\n        <div class="modal-content">\n            <!-- dialog body -->\n            <div class="modal-body">\n                <button type="button" class="close" data-dismiss="modal">&times;</button>\n                <%= message %>\n            </div>\n            <!-- dialog buttons -->\n            <div class="modal-footer">\n                <button id="mg-btn-cancel" data-bb-handler="cancel" type="button" class="btn btn-default"><%= labelCancel %></button>\n                <button id="mg-btn-confirm" data-bb-handler="confirm" type="button" class="btn btn-primary"><%= labelConfirm %></button>\n            </div>\n        </div>\n    </div>\n</div>';});
+				if (!converter.write) {
+					value = encodeURIComponent(String(value))
+						.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+				} else {
+					value = converter.write(value, key);
+				}
 
-define('views/private/util/ModalGenericView',[
-	'jquery',
-	'backbone',
-	'core/BaseView',
-	'models/util/ModalGenericModel',
-	'text!templates/private/util/tplModalGeneric.html'
-], function($, Backbone, BaseView, ModalGenericModel, tplModalGeneric){
+				key = encodeURIComponent(String(key));
+				key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+				key = key.replace(/[\(\)]/g, escape);
 
-    var ModelGenericView = BaseView.extend({
-        el: '#modal-generic',
-        template: _.template(tplModalGeneric),
+				var stringifiedAttributes = '';
 
-        events: {
-            'click #mg-btn-cancel'     : 'clickCancel',
-            'click #mg-btn-confirm'    : 'clickConfirm'
-        },
+				for (var attributeName in attributes) {
+					if (!attributes[attributeName]) {
+						continue;
+					}
+					stringifiedAttributes += '; ' + attributeName;
+					if (attributes[attributeName] === true) {
+						continue;
+					}
+					stringifiedAttributes += '=' + attributes[attributeName];
+				}
+				return (document.cookie = key + '=' + value + stringifiedAttributes);
+			}
 
-        initialize: function(opts) {
-            this.model = new ModalGenericModel();
-            this.callbackCancel = opts.callbackCancel;
-            this.callbackConfirm = opts.callbackConfirm;
-            if (typeof opts.type === 'undefined') {
-                opts.type = 'alert';
-            }
-            if (typeof opts.message === 'undefined') {
-                opts.message = ' ';
-            }
-            if (typeof opts.labelCancel === 'undefined') {
-                opts.labelCancel = 'Cancel';
-            }
-            if (typeof opts.labelConfirm === 'undefined') {
-                opts.labelConfirm = 'OK';
-            }
-            this.model.set({message: opts.message,
-                            labelCancel: opts.labelCancel,
-                            labelConfirm: opts.labelConfirm});
-            this.type = opts.type;
-            this.render();
-        },
+			// Read
 
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            this.btnCancel = this.$el.find('#mg-btn-cancel');
-            this.btnConfirm = this.$el.find('#mg-btn-confirm');
+			if (!key) {
+				result = {};
+			}
 
-            if(this.type == 'confirm') {
-                this.btnCancel.show();
-            } else {
-                this.btnCancel.hide();
-            }
-            this.$('#modal-generic-dialog').modal({backdrop: "static", keyboard: false});
-        },
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling "get()"
+			var cookies = document.cookie ? document.cookie.split('; ') : [];
+			var rdecode = /(%[0-9A-Z]{2})+/g;
+			var i = 0;
 
-        clickCancel: function(event){
-            this.$('#modal-generic-dialog').modal('hide');
-            if (typeof this.callbackCancel == 'function') {
-                this.callbackCancel(event);
-            }
-            this.undelegateEvents();
-        },
+			for (; i < cookies.length; i++) {
+				var parts = cookies[i].split('=');
+				var cookie = parts.slice(1).join('=');
 
-        clickConfirm: function(event) {
-            this.$('#modal-generic-dialog').modal('hide');
-            if (typeof this.callbackConfirm == 'function') {
-                this.callbackConfirm(event);
-            }
-            this.undelegateEvents();
-        }
-    });
+				if (!this.json && cookie.charAt(0) === '"') {
+					cookie = cookie.slice(1, -1);
+				}
 
-    return ModelGenericView;
-});
-define('Session',[
-	'jquery',
-	'backbone',
-    'jquerycookie',
-	'views/private/util/ModalGenericView'
-], function($, Backbone, jquerycookie, ModalGenericView){
+				try {
+					var name = parts[0].replace(rdecode, decodeURIComponent);
+					cookie = converter.read ?
+						converter.read(cookie, name) : converter(cookie, name) ||
+						cookie.replace(rdecode, decodeURIComponent);
 
-	var SessionModel = Backbone.Model.extend({
-	    url : 'session/login',
-
-        defaults: {
-            username: '',
-            password: ''
-        },
-
-	    initialize: function(){
-	    	this.set('authenticated', false);
-	    },
-
-        validation: {
-            username: {
-                required: true,
-                pattern: 'email',
-                msg: 'Por favor especifique un email correcto'
-            },
-            password: {
-                required: true,
-                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
-                msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
-            }
-        },
-
-		login : function(callback, user, pass, remember){
-			var that = callback;
-			var Session = this;
-
-			this.save({
-						username: user,
-						password: pass}, {
-				wait:true,
-				success:function(model, response) {
-					Session.set('authenticated', true);
-					Session.set('username', user)
-					if (remember) {
-						$.cookie('auth_token', JSON.stringify({username: user, token: model.get('token')}));
+					if (this.json) {
+						try {
+							cookie = JSON.parse(cookie);
+						} catch (e) {}
 					}
 
-					$.ajaxSetup({
-						headers: {
-							"X-Auth-Token": model.get('token')
-						}
-					});
-					console.log('Successfully saved!');
-					that();
-				},
-				error: function(model, error) {
-					Session.set('authenticated', false);
-					Session.set('username', '');
-                    $.removeCookie('auth_token')
-					new ModalGenericView({
-						message: 'Usuario y/o contraseña incorrecta'
-					});
-				}
-			});
-		},
+					if (key === name) {
+						result = cookie;
+						break;
+					}
 
-		logout : function(callback){
-			var thisSession = this;
-			var that = callback;
-			var Session = new SessionModel();
+					if (!key) {
+						result[name] = cookie;
+					}
+				} catch (e) {}
+			}
 
-			Session.save({ username: this.get('username'),
-						   logout: 'logout'}, {
-				wait:true,
-				success:function(model, response) {
-					thisSession.clear();
-					$.ajaxSetup({
-						headers: {
-							"X-Auth-Token": ''
-						}
-					});
-                    Session.set('username', '');
-                    $.removeCookie('auth_token')
-					console.log('Successfully saved!');
-					that();
-				},
-				error: function(model, error) {
-					console.log(model.toJSON());
-					console.log('error.responseText');
-				}
-			});
+			return result;
 		}
-	});
 
-	return new SessionModel();
-});
-define('views/LoginView',[
-	'jquery',
-	'core/BaseView',
-    'backbone',
-    'backboneValidation',
-    'jquerySerializeObject',
-    'models/UserModel',
-	'text!templates/tplLogin.html',
-	'Session'
-], function($, BaseView, backbone, backboneValidation, jquerySerializeObject, UserModel, tplLogin, Session){
-
-	var LoginView = BaseView.extend({
-        template: _.template(tplLogin),
-
-        events: {
-            'click .btn.btn-lg.btn-primary.btn-block': 'login'
-        },
-
-        initialize: function() {
-            this.$el.find('.tip').tooltip();
-            this.model = new UserModel();
-            Backbone.Validation.bind(this, {
-                valid: function(view, attr, selector) {
-                    var $el = view.$('[name=' + attr + ']'),  $group = $el.closest('.form-group');
-                    if (view.model.preValidate(attr, $el.val())) {
-                        return;
-                    }
-                    $group.removeClass('has-error');
-                    $group.addClass('has-success');
-                },
-
-                invalid: function(view, attr, error, selector) {
-                    var $el = view.$('[name=' + attr + ']'),
-                    $group = $el.closest('.form-group');
-                    $el.popover({
-                        content: error,
-                        placement: 'left'
-                    });
-                    $el.popover('show');
-                    $group.addClass('has-error');
-                }
-
-            });
-        },
-
-
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        },
-
-        remove: function() {
-            // Remove the validation binding
-            // See: http://thedersen.com/projects/backbone-validation/#using-form-model-validation/unbinding
-            Backbone.Validation.unbind(this);
-            return Backbone.View.prototype.remove.apply(this, arguments);
-        },
-
-        login: function(){
-            var data = this.$el.find("#form-login").serializeObject();
-            this.model.set(data);
-            this.model.set({passwordConfirm: this.model.get('password')});
-
-            if(this.model.isValid(true)){
-                var user = this.model.get('username');
-                var pass = this.model.get('password');
-                var remember = $("#remember").is(":checked");
-                Session.login(function(response){
-                    Backbone.history.navigate('admin', { trigger : true });
-                }, user, pass, remember);
-            }
-
-        }
-
-	});
-
-	return LoginView;
-
-});
-
-
-define('text!templates/tplSignup.html',[],function () { return '<div class="row signup-wrap">\n  <div class="center-box-login">\n\n    <div class="panel panel-default">\n      <form id="form-user" role="form" class="form-signup">\n        <div class="form-signup-heading">\n          <h3 class="text-center">Bienvenido a entuliga!</h3>\n        </div>\n\n        <div class="row">\n            <div class="col-xs-12">\n                <div class="form-group">\n                    <label>Email</label>\n                    <input class="form-control signup-username" placeholder="Email" type="text" name="username" value="<%= username %>">\n                </div>\n            </div>\n\n        </div>\n        <div class="row">\n            <div class="col-xs-12">\n                <div class="form-group">\n                    <label>Password</label>\n                    <input class="form-control signup-pass" placeholder="Password" type="password" name="password" value="<%= password %>">\n                </div>\n            </div>\n        </div>\n\n        <div class="row">\n            <div class="col-xs-12">\n                <div class="form-group">\n                    <label>Confirm Password</label>\n                    <input class="form-control signup-pass-confirm" placeholder="Confirm Password" type="password" name="passwordConfirm" value="<%= passwordConfirm %>">\n                </div>\n            </div>\n        </div>\n        <button id="btn-ok" type="button" class="btn btn-lg btn-primary btn-block">Registrar</button>\n      </form>\n    </div>\n  </div>\n</div>\n';});
-
-define('views/SignupView',[
-	'jquery',
-	'core/BaseView',
-    'backbone',
-    'backboneValidation',
-    'jquerySerializeObject',
-    'models/UserModel',
-    'views/private/util/ModalGenericView',
-	'text!templates/tplSignup.html'
-], function($, BaseView, backbone, backboneValidation, jquerySerializeObject, UserModel, ModalGenericView, tplSignup){
-
-	var SignupView = BaseView.extend({
-        template: _.template(tplSignup),
-
-        events: {
-            'click #btn-ok'         : 'signup',
-            'focus .signup-username' : 'showDetailsUsername',
-            'focusout .signup-username' : 'hideDetailsUsername',
-            'focus .signup-pass' : 'showDetailsPass',
-            'focusout .signup-pass' : 'hideDetailsPass',
-            'focus .signup-pass-confirm' : 'showDetailsPassConfirm',
-            'focusout .signup-pass-confirm' : 'hideDetailsPassConfirm'
-        },
-
-
-        initialize: function() {
-            this.model = new UserModel();
-            this.model.once("sync", this.saveUserSuccess);
-            this.model.once("error", this.saveUserError);
-
-            this.$("input[name='username']").focus();
-
-            Backbone.Validation.bind(this, {
-                valid: function(view, attr, selector) {
-                    var $el = view.$('[name=' + attr + ']'),  $group = $el.closest('.form-group');
-                    if (view.model.preValidate(attr, $el.val())) {
-                        return;
-                    }
-                    $group.removeClass('has-error');
-                    $group.addClass('has-success');
-                },
-
-                invalid: function(view, attr, error, selector) {
-                    var $el = view.$('[name=' + attr + ']'),
-                    $group = $el.closest('.form-group');
-                    $el.popover({
-                        content: error,
-                        placement: 'left'
-                    });
-                    $el.popover('show');
-                    $group.addClass('has-error');
-                }
-
-            });
-            app.that = this;
-
-        },
-
-        onDomRefresh: function(){
-            this.focusFirstInput();
-        },
-
-        focusFirstInput: function() {
-            this.$(':input:visible:enabled:first').focus();
-        },
-
-
-        render: function() {
-            this.$('[name=username]').focus();
-
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        },
-
-        signup: function(){
-            var data = this.$el.find("#form-user").serializeObject();
-            this.model.set(data);
-
-            if(this.model.isValid(true)){
-                this.model.save();
-            }
-        },
-
-        saveUserSuccess: function(model, response, options){
-          console.log('OPTIONS', options);
-          console.log('RESPONSE', response);
-          console.log('MODEL', model);
-            if (typeof app.that === 'undefined') {
-                return;
-            }
-            new ModalGenericView({
-                message: 'Revise su email, para confirmar su registro'
-            });
-            app.that.destroyView();
-            delete app.that;
-        },
-
-        saveUserError: function(model, response, options){
-            new ModalGenericView({
-                message: 'Se presento un error al registrar el usuario'
-            });
-        },
-
-        showDetailsUsername : function() {
-            this.model.preValidate('username', this.$(".signup-username").val());
-
-            // if (!this.model.preValidate('username', this.$("input.signup-username").val() )) {
-            //     console.log("true");
-            // }else {
-            //     console.log("false");
-            // }
-
-            this.$(".signup-username").popover({
-                content: 'Ingresa tu dirección de correo electronico.',
-                placement: 'left'
-            });
-            this.$(".signup-username").popover('show');
-        },
-        hideDetailsUsername : function() {
-            this.$(".signup-username").popover('destroy');
-        },
-
-        showDetailsPass : function() {
-            this.$(".signup-pass").popover({
-                content: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero',
-                placement: 'left'
-            });
-
-            this.$(".signup-pass").popover('show');
-        },
-        hideDetailsPass : function() {
-            this.$(".signup-pass").popover('destroy');
-        },
-
-        showDetailsPassConfirm : function() {
-            this.$(".signup-pass-confirm").popover({
-                content: 'Confirmar password',
-                placement: 'left'
-            });
-            this.$(".signup-pass-confirm").popover('show');
-        },
-        hideDetailsPassConfirm : function() {
-            this.$(".signup-pass-confirm").popover('destroy');
-        }
-	});
-
-	return SignupView;
-
-});
-
-define('models/UserTokenModel',[
-    'backbone'
-], function(Backbone){
-
-    var UserTokenModel = Backbone.Model.extend({
-
-        urlRoot: 'usertoken',
-
-        defaults: {
-            token: '',
-            username: '',
-            tipo: '',
-            fechaVigencia: (new Date()).getTime() + 5
-            // fechaVigencia: (new Date()).getTime()
-        },
-
-
-
-        isAuthorized: function(){
-          return Boolean(this.get("token"));
-        },
-
-
-        validation: {
-            token: {
-                required: true
-            },
-            username: {
-                required: true,
-                pattern: 'email'
-            },
-            tipo: {
-                required: true
-            },
-            fechaVigencia: {
-                required: true
-            }
-        }
-
-    });
-
-    return UserTokenModel;
-});
-
-
-define('text!templates/tplTokenChangePass.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n        <form id="form-user" role="form">\n            <p>Especifica tu nuevo password</p>\n            <div class="row">\n                <div class="col-xs-6">\n                    <div class="form-group">\n                        <label>Password</label>\n                        <input class="form-control" placeholder="Password" type="password" name="password" value="<%= password %>">\n                        <p class="help-block"></p>\n                    </div>\n                </div>\n            </div>\n            <div class="row">\n                <div class="col-xs-6">\n                    <div class="form-group">\n                        <label>Confirm Password</label>\n                        <input class="form-control" placeholder="Confirm Password" type="password" name="passwordConfirm" value="<%= passwordConfirm %>">\n                        <p class="help-block"></p>\n                    </div>\n                </div>\n            </div>\n            <div class="row">\n                <div class="modal-footer">\n                    <button id="btn-ok" type="button" class="btn btn-success">Cambiar Password</button>\n                </div>\n            </div>\n        </form>\n    </div>\n</div>';});
-
-define('views/TokenChangePassView',[
-    'jquery',
-    'core/BaseView',
-    'models/UserModel',
-    'views/private/util/ModalGenericView',
-    'text!templates/tplTokenChangePass.html'
-], function($, BaseView, UserModel, ModalGenericView, tplTokenChangePass){
-
-    var TokenChangePassView = BaseView.extend({
-        template: _.template(tplTokenChangePass),
-
-        events: {
-            'click #btn-ok'         : 'changePass'
-        },
-
-        initialize: function(opts) {;
-            this.model = new UserModel();
-            this.listenTo(this.model, 'sync', this.syncUserToken);
-            this.listenTo(this.model, 'error', this.errorUserToken);
-
-            this.model.set({id: 'no-replay@entuliga.com', username: 'no-replay@entuliga.com', token: opts.token});
-            Backbone.Validation.bind(this);
-        },
-
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        },
-
-        changePass: function(){
-            var data = this.$el.find("#form-user").serializeObject();
-            this.model.set(data);
-
-            if(this.model.isValid(true)){
-                this.model.save();
-            }
-        },
-
-        syncUserToken: function() {
-            new ModalGenericView({
-                message: 'Su password se ha restaurado',
-                callbackConfirm: function (data) {
-                    Backbone.history.navigate('login', { trigger : true });
-                }
-            });
-        },
-
-        errorUserToken: function(model, response) {
-            new ModalGenericView({
-                message: response.responseJSON.message
-            });
-        }
-    });
-
-    return TokenChangePassView;
-
-});
-
-define('text!templates/tplTokenValidate.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n        <div class="jumbotron">\n            <h1>¡Bienvenido a entuliga.com!</h1>\n            <p>Hola <%= username %>, ya estas registrado, puedes utilizar la plataforma.</p>\n        </div>\n    </div>\n</div>';});
-
-
-define('text!templates/tplTokenInValid.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n        <div class="jumbotron">\n            <p>Se presento un error en la plataforma: <%= message %></p>\n        </div>\n    </div>\n</div>';});
-
-define('views/TokenValidateView',[
-    'jquery',
-    'core/BaseView',
-    'models/UserTokenModel',
-    'views/TokenChangePassView',
-    'text!templates/tplTokenValidate.html',
-    'text!templates/tplTokenInValid.html'
-], function($, BaseView, UserTokenModel, TokenChangePassView, tplTokenValidate, tplTokenInValid){
-
-    var TokenValidateView = BaseView.extend({
-        template: _.template(tplTokenValidate),
-        templateInValid: _.template(tplTokenInValid),
-
-        events: {
-            'click #btn-ok'         : 'changePass'
-        },
-
-        initialize: function(opts) {;
-            this.model = new UserTokenModel();
-            this.listenTo(this.model, 'sync', this.syncUserToken);
-            this.listenTo(this.model, 'error', this.errorUserToken);
-
-            this.model.set({id: opts.token});
-            this.model.fetch();
-            Backbone.Validation.bind(this);
-        },
-
-        render: function() {
-            return this;
-        },
-
-        syncUserToken: function() {
-            if (this.model.get('tipo') === 'VALID_EMAIL') {
-                this.$el.html(this.template(this.model.toJSON()));
-            } else {
-                this.$el.html(this.templateInValid({message: 'Token no valido.'}));
-            }
-        },
-
-        errorUserToken: function(model, response) {
-            this.$el.html(this.templateInValid(response.responseJSON));
-        }
-    });
-
-    return TokenValidateView;
-
-});
-
-define('text!templates/private/perfil/tplPerfilAdmin.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n      <div class="main-box">\n        <div class="panel panel-primary">\n\n            <div class="panel-heading">\n                <h3 class="panel-title">Perfil de <%= username %></h3>\n            </div>\n            <div class="panel-body">\n                <div class="row">\n                    <div class="col-md-12">\n                        <div class="jumbotron">\n                            <h1>¡Bienvenido a entuliga.com!</h1>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n      </div>\n\n    </div>\n</div>\n';});
-
-define('views/private/perfil/PerfilAdminView',[
-    'jquery',
-    'backbone',
-    'core/BaseView',
-    'models/UserModel',
-    'views/private/util/ModalGenericView',
-    'text!templates/private/perfil/tplPerfilAdmin.html',
-    'Session'
-], function($, Backbone, BaseView, UserModel, ModalGenericView, tplPerfilAdmin, Session){
-
-    var LigaAdminView = BaseView.extend({
-        template: _.template(tplPerfilAdmin),
-
-        events: {
-
-        },
-
-        initialize: function() {
-            this.model = new UserModel();
-            this.listenTo(this.model, 'sync', this.saveUserSuccess);
-            this.listenTo(this.model, 'error', this.saveUserError);
-            this.model.set({id: Session.get('username')});
-            this.model.fetch();
-        },
-
-        render: function() {
-            return this;
-        },
-
-        saveUserSuccess: function(model, response, options){
-            this.$el.html(this.template(this.model.toJSON()));
-        },
-
-        saveUserError: function(model, response, options){
-            new ModalGenericView({
-                message: response.responseJSON.message
-            });
-        }
-    });
-
-    return LigaAdminView;
-
-});
-
-define('text!templates/private/tplMainAdminNav.html',[],function () { return '<div class="container">\n    <div class="container-fluid">\n        <div class="navbar-header">\n            <a id="home" class="navbar-brand title-entuliga" href="#">entuliga</a>\n        </div>\n        <div class="collapse navbar-collapse">\n            <ul class="nav navbar-nav menu-liga">\n                <li class=" nav-item-entuliga">\n                    <a href="#admin/perfil">Perfil</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/ligas">Ligas</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/torneos">Torneos</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/equipos">Equipos</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/jugadores">Jugadores</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/arbitros">Arbitros</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/canchas">Canchas</a>\n                </li>\n            </ul>\n            <p class="nav navbar-right">\n                <button id="logout" type="button" class="btn btn-danger navbar-btn">Salir</button>\n            </p>\n        </div>\n    </div>\n</div>\n';});
-
-define('views/private/MainAdminNavView',[
-	'jquery',
-	'core/BaseView',
-	'text!templates/private/tplMainAdminNav.html',
-	'Session'
-], function($, BaseView, tplMainAdminNav, Session){
-
-	var MainAdminNavView = BaseView.extend({
-	    el: $("#hotel-nav"),
-
-        template: _.template(tplMainAdminNav),
-
-        events: {
-            'click #logout'             : 'logout',
-            'click #home'               : 'homeAdmin',
-            'click li.nav-item-entuliga'  : 'activeMenu'
-        },
-
-        initialize: function() {
-          // this.listenTo("reset", this.updateView);
-          // this.listenTo('destroy', this.remove);
-          // this.bind("reset", this.remove());
-          this.render();
-        },
-
-        render: function() {
-            this.$el.html(this.template());
-            // this.remove();
-            return this;
-        },
-
-        logout: function(){
-            Session.logout(function(response){
-                Backbone.history.navigate('', { trigger : true });
-            });
-        },
-
-        homeAdmin: function(){
-            Backbone.history.navigate('admin', { trigger : true });
-        },
-
-        activeMenu: function(event){
-            // console.log("click");
-            // console.log(event);
-            // console.log($(event.target).parent());
-            $(event.target).parent().addClass('active');
-            // $('.nav-item-entuliga').removeClass('active');
-        },
-
-        destroy_view: function() {
-          // console.log("remove");
-          // COMPLETELY UNBIND THE VIEW
-          this.undelegateEvents();
-
-          this.$el.removeData().unbind();
-
-          // Remove view from DOM
-          this.remove();
-          Backbone.View.prototype.remove.call(this);
-        }
-	});
-
-	return MainAdminNavView;
-
-});
+		api.set = api;
+		api.get = function (key) {
+			return api.call(api, key);
+		};
+		api.getJSON = function () {
+			return api.apply({
+				json: true
+			}, [].slice.call(arguments));
+		};
+		api.defaults = {};
+
+		api.remove = function (key, attributes) {
+			api(key, '', extend(attributes, {
+				expires: -1
+			}));
+		};
+
+		api.withConverter = init;
+
+		return api;
+	}
+
+	return init(function () {});
+}));
 
 /*!
  * Bootstrap v3.3.1 (http://getbootstrap.com)
@@ -18671,6 +18055,3646 @@ if (typeof jQuery === 'undefined') {
 
 define("bootstrap", ["jquery"], function(){});
 
+
+define('text!templates/private/tplRootAdmin.html',[],function () { return '<div id="header-region">\n  <nav id="header-general" class="navbar navbar-default navbar-fixed-top" role="navigation">\n\n  </nav>\n</div>\n<div id="container-region">\n  <div class="container">\n    <div class="starter-template">\n      <div id="container-body" data-transition="fadeOutLeft">\n\n      </div>\n    </div>\n  </div>\n\n</div>\n<div id="footer-region">\n  <footer class="footer">\n    <div class="container">\n        <div class="row">\n          <div class="span3 pull-right">\n          </div>\n          <div class="span6 pull-left">\n            <span class="small">\n              Design by CodigoArtesanal | Copyright © 2017 entuliga. All Rights Reserved.\n            </span>\n          </div>\n        </div>\n    </div>\n  </footer>\n\n  <div id="modal-generic">\n  </div>\n</div>\n';});
+
+
+define('text!templates/private/tplMainAdminNav.html',[],function () { return '<nav id="header-general" class="navbar navbar-default navbar-fixed-top" role="navigation">\n\n<div class="container">\n    <div class="container-fluid">\n        <div class="navbar-header">\n            <a id="home" class="navbar-brand title-entuliga" href="#">entuliga</a>\n        </div>\n        <div class="collapse navbar-collapse">\n            <ul class="nav navbar-nav menu-liga">\n                <li class=" nav-item-entuliga">\n                    <a href="#admin/perfil">Perfil</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/ligas">Ligas</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/torneos">Torneos</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/equipos">Equipos</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/jugadores">Jugadores</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/arbitros">Arbitros</a>\n                </li>\n                <li class="nav-item-entuliga">\n                    <a href="#admin/canchas">Canchas</a>\n                </li>\n            </ul>\n            <p class="nav navbar-right">\n                <button id="logout" type="button" class="btn btn-danger navbar-btn">Salir</button>\n            </p>\n        </div>\n    </div>\n</div>\n</nav>\n';});
+
+define('models/util/ModalGenericModel',[
+    'backbone'
+], function(Backbone){
+
+    var ModalGenericModel = Backbone.Model.extend({
+
+        urlRoot: 'modal',
+
+        defaults: {
+        },
+
+        initialize: function() {
+        }
+
+    });
+
+	return ModalGenericModel;
+});
+
+define('text!templates/private/util/tplModalGeneric.html',[],function () { return '<div class="modal fade" id="modal-generic-dialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">\n    <div class="modal-dialog">\n        <div class="modal-content">\n            <!-- dialog body -->\n            <div class="modal-body">\n                <button type="button" class="close" data-dismiss="modal">&times;</button>\n                <%= message %>\n            </div>\n            <!-- dialog buttons -->\n            <div class="modal-footer">\n                <button id="mg-btn-cancel" data-bb-handler="cancel" type="button" class="btn btn-default"><%= labelCancel %></button>\n                <button id="mg-btn-confirm" data-bb-handler="confirm" type="button" class="btn btn-primary"><%= labelConfirm %></button>\n            </div>\n        </div>\n    </div>\n</div>';});
+
+define('views/private/util/ModalGenericView',[
+	'jquery',
+	'backbone',
+	'core/BaseView',
+	'models/util/ModalGenericModel',
+	'text!templates/private/util/tplModalGeneric.html'
+], function($, Backbone, BaseView, ModalGenericModel, tplModalGeneric){
+
+    var ModelGenericView = BaseView.extend({
+        el: '#modal-generic',
+        template: _.template(tplModalGeneric),
+
+        events: {
+            'click #mg-btn-cancel'     : 'clickCancel',
+            'click #mg-btn-confirm'    : 'clickConfirm'
+        },
+
+        initialize: function(opts) {
+            this.model = new ModalGenericModel();
+            this.callbackCancel = opts.callbackCancel;
+            this.callbackConfirm = opts.callbackConfirm;
+            if (typeof opts.type === 'undefined') {
+                opts.type = 'alert';
+            }
+            if (typeof opts.message === 'undefined') {
+                opts.message = ' ';
+            }
+            if (typeof opts.labelCancel === 'undefined') {
+                opts.labelCancel = 'Cancel';
+            }
+            if (typeof opts.labelConfirm === 'undefined') {
+                opts.labelConfirm = 'OK';
+            }
+            this.model.set({message: opts.message,
+                            labelCancel: opts.labelCancel,
+                            labelConfirm: opts.labelConfirm});
+            this.type = opts.type;
+            this.render();
+        },
+
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            this.btnCancel = this.$el.find('#mg-btn-cancel');
+            this.btnConfirm = this.$el.find('#mg-btn-confirm');
+
+            if(this.type == 'confirm') {
+                this.btnCancel.show();
+            } else {
+                this.btnCancel.hide();
+            }
+            this.$('#modal-generic-dialog').modal({backdrop: "static", keyboard: false});
+        },
+
+        clickCancel: function(event){
+            this.$('#modal-generic-dialog').modal('hide');
+            if (typeof this.callbackCancel == 'function') {
+                this.callbackCancel(event);
+            }
+            this.undelegateEvents();
+        },
+
+        clickConfirm: function(event) {
+            this.$('#modal-generic-dialog').modal('hide');
+            if (typeof this.callbackConfirm == 'function') {
+                this.callbackConfirm(event);
+            }
+            this.undelegateEvents();
+        }
+    });
+
+    return ModelGenericView;
+});
+define('Session',[
+  'jquery',
+  'backbone',
+  'views/private/util/ModalGenericView',
+  'jscookie'
+], function($, Backbone, ModalGenericView, Cookies) {
+
+  var SessionModel = Backbone.Model.extend({
+    url: 'session/login',
+
+    defaults: {
+      username: '',
+      password: '',
+      authenticated: false,
+      user_id: ''
+    },
+
+    initialize: function() {
+    },
+
+    validation: {
+      username: {
+        required: true,
+        pattern: 'email',
+        msg: 'Por favor especifique un email correcto'
+      },
+      password: {
+        required: true,
+        pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
+        msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
+      }
+    },
+
+
+
+    login: function(callback, user, pass, remember) {
+      var thatCallback = callback;
+      var self = this;
+
+      this.save({ username: user, password: pass }, {
+        wait: true,
+
+        success: function(model, response) {
+          Cookies.set('auth_token', JSON.stringify({ username: user, token: model.get('token') }), { expires: 365 });
+
+          self.set('authenticated', true);
+          self.set('username', user)
+
+          $.ajaxSetup({
+            headers: {
+              "X-Auth-Token": model.get('token')
+            }
+          });
+          console.log('Successfully saved!');
+          thatCallback();
+        },
+        error: function(model, error) {
+          console.log("Error autenthication");
+          // la parte de session esta mal Session
+          Session.set('authenticated', false);
+          Session.set('username', '');
+          Cookies.remove('auth_token')
+          new ModalGenericView({
+            message: 'Usuario y/o contraseña incorrecta'
+          });
+        }
+      });
+    },
+
+    logout: function(callback) {
+      var thisSession = this;
+      var that = callback;
+      var Session = new SessionModel();
+      Cookies.remove('auth_token');
+
+
+
+      Session.save({ username: this.get('username'), logout: 'logout' }, {
+        wait: true,
+        success: function(model, response) {
+
+          thisSession.clear();
+          $.ajaxSetup({
+            headers: {
+              "X-Auth-Token": ''
+            }
+          });
+          Session.set('username', '');
+          Cookies.remove('auth_token');
+          console.log('Successfully Remove cookie!');
+          that();
+        },
+        error: function(model, error) {
+          console.log(model.toJSON());
+          console.log('error.responseText');
+          window.location.reload();
+
+        }
+      });
+    }
+  });
+
+  return new SessionModel();
+});
+
+define('views/private/MainAdminNavView',[
+  'jquery',
+  'core/BaseView',
+  'text!templates/private/tplMainAdminNav.html',
+  'Session'
+], function($, BaseView, tplMainAdminNav, Session) {
+
+  var MainAdminNavView = BaseView.extend({
+
+    template: _.template(tplMainAdminNav),
+
+    events: {
+      'click #logout': 'logout',
+      'click #home': 'homeAdmin',
+      'click .nav-item-entuliga': 'activeMenu'
+    },
+
+    initialize: function() {
+      this.render();
+    },
+
+    render: function() {
+      this.$el.html(this.template());
+      return this;
+    },
+
+    logout: function() {
+      //cambiar este logout
+      Session.logout(function(response) {
+        Backbone.history.navigate('', { trigger: true });
+        window.location.reload();
+      });
+    },
+
+    homeAdmin: function() {
+      Backbone.history.navigate('', { trigger: true });
+    },
+
+    activeMenu: function(event) {
+      $('.nav-item-entuliga').removeClass('active');
+      $(event.target).parent().addClass('active');
+    },
+  });
+
+  return MainAdminNavView;
+
+});
+
+/*!
+ * typeahead.js 0.11.1
+ * https://github.com/twitter/typeahead.js
+ * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
+ */
+
+(function(root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define("bloodhound", [ "jquery" ], function(a0) {
+            return root["Bloodhound"] = factory(a0);
+        });
+    } else if (typeof exports === "object") {
+        module.exports = factory(require("jquery"));
+    } else {
+        root["Bloodhound"] = factory(jQuery);
+    }
+})(this, function($) {
+    var _ = function() {
+        "use strict";
+        return {
+            isMsie: function() {
+                return /(msie|trident)/i.test(navigator.userAgent) ? navigator.userAgent.match(/(msie |rv:)(\d+(.\d+)?)/i)[2] : false;
+            },
+            isBlankString: function(str) {
+                return !str || /^\s*$/.test(str);
+            },
+            escapeRegExChars: function(str) {
+                return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            },
+            isString: function(obj) {
+                return typeof obj === "string";
+            },
+            isNumber: function(obj) {
+                return typeof obj === "number";
+            },
+            isArray: $.isArray,
+            isFunction: $.isFunction,
+            isObject: $.isPlainObject,
+            isUndefined: function(obj) {
+                return typeof obj === "undefined";
+            },
+            isElement: function(obj) {
+                return !!(obj && obj.nodeType === 1);
+            },
+            isJQuery: function(obj) {
+                return obj instanceof $;
+            },
+            toStr: function toStr(s) {
+                return _.isUndefined(s) || s === null ? "" : s + "";
+            },
+            bind: $.proxy,
+            each: function(collection, cb) {
+                $.each(collection, reverseArgs);
+                function reverseArgs(index, value) {
+                    return cb(value, index);
+                }
+            },
+            map: $.map,
+            filter: $.grep,
+            every: function(obj, test) {
+                var result = true;
+                if (!obj) {
+                    return result;
+                }
+                $.each(obj, function(key, val) {
+                    if (!(result = test.call(null, val, key, obj))) {
+                        return false;
+                    }
+                });
+                return !!result;
+            },
+            some: function(obj, test) {
+                var result = false;
+                if (!obj) {
+                    return result;
+                }
+                $.each(obj, function(key, val) {
+                    if (result = test.call(null, val, key, obj)) {
+                        return false;
+                    }
+                });
+                return !!result;
+            },
+            mixin: $.extend,
+            identity: function(x) {
+                return x;
+            },
+            clone: function(obj) {
+                return $.extend(true, {}, obj);
+            },
+            getIdGenerator: function() {
+                var counter = 0;
+                return function() {
+                    return counter++;
+                };
+            },
+            templatify: function templatify(obj) {
+                return $.isFunction(obj) ? obj : template;
+                function template() {
+                    return String(obj);
+                }
+            },
+            defer: function(fn) {
+                setTimeout(fn, 0);
+            },
+            debounce: function(func, wait, immediate) {
+                var timeout, result;
+                return function() {
+                    var context = this, args = arguments, later, callNow;
+                    later = function() {
+                        timeout = null;
+                        if (!immediate) {
+                            result = func.apply(context, args);
+                        }
+                    };
+                    callNow = immediate && !timeout;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                    if (callNow) {
+                        result = func.apply(context, args);
+                    }
+                    return result;
+                };
+            },
+            throttle: function(func, wait) {
+                var context, args, timeout, result, previous, later;
+                previous = 0;
+                later = function() {
+                    previous = new Date();
+                    timeout = null;
+                    result = func.apply(context, args);
+                };
+                return function() {
+                    var now = new Date(), remaining = wait - (now - previous);
+                    context = this;
+                    args = arguments;
+                    if (remaining <= 0) {
+                        clearTimeout(timeout);
+                        timeout = null;
+                        previous = now;
+                        result = func.apply(context, args);
+                    } else if (!timeout) {
+                        timeout = setTimeout(later, remaining);
+                    }
+                    return result;
+                };
+            },
+            stringify: function(val) {
+                return _.isString(val) ? val : JSON.stringify(val);
+            },
+            noop: function() {}
+        };
+    }();
+    var VERSION = "0.11.1";
+    var tokenizers = function() {
+        "use strict";
+        return {
+            nonword: nonword,
+            whitespace: whitespace,
+            obj: {
+                nonword: getObjTokenizer(nonword),
+                whitespace: getObjTokenizer(whitespace)
+            }
+        };
+        function whitespace(str) {
+            str = _.toStr(str);
+            return str ? str.split(/\s+/) : [];
+        }
+        function nonword(str) {
+            str = _.toStr(str);
+            return str ? str.split(/\W+/) : [];
+        }
+        function getObjTokenizer(tokenizer) {
+            return function setKey(keys) {
+                keys = _.isArray(keys) ? keys : [].slice.call(arguments, 0);
+                return function tokenize(o) {
+                    var tokens = [];
+                    _.each(keys, function(k) {
+                        tokens = tokens.concat(tokenizer(_.toStr(o[k])));
+                    });
+                    return tokens;
+                };
+            };
+        }
+    }();
+    var LruCache = function() {
+        "use strict";
+        function LruCache(maxSize) {
+            this.maxSize = _.isNumber(maxSize) ? maxSize : 100;
+            this.reset();
+            if (this.maxSize <= 0) {
+                this.set = this.get = $.noop;
+            }
+        }
+        _.mixin(LruCache.prototype, {
+            set: function set(key, val) {
+                var tailItem = this.list.tail, node;
+                if (this.size >= this.maxSize) {
+                    this.list.remove(tailItem);
+                    delete this.hash[tailItem.key];
+                    this.size--;
+                }
+                if (node = this.hash[key]) {
+                    node.val = val;
+                    this.list.moveToFront(node);
+                } else {
+                    node = new Node(key, val);
+                    this.list.add(node);
+                    this.hash[key] = node;
+                    this.size++;
+                }
+            },
+            get: function get(key) {
+                var node = this.hash[key];
+                if (node) {
+                    this.list.moveToFront(node);
+                    return node.val;
+                }
+            },
+            reset: function reset() {
+                this.size = 0;
+                this.hash = {};
+                this.list = new List();
+            }
+        });
+        function List() {
+            this.head = this.tail = null;
+        }
+        _.mixin(List.prototype, {
+            add: function add(node) {
+                if (this.head) {
+                    node.next = this.head;
+                    this.head.prev = node;
+                }
+                this.head = node;
+                this.tail = this.tail || node;
+            },
+            remove: function remove(node) {
+                node.prev ? node.prev.next = node.next : this.head = node.next;
+                node.next ? node.next.prev = node.prev : this.tail = node.prev;
+            },
+            moveToFront: function(node) {
+                this.remove(node);
+                this.add(node);
+            }
+        });
+        function Node(key, val) {
+            this.key = key;
+            this.val = val;
+            this.prev = this.next = null;
+        }
+        return LruCache;
+    }();
+    var PersistentStorage = function() {
+        "use strict";
+        var LOCAL_STORAGE;
+        try {
+            LOCAL_STORAGE = window.localStorage;
+            LOCAL_STORAGE.setItem("~~~", "!");
+            LOCAL_STORAGE.removeItem("~~~");
+        } catch (err) {
+            LOCAL_STORAGE = null;
+        }
+        function PersistentStorage(namespace, override) {
+            this.prefix = [ "__", namespace, "__" ].join("");
+            this.ttlKey = "__ttl__";
+            this.keyMatcher = new RegExp("^" + _.escapeRegExChars(this.prefix));
+            this.ls = override || LOCAL_STORAGE;
+            !this.ls && this._noop();
+        }
+        _.mixin(PersistentStorage.prototype, {
+            _prefix: function(key) {
+                return this.prefix + key;
+            },
+            _ttlKey: function(key) {
+                return this._prefix(key) + this.ttlKey;
+            },
+            _noop: function() {
+                this.get = this.set = this.remove = this.clear = this.isExpired = _.noop;
+            },
+            _safeSet: function(key, val) {
+                try {
+                    this.ls.setItem(key, val);
+                } catch (err) {
+                    if (err.name === "QuotaExceededError") {
+                        this.clear();
+                        this._noop();
+                    }
+                }
+            },
+            get: function(key) {
+                if (this.isExpired(key)) {
+                    this.remove(key);
+                }
+                return decode(this.ls.getItem(this._prefix(key)));
+            },
+            set: function(key, val, ttl) {
+                if (_.isNumber(ttl)) {
+                    this._safeSet(this._ttlKey(key), encode(now() + ttl));
+                } else {
+                    this.ls.removeItem(this._ttlKey(key));
+                }
+                return this._safeSet(this._prefix(key), encode(val));
+            },
+            remove: function(key) {
+                this.ls.removeItem(this._ttlKey(key));
+                this.ls.removeItem(this._prefix(key));
+                return this;
+            },
+            clear: function() {
+                var i, keys = gatherMatchingKeys(this.keyMatcher);
+                for (i = keys.length; i--; ) {
+                    this.remove(keys[i]);
+                }
+                return this;
+            },
+            isExpired: function(key) {
+                var ttl = decode(this.ls.getItem(this._ttlKey(key)));
+                return _.isNumber(ttl) && now() > ttl ? true : false;
+            }
+        });
+        return PersistentStorage;
+        function now() {
+            return new Date().getTime();
+        }
+        function encode(val) {
+            return JSON.stringify(_.isUndefined(val) ? null : val);
+        }
+        function decode(val) {
+            return $.parseJSON(val);
+        }
+        function gatherMatchingKeys(keyMatcher) {
+            var i, key, keys = [], len = LOCAL_STORAGE.length;
+            for (i = 0; i < len; i++) {
+                if ((key = LOCAL_STORAGE.key(i)).match(keyMatcher)) {
+                    keys.push(key.replace(keyMatcher, ""));
+                }
+            }
+            return keys;
+        }
+    }();
+    var Transport = function() {
+        "use strict";
+        var pendingRequestsCount = 0, pendingRequests = {}, maxPendingRequests = 6, sharedCache = new LruCache(10);
+        function Transport(o) {
+            o = o || {};
+            this.cancelled = false;
+            this.lastReq = null;
+            this._send = o.transport;
+            this._get = o.limiter ? o.limiter(this._get) : this._get;
+            this._cache = o.cache === false ? new LruCache(0) : sharedCache;
+        }
+        Transport.setMaxPendingRequests = function setMaxPendingRequests(num) {
+            maxPendingRequests = num;
+        };
+        Transport.resetCache = function resetCache() {
+            sharedCache.reset();
+        };
+        _.mixin(Transport.prototype, {
+            _fingerprint: function fingerprint(o) {
+                o = o || {};
+                return o.url + o.type + $.param(o.data || {});
+            },
+            _get: function(o, cb) {
+                var that = this, fingerprint, jqXhr;
+                fingerprint = this._fingerprint(o);
+                if (this.cancelled || fingerprint !== this.lastReq) {
+                    return;
+                }
+                if (jqXhr = pendingRequests[fingerprint]) {
+                    jqXhr.done(done).fail(fail);
+                } else if (pendingRequestsCount < maxPendingRequests) {
+                    pendingRequestsCount++;
+                    pendingRequests[fingerprint] = this._send(o).done(done).fail(fail).always(always);
+                } else {
+                    this.onDeckRequestArgs = [].slice.call(arguments, 0);
+                }
+                function done(resp) {
+                    cb(null, resp);
+                    that._cache.set(fingerprint, resp);
+                }
+                function fail() {
+                    cb(true);
+                }
+                function always() {
+                    pendingRequestsCount--;
+                    delete pendingRequests[fingerprint];
+                    if (that.onDeckRequestArgs) {
+                        that._get.apply(that, that.onDeckRequestArgs);
+                        that.onDeckRequestArgs = null;
+                    }
+                }
+            },
+            get: function(o, cb) {
+                var resp, fingerprint;
+                cb = cb || $.noop;
+                o = _.isString(o) ? {
+                    url: o
+                } : o || {};
+                fingerprint = this._fingerprint(o);
+                this.cancelled = false;
+                this.lastReq = fingerprint;
+                if (resp = this._cache.get(fingerprint)) {
+                    cb(null, resp);
+                } else {
+                    this._get(o, cb);
+                }
+            },
+            cancel: function() {
+                this.cancelled = true;
+            }
+        });
+        return Transport;
+    }();
+    var SearchIndex = window.SearchIndex = function() {
+        "use strict";
+        var CHILDREN = "c", IDS = "i";
+        function SearchIndex(o) {
+            o = o || {};
+            if (!o.datumTokenizer || !o.queryTokenizer) {
+                $.error("datumTokenizer and queryTokenizer are both required");
+            }
+            this.identify = o.identify || _.stringify;
+            this.datumTokenizer = o.datumTokenizer;
+            this.queryTokenizer = o.queryTokenizer;
+            this.reset();
+        }
+        _.mixin(SearchIndex.prototype, {
+            bootstrap: function bootstrap(o) {
+                this.datums = o.datums;
+                this.trie = o.trie;
+            },
+            add: function(data) {
+                var that = this;
+                data = _.isArray(data) ? data : [ data ];
+                _.each(data, function(datum) {
+                    var id, tokens;
+                    that.datums[id = that.identify(datum)] = datum;
+                    tokens = normalizeTokens(that.datumTokenizer(datum));
+                    _.each(tokens, function(token) {
+                        var node, chars, ch;
+                        node = that.trie;
+                        chars = token.split("");
+                        while (ch = chars.shift()) {
+                            node = node[CHILDREN][ch] || (node[CHILDREN][ch] = newNode());
+                            node[IDS].push(id);
+                        }
+                    });
+                });
+            },
+            get: function get(ids) {
+                var that = this;
+                return _.map(ids, function(id) {
+                    return that.datums[id];
+                });
+            },
+            search: function search(query) {
+                var that = this, tokens, matches;
+                tokens = normalizeTokens(this.queryTokenizer(query));
+                _.each(tokens, function(token) {
+                    var node, chars, ch, ids;
+                    if (matches && matches.length === 0) {
+                        return false;
+                    }
+                    node = that.trie;
+                    chars = token.split("");
+                    while (node && (ch = chars.shift())) {
+                        node = node[CHILDREN][ch];
+                    }
+                    if (node && chars.length === 0) {
+                        ids = node[IDS].slice(0);
+                        matches = matches ? getIntersection(matches, ids) : ids;
+                    } else {
+                        matches = [];
+                        return false;
+                    }
+                });
+                return matches ? _.map(unique(matches), function(id) {
+                    return that.datums[id];
+                }) : [];
+            },
+            all: function all() {
+                var values = [];
+                for (var key in this.datums) {
+                    values.push(this.datums[key]);
+                }
+                return values;
+            },
+            reset: function reset() {
+                this.datums = {};
+                this.trie = newNode();
+            },
+            serialize: function serialize() {
+                return {
+                    datums: this.datums,
+                    trie: this.trie
+                };
+            }
+        });
+        return SearchIndex;
+        function normalizeTokens(tokens) {
+            tokens = _.filter(tokens, function(token) {
+                return !!token;
+            });
+            tokens = _.map(tokens, function(token) {
+                return token.toLowerCase();
+            });
+            return tokens;
+        }
+        function newNode() {
+            var node = {};
+            node[IDS] = [];
+            node[CHILDREN] = {};
+            return node;
+        }
+        function unique(array) {
+            var seen = {}, uniques = [];
+            for (var i = 0, len = array.length; i < len; i++) {
+                if (!seen[array[i]]) {
+                    seen[array[i]] = true;
+                    uniques.push(array[i]);
+                }
+            }
+            return uniques;
+        }
+        function getIntersection(arrayA, arrayB) {
+            var ai = 0, bi = 0, intersection = [];
+            arrayA = arrayA.sort();
+            arrayB = arrayB.sort();
+            var lenArrayA = arrayA.length, lenArrayB = arrayB.length;
+            while (ai < lenArrayA && bi < lenArrayB) {
+                if (arrayA[ai] < arrayB[bi]) {
+                    ai++;
+                } else if (arrayA[ai] > arrayB[bi]) {
+                    bi++;
+                } else {
+                    intersection.push(arrayA[ai]);
+                    ai++;
+                    bi++;
+                }
+            }
+            return intersection;
+        }
+    }();
+    var Prefetch = function() {
+        "use strict";
+        var keys;
+        keys = {
+            data: "data",
+            protocol: "protocol",
+            thumbprint: "thumbprint"
+        };
+        function Prefetch(o) {
+            this.url = o.url;
+            this.ttl = o.ttl;
+            this.cache = o.cache;
+            this.prepare = o.prepare;
+            this.transform = o.transform;
+            this.transport = o.transport;
+            this.thumbprint = o.thumbprint;
+            this.storage = new PersistentStorage(o.cacheKey);
+        }
+        _.mixin(Prefetch.prototype, {
+            _settings: function settings() {
+                return {
+                    url: this.url,
+                    type: "GET",
+                    dataType: "json"
+                };
+            },
+            store: function store(data) {
+                if (!this.cache) {
+                    return;
+                }
+                this.storage.set(keys.data, data, this.ttl);
+                this.storage.set(keys.protocol, location.protocol, this.ttl);
+                this.storage.set(keys.thumbprint, this.thumbprint, this.ttl);
+            },
+            fromCache: function fromCache() {
+                var stored = {}, isExpired;
+                if (!this.cache) {
+                    return null;
+                }
+                stored.data = this.storage.get(keys.data);
+                stored.protocol = this.storage.get(keys.protocol);
+                stored.thumbprint = this.storage.get(keys.thumbprint);
+                isExpired = stored.thumbprint !== this.thumbprint || stored.protocol !== location.protocol;
+                return stored.data && !isExpired ? stored.data : null;
+            },
+            fromNetwork: function(cb) {
+                var that = this, settings;
+                if (!cb) {
+                    return;
+                }
+                settings = this.prepare(this._settings());
+                this.transport(settings).fail(onError).done(onResponse);
+                function onError() {
+                    cb(true);
+                }
+                function onResponse(resp) {
+                    cb(null, that.transform(resp));
+                }
+            },
+            clear: function clear() {
+                this.storage.clear();
+                return this;
+            }
+        });
+        return Prefetch;
+    }();
+    var Remote = function() {
+        "use strict";
+        function Remote(o) {
+            this.url = o.url;
+            this.prepare = o.prepare;
+            this.transform = o.transform;
+            this.transport = new Transport({
+                cache: o.cache,
+                limiter: o.limiter,
+                transport: o.transport
+            });
+        }
+        _.mixin(Remote.prototype, {
+            _settings: function settings() {
+                return {
+                    url: this.url,
+                    type: "GET",
+                    dataType: "json"
+                };
+            },
+            get: function get(query, cb) {
+                var that = this, settings;
+                if (!cb) {
+                    return;
+                }
+                query = query || "";
+                settings = this.prepare(query, this._settings());
+                return this.transport.get(settings, onResponse);
+                function onResponse(err, resp) {
+                    err ? cb([]) : cb(that.transform(resp));
+                }
+            },
+            cancelLastRequest: function cancelLastRequest() {
+                this.transport.cancel();
+            }
+        });
+        return Remote;
+    }();
+    var oParser = function() {
+        "use strict";
+        return function parse(o) {
+            var defaults, sorter;
+            defaults = {
+                initialize: true,
+                identify: _.stringify,
+                datumTokenizer: null,
+                queryTokenizer: null,
+                sufficient: 5,
+                sorter: null,
+                local: [],
+                prefetch: null,
+                remote: null
+            };
+            o = _.mixin(defaults, o || {});
+            !o.datumTokenizer && $.error("datumTokenizer is required");
+            !o.queryTokenizer && $.error("queryTokenizer is required");
+            sorter = o.sorter;
+            o.sorter = sorter ? function(x) {
+                return x.sort(sorter);
+            } : _.identity;
+            o.local = _.isFunction(o.local) ? o.local() : o.local;
+            o.prefetch = parsePrefetch(o.prefetch);
+            o.remote = parseRemote(o.remote);
+            return o;
+        };
+        function parsePrefetch(o) {
+            var defaults;
+            if (!o) {
+                return null;
+            }
+            defaults = {
+                url: null,
+                ttl: 24 * 60 * 60 * 1e3,
+                cache: true,
+                cacheKey: null,
+                thumbprint: "",
+                prepare: _.identity,
+                transform: _.identity,
+                transport: null
+            };
+            o = _.isString(o) ? {
+                url: o
+            } : o;
+            o = _.mixin(defaults, o);
+            !o.url && $.error("prefetch requires url to be set");
+            o.transform = o.filter || o.transform;
+            o.cacheKey = o.cacheKey || o.url;
+            o.thumbprint = VERSION + o.thumbprint;
+            o.transport = o.transport ? callbackToDeferred(o.transport) : $.ajax;
+            return o;
+        }
+        function parseRemote(o) {
+            var defaults;
+            if (!o) {
+                return;
+            }
+            defaults = {
+                url: null,
+                cache: true,
+                prepare: null,
+                replace: null,
+                wildcard: null,
+                limiter: null,
+                rateLimitBy: "debounce",
+                rateLimitWait: 300,
+                transform: _.identity,
+                transport: null
+            };
+            o = _.isString(o) ? {
+                url: o
+            } : o;
+            o = _.mixin(defaults, o);
+            !o.url && $.error("remote requires url to be set");
+            o.transform = o.filter || o.transform;
+            o.prepare = toRemotePrepare(o);
+            o.limiter = toLimiter(o);
+            o.transport = o.transport ? callbackToDeferred(o.transport) : $.ajax;
+            delete o.replace;
+            delete o.wildcard;
+            delete o.rateLimitBy;
+            delete o.rateLimitWait;
+            return o;
+        }
+        function toRemotePrepare(o) {
+            var prepare, replace, wildcard;
+            prepare = o.prepare;
+            replace = o.replace;
+            wildcard = o.wildcard;
+            if (prepare) {
+                return prepare;
+            }
+            if (replace) {
+                prepare = prepareByReplace;
+            } else if (o.wildcard) {
+                prepare = prepareByWildcard;
+            } else {
+                prepare = idenityPrepare;
+            }
+            return prepare;
+            function prepareByReplace(query, settings) {
+                settings.url = replace(settings.url, query);
+                return settings;
+            }
+            function prepareByWildcard(query, settings) {
+                settings.url = settings.url.replace(wildcard, encodeURIComponent(query));
+                return settings;
+            }
+            function idenityPrepare(query, settings) {
+                return settings;
+            }
+        }
+        function toLimiter(o) {
+            var limiter, method, wait;
+            limiter = o.limiter;
+            method = o.rateLimitBy;
+            wait = o.rateLimitWait;
+            if (!limiter) {
+                limiter = /^throttle$/i.test(method) ? throttle(wait) : debounce(wait);
+            }
+            return limiter;
+            function debounce(wait) {
+                return function debounce(fn) {
+                    return _.debounce(fn, wait);
+                };
+            }
+            function throttle(wait) {
+                return function throttle(fn) {
+                    return _.throttle(fn, wait);
+                };
+            }
+        }
+        function callbackToDeferred(fn) {
+            return function wrapper(o) {
+                var deferred = $.Deferred();
+                fn(o, onSuccess, onError);
+                return deferred;
+                function onSuccess(resp) {
+                    _.defer(function() {
+                        deferred.resolve(resp);
+                    });
+                }
+                function onError(err) {
+                    _.defer(function() {
+                        deferred.reject(err);
+                    });
+                }
+            };
+        }
+    }();
+    var Bloodhound = function() {
+        "use strict";
+        var old;
+        old = window && window.Bloodhound;
+        function Bloodhound(o) {
+            o = oParser(o);
+            this.sorter = o.sorter;
+            this.identify = o.identify;
+            this.sufficient = o.sufficient;
+            this.local = o.local;
+            this.remote = o.remote ? new Remote(o.remote) : null;
+            this.prefetch = o.prefetch ? new Prefetch(o.prefetch) : null;
+            this.index = new SearchIndex({
+                identify: this.identify,
+                datumTokenizer: o.datumTokenizer,
+                queryTokenizer: o.queryTokenizer
+            });
+            o.initialize !== false && this.initialize();
+        }
+        Bloodhound.noConflict = function noConflict() {
+            window && (window.Bloodhound = old);
+            return Bloodhound;
+        };
+        Bloodhound.tokenizers = tokenizers;
+        _.mixin(Bloodhound.prototype, {
+            __ttAdapter: function ttAdapter() {
+                var that = this;
+                return this.remote ? withAsync : withoutAsync;
+                function withAsync(query, sync, async) {
+                    return that.search(query, sync, async);
+                }
+                function withoutAsync(query, sync) {
+                    return that.search(query, sync);
+                }
+            },
+            _loadPrefetch: function loadPrefetch() {
+                var that = this, deferred, serialized;
+                deferred = $.Deferred();
+                if (!this.prefetch) {
+                    deferred.resolve();
+                } else if (serialized = this.prefetch.fromCache()) {
+                    this.index.bootstrap(serialized);
+                    deferred.resolve();
+                } else {
+                    this.prefetch.fromNetwork(done);
+                }
+                return deferred.promise();
+                function done(err, data) {
+                    if (err) {
+                        return deferred.reject();
+                    }
+                    that.add(data);
+                    that.prefetch.store(that.index.serialize());
+                    deferred.resolve();
+                }
+            },
+            _initialize: function initialize() {
+                var that = this, deferred;
+                this.clear();
+                (this.initPromise = this._loadPrefetch()).done(addLocalToIndex);
+                return this.initPromise;
+                function addLocalToIndex() {
+                    that.add(that.local);
+                }
+            },
+            initialize: function initialize(force) {
+                return !this.initPromise || force ? this._initialize() : this.initPromise;
+            },
+            add: function add(data) {
+                this.index.add(data);
+                return this;
+            },
+            get: function get(ids) {
+                ids = _.isArray(ids) ? ids : [].slice.call(arguments);
+                return this.index.get(ids);
+            },
+            search: function search(query, sync, async) {
+                var that = this, local;
+                local = this.sorter(this.index.search(query));
+                sync(this.remote ? local.slice() : local);
+                if (this.remote && local.length < this.sufficient) {
+                    this.remote.get(query, processRemote);
+                } else if (this.remote) {
+                    this.remote.cancelLastRequest();
+                }
+                return this;
+                function processRemote(remote) {
+                    var nonDuplicates = [];
+                    _.each(remote, function(r) {
+                        !_.some(local, function(l) {
+                            return that.identify(r) === that.identify(l);
+                        }) && nonDuplicates.push(r);
+                    });
+                    async && async(nonDuplicates);
+                }
+            },
+            all: function all() {
+                return this.index.all();
+            },
+            clear: function clear() {
+                this.index.reset();
+                return this;
+            },
+            clearPrefetchCache: function clearPrefetchCache() {
+                this.prefetch && this.prefetch.clear();
+                return this;
+            },
+            clearRemoteCache: function clearRemoteCache() {
+                Transport.resetCache();
+                return this;
+            },
+            ttAdapter: function ttAdapter() {
+                return this.__ttAdapter();
+            }
+        });
+        return Bloodhound;
+    }();
+    return Bloodhound;
+});
+/*!
+ * typeahead.js 0.11.1
+ * https://github.com/twitter/typeahead.js
+ * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
+ */
+
+(function(root, factory) {
+    if (typeof define === "function" && define.amd) {
+        define("typeahead", [ "jquery" ], function(a0) {
+            return factory(a0);
+        });
+    } else if (typeof exports === "object") {
+        module.exports = factory(require("jquery"));
+    } else {
+        factory(jQuery);
+    }
+})(this, function($) {
+    var _ = function() {
+        "use strict";
+        return {
+            isMsie: function() {
+                return /(msie|trident)/i.test(navigator.userAgent) ? navigator.userAgent.match(/(msie |rv:)(\d+(.\d+)?)/i)[2] : false;
+            },
+            isBlankString: function(str) {
+                return !str || /^\s*$/.test(str);
+            },
+            escapeRegExChars: function(str) {
+                return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            },
+            isString: function(obj) {
+                return typeof obj === "string";
+            },
+            isNumber: function(obj) {
+                return typeof obj === "number";
+            },
+            isArray: $.isArray,
+            isFunction: $.isFunction,
+            isObject: $.isPlainObject,
+            isUndefined: function(obj) {
+                return typeof obj === "undefined";
+            },
+            isElement: function(obj) {
+                return !!(obj && obj.nodeType === 1);
+            },
+            isJQuery: function(obj) {
+                return obj instanceof $;
+            },
+            toStr: function toStr(s) {
+                return _.isUndefined(s) || s === null ? "" : s + "";
+            },
+            bind: $.proxy,
+            each: function(collection, cb) {
+                $.each(collection, reverseArgs);
+                function reverseArgs(index, value) {
+                    return cb(value, index);
+                }
+            },
+            map: $.map,
+            filter: $.grep,
+            every: function(obj, test) {
+                var result = true;
+                if (!obj) {
+                    return result;
+                }
+                $.each(obj, function(key, val) {
+                    if (!(result = test.call(null, val, key, obj))) {
+                        return false;
+                    }
+                });
+                return !!result;
+            },
+            some: function(obj, test) {
+                var result = false;
+                if (!obj) {
+                    return result;
+                }
+                $.each(obj, function(key, val) {
+                    if (result = test.call(null, val, key, obj)) {
+                        return false;
+                    }
+                });
+                return !!result;
+            },
+            mixin: $.extend,
+            identity: function(x) {
+                return x;
+            },
+            clone: function(obj) {
+                return $.extend(true, {}, obj);
+            },
+            getIdGenerator: function() {
+                var counter = 0;
+                return function() {
+                    return counter++;
+                };
+            },
+            templatify: function templatify(obj) {
+                return $.isFunction(obj) ? obj : template;
+                function template() {
+                    return String(obj);
+                }
+            },
+            defer: function(fn) {
+                setTimeout(fn, 0);
+            },
+            debounce: function(func, wait, immediate) {
+                var timeout, result;
+                return function() {
+                    var context = this, args = arguments, later, callNow;
+                    later = function() {
+                        timeout = null;
+                        if (!immediate) {
+                            result = func.apply(context, args);
+                        }
+                    };
+                    callNow = immediate && !timeout;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                    if (callNow) {
+                        result = func.apply(context, args);
+                    }
+                    return result;
+                };
+            },
+            throttle: function(func, wait) {
+                var context, args, timeout, result, previous, later;
+                previous = 0;
+                later = function() {
+                    previous = new Date();
+                    timeout = null;
+                    result = func.apply(context, args);
+                };
+                return function() {
+                    var now = new Date(), remaining = wait - (now - previous);
+                    context = this;
+                    args = arguments;
+                    if (remaining <= 0) {
+                        clearTimeout(timeout);
+                        timeout = null;
+                        previous = now;
+                        result = func.apply(context, args);
+                    } else if (!timeout) {
+                        timeout = setTimeout(later, remaining);
+                    }
+                    return result;
+                };
+            },
+            stringify: function(val) {
+                return _.isString(val) ? val : JSON.stringify(val);
+            },
+            noop: function() {}
+        };
+    }();
+    var WWW = function() {
+        "use strict";
+        var defaultClassNames = {
+            wrapper: "twitter-typeahead",
+            input: "tt-input",
+            hint: "tt-hint",
+            menu: "tt-menu",
+            dataset: "tt-dataset",
+            suggestion: "tt-suggestion",
+            selectable: "tt-selectable",
+            empty: "tt-empty",
+            open: "tt-open",
+            cursor: "tt-cursor",
+            highlight: "tt-highlight"
+        };
+        return build;
+        function build(o) {
+            var www, classes;
+            classes = _.mixin({}, defaultClassNames, o);
+            www = {
+                css: buildCss(),
+                classes: classes,
+                html: buildHtml(classes),
+                selectors: buildSelectors(classes)
+            };
+            return {
+                css: www.css,
+                html: www.html,
+                classes: www.classes,
+                selectors: www.selectors,
+                mixin: function(o) {
+                    _.mixin(o, www);
+                }
+            };
+        }
+        function buildHtml(c) {
+            return {
+                wrapper: '<span class="' + c.wrapper + '"></span>',
+                menu: '<div class="' + c.menu + '"></div>'
+            };
+        }
+        function buildSelectors(classes) {
+            var selectors = {};
+            _.each(classes, function(v, k) {
+                selectors[k] = "." + v;
+            });
+            return selectors;
+        }
+        function buildCss() {
+            var css = {
+                wrapper: {
+                    position: "relative",
+                    display: "inline-block"
+                },
+                hint: {
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                    borderColor: "transparent",
+                    boxShadow: "none",
+                    opacity: "1"
+                },
+                input: {
+                    position: "relative",
+                    verticalAlign: "top",
+                    backgroundColor: "transparent"
+                },
+                inputWithNoHint: {
+                    position: "relative",
+                    verticalAlign: "top"
+                },
+                menu: {
+                    position: "absolute",
+                    top: "100%",
+                    left: "0",
+                    zIndex: "100",
+                    display: "none"
+                },
+                ltr: {
+                    left: "0",
+                    right: "auto"
+                },
+                rtl: {
+                    left: "auto",
+                    right: " 0"
+                }
+            };
+            if (_.isMsie()) {
+                _.mixin(css.input, {
+                    backgroundImage: "url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)"
+                });
+            }
+            return css;
+        }
+    }();
+    var EventBus = function() {
+        "use strict";
+        var namespace, deprecationMap;
+        namespace = "typeahead:";
+        deprecationMap = {
+            render: "rendered",
+            cursorchange: "cursorchanged",
+            select: "selected",
+            autocomplete: "autocompleted"
+        };
+        function EventBus(o) {
+            if (!o || !o.el) {
+                $.error("EventBus initialized without el");
+            }
+            this.$el = $(o.el);
+        }
+        _.mixin(EventBus.prototype, {
+            _trigger: function(type, args) {
+                var $e;
+                $e = $.Event(namespace + type);
+                (args = args || []).unshift($e);
+                this.$el.trigger.apply(this.$el, args);
+                return $e;
+            },
+            before: function(type) {
+                var args, $e;
+                args = [].slice.call(arguments, 1);
+                $e = this._trigger("before" + type, args);
+                return $e.isDefaultPrevented();
+            },
+            trigger: function(type) {
+                var deprecatedType;
+                this._trigger(type, [].slice.call(arguments, 1));
+                if (deprecatedType = deprecationMap[type]) {
+                    this._trigger(deprecatedType, [].slice.call(arguments, 1));
+                }
+            }
+        });
+        return EventBus;
+    }();
+    var EventEmitter = function() {
+        "use strict";
+        var splitter = /\s+/, nextTick = getNextTick();
+        return {
+            onSync: onSync,
+            onAsync: onAsync,
+            off: off,
+            trigger: trigger
+        };
+        function on(method, types, cb, context) {
+            var type;
+            if (!cb) {
+                return this;
+            }
+            types = types.split(splitter);
+            cb = context ? bindContext(cb, context) : cb;
+            this._callbacks = this._callbacks || {};
+            while (type = types.shift()) {
+                this._callbacks[type] = this._callbacks[type] || {
+                    sync: [],
+                    async: []
+                };
+                this._callbacks[type][method].push(cb);
+            }
+            return this;
+        }
+        function onAsync(types, cb, context) {
+            return on.call(this, "async", types, cb, context);
+        }
+        function onSync(types, cb, context) {
+            return on.call(this, "sync", types, cb, context);
+        }
+        function off(types) {
+            var type;
+            if (!this._callbacks) {
+                return this;
+            }
+            types = types.split(splitter);
+            while (type = types.shift()) {
+                delete this._callbacks[type];
+            }
+            return this;
+        }
+        function trigger(types) {
+            var type, callbacks, args, syncFlush, asyncFlush;
+            if (!this._callbacks) {
+                return this;
+            }
+            types = types.split(splitter);
+            args = [].slice.call(arguments, 1);
+            while ((type = types.shift()) && (callbacks = this._callbacks[type])) {
+                syncFlush = getFlush(callbacks.sync, this, [ type ].concat(args));
+                asyncFlush = getFlush(callbacks.async, this, [ type ].concat(args));
+                syncFlush() && nextTick(asyncFlush);
+            }
+            return this;
+        }
+        function getFlush(callbacks, context, args) {
+            return flush;
+            function flush() {
+                var cancelled;
+                for (var i = 0, len = callbacks.length; !cancelled && i < len; i += 1) {
+                    cancelled = callbacks[i].apply(context, args) === false;
+                }
+                return !cancelled;
+            }
+        }
+        function getNextTick() {
+            var nextTickFn;
+            if (window.setImmediate) {
+                nextTickFn = function nextTickSetImmediate(fn) {
+                    setImmediate(function() {
+                        fn();
+                    });
+                };
+            } else {
+                nextTickFn = function nextTickSetTimeout(fn) {
+                    setTimeout(function() {
+                        fn();
+                    }, 0);
+                };
+            }
+            return nextTickFn;
+        }
+        function bindContext(fn, context) {
+            return fn.bind ? fn.bind(context) : function() {
+                fn.apply(context, [].slice.call(arguments, 0));
+            };
+        }
+    }();
+    var highlight = function(doc) {
+        "use strict";
+        var defaults = {
+            node: null,
+            pattern: null,
+            tagName: "strong",
+            className: null,
+            wordsOnly: false,
+            caseSensitive: false
+        };
+        return function hightlight(o) {
+            var regex;
+            o = _.mixin({}, defaults, o);
+            if (!o.node || !o.pattern) {
+                return;
+            }
+            o.pattern = _.isArray(o.pattern) ? o.pattern : [ o.pattern ];
+            regex = getRegex(o.pattern, o.caseSensitive, o.wordsOnly);
+            traverse(o.node, hightlightTextNode);
+            function hightlightTextNode(textNode) {
+                var match, patternNode, wrapperNode;
+                if (match = regex.exec(textNode.data)) {
+                    wrapperNode = doc.createElement(o.tagName);
+                    o.className && (wrapperNode.className = o.className);
+                    patternNode = textNode.splitText(match.index);
+                    patternNode.splitText(match[0].length);
+                    wrapperNode.appendChild(patternNode.cloneNode(true));
+                    textNode.parentNode.replaceChild(wrapperNode, patternNode);
+                }
+                return !!match;
+            }
+            function traverse(el, hightlightTextNode) {
+                var childNode, TEXT_NODE_TYPE = 3;
+                for (var i = 0; i < el.childNodes.length; i++) {
+                    childNode = el.childNodes[i];
+                    if (childNode.nodeType === TEXT_NODE_TYPE) {
+                        i += hightlightTextNode(childNode) ? 1 : 0;
+                    } else {
+                        traverse(childNode, hightlightTextNode);
+                    }
+                }
+            }
+        };
+        function getRegex(patterns, caseSensitive, wordsOnly) {
+            var escapedPatterns = [], regexStr;
+            for (var i = 0, len = patterns.length; i < len; i++) {
+                escapedPatterns.push(_.escapeRegExChars(patterns[i]));
+            }
+            regexStr = wordsOnly ? "\\b(" + escapedPatterns.join("|") + ")\\b" : "(" + escapedPatterns.join("|") + ")";
+            return caseSensitive ? new RegExp(regexStr) : new RegExp(regexStr, "i");
+        }
+    }(window.document);
+    var Input = function() {
+        "use strict";
+        var specialKeyCodeMap;
+        specialKeyCodeMap = {
+            9: "tab",
+            27: "esc",
+            37: "left",
+            39: "right",
+            13: "enter",
+            38: "up",
+            40: "down"
+        };
+        function Input(o, www) {
+            o = o || {};
+            if (!o.input) {
+                $.error("input is missing");
+            }
+            www.mixin(this);
+            this.$hint = $(o.hint);
+            this.$input = $(o.input);
+            this.query = this.$input.val();
+            this.queryWhenFocused = this.hasFocus() ? this.query : null;
+            this.$overflowHelper = buildOverflowHelper(this.$input);
+            this._checkLanguageDirection();
+            if (this.$hint.length === 0) {
+                this.setHint = this.getHint = this.clearHint = this.clearHintIfInvalid = _.noop;
+            }
+        }
+        Input.normalizeQuery = function(str) {
+            return _.toStr(str).replace(/^\s*/g, "").replace(/\s{2,}/g, " ");
+        };
+        _.mixin(Input.prototype, EventEmitter, {
+            _onBlur: function onBlur() {
+                this.resetInputValue();
+                this.trigger("blurred");
+            },
+            _onFocus: function onFocus() {
+                this.queryWhenFocused = this.query;
+                this.trigger("focused");
+            },
+            _onKeydown: function onKeydown($e) {
+                var keyName = specialKeyCodeMap[$e.which || $e.keyCode];
+                this._managePreventDefault(keyName, $e);
+                if (keyName && this._shouldTrigger(keyName, $e)) {
+                    this.trigger(keyName + "Keyed", $e);
+                }
+            },
+            _onInput: function onInput() {
+                this._setQuery(this.getInputValue());
+                this.clearHintIfInvalid();
+                this._checkLanguageDirection();
+            },
+            _managePreventDefault: function managePreventDefault(keyName, $e) {
+                var preventDefault;
+                switch (keyName) {
+                  case "up":
+                  case "down":
+                    preventDefault = !withModifier($e);
+                    break;
+
+                  default:
+                    preventDefault = false;
+                }
+                preventDefault && $e.preventDefault();
+            },
+            _shouldTrigger: function shouldTrigger(keyName, $e) {
+                var trigger;
+                switch (keyName) {
+                  case "tab":
+                    trigger = !withModifier($e);
+                    break;
+
+                  default:
+                    trigger = true;
+                }
+                return trigger;
+            },
+            _checkLanguageDirection: function checkLanguageDirection() {
+                var dir = (this.$input.css("direction") || "ltr").toLowerCase();
+                if (this.dir !== dir) {
+                    this.dir = dir;
+                    this.$hint.attr("dir", dir);
+                    this.trigger("langDirChanged", dir);
+                }
+            },
+            _setQuery: function setQuery(val, silent) {
+                var areEquivalent, hasDifferentWhitespace;
+                areEquivalent = areQueriesEquivalent(val, this.query);
+                hasDifferentWhitespace = areEquivalent ? this.query.length !== val.length : false;
+                this.query = val;
+                if (!silent && !areEquivalent) {
+                    this.trigger("queryChanged", this.query);
+                } else if (!silent && hasDifferentWhitespace) {
+                    this.trigger("whitespaceChanged", this.query);
+                }
+            },
+            bind: function() {
+                var that = this, onBlur, onFocus, onKeydown, onInput;
+                onBlur = _.bind(this._onBlur, this);
+                onFocus = _.bind(this._onFocus, this);
+                onKeydown = _.bind(this._onKeydown, this);
+                onInput = _.bind(this._onInput, this);
+                this.$input.on("blur.tt", onBlur).on("focus.tt", onFocus).on("keydown.tt", onKeydown);
+                if (!_.isMsie() || _.isMsie() > 9) {
+                    this.$input.on("input.tt", onInput);
+                } else {
+                    this.$input.on("keydown.tt keypress.tt cut.tt paste.tt", function($e) {
+                        if (specialKeyCodeMap[$e.which || $e.keyCode]) {
+                            return;
+                        }
+                        _.defer(_.bind(that._onInput, that, $e));
+                    });
+                }
+                return this;
+            },
+            focus: function focus() {
+                this.$input.focus();
+            },
+            blur: function blur() {
+                this.$input.blur();
+            },
+            getLangDir: function getLangDir() {
+                return this.dir;
+            },
+            getQuery: function getQuery() {
+                return this.query || "";
+            },
+            setQuery: function setQuery(val, silent) {
+                this.setInputValue(val);
+                this._setQuery(val, silent);
+            },
+            hasQueryChangedSinceLastFocus: function hasQueryChangedSinceLastFocus() {
+                return this.query !== this.queryWhenFocused;
+            },
+            getInputValue: function getInputValue() {
+                return this.$input.val();
+            },
+            setInputValue: function setInputValue(value) {
+                this.$input.val(value);
+                this.clearHintIfInvalid();
+                this._checkLanguageDirection();
+            },
+            resetInputValue: function resetInputValue() {
+                this.setInputValue(this.query);
+            },
+            getHint: function getHint() {
+                return this.$hint.val();
+            },
+            setHint: function setHint(value) {
+                this.$hint.val(value);
+            },
+            clearHint: function clearHint() {
+                this.setHint("");
+            },
+            clearHintIfInvalid: function clearHintIfInvalid() {
+                var val, hint, valIsPrefixOfHint, isValid;
+                val = this.getInputValue();
+                hint = this.getHint();
+                valIsPrefixOfHint = val !== hint && hint.indexOf(val) === 0;
+                isValid = val !== "" && valIsPrefixOfHint && !this.hasOverflow();
+                !isValid && this.clearHint();
+            },
+            hasFocus: function hasFocus() {
+                return this.$input.is(":focus");
+            },
+            hasOverflow: function hasOverflow() {
+                var constraint = this.$input.width() - 2;
+                this.$overflowHelper.text(this.getInputValue());
+                return this.$overflowHelper.width() >= constraint;
+            },
+            isCursorAtEnd: function() {
+                var valueLength, selectionStart, range;
+                valueLength = this.$input.val().length;
+                selectionStart = this.$input[0].selectionStart;
+                if (_.isNumber(selectionStart)) {
+                    return selectionStart === valueLength;
+                } else if (document.selection) {
+                    range = document.selection.createRange();
+                    range.moveStart("character", -valueLength);
+                    return valueLength === range.text.length;
+                }
+                return true;
+            },
+            destroy: function destroy() {
+                this.$hint.off(".tt");
+                this.$input.off(".tt");
+                this.$overflowHelper.remove();
+                this.$hint = this.$input = this.$overflowHelper = $("<div>");
+            }
+        });
+        return Input;
+        function buildOverflowHelper($input) {
+            return $('<pre aria-hidden="true"></pre>').css({
+                position: "absolute",
+                visibility: "hidden",
+                whiteSpace: "pre",
+                fontFamily: $input.css("font-family"),
+                fontSize: $input.css("font-size"),
+                fontStyle: $input.css("font-style"),
+                fontVariant: $input.css("font-variant"),
+                fontWeight: $input.css("font-weight"),
+                wordSpacing: $input.css("word-spacing"),
+                letterSpacing: $input.css("letter-spacing"),
+                textIndent: $input.css("text-indent"),
+                textRendering: $input.css("text-rendering"),
+                textTransform: $input.css("text-transform")
+            }).insertAfter($input);
+        }
+        function areQueriesEquivalent(a, b) {
+            return Input.normalizeQuery(a) === Input.normalizeQuery(b);
+        }
+        function withModifier($e) {
+            return $e.altKey || $e.ctrlKey || $e.metaKey || $e.shiftKey;
+        }
+    }();
+    var Dataset = function() {
+        "use strict";
+        var keys, nameGenerator;
+        keys = {
+            val: "tt-selectable-display",
+            obj: "tt-selectable-object"
+        };
+        nameGenerator = _.getIdGenerator();
+        function Dataset(o, www) {
+            o = o || {};
+            o.templates = o.templates || {};
+            o.templates.notFound = o.templates.notFound || o.templates.empty;
+            if (!o.source) {
+                $.error("missing source");
+            }
+            if (!o.node) {
+                $.error("missing node");
+            }
+            if (o.name && !isValidName(o.name)) {
+                $.error("invalid dataset name: " + o.name);
+            }
+            www.mixin(this);
+            this.highlight = !!o.highlight;
+            this.name = o.name || nameGenerator();
+            this.limit = o.limit || 5;
+            this.displayFn = getDisplayFn(o.display || o.displayKey);
+            this.templates = getTemplates(o.templates, this.displayFn);
+            this.source = o.source.__ttAdapter ? o.source.__ttAdapter() : o.source;
+            this.async = _.isUndefined(o.async) ? this.source.length > 2 : !!o.async;
+            this._resetLastSuggestion();
+            this.$el = $(o.node).addClass(this.classes.dataset).addClass(this.classes.dataset + "-" + this.name);
+        }
+        Dataset.extractData = function extractData(el) {
+            var $el = $(el);
+            if ($el.data(keys.obj)) {
+                return {
+                    val: $el.data(keys.val) || "",
+                    obj: $el.data(keys.obj) || null
+                };
+            }
+            return null;
+        };
+        _.mixin(Dataset.prototype, EventEmitter, {
+            _overwrite: function overwrite(query, suggestions) {
+                suggestions = suggestions || [];
+                if (suggestions.length) {
+                    this._renderSuggestions(query, suggestions);
+                } else if (this.async && this.templates.pending) {
+                    this._renderPending(query);
+                } else if (!this.async && this.templates.notFound) {
+                    this._renderNotFound(query);
+                } else {
+                    this._empty();
+                }
+                this.trigger("rendered", this.name, suggestions, false);
+            },
+            _append: function append(query, suggestions) {
+                suggestions = suggestions || [];
+                if (suggestions.length && this.$lastSuggestion.length) {
+                    this._appendSuggestions(query, suggestions);
+                } else if (suggestions.length) {
+                    this._renderSuggestions(query, suggestions);
+                } else if (!this.$lastSuggestion.length && this.templates.notFound) {
+                    this._renderNotFound(query);
+                }
+                this.trigger("rendered", this.name, suggestions, true);
+            },
+            _renderSuggestions: function renderSuggestions(query, suggestions) {
+                var $fragment;
+                $fragment = this._getSuggestionsFragment(query, suggestions);
+                this.$lastSuggestion = $fragment.children().last();
+                this.$el.html($fragment).prepend(this._getHeader(query, suggestions)).append(this._getFooter(query, suggestions));
+            },
+            _appendSuggestions: function appendSuggestions(query, suggestions) {
+                var $fragment, $lastSuggestion;
+                $fragment = this._getSuggestionsFragment(query, suggestions);
+                $lastSuggestion = $fragment.children().last();
+                this.$lastSuggestion.after($fragment);
+                this.$lastSuggestion = $lastSuggestion;
+            },
+            _renderPending: function renderPending(query) {
+                var template = this.templates.pending;
+                this._resetLastSuggestion();
+                template && this.$el.html(template({
+                    query: query,
+                    dataset: this.name
+                }));
+            },
+            _renderNotFound: function renderNotFound(query) {
+                var template = this.templates.notFound;
+                this._resetLastSuggestion();
+                template && this.$el.html(template({
+                    query: query,
+                    dataset: this.name
+                }));
+            },
+            _empty: function empty() {
+                this.$el.empty();
+                this._resetLastSuggestion();
+            },
+            _getSuggestionsFragment: function getSuggestionsFragment(query, suggestions) {
+                var that = this, fragment;
+                fragment = document.createDocumentFragment();
+                _.each(suggestions, function getSuggestionNode(suggestion) {
+                    var $el, context;
+                    context = that._injectQuery(query, suggestion);
+                    $el = $(that.templates.suggestion(context)).data(keys.obj, suggestion).data(keys.val, that.displayFn(suggestion)).addClass(that.classes.suggestion + " " + that.classes.selectable);
+                    fragment.appendChild($el[0]);
+                });
+                this.highlight && highlight({
+                    className: this.classes.highlight,
+                    node: fragment,
+                    pattern: query
+                });
+                return $(fragment);
+            },
+            _getFooter: function getFooter(query, suggestions) {
+                return this.templates.footer ? this.templates.footer({
+                    query: query,
+                    suggestions: suggestions,
+                    dataset: this.name
+                }) : null;
+            },
+            _getHeader: function getHeader(query, suggestions) {
+                return this.templates.header ? this.templates.header({
+                    query: query,
+                    suggestions: suggestions,
+                    dataset: this.name
+                }) : null;
+            },
+            _resetLastSuggestion: function resetLastSuggestion() {
+                this.$lastSuggestion = $();
+            },
+            _injectQuery: function injectQuery(query, obj) {
+                return _.isObject(obj) ? _.mixin({
+                    _query: query
+                }, obj) : obj;
+            },
+            update: function update(query) {
+                var that = this, canceled = false, syncCalled = false, rendered = 0;
+                this.cancel();
+                this.cancel = function cancel() {
+                    canceled = true;
+                    that.cancel = $.noop;
+                    that.async && that.trigger("asyncCanceled", query);
+                };
+                this.source(query, sync, async);
+                !syncCalled && sync([]);
+                function sync(suggestions) {
+                    if (syncCalled) {
+                        return;
+                    }
+                    syncCalled = true;
+                    suggestions = (suggestions || []).slice(0, that.limit);
+                    rendered = suggestions.length;
+                    that._overwrite(query, suggestions);
+                    if (rendered < that.limit && that.async) {
+                        that.trigger("asyncRequested", query);
+                    }
+                }
+                function async(suggestions) {
+                    suggestions = suggestions || [];
+                    if (!canceled && rendered < that.limit) {
+                        that.cancel = $.noop;
+                        rendered += suggestions.length;
+                        that._append(query, suggestions.slice(0, that.limit - rendered));
+                        that.async && that.trigger("asyncReceived", query);
+                    }
+                }
+            },
+            cancel: $.noop,
+            clear: function clear() {
+                this._empty();
+                this.cancel();
+                this.trigger("cleared");
+            },
+            isEmpty: function isEmpty() {
+                return this.$el.is(":empty");
+            },
+            destroy: function destroy() {
+                this.$el = $("<div>");
+            }
+        });
+        return Dataset;
+        function getDisplayFn(display) {
+            display = display || _.stringify;
+            return _.isFunction(display) ? display : displayFn;
+            function displayFn(obj) {
+                return obj[display];
+            }
+        }
+        function getTemplates(templates, displayFn) {
+            return {
+                notFound: templates.notFound && _.templatify(templates.notFound),
+                pending: templates.pending && _.templatify(templates.pending),
+                header: templates.header && _.templatify(templates.header),
+                footer: templates.footer && _.templatify(templates.footer),
+                suggestion: templates.suggestion || suggestionTemplate
+            };
+            function suggestionTemplate(context) {
+                return $("<div>").text(displayFn(context));
+            }
+        }
+        function isValidName(str) {
+            return /^[_a-zA-Z0-9-]+$/.test(str);
+        }
+    }();
+    var Menu = function() {
+        "use strict";
+        function Menu(o, www) {
+            var that = this;
+            o = o || {};
+            if (!o.node) {
+                $.error("node is required");
+            }
+            www.mixin(this);
+            this.$node = $(o.node);
+            this.query = null;
+            this.datasets = _.map(o.datasets, initializeDataset);
+            function initializeDataset(oDataset) {
+                var node = that.$node.find(oDataset.node).first();
+                oDataset.node = node.length ? node : $("<div>").appendTo(that.$node);
+                return new Dataset(oDataset, www);
+            }
+        }
+        _.mixin(Menu.prototype, EventEmitter, {
+            _onSelectableClick: function onSelectableClick($e) {
+                this.trigger("selectableClicked", $($e.currentTarget));
+            },
+            _onRendered: function onRendered(type, dataset, suggestions, async) {
+                this.$node.toggleClass(this.classes.empty, this._allDatasetsEmpty());
+                this.trigger("datasetRendered", dataset, suggestions, async);
+            },
+            _onCleared: function onCleared() {
+                this.$node.toggleClass(this.classes.empty, this._allDatasetsEmpty());
+                this.trigger("datasetCleared");
+            },
+            _propagate: function propagate() {
+                this.trigger.apply(this, arguments);
+            },
+            _allDatasetsEmpty: function allDatasetsEmpty() {
+                return _.every(this.datasets, isDatasetEmpty);
+                function isDatasetEmpty(dataset) {
+                    return dataset.isEmpty();
+                }
+            },
+            _getSelectables: function getSelectables() {
+                return this.$node.find(this.selectors.selectable);
+            },
+            _removeCursor: function _removeCursor() {
+                var $selectable = this.getActiveSelectable();
+                $selectable && $selectable.removeClass(this.classes.cursor);
+            },
+            _ensureVisible: function ensureVisible($el) {
+                var elTop, elBottom, nodeScrollTop, nodeHeight;
+                elTop = $el.position().top;
+                elBottom = elTop + $el.outerHeight(true);
+                nodeScrollTop = this.$node.scrollTop();
+                nodeHeight = this.$node.height() + parseInt(this.$node.css("paddingTop"), 10) + parseInt(this.$node.css("paddingBottom"), 10);
+                if (elTop < 0) {
+                    this.$node.scrollTop(nodeScrollTop + elTop);
+                } else if (nodeHeight < elBottom) {
+                    this.$node.scrollTop(nodeScrollTop + (elBottom - nodeHeight));
+                }
+            },
+            bind: function() {
+                var that = this, onSelectableClick;
+                onSelectableClick = _.bind(this._onSelectableClick, this);
+                this.$node.on("click.tt", this.selectors.selectable, onSelectableClick);
+                _.each(this.datasets, function(dataset) {
+                    dataset.onSync("asyncRequested", that._propagate, that).onSync("asyncCanceled", that._propagate, that).onSync("asyncReceived", that._propagate, that).onSync("rendered", that._onRendered, that).onSync("cleared", that._onCleared, that);
+                });
+                return this;
+            },
+            isOpen: function isOpen() {
+                return this.$node.hasClass(this.classes.open);
+            },
+            open: function open() {
+                this.$node.addClass(this.classes.open);
+            },
+            close: function close() {
+                this.$node.removeClass(this.classes.open);
+                this._removeCursor();
+            },
+            setLanguageDirection: function setLanguageDirection(dir) {
+                this.$node.attr("dir", dir);
+            },
+            selectableRelativeToCursor: function selectableRelativeToCursor(delta) {
+                var $selectables, $oldCursor, oldIndex, newIndex;
+                $oldCursor = this.getActiveSelectable();
+                $selectables = this._getSelectables();
+                oldIndex = $oldCursor ? $selectables.index($oldCursor) : -1;
+                newIndex = oldIndex + delta;
+                newIndex = (newIndex + 1) % ($selectables.length + 1) - 1;
+                newIndex = newIndex < -1 ? $selectables.length - 1 : newIndex;
+                return newIndex === -1 ? null : $selectables.eq(newIndex);
+            },
+            setCursor: function setCursor($selectable) {
+                this._removeCursor();
+                if ($selectable = $selectable && $selectable.first()) {
+                    $selectable.addClass(this.classes.cursor);
+                    this._ensureVisible($selectable);
+                }
+            },
+            getSelectableData: function getSelectableData($el) {
+                return $el && $el.length ? Dataset.extractData($el) : null;
+            },
+            getActiveSelectable: function getActiveSelectable() {
+                var $selectable = this._getSelectables().filter(this.selectors.cursor).first();
+                return $selectable.length ? $selectable : null;
+            },
+            getTopSelectable: function getTopSelectable() {
+                var $selectable = this._getSelectables().first();
+                return $selectable.length ? $selectable : null;
+            },
+            update: function update(query) {
+                var isValidUpdate = query !== this.query;
+                if (isValidUpdate) {
+                    this.query = query;
+                    _.each(this.datasets, updateDataset);
+                }
+                return isValidUpdate;
+                function updateDataset(dataset) {
+                    dataset.update(query);
+                }
+            },
+            empty: function empty() {
+                _.each(this.datasets, clearDataset);
+                this.query = null;
+                this.$node.addClass(this.classes.empty);
+                function clearDataset(dataset) {
+                    dataset.clear();
+                }
+            },
+            destroy: function destroy() {
+                this.$node.off(".tt");
+                this.$node = $("<div>");
+                _.each(this.datasets, destroyDataset);
+                function destroyDataset(dataset) {
+                    dataset.destroy();
+                }
+            }
+        });
+        return Menu;
+    }();
+    var DefaultMenu = function() {
+        "use strict";
+        var s = Menu.prototype;
+        function DefaultMenu() {
+            Menu.apply(this, [].slice.call(arguments, 0));
+        }
+        _.mixin(DefaultMenu.prototype, Menu.prototype, {
+            open: function open() {
+                !this._allDatasetsEmpty() && this._show();
+                return s.open.apply(this, [].slice.call(arguments, 0));
+            },
+            close: function close() {
+                this._hide();
+                return s.close.apply(this, [].slice.call(arguments, 0));
+            },
+            _onRendered: function onRendered() {
+                if (this._allDatasetsEmpty()) {
+                    this._hide();
+                } else {
+                    this.isOpen() && this._show();
+                }
+                return s._onRendered.apply(this, [].slice.call(arguments, 0));
+            },
+            _onCleared: function onCleared() {
+                if (this._allDatasetsEmpty()) {
+                    this._hide();
+                } else {
+                    this.isOpen() && this._show();
+                }
+                return s._onCleared.apply(this, [].slice.call(arguments, 0));
+            },
+            setLanguageDirection: function setLanguageDirection(dir) {
+                this.$node.css(dir === "ltr" ? this.css.ltr : this.css.rtl);
+                return s.setLanguageDirection.apply(this, [].slice.call(arguments, 0));
+            },
+            _hide: function hide() {
+                this.$node.hide();
+            },
+            _show: function show() {
+                this.$node.css("display", "block");
+            }
+        });
+        return DefaultMenu;
+    }();
+    var Typeahead = function() {
+        "use strict";
+        function Typeahead(o, www) {
+            var onFocused, onBlurred, onEnterKeyed, onTabKeyed, onEscKeyed, onUpKeyed, onDownKeyed, onLeftKeyed, onRightKeyed, onQueryChanged, onWhitespaceChanged;
+            o = o || {};
+            if (!o.input) {
+                $.error("missing input");
+            }
+            if (!o.menu) {
+                $.error("missing menu");
+            }
+            if (!o.eventBus) {
+                $.error("missing event bus");
+            }
+            www.mixin(this);
+            this.eventBus = o.eventBus;
+            this.minLength = _.isNumber(o.minLength) ? o.minLength : 1;
+            this.input = o.input;
+            this.menu = o.menu;
+            this.enabled = true;
+            this.active = false;
+            this.input.hasFocus() && this.activate();
+            this.dir = this.input.getLangDir();
+            this._hacks();
+            this.menu.bind().onSync("selectableClicked", this._onSelectableClicked, this).onSync("asyncRequested", this._onAsyncRequested, this).onSync("asyncCanceled", this._onAsyncCanceled, this).onSync("asyncReceived", this._onAsyncReceived, this).onSync("datasetRendered", this._onDatasetRendered, this).onSync("datasetCleared", this._onDatasetCleared, this);
+            onFocused = c(this, "activate", "open", "_onFocused");
+            onBlurred = c(this, "deactivate", "_onBlurred");
+            onEnterKeyed = c(this, "isActive", "isOpen", "_onEnterKeyed");
+            onTabKeyed = c(this, "isActive", "isOpen", "_onTabKeyed");
+            onEscKeyed = c(this, "isActive", "_onEscKeyed");
+            onUpKeyed = c(this, "isActive", "open", "_onUpKeyed");
+            onDownKeyed = c(this, "isActive", "open", "_onDownKeyed");
+            onLeftKeyed = c(this, "isActive", "isOpen", "_onLeftKeyed");
+            onRightKeyed = c(this, "isActive", "isOpen", "_onRightKeyed");
+            onQueryChanged = c(this, "_openIfActive", "_onQueryChanged");
+            onWhitespaceChanged = c(this, "_openIfActive", "_onWhitespaceChanged");
+            this.input.bind().onSync("focused", onFocused, this).onSync("blurred", onBlurred, this).onSync("enterKeyed", onEnterKeyed, this).onSync("tabKeyed", onTabKeyed, this).onSync("escKeyed", onEscKeyed, this).onSync("upKeyed", onUpKeyed, this).onSync("downKeyed", onDownKeyed, this).onSync("leftKeyed", onLeftKeyed, this).onSync("rightKeyed", onRightKeyed, this).onSync("queryChanged", onQueryChanged, this).onSync("whitespaceChanged", onWhitespaceChanged, this).onSync("langDirChanged", this._onLangDirChanged, this);
+        }
+        _.mixin(Typeahead.prototype, {
+            _hacks: function hacks() {
+                var $input, $menu;
+                $input = this.input.$input || $("<div>");
+                $menu = this.menu.$node || $("<div>");
+                $input.on("blur.tt", function($e) {
+                    var active, isActive, hasActive;
+                    active = document.activeElement;
+                    isActive = $menu.is(active);
+                    hasActive = $menu.has(active).length > 0;
+                    if (_.isMsie() && (isActive || hasActive)) {
+                        $e.preventDefault();
+                        $e.stopImmediatePropagation();
+                        _.defer(function() {
+                            $input.focus();
+                        });
+                    }
+                });
+                $menu.on("mousedown.tt", function($e) {
+                    $e.preventDefault();
+                });
+            },
+            _onSelectableClicked: function onSelectableClicked(type, $el) {
+                this.select($el);
+            },
+            _onDatasetCleared: function onDatasetCleared() {
+                this._updateHint();
+            },
+            _onDatasetRendered: function onDatasetRendered(type, dataset, suggestions, async) {
+                this._updateHint();
+                this.eventBus.trigger("render", suggestions, async, dataset);
+            },
+            _onAsyncRequested: function onAsyncRequested(type, dataset, query) {
+                this.eventBus.trigger("asyncrequest", query, dataset);
+            },
+            _onAsyncCanceled: function onAsyncCanceled(type, dataset, query) {
+                this.eventBus.trigger("asynccancel", query, dataset);
+            },
+            _onAsyncReceived: function onAsyncReceived(type, dataset, query) {
+                this.eventBus.trigger("asyncreceive", query, dataset);
+            },
+            _onFocused: function onFocused() {
+                this._minLengthMet() && this.menu.update(this.input.getQuery());
+            },
+            _onBlurred: function onBlurred() {
+                if (this.input.hasQueryChangedSinceLastFocus()) {
+                    this.eventBus.trigger("change", this.input.getQuery());
+                }
+            },
+            _onEnterKeyed: function onEnterKeyed(type, $e) {
+                var $selectable;
+                if ($selectable = this.menu.getActiveSelectable()) {
+                    this.select($selectable) && $e.preventDefault();
+                }
+            },
+            _onTabKeyed: function onTabKeyed(type, $e) {
+                var $selectable;
+                if ($selectable = this.menu.getActiveSelectable()) {
+                    this.select($selectable) && $e.preventDefault();
+                } else if ($selectable = this.menu.getTopSelectable()) {
+                    this.autocomplete($selectable) && $e.preventDefault();
+                }
+            },
+            _onEscKeyed: function onEscKeyed() {
+                this.close();
+            },
+            _onUpKeyed: function onUpKeyed() {
+                this.moveCursor(-1);
+            },
+            _onDownKeyed: function onDownKeyed() {
+                this.moveCursor(+1);
+            },
+            _onLeftKeyed: function onLeftKeyed() {
+                if (this.dir === "rtl" && this.input.isCursorAtEnd()) {
+                    this.autocomplete(this.menu.getTopSelectable());
+                }
+            },
+            _onRightKeyed: function onRightKeyed() {
+                if (this.dir === "ltr" && this.input.isCursorAtEnd()) {
+                    this.autocomplete(this.menu.getTopSelectable());
+                }
+            },
+            _onQueryChanged: function onQueryChanged(e, query) {
+                this._minLengthMet(query) ? this.menu.update(query) : this.menu.empty();
+            },
+            _onWhitespaceChanged: function onWhitespaceChanged() {
+                this._updateHint();
+            },
+            _onLangDirChanged: function onLangDirChanged(e, dir) {
+                if (this.dir !== dir) {
+                    this.dir = dir;
+                    this.menu.setLanguageDirection(dir);
+                }
+            },
+            _openIfActive: function openIfActive() {
+                this.isActive() && this.open();
+            },
+            _minLengthMet: function minLengthMet(query) {
+                query = _.isString(query) ? query : this.input.getQuery() || "";
+                return query.length >= this.minLength;
+            },
+            _updateHint: function updateHint() {
+                var $selectable, data, val, query, escapedQuery, frontMatchRegEx, match;
+                $selectable = this.menu.getTopSelectable();
+                data = this.menu.getSelectableData($selectable);
+                val = this.input.getInputValue();
+                if (data && !_.isBlankString(val) && !this.input.hasOverflow()) {
+                    query = Input.normalizeQuery(val);
+                    escapedQuery = _.escapeRegExChars(query);
+                    frontMatchRegEx = new RegExp("^(?:" + escapedQuery + ")(.+$)", "i");
+                    match = frontMatchRegEx.exec(data.val);
+                    match && this.input.setHint(val + match[1]);
+                } else {
+                    this.input.clearHint();
+                }
+            },
+            isEnabled: function isEnabled() {
+                return this.enabled;
+            },
+            enable: function enable() {
+                this.enabled = true;
+            },
+            disable: function disable() {
+                this.enabled = false;
+            },
+            isActive: function isActive() {
+                return this.active;
+            },
+            activate: function activate() {
+                if (this.isActive()) {
+                    return true;
+                } else if (!this.isEnabled() || this.eventBus.before("active")) {
+                    return false;
+                } else {
+                    this.active = true;
+                    this.eventBus.trigger("active");
+                    return true;
+                }
+            },
+            deactivate: function deactivate() {
+                if (!this.isActive()) {
+                    return true;
+                } else if (this.eventBus.before("idle")) {
+                    return false;
+                } else {
+                    this.active = false;
+                    this.close();
+                    this.eventBus.trigger("idle");
+                    return true;
+                }
+            },
+            isOpen: function isOpen() {
+                return this.menu.isOpen();
+            },
+            open: function open() {
+                if (!this.isOpen() && !this.eventBus.before("open")) {
+                    this.menu.open();
+                    this._updateHint();
+                    this.eventBus.trigger("open");
+                }
+                return this.isOpen();
+            },
+            close: function close() {
+                if (this.isOpen() && !this.eventBus.before("close")) {
+                    this.menu.close();
+                    this.input.clearHint();
+                    this.input.resetInputValue();
+                    this.eventBus.trigger("close");
+                }
+                return !this.isOpen();
+            },
+            setVal: function setVal(val) {
+                this.input.setQuery(_.toStr(val));
+            },
+            getVal: function getVal() {
+                return this.input.getQuery();
+            },
+            select: function select($selectable) {
+                var data = this.menu.getSelectableData($selectable);
+                if (data && !this.eventBus.before("select", data.obj)) {
+                    this.input.setQuery(data.val, true);
+                    this.eventBus.trigger("select", data.obj);
+                    this.close();
+                    return true;
+                }
+                return false;
+            },
+            autocomplete: function autocomplete($selectable) {
+                var query, data, isValid;
+                query = this.input.getQuery();
+                data = this.menu.getSelectableData($selectable);
+                isValid = data && query !== data.val;
+                if (isValid && !this.eventBus.before("autocomplete", data.obj)) {
+                    this.input.setQuery(data.val);
+                    this.eventBus.trigger("autocomplete", data.obj);
+                    return true;
+                }
+                return false;
+            },
+            moveCursor: function moveCursor(delta) {
+                var query, $candidate, data, payload, cancelMove;
+                query = this.input.getQuery();
+                $candidate = this.menu.selectableRelativeToCursor(delta);
+                data = this.menu.getSelectableData($candidate);
+                payload = data ? data.obj : null;
+                cancelMove = this._minLengthMet() && this.menu.update(query);
+                if (!cancelMove && !this.eventBus.before("cursorchange", payload)) {
+                    this.menu.setCursor($candidate);
+                    if (data) {
+                        this.input.setInputValue(data.val);
+                    } else {
+                        this.input.resetInputValue();
+                        this._updateHint();
+                    }
+                    this.eventBus.trigger("cursorchange", payload);
+                    return true;
+                }
+                return false;
+            },
+            destroy: function destroy() {
+                this.input.destroy();
+                this.menu.destroy();
+            }
+        });
+        return Typeahead;
+        function c(ctx) {
+            var methods = [].slice.call(arguments, 1);
+            return function() {
+                var args = [].slice.call(arguments);
+                _.each(methods, function(method) {
+                    return ctx[method].apply(ctx, args);
+                });
+            };
+        }
+    }();
+    (function() {
+        "use strict";
+        var old, keys, methods;
+        old = $.fn.typeahead;
+        keys = {
+            www: "tt-www",
+            attrs: "tt-attrs",
+            typeahead: "tt-typeahead"
+        };
+        methods = {
+            initialize: function initialize(o, datasets) {
+                var www;
+                datasets = _.isArray(datasets) ? datasets : [].slice.call(arguments, 1);
+                o = o || {};
+                www = WWW(o.classNames);
+                return this.each(attach);
+                function attach() {
+                    var $input, $wrapper, $hint, $menu, defaultHint, defaultMenu, eventBus, input, menu, typeahead, MenuConstructor;
+                    _.each(datasets, function(d) {
+                        d.highlight = !!o.highlight;
+                    });
+                    $input = $(this);
+                    $wrapper = $(www.html.wrapper);
+                    $hint = $elOrNull(o.hint);
+                    $menu = $elOrNull(o.menu);
+                    defaultHint = o.hint !== false && !$hint;
+                    defaultMenu = o.menu !== false && !$menu;
+                    defaultHint && ($hint = buildHintFromInput($input, www));
+                    defaultMenu && ($menu = $(www.html.menu).css(www.css.menu));
+                    $hint && $hint.val("");
+                    $input = prepInput($input, www);
+                    if (defaultHint || defaultMenu) {
+                        $wrapper.css(www.css.wrapper);
+                        $input.css(defaultHint ? www.css.input : www.css.inputWithNoHint);
+                        $input.wrap($wrapper).parent().prepend(defaultHint ? $hint : null).append(defaultMenu ? $menu : null);
+                    }
+                    MenuConstructor = defaultMenu ? DefaultMenu : Menu;
+                    eventBus = new EventBus({
+                        el: $input
+                    });
+                    input = new Input({
+                        hint: $hint,
+                        input: $input
+                    }, www);
+                    menu = new MenuConstructor({
+                        node: $menu,
+                        datasets: datasets
+                    }, www);
+                    typeahead = new Typeahead({
+                        input: input,
+                        menu: menu,
+                        eventBus: eventBus,
+                        minLength: o.minLength
+                    }, www);
+                    $input.data(keys.www, www);
+                    $input.data(keys.typeahead, typeahead);
+                }
+            },
+            isEnabled: function isEnabled() {
+                var enabled;
+                ttEach(this.first(), function(t) {
+                    enabled = t.isEnabled();
+                });
+                return enabled;
+            },
+            enable: function enable() {
+                ttEach(this, function(t) {
+                    t.enable();
+                });
+                return this;
+            },
+            disable: function disable() {
+                ttEach(this, function(t) {
+                    t.disable();
+                });
+                return this;
+            },
+            isActive: function isActive() {
+                var active;
+                ttEach(this.first(), function(t) {
+                    active = t.isActive();
+                });
+                return active;
+            },
+            activate: function activate() {
+                ttEach(this, function(t) {
+                    t.activate();
+                });
+                return this;
+            },
+            deactivate: function deactivate() {
+                ttEach(this, function(t) {
+                    t.deactivate();
+                });
+                return this;
+            },
+            isOpen: function isOpen() {
+                var open;
+                ttEach(this.first(), function(t) {
+                    open = t.isOpen();
+                });
+                return open;
+            },
+            open: function open() {
+                ttEach(this, function(t) {
+                    t.open();
+                });
+                return this;
+            },
+            close: function close() {
+                ttEach(this, function(t) {
+                    t.close();
+                });
+                return this;
+            },
+            select: function select(el) {
+                var success = false, $el = $(el);
+                ttEach(this.first(), function(t) {
+                    success = t.select($el);
+                });
+                return success;
+            },
+            autocomplete: function autocomplete(el) {
+                var success = false, $el = $(el);
+                ttEach(this.first(), function(t) {
+                    success = t.autocomplete($el);
+                });
+                return success;
+            },
+            moveCursor: function moveCursoe(delta) {
+                var success = false;
+                ttEach(this.first(), function(t) {
+                    success = t.moveCursor(delta);
+                });
+                return success;
+            },
+            val: function val(newVal) {
+                var query;
+                if (!arguments.length) {
+                    ttEach(this.first(), function(t) {
+                        query = t.getVal();
+                    });
+                    return query;
+                } else {
+                    ttEach(this, function(t) {
+                        t.setVal(newVal);
+                    });
+                    return this;
+                }
+            },
+            destroy: function destroy() {
+                ttEach(this, function(typeahead, $input) {
+                    revert($input);
+                    typeahead.destroy();
+                });
+                return this;
+            }
+        };
+        $.fn.typeahead = function(method) {
+            if (methods[method]) {
+                return methods[method].apply(this, [].slice.call(arguments, 1));
+            } else {
+                return methods.initialize.apply(this, arguments);
+            }
+        };
+        $.fn.typeahead.noConflict = function noConflict() {
+            $.fn.typeahead = old;
+            return this;
+        };
+        function ttEach($els, fn) {
+            $els.each(function() {
+                var $input = $(this), typeahead;
+                (typeahead = $input.data(keys.typeahead)) && fn(typeahead, $input);
+            });
+        }
+        function buildHintFromInput($input, www) {
+            return $input.clone().addClass(www.classes.hint).removeData().css(www.css.hint).css(getBackgroundStyles($input)).prop("readonly", true).removeAttr("id name placeholder required").attr({
+                autocomplete: "off",
+                spellcheck: "false",
+                tabindex: -1
+            });
+        }
+        function prepInput($input, www) {
+            $input.data(keys.attrs, {
+                dir: $input.attr("dir"),
+                autocomplete: $input.attr("autocomplete"),
+                spellcheck: $input.attr("spellcheck"),
+                style: $input.attr("style")
+            });
+            $input.addClass(www.classes.input).attr({
+                autocomplete: "off",
+                spellcheck: false
+            });
+            try {
+                !$input.attr("dir") && $input.attr("dir", "auto");
+            } catch (e) {}
+            return $input;
+        }
+        function getBackgroundStyles($el) {
+            return {
+                backgroundAttachment: $el.css("background-attachment"),
+                backgroundClip: $el.css("background-clip"),
+                backgroundColor: $el.css("background-color"),
+                backgroundImage: $el.css("background-image"),
+                backgroundOrigin: $el.css("background-origin"),
+                backgroundPosition: $el.css("background-position"),
+                backgroundRepeat: $el.css("background-repeat"),
+                backgroundSize: $el.css("background-size")
+            };
+        }
+        function revert($input) {
+            var www, $wrapper;
+            www = $input.data(keys.www);
+            $wrapper = $input.parent().filter(www.selectors.wrapper);
+            _.each($input.data(keys.attrs), function(val, key) {
+                _.isUndefined(val) ? $input.removeAttr(key) : $input.attr(key, val);
+            });
+            $input.removeData(keys.typeahead).removeData(keys.www).removeData(keys.attr).removeClass(www.classes.input);
+            if ($wrapper.length) {
+                $input.detach().insertAfter($wrapper);
+                $wrapper.remove();
+            }
+        }
+        function $elOrNull(obj) {
+            var isValid, $el;
+            isValid = _.isJQuery(obj) || _.isElement(obj);
+            $el = isValid ? $(obj).first() : [];
+            return $el.length ? $el : null;
+        }
+    })();
+});
+/*
+ * Date Format 1.2.3
+ * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+ * MIT license
+ *
+ * Includes enhancements by Scott Trenda <scott.trenda.net>
+ * and Kris Kowal <cixar.com/~kris.kowal/>
+ *
+ * Accepts a date, a mask, or a date and a mask.
+ * Returns a formatted version of the given date.
+ * The date defaults to the current date/time.
+ * The mask defaults to dateFormat.masks.default.
+ */
+
+var dateFormat = function () {
+	var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+		timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+		timezoneClip = /[^-+\dA-Z]/g,
+		pad = function (val, len) {
+			val = String(val);
+			len = len || 2;
+			while (val.length < len) val = "0" + val;
+			return val;
+		};
+
+	// Regexes and supporting functions are cached through closure
+	return function (date, mask, utc) {
+		var dF = dateFormat;
+
+		// You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+		if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
+			mask = date;
+			date = undefined;
+		}
+
+		// Passing date through Date applies Date.parse, if necessary
+		date = date ? new Date(date) : new Date;
+		if (isNaN(date)) throw SyntaxError("invalid date");
+
+		mask = String(dF.masks[mask] || mask || dF.masks["default"]);
+
+		// Allow setting the utc argument via the mask
+		if (mask.slice(0, 4) == "UTC:") {
+			mask = mask.slice(4);
+			utc = true;
+		}
+
+		var	_ = utc ? "getUTC" : "get",
+			d = date[_ + "Date"](),
+			D = date[_ + "Day"](),
+			m = date[_ + "Month"](),
+			y = date[_ + "FullYear"](),
+			H = date[_ + "Hours"](),
+			M = date[_ + "Minutes"](),
+			s = date[_ + "Seconds"](),
+			L = date[_ + "Milliseconds"](),
+			o = utc ? 0 : date.getTimezoneOffset(),
+			flags = {
+				d:    d,
+				dd:   pad(d),
+				ddd:  dF.i18n.dayNames[D],
+				dddd: dF.i18n.dayNames[D + 7],
+				m:    m + 1,
+				mm:   pad(m + 1),
+				mmm:  dF.i18n.monthNames[m],
+				mmmm: dF.i18n.monthNames[m + 12],
+				yy:   String(y).slice(2),
+				yyyy: y,
+				h:    H % 12 || 12,
+				hh:   pad(H % 12 || 12),
+				H:    H,
+				HH:   pad(H),
+				M:    M,
+				MM:   pad(M),
+				s:    s,
+				ss:   pad(s),
+				l:    pad(L, 3),
+				L:    pad(L > 99 ? Math.round(L / 10) : L),
+				t:    H < 12 ? "a"  : "p",
+				tt:   H < 12 ? "am" : "pm",
+				T:    H < 12 ? "A"  : "P",
+				TT:   H < 12 ? "AM" : "PM",
+				Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+				o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+				S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+			};
+
+		return mask.replace(token, function ($0) {
+			return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+		});
+	};
+}();
+
+// Some common format strings
+dateFormat.masks = {
+	"default":      "ddd mmm dd yyyy HH:MM:ss",
+	shortDate:      "m/d/yy",
+	mediumDate:     "mmm d, yyyy",
+	longDate:       "mmmm d, yyyy",
+	fullDate:       "dddd, mmmm d, yyyy",
+	shortTime:      "h:MM TT",
+	mediumTime:     "h:MM:ss TT",
+	longTime:       "h:MM:ss TT Z",
+	isoDate:        "yyyy-mm-dd",
+	isoTime:        "HH:MM:ss",
+	isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
+	isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+};
+
+// Internationalization strings
+dateFormat.i18n = {
+	dayNames: [
+		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+		"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+	],
+	monthNames: [
+		"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+		"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+	]
+};
+
+// For convenience...
+Date.prototype.format = function (mask, utc) {
+	return dateFormat(this, mask, utc);
+};
+define("dateformat", function(){});
+
+define('core/BaseModel',[
+    'underscore',
+    'backbone'
+], function(_, Backbone){
+
+    var BaseModel = Backbone.Model.extend({
+
+        defaults: {
+        },
+
+        initialize: function() {
+          _.each(this.attributes, function (val, key) {
+            this.set(key, _.escape(val));
+          }, this);
+        }
+
+
+    });
+	return BaseModel;
+});
+
+define('models/TorneoModel',[
+    'backbone',
+    'dateformat',
+    '../core/BaseModel'
+], function(Backbone, dateformat, BaseModel){
+
+    var TorneoModel = BaseModel.extend({
+
+        urlRoot: 'torneo',
+
+        defaults: {
+            ligaId: '',
+            nombre: '',
+            descripcion: '',
+            fechaInicio: (new Date()).getTime(),
+            fechaInicioDes: (new Date()).format("mm/dd/yyyy"),
+            fechaFin: (new Date()).getTime(),
+            fechaFinDes: (new Date()).format("mm/dd/yyyy"),
+            status: 'ENPROCESO'
+        },
+
+        validation: {
+            ligaId: {
+                required: true
+            },
+            nombre: {
+                required: true
+            },
+            descripcion: {
+                required: true
+            },
+            fechaInicio: {
+                required: true
+            },
+            fechaFin: {
+                required: true
+            },
+            status: {
+                required: true
+            }
+        }
+
+    });
+
+	return TorneoModel;
+});
+
+define('collections/TorneosCollection',[
+	'backbone',
+    'models/TorneoModel'
+], function(Backbone, TorneoModel){
+
+    var TorneosCollection = Backbone.Collection.extend({
+        model: TorneoModel,
+        url: function() {
+            if ( this.liga != null && this.liga != 'undefined' ) {
+                return 'liga/' + this.liga.get('id') + '/torneo';
+            } else {
+                return 'torneo';
+            }
+        },
+        setLiga: function(model){
+            this.liga = model;
+        }
+    });
+
+	return TorneosCollection;
+});
+
+define('text!templates/public/tplMain.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n      <div class="main-box">\n        <div class="panel panel-default">\n          <div class="panel-body">\n            <div class="row">\n              <div class="col-lg-4">\n\n              </div>\n              <div class="col-lg-4">\n                <div class="input-group">\n                  <input id="sel-torneo" type="text" class="form-control" placeholder="Escribe el nombre del torneo...">\n                  <span class="input-group-btn">\n                    <button id="go-torneo" class="btn btn-default" type="button">Ir</button>\n                  </span>\n                </div>\n              </div>\n              <div class="col-lg-4">\n\n              </div>\n            </div>\n          </div>\n        </div>\n\n      </div>\n    </div>\n</div>\n';});
+
+define('views/public/MainView',[
+  'jquery',
+  'bootstrap',
+  'bloodhound',
+  'typeahead',
+  'core/BaseView',
+  'collections/TorneosCollection',
+  'text!templates/public/tplMain.html'
+], function($, bootstrap, bloodhound, typeahead, BaseView, TorneosCollection, tplMain) {
+
+  var MainView = BaseView.extend({
+    template: _.template(tplMain),
+
+    events: {
+      'typeahead:select #sel-torneo': 'selToreno',
+      'click #go-torneo': 'goTorneo'
+    },
+
+    initialize: function() {
+      this.torneos = new TorneosCollection();
+      this.listenTo(this.torneos, 'add', this.agregarTorneo);
+      this.listenTo(this.torneos, 'sync', this.syncTorneos);
+
+      this.torneosDesc = [];
+      this.torneo = null;
+
+      this.torneos.fetch();
+    },
+
+    render: function() {
+      this.$el.html(this.template());
+      return this;
+    },
+
+    agregarTorneo: function(modelo) {
+      this.torneosDesc.push({ clave: modelo.get('clave'), descripcion: modelo.get('descripcion') });
+    },
+
+    syncTorneos: function() {
+      this.setUp();
+    },
+
+    setUp: function() {
+      var numbers = new Bloodhound({
+        datumTokenizer: function(d) {
+          return Bloodhound.tokenizers.whitespace(d.descripcion);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: this.torneosDesc
+      });
+
+      // initialize the bloodhound suggestion engine
+      numbers.initialize();
+
+      // instantiate the typeahead UI
+      $('#sel-torneo').typeahead(null, {
+        displayKey: 'descripcion',
+        source: numbers.ttAdapter()
+      });
+    },
+
+    selToreno: function(ev, suggestion) {
+      this.torneo = suggestion;
+    },
+
+    goTorneo: function() {
+      if(this.torneo) {
+        Backbone.history.navigate('torneo/' + this.torneo.clave, { trigger: true });
+      }
+    }
+  });
+
+  return MainView;
+
+});
+
+define('views/RootAdminView',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'bootstrap',
+  'text!templates/private/tplRootAdmin.html',
+  'views/private/MainAdminNavView',
+  'views/public/MainView'
+], function($, Backbone, Mn, bootstrap, tplRootAdmin, MainAdminNavView, MainView){
+
+  var RootAdminView = Mn.View.extend({
+
+    template: _.template(tplRootAdmin),
+
+    regions: {
+      headerWrap: '#header-region',
+      containerWrap: '#container-body',
+      footerWrap: '#footer-region'
+    },
+
+    onRender : function () {
+      this.showChildView('headerWrap', new MainAdminNavView());
+      this.showChildView('containerWrap', new MainView());
+    },
+
+  });
+
+  return RootAdminView;
+
+});
+
+define('views/LoginView',[
+  'jquery',
+  'core/BaseView',
+  'backbone',
+  'backboneValidation',
+  'jquerySerializeObject',
+  'models/UserModel',
+  'text!templates/tplLogin.html',
+  'jscookie',
+  'views/RootAdminView'
+], function($, BaseView, Backbone, backboneValidation, jquerySerializeObject, UserModel, tplLogin, Cookies, RootAdminView) {
+
+  var LoginView = BaseView.extend({
+    template: _.template(tplLogin),
+
+    events: {
+      'click .btn.btn-lg.btn-primary.btn-block': 'login'
+    },
+
+    initialize: function() {
+      this.layoutMaster = Backbone.Radio.channel('app').request('appMn');
+      this.$el.find('.tip').tooltip();
+      this.model = new UserModel();
+      Backbone.Validation.bind(this, {
+        valid: function(view, attr, selector) {
+          var $el = view.$('[name=' + attr + ']'),
+            $group = $el.closest('.form-group');
+          if(view.model.preValidate(attr, $el.val())) {
+            return;
+          }
+          $group.removeClass('has-error');
+          $group.addClass('has-success');
+        },
+
+        invalid: function(view, attr, error, selector) {
+          var $el = view.$('[name=' + attr + ']'),
+            $group = $el.closest('.form-group');
+          $el.popover({
+            content: error,
+            placement: 'left'
+          });
+          $el.popover('show');
+          $group.addClass('has-error');
+        }
+
+      });
+    },
+
+
+    render: function() {
+      this.$el.html(this.template(this.model.toJSON()));
+      return this;
+    },
+
+    remove: function() {
+      // Remove the validation binding
+      // See: http://thedersen.com/projects/backbone-validation/#using-form-model-validation/unbinding
+      Backbone.Validation.unbind(this);
+      return Backbone.View.prototype.remove.apply(this, arguments);
+    },
+
+    login: function() {
+      var that = this;
+
+      var data = this.$el.find("#form-login").serializeObject();
+
+      this.model.set(data);
+      this.model.set({ passwordConfirm: this.model.get('password') });
+
+      if(this.model.isValid(true)) {
+        var user = this.model.get('username');
+        var pass = this.model.get('password');
+        var remember = $("#remember").is(":checked");
+        var rootLayout = Backbone.Radio.channel('app').request('rootLayout');
+
+        Backbone.Radio.channel('app').request('session').login({
+          username: user,
+          password: pass
+        }, {
+          success: function(res) {
+            Cookies.set('auth_token', JSON.stringify({ username: res.username, token: res.token }), { expires: 365 });
+
+            $.ajaxSetup({
+              headers: {
+                "X-Auth-Token": res.token
+              }
+            });
+            //Render master view
+            //TODO verificar los roles en esta parte y al iniciar se redireccionara a su dashboard
+            var regionMaster = that.layoutMaster.getRegion();
+            regionMaster.show(new RootAdminView());
+            Backbone.history.navigate('', { trigger: true });
+          },
+          error: function(err) {
+            //TODO Redireccionar de nuevo a login o mandar mensaje de error.
+            console.log("Error on login");
+          },
+          complete: function() {
+            console.log("Complete login");
+          }
+        });
+      }
+
+    }
+
+  });
+
+  return LoginView;
+
+});
+
+
+define('text!templates/tplSignup.html',[],function () { return '<div class="row signup-wrap">\n  <div class="center-box-login">\n\n    <div class="panel panel-default">\n      <form id="form-user" role="form" class="form-signup">\n        <div class="form-signup-heading">\n          <h3 class="text-center">Bienvenido a entuliga!</h3>\n        </div>\n\n        <div class="row">\n            <div class="col-xs-12">\n                <div class="form-group">\n                    <label>Email</label>\n                    <input class="form-control signup-username" placeholder="Email" type="text" name="username" value="<%= username %>">\n                </div>\n            </div>\n\n        </div>\n        <div class="row">\n            <div class="col-xs-12">\n                <div class="form-group">\n                    <label>Password</label>\n                    <input class="form-control signup-pass" placeholder="Password" type="password" name="password" value="<%= password %>">\n                </div>\n            </div>\n        </div>\n\n        <div class="row">\n            <div class="col-xs-12">\n                <div class="form-group">\n                    <label>Confirm Password</label>\n                    <input class="form-control signup-pass-confirm" placeholder="Confirm Password" type="password" name="passwordConfirm" value="<%= passwordConfirm %>">\n                </div>\n            </div>\n        </div>\n        <button id="btn-ok" type="button" class="btn btn-lg btn-primary btn-block">Registrar</button>\n      </form>\n    </div>\n  </div>\n</div>\n';});
+
+define('views/SignupView',[
+	'jquery',
+	'core/BaseView',
+    'backbone',
+    'backboneValidation',
+    'jquerySerializeObject',
+    'models/UserModel',
+    'views/private/util/ModalGenericView',
+	'text!templates/tplSignup.html'
+], function($, BaseView, backbone, backboneValidation, jquerySerializeObject, UserModel, ModalGenericView, tplSignup){
+
+	var SignupView = BaseView.extend({
+        template: _.template(tplSignup),
+
+        events: {
+            'click #btn-ok'         : 'signup',
+            'focus .signup-username' : 'showDetailsUsername',
+            'focusout .signup-username' : 'hideDetailsUsername',
+            'focus .signup-pass' : 'showDetailsPass',
+            'focusout .signup-pass' : 'hideDetailsPass',
+            'focus .signup-pass-confirm' : 'showDetailsPassConfirm',
+            'focusout .signup-pass-confirm' : 'hideDetailsPassConfirm'
+        },
+
+
+        initialize: function() {
+            this.model = new UserModel();
+            this.model.once("sync", this.saveUserSuccess);
+            this.model.once("error", this.saveUserError);
+
+            this.$("input[name='username']").focus();
+
+            Backbone.Validation.bind(this, {
+                valid: function(view, attr, selector) {
+                    var $el = view.$('[name=' + attr + ']'),  $group = $el.closest('.form-group');
+                    if (view.model.preValidate(attr, $el.val())) {
+                        return;
+                    }
+                    $group.removeClass('has-error');
+                    $group.addClass('has-success');
+                },
+
+                invalid: function(view, attr, error, selector) {
+                    var $el = view.$('[name=' + attr + ']'),
+                    $group = $el.closest('.form-group');
+                    $el.popover({
+                        content: error,
+                        placement: 'left'
+                    });
+                    $el.popover('show');
+                    $group.addClass('has-error');
+                }
+
+            });
+            app.that = this;
+
+        },
+
+        onDomRefresh: function(){
+            this.focusFirstInput();
+        },
+
+        focusFirstInput: function() {
+            this.$(':input:visible:enabled:first').focus();
+        },
+
+
+        render: function() {
+            this.$('[name=username]').focus();
+
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        },
+
+        signup: function(){
+            var data = this.$el.find("#form-user").serializeObject();
+            this.model.set(data);
+
+            if(this.model.isValid(true)){
+                this.model.save();
+            }
+        },
+
+        saveUserSuccess: function(model, response, options){
+            if (typeof app.that === 'undefined') {
+                return;
+            }
+            new ModalGenericView({
+                message: 'Revise su email, para confirmar su registro'
+            });
+            app.that.destroyView();
+            delete app.that;
+        },
+
+        saveUserError: function(model, response, options){
+            new ModalGenericView({
+                message: 'Se presento un error al registrar el usuario'
+            });
+        },
+
+        showDetailsUsername : function() {
+            this.model.preValidate('username', this.$(".signup-username").val());
+
+            // if (!this.model.preValidate('username', this.$("input.signup-username").val() )) {
+            //     console.log("true");
+            // }else {
+            //     console.log("false");
+            // }
+
+            this.$(".signup-username").popover({
+                content: 'Ingresa tu dirección de correo electronico.',
+                placement: 'left'
+            });
+            this.$(".signup-username").popover('show');
+        },
+        hideDetailsUsername : function() {
+            this.$(".signup-username").popover('destroy');
+        },
+
+        showDetailsPass : function() {
+            this.$(".signup-pass").popover({
+                content: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero',
+                placement: 'left'
+            });
+
+            this.$(".signup-pass").popover('show');
+        },
+        hideDetailsPass : function() {
+            this.$(".signup-pass").popover('destroy');
+        },
+
+        showDetailsPassConfirm : function() {
+            this.$(".signup-pass-confirm").popover({
+                content: 'Confirmar password',
+                placement: 'left'
+            });
+            this.$(".signup-pass-confirm").popover('show');
+        },
+        hideDetailsPassConfirm : function() {
+            this.$(".signup-pass-confirm").popover('destroy');
+        }
+	});
+
+	return SignupView;
+
+});
+
+define('session',[
+  'jquery',
+  'backbone',
+  'views/private/util/ModalGenericView',
+  'jscookie'
+], function($, Backbone, ModalGenericView, Cookies) {
+
+  var SessionModel = Backbone.Model.extend({
+    url: 'session/login',
+
+    defaults: {
+      username: '',
+      password: '',
+      authenticated: false,
+      user_id: ''
+    },
+
+    initialize: function() {
+    },
+
+    validation: {
+      username: {
+        required: true,
+        pattern: 'email',
+        msg: 'Por favor especifique un email correcto'
+      },
+      password: {
+        required: true,
+        pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
+        msg: 'El password debe tener por lo menos una letra mayuscula, una minuscula y un numero'
+      }
+    },
+
+
+
+    login: function(callback, user, pass, remember) {
+      var thatCallback = callback;
+      var self = this;
+
+      this.save({ username: user, password: pass }, {
+        wait: true,
+
+        success: function(model, response) {
+          Cookies.set('auth_token', JSON.stringify({ username: user, token: model.get('token') }), { expires: 365 });
+
+          self.set('authenticated', true);
+          self.set('username', user)
+
+          $.ajaxSetup({
+            headers: {
+              "X-Auth-Token": model.get('token')
+            }
+          });
+          console.log('Successfully saved!');
+          thatCallback();
+        },
+        error: function(model, error) {
+          console.log("Error autenthication");
+          // la parte de session esta mal Session
+          Session.set('authenticated', false);
+          Session.set('username', '');
+          Cookies.remove('auth_token')
+          new ModalGenericView({
+            message: 'Usuario y/o contraseña incorrecta'
+          });
+        }
+      });
+    },
+
+    logout: function(callback) {
+      var thisSession = this;
+      var that = callback;
+      var Session = new SessionModel();
+      Cookies.remove('auth_token');
+
+
+
+      Session.save({ username: this.get('username'), logout: 'logout' }, {
+        wait: true,
+        success: function(model, response) {
+
+          thisSession.clear();
+          $.ajaxSetup({
+            headers: {
+              "X-Auth-Token": ''
+            }
+          });
+          Session.set('username', '');
+          Cookies.remove('auth_token');
+          console.log('Successfully Remove cookie!');
+          that();
+        },
+        error: function(model, error) {
+          console.log(model.toJSON());
+          console.log('error.responseText');
+          window.location.reload();
+
+        }
+      });
+    }
+  });
+
+  return new SessionModel();
+});
+
+define('models/UserTokenModel',[
+    'backbone',
+    'session',
+], function(Backbone, Session){
+
+    var UserTokenModel = Backbone.Model.extend({
+
+        urlRoot: 'usertoken',
+
+        defaults: {
+            token: '',
+            username: '',
+            tipo: '',
+            fechaVigencia: (new Date()).getTime() + 5
+            // fechaVigencia: (new Date()).getTime()
+        },
+
+        initialize: function(){
+
+        },
+
+        isAuthorized: function(){
+          return Boolean(this.get("token"));
+        },
+
+        checkAuth: function( token , callback) {
+          console.log("token checkout ");
+          console.log(token);
+          var status = true;
+          // this.model.set('id', token );
+          this.set({ token : token });
+
+          // this.model.id = token;
+          var thatCallback = callback;
+
+          this.fetch({
+            success: function(mod, res){
+
+              console.log("success token checkout");
+              var status = true;
+              thatCallback(status);
+            },
+
+            error: function(mod, res){
+              console.log("error token checkout");
+              status = false;
+              thatCallback(status);
+            }
+
+          });
+
+
+        },
+
+
+
+
+
+        validation: {
+            token: {
+                required: true
+            },
+            username: {
+                required: true,
+                pattern: 'email'
+            },
+            tipo: {
+                required: true
+            },
+            fechaVigencia: {
+                required: true
+            }
+        }
+
+    });
+
+    return UserTokenModel;
+});
+
+
+define('text!templates/tplTokenChangePass.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n        <form id="form-user" role="form">\n            <p>Especifica tu nuevo password</p>\n            <div class="row">\n                <div class="col-xs-6">\n                    <div class="form-group">\n                        <label>Password</label>\n                        <input class="form-control" placeholder="Password" type="password" name="password" value="<%= password %>">\n                        <p class="help-block"></p>\n                    </div>\n                </div>\n            </div>\n            <div class="row">\n                <div class="col-xs-6">\n                    <div class="form-group">\n                        <label>Confirm Password</label>\n                        <input class="form-control" placeholder="Confirm Password" type="password" name="passwordConfirm" value="<%= passwordConfirm %>">\n                        <p class="help-block"></p>\n                    </div>\n                </div>\n            </div>\n            <div class="row">\n                <div class="modal-footer">\n                    <button id="btn-ok" type="button" class="btn btn-success">Cambiar Password</button>\n                </div>\n            </div>\n        </form>\n    </div>\n</div>';});
+
+define('views/TokenChangePassView',[
+    'jquery',
+    'core/BaseView',
+    'models/UserModel',
+    'views/private/util/ModalGenericView',
+    'text!templates/tplTokenChangePass.html'
+], function($, BaseView, UserModel, ModalGenericView, tplTokenChangePass){
+
+    var TokenChangePassView = BaseView.extend({
+        template: _.template(tplTokenChangePass),
+
+        events: {
+            'click #btn-ok'         : 'changePass'
+        },
+
+        initialize: function(opts) {;
+            this.model = new UserModel();
+            this.listenTo(this.model, 'sync', this.syncUserToken);
+            this.listenTo(this.model, 'error', this.errorUserToken);
+
+            this.model.set({id: 'no-replay@entuliga.com', username: 'no-replay@entuliga.com', token: opts.token});
+            Backbone.Validation.bind(this);
+        },
+
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        },
+
+        changePass: function(){
+            var data = this.$el.find("#form-user").serializeObject();
+            this.model.set(data);
+
+            if(this.model.isValid(true)){
+                this.model.save();
+            }
+        },
+
+        syncUserToken: function() {
+            new ModalGenericView({
+                message: 'Su password se ha restaurado',
+                callbackConfirm: function (data) {
+                    Backbone.history.navigate('login', { trigger : true });
+                }
+            });
+        },
+
+        errorUserToken: function(model, response) {
+            new ModalGenericView({
+                message: response.responseJSON.message
+            });
+        }
+    });
+
+    return TokenChangePassView;
+
+});
+
+define('text!templates/tplTokenValidate.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n        <div class="jumbotron">\n            <h1>¡Bienvenido a entuliga.com!</h1>\n            <p>Hola <%= username %>, ya estas registrado, puedes utilizar la plataforma.</p>\n        </div>\n    </div>\n</div>';});
+
+
+define('text!templates/tplTokenInValid.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n        <div class="jumbotron">\n            <p>Se presento un error en la plataforma: <%= message %></p>\n        </div>\n    </div>\n</div>';});
+
+define('views/TokenValidateView',[
+    'jquery',
+    'core/BaseView',
+    'models/UserTokenModel',
+    'views/TokenChangePassView',
+    'text!templates/tplTokenValidate.html',
+    'text!templates/tplTokenInValid.html'
+], function($, BaseView, UserTokenModel, TokenChangePassView, tplTokenValidate, tplTokenInValid){
+
+    var TokenValidateView = BaseView.extend({
+        template: _.template(tplTokenValidate),
+        templateInValid: _.template(tplTokenInValid),
+
+        events: {
+            'click #btn-ok'         : 'changePass'
+        },
+
+        initialize: function(opts) {;
+            this.model = new UserTokenModel();
+            this.listenTo(this.model, 'sync', this.syncUserToken);
+            this.listenTo(this.model, 'error', this.errorUserToken);
+
+            this.model.set({id: opts.token});
+            this.model.fetch();
+            Backbone.Validation.bind(this);
+        },
+
+        render: function() {
+            return this;
+        },
+
+        syncUserToken: function() {
+            if (this.model.get('tipo') === 'VALID_EMAIL') {
+                this.$el.html(this.template(this.model.toJSON()));
+            } else {
+                this.$el.html(this.templateInValid({message: 'Token no valido.'}));
+            }
+        },
+
+        errorUserToken: function(model, response) {
+            this.$el.html(this.templateInValid(response.responseJSON));
+        }
+    });
+
+    return TokenValidateView;
+
+});
+
+define('text!templates/private/perfil/tplPerfilAdmin.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n      <div class="main-box">\n        <div class="panel panel-primary">\n\n            <div class="panel-heading">\n                <h3 class="panel-title">Perfil de <%= username %></h3>\n            </div>\n            <div class="panel-body">\n                <div class="row">\n                    <div class="col-md-12">\n                        <div class="jumbotron">\n                            <h1>¡Bienvenido a entuliga.com!</h1>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n      </div>\n\n    </div>\n</div>\n';});
+
+define('views/private/perfil/PerfilAdminView',[
+  'jquery',
+  'backbone',
+  'core/BaseView',
+  'models/UserModel',
+  'views/private/util/ModalGenericView',
+  'text!templates/private/perfil/tplPerfilAdmin.html'
+], function($, Backbone, BaseView, UserModel, ModalGenericView, tplPerfilAdmin) {
+
+  var LigaAdminView = BaseView.extend({
+    template: _.template(tplPerfilAdmin),
+
+    events: {
+
+    },
+
+    initialize: function() {
+      var username = Backbone.Radio.channel('app').request('session').get('username');
+      var user = Backbone.Radio.channel('app').request('session').get('username');
+      this.model = new UserModel();
+      this.listenTo(this.model, 'sync', this.saveUserSuccess);
+      this.listenTo(this.model, 'error', this.saveUserError);
+      this.model.set({ id: username });
+      this.model.fetch();
+    },
+
+    render: function() {
+      return this;
+    },
+
+    saveUserSuccess: function(model, response, options) {
+      this.$el.html(this.template(this.model.toJSON()));
+    },
+
+    saveUserError: function(model, response, options) {
+      new ModalGenericView({
+        message: response.responseJSON.message
+      });
+    }
+  });
+
+  return LigaAdminView;
+
+});
+
 /*!
  * Bootstrap-select v1.6.4 (http://silviomoreto.github.io/bootstrap-select)
  *
@@ -19222,320 +22246,104 @@ define('views/private/LigaEditView',[
 define('text!templates/private/tplLigaAdmin.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n      <div class="main-box">\n        <div class="panel panel-success">\n            <div class="panel-heading">\n                <h3 class="panel-title">Liga Admin</h3>\n            </div>\n            <div class="panel-body">\n                <div class="row">\n                  <div class="col-md-6">\n                    <div class="form-inline">\n                      <div class="form-group">\n                        <label for="select-liga">Selecciona una liga</label>\n                        <select name="select-liga" class="form-control action-entuliga" id="select-liga" placeholder="Liga...">\n                        </select>\n                      </div>\n                    </div>\n\n                      <div class="panel panel-default">\n                          <div id="liga-detail" class="panel-body">\n                          </div>\n                      </div>\n                      <div class="btn-group-horizontal" role="group" aria-label="...">\n                          <button id="liga-nuevo" type="button" class="btn btn-primary action-entuliga">Registrar</button>\n                          <button id="liga-editar" type="button" class="btn btn-primary action-entuliga">Editar</button>\n                          <button id="liga-borrar" type="button" class="btn btn-danger action-entuliga">\n                              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>\n                          </button>\n                      </div>\n                    </div>\n                    <div class="col-md-6">\n                        <div class="panel panel-default">\n                            <div class="panel-heading">\n                                <h3 class="panel-title">Liga</h3>\n                            </div>\n                            <div id="liga-edit" class="panel-body">\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n      </div>\n    </div>\n</div>\n';});
 
 define('views/private/LigaAdminView',[
-	'jquery',
-	'backbone',
-	'bootstrap',
-	'selecter',
-	'core/BaseView',
-	'collections/LigasCollection',
-	'views/private/LigaDetailView',
-	'views/private/LigaEditView',
-    'views/private/util/ModalGenericView',
-	'text!templates/private/tplLigaAdmin.html'
-], function($, Backbone, bootstrap, selecter, BaseView, LigasCollection,
-            LigaDetailView, LigaEditView, ModalGenericView, tplLigaAdmin){
+  'jquery',
+  'backbone',
+  'bootstrap',
+  'selecter',
+  'core/BaseView',
+  'collections/LigasCollection',
+  'views/private/LigaDetailView',
+  'views/private/LigaEditView',
+  'views/private/util/ModalGenericView',
+  'text!templates/private/tplLigaAdmin.html'
+], function($, Backbone, bootstrap, selecter, BaseView, LigasCollection, LigaDetailView, LigaEditView, ModalGenericView, tplLigaAdmin) {
 
-	var LigaAdminView = BaseView.extend({
-        template: _.template(tplLigaAdmin),
+  var LigaAdminView = BaseView.extend({
+    template: _.template(tplLigaAdmin),
 
-        events: {
-            'change #select-liga': 'changeLiga',
-            'click #liga-nuevo': 'newLiga',
-            'click #liga-editar': 'editLiga',
-            'click #liga-borrar': 'deleteLiga'
-        },
+    events: {
+      'change #select-liga': 'changeLiga',
+      'click #liga-nuevo': 'newLiga',
+      'click #liga-editar': 'editLiga',
+      'click #liga-borrar': 'deleteLiga'
+    },
 
-        initialize: function() {
-            app.ligas = new LigasCollection();
-            this.listenTo(app.ligas, 'add', this.agregarLiga);
-            this.listenTo(app.ligas, 'sync', this.syncLigas);
+    initialize: function() {
+      app.ligas = new LigasCollection();
+      this.listenTo(app.ligas, 'add', this.agregarLiga);
+      this.listenTo(app.ligas, 'sync', this.syncLigas);
 
-            app.ligas.fetch();
-        },
+      app.ligas.fetch();
+    },
 
-        render: function() {
-            this.$el.html(this.template());
-            this.$el.find(".selecter_liga").select();
-            return this;
-        },
+    render: function() {
+      this.$el.html(this.template());
+      this.$el.find(".selecter_liga").select();
+      return this;
+    },
 
-        changeLiga: function(event) {
-            var modelo = app.ligas.get($(event.target).val());
-            if (typeof modelo != 'undefined') {
-                this.ligaDetailView = new LigaDetailView({model: modelo});
-                $('#liga-detail').html(this.ligaDetailView.render().$el);
-                $('#liga-editar').removeAttr("disabled");
-                $('#liga-borrar').removeAttr("disabled");
-            } else {
-                if (typeof this.ligaDetailView !== 'undefined') {
-                    this.ligaDetailView.destroyView();
-                }
-                $('#liga-editar').attr("disabled", true);
-                $('#liga-borrar').attr("disabled", true);
-            }
-        },
+    changeLiga: function(event) {
+      var modelo = app.ligas.get($(event.target).val());
+      if(typeof modelo != 'undefined') {
+        this.ligaDetailView = new LigaDetailView({ model: modelo });
+        $('#liga-detail').html(this.ligaDetailView.render().$el);
+        $('#liga-editar').removeAttr("disabled");
+        $('#liga-borrar').removeAttr("disabled");
+      } else {
+        if(typeof this.ligaDetailView !== 'undefined') {
+          this.ligaDetailView.destroyView();
+        }
+        $('#liga-editar').attr("disabled", true);
+        $('#liga-borrar').attr("disabled", true);
+      }
+    },
 
-        newLiga: function() {
-            this.disabledAction(true);
-            var ligaEditView = new LigaEditView({tipo: 'new', modelo: null});
-            $('#liga-edit').html(ligaEditView.render().$el);
-        },
+    newLiga: function() {
+      this.disabledAction(true);
+      var ligaEditView = new LigaEditView({ tipo: 'new', modelo: null });
+      $('#liga-edit').html(ligaEditView.render().$el);
+    },
 
-        editLiga: function() {
-            this.disabledAction(true);
-            var modelo = app.ligas.get($("#select-liga").val());
-            var ligaEditView = new LigaEditView({tipo: 'edit', modelo: modelo});
-            $('#liga-edit').html(ligaEditView.render().$el);
-        },
+    editLiga: function() {
+      this.disabledAction(true);
+      var modelo = app.ligas.get($("#select-liga").val());
+      var ligaEditView = new LigaEditView({ tipo: 'edit', modelo: modelo });
+      $('#liga-edit').html(ligaEditView.render().$el);
+    },
 
-        deleteLiga: function() {
-            var modelo = app.ligas.get($("#select-liga").val());
-            modelo.destroy({
-                wait:true,
-                success: function(model, response) {
-                    new ModalGenericView({message: response.message});
-                    if(response.result){
-                        $("#select-liga option:selected").remove();
-                        $('#select-liga').change();
-                    }
-                },
-                error: function(model, error) {
-                    new ModalGenericView({message: error.responseJSON.message});
-                }
-            });
-        },
-
-        agregarLiga: function(modelo) {
-            $('#select-liga').append($('<option>', {
-                value: modelo.get('id'),
-                text : modelo.get('nombre')
-            }));
-        },
-
-        syncLigas: function() {
+    deleteLiga: function() {
+      var modelo = app.ligas.get($("#select-liga").val());
+      modelo.destroy({
+        wait: true,
+        success: function(model, response) {
+          new ModalGenericView({ message: response.message });
+          if(response.result) {
+            $("#select-liga option:selected").remove();
             $('#select-liga').change();
-        }
-	});
-
-	return LigaAdminView;
-
-});
-/*
- * Date Format 1.2.3
- * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
- * MIT license
- *
- * Includes enhancements by Scott Trenda <scott.trenda.net>
- * and Kris Kowal <cixar.com/~kris.kowal/>
- *
- * Accepts a date, a mask, or a date and a mask.
- * Returns a formatted version of the given date.
- * The date defaults to the current date/time.
- * The mask defaults to dateFormat.masks.default.
- */
-
-var dateFormat = function () {
-	var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
-		timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
-		timezoneClip = /[^-+\dA-Z]/g,
-		pad = function (val, len) {
-			val = String(val);
-			len = len || 2;
-			while (val.length < len) val = "0" + val;
-			return val;
-		};
-
-	// Regexes and supporting functions are cached through closure
-	return function (date, mask, utc) {
-		var dF = dateFormat;
-
-		// You can't provide utc if you skip other args (use the "UTC:" mask prefix)
-		if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
-			mask = date;
-			date = undefined;
-		}
-
-		// Passing date through Date applies Date.parse, if necessary
-		date = date ? new Date(date) : new Date;
-		if (isNaN(date)) throw SyntaxError("invalid date");
-
-		mask = String(dF.masks[mask] || mask || dF.masks["default"]);
-
-		// Allow setting the utc argument via the mask
-		if (mask.slice(0, 4) == "UTC:") {
-			mask = mask.slice(4);
-			utc = true;
-		}
-
-		var	_ = utc ? "getUTC" : "get",
-			d = date[_ + "Date"](),
-			D = date[_ + "Day"](),
-			m = date[_ + "Month"](),
-			y = date[_ + "FullYear"](),
-			H = date[_ + "Hours"](),
-			M = date[_ + "Minutes"](),
-			s = date[_ + "Seconds"](),
-			L = date[_ + "Milliseconds"](),
-			o = utc ? 0 : date.getTimezoneOffset(),
-			flags = {
-				d:    d,
-				dd:   pad(d),
-				ddd:  dF.i18n.dayNames[D],
-				dddd: dF.i18n.dayNames[D + 7],
-				m:    m + 1,
-				mm:   pad(m + 1),
-				mmm:  dF.i18n.monthNames[m],
-				mmmm: dF.i18n.monthNames[m + 12],
-				yy:   String(y).slice(2),
-				yyyy: y,
-				h:    H % 12 || 12,
-				hh:   pad(H % 12 || 12),
-				H:    H,
-				HH:   pad(H),
-				M:    M,
-				MM:   pad(M),
-				s:    s,
-				ss:   pad(s),
-				l:    pad(L, 3),
-				L:    pad(L > 99 ? Math.round(L / 10) : L),
-				t:    H < 12 ? "a"  : "p",
-				tt:   H < 12 ? "am" : "pm",
-				T:    H < 12 ? "A"  : "P",
-				TT:   H < 12 ? "AM" : "PM",
-				Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-				o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-				S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
-			};
-
-		return mask.replace(token, function ($0) {
-			return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
-		});
-	};
-}();
-
-// Some common format strings
-dateFormat.masks = {
-	"default":      "ddd mmm dd yyyy HH:MM:ss",
-	shortDate:      "m/d/yy",
-	mediumDate:     "mmm d, yyyy",
-	longDate:       "mmmm d, yyyy",
-	fullDate:       "dddd, mmmm d, yyyy",
-	shortTime:      "h:MM TT",
-	mediumTime:     "h:MM:ss TT",
-	longTime:       "h:MM:ss TT Z",
-	isoDate:        "yyyy-mm-dd",
-	isoTime:        "HH:MM:ss",
-	isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
-	isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
-};
-
-// Internationalization strings
-dateFormat.i18n = {
-	dayNames: [
-		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
-		"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-	],
-	monthNames: [
-		"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-		"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-	]
-};
-
-// For convenience...
-Date.prototype.format = function (mask, utc) {
-	return dateFormat(this, mask, utc);
-};
-define("dateformat", function(){});
-
-define('core/BaseModel',[
-    'underscore',
-    'backbone'
-], function(_, Backbone){
-
-    var BaseModel = Backbone.Model.extend({
-
-        defaults: {
+          }
         },
-
-        initialize: function() {
-          _.each(this.attributes, function (val, key) {
-            this.set(key, _.escape(val));
-          }, this);
+        error: function(model, error) {
+          new ModalGenericView({ message: error.responseJSON.message });
         }
+      });
+    },
 
+    agregarLiga: function(modelo) {
+      $('#select-liga').append($('<option>', {
+        value: modelo.get('id'),
+        text: modelo.get('nombre')
+      }));
+    },
 
-    });
-	return BaseModel;
+    syncLigas: function() {
+      $('#select-liga').change();
+    }
+  });
+
+  return LigaAdminView;
+
 });
 
-define('models/TorneoModel',[
-    'backbone',
-    'dateformat',
-    '../core/BaseModel'
-], function(Backbone, dateformat, BaseModel){
-
-    var TorneoModel = BaseModel.extend({
-
-        urlRoot: 'torneo',
-
-        defaults: {
-            ligaId: '',
-            nombre: '',
-            descripcion: '',
-            fechaInicio: (new Date()).getTime(),
-            fechaInicioDes: (new Date()).format("mm/dd/yyyy"),
-            fechaFin: (new Date()).getTime(),
-            fechaFinDes: (new Date()).format("mm/dd/yyyy"),
-            status: 'ENPROCESO'
-        },
-
-        validation: {
-            ligaId: {
-                required: true
-            },
-            nombre: {
-                required: true
-            },
-            descripcion: {
-                required: true
-            },
-            fechaInicio: {
-                required: true
-            },
-            fechaFin: {
-                required: true
-            },
-            status: {
-                required: true
-            }
-        }
-
-    });
-
-	return TorneoModel;
-});
-
-define('collections/TorneosCollection',[
-	'backbone',
-    'models/TorneoModel'
-], function(Backbone, TorneoModel){
-
-    var TorneosCollection = Backbone.Collection.extend({
-        model: TorneoModel,
-        url: function() {
-            if ( this.liga != null && this.liga != 'undefined' ) {
-                return 'liga/' + this.liga.get('id') + '/torneo';
-            } else {
-                return 'torneo';
-            }
-        },
-        setLiga: function(model){
-            this.liga = model;
-        }
-    });
-
-	return TorneosCollection;
-});
 define('models/TorneoEquipoModel',[
     'backbone'
 ], function(Backbone){
@@ -25406,7 +28214,7 @@ define('collections/ArbitrosPartidoCollection',[
 	return ArbitrosPartidoCollection;
 });
 
-define('text!templates/private/partido/tplItemArbitroPartido.html',[],function () { return '<th><%= id %></th>\n<td><%= nombre %></td>\n<td><%= tipoArbitro %></td>\n<td>\n    <button id="eliminar-arbitro-partido" class="btn btn-primary btn-xs" value="<%= id %>">\n        <span class="glyphicon glyphicon-trash" aria-hidden="true" value="<%= id %>"></span>\n    </button>\n</td>\n';});
+define('text!templates/private/partido/tplItemArbitroPartido.html',[],function () { return '<th><%= id %></th>\n<td><%= nombre %></td>\n<td><%= tipoArbitro %></td>\n<td>\n\n    <button id="eliminar-arbitro-partido" class="btn btn-primary btn-xs" value="<%= id %>">\n        <span class="glyphicon glyphicon-trash" aria-hidden="true" value="<%= id %>"></span>\n    </button>\n</td>\n';});
 
 define('views/private/partido/ItemArbitroPartidoView',[
 	'jquery',
@@ -25422,19 +28230,18 @@ define('views/private/partido/ItemArbitroPartidoView',[
 		tagName: 'tr',
 		template: _.template(tplItemArbitroPartido),
 
-		// ui:{
-		// 	toggle: '.toggle'
-		// },
+		ui:{
+			eliminarArbitro: '#eliminar-arbitro-partido'
+		},
 
-		// events:{
-		// 	'click @ui.toggle' : 'toggle'
-		// },
+		events:{
+			'click @ui.eliminarArbitro' : 'deleteArbitroPartido'
+		},
 
-		// toggle: function(){
-		// 	console.log("toggle arbitro partido");
-		// },
+		deleteArbitroPartido: function(){
+			console.log("delte arbitro partido");
+		},
 
-		
 		onRender: function(opts) {
 			this.$el.html(this.template(this.model.toJSON()));			
 		},
@@ -25741,15 +28548,8 @@ define('views/private/partido/NewArbitroPartidoView',[
 		},
 
 		initialize: function(opts) {
-			console.log("opts");
-			console.log(opts);
 			this.parentView = opts.parent;
-			console.log(this.parentView);
-			// collection.add(bar)
-			console.log(this.parentView.viewPartidoArbitro);
-			console.log(this.parentView.viewPartidoArbitro.getChildView('listBody'));
 			this.modelPartido = opts.modelo;
-			this.callbackSave = opts.callbackAceptar;
 			this.model = new ArbitroPartidoModel();
 			this.torneoarbitros = new TorneoArbitrosCollection();
 			this.torneoarbitros.setTorneo(new ArbitroPartidoModel({id: this.modelPartido.get('id') }));
@@ -25762,12 +28562,7 @@ define('views/private/partido/NewArbitroPartidoView',[
 		},
 
 		guardarArbitro: function(){
-			console.log("guardar arbitros");
-
-			if (this.model.get("id") != null) {
-				delete this.model.attributes.id;
-			}
-
+			
 			var listBody = this.getChildView('listBody');
 			var idPartidoModel =  this.modelPartido.get('id');
 			that = this;
@@ -25777,31 +28572,21 @@ define('views/private/partido/NewArbitroPartidoView',[
 				objectArbitro.partidoId = idPartidoModel;
 				
 				if (childView.$el.find(".togglecheckbox").is(":checked")) {
-
-					// arrayArbitros.push(objectArbitro);
 					that.model.set(objectArbitro);
+
 					if (that.model.isValid(true)) {
-
 						var modelsavetest = that.model.save();
-						console.log("modelsavetest");
-						console.log(modelsavetest);
-
-						console.log(modelsavetest.get("responseJSON"));
-						console.log(modelsavetest.get("status"));
-						console.log(modelsavetest.responseJSON);
-						console.log(modelsavetest.responseJSON());
-						that.parentView.viewPartidoArbitro.getChildView('listBody').collection.add(new ArbitroPartidoModel());
+						modelsavetest.complete(function(model) {
+							that.parentView.viewPartidoArbitro.getChildView('listBody').collection.add(new ArbitroPartidoModel(model.responseJSON));
+						});
 						childView.$el.find("select,input").remove();
-
-						// that.callbackSave(objectArbitro);
-						
 						childView.destroy();
-						$("#modal-partido-parent").append('<div id="modal-partido"></div>');
 					}
 				}
 			});
 
 			this.destroy();
+			$("#modal-partido-parent").append('<div id="modal-partido"></div>');
 		},
 
 
@@ -28699,11 +31484,7 @@ define('views/private/partido/PartidoAdminView',[
         },
 
         successSavePartido: function(arbitropartido) {
-            console.log("poner los arbitros ");
-            console.log(arbitropartido);
-            console.log(this.viewPartidoArbitro);
-            console.log(this.viewPartidoArbitro.getChildView('listBody'));
-            console.log(this.viewPartidoArbitro.getChildView('listBody').collection.add(new ArbitroPartidoModel(arbitropartido) ));
+
         },
 
         agregarArbitro: function() {
@@ -29146,2581 +31927,46 @@ define('views/private/partido/PartidoAdminView',[
 	return PartidoAdminView;
 
 });
-/*!
- * typeahead.js 0.11.1
- * https://github.com/twitter/typeahead.js
- * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
- */
 
-(function(root, factory) {
-    if (typeof define === "function" && define.amd) {
-        define("bloodhound", [ "jquery" ], function(a0) {
-            return root["Bloodhound"] = factory(a0);
-        });
-    } else if (typeof exports === "object") {
-        module.exports = factory(require("jquery"));
-    } else {
-        root["Bloodhound"] = factory(jQuery);
-    }
-})(this, function($) {
-    var _ = function() {
-        "use strict";
-        return {
-            isMsie: function() {
-                return /(msie|trident)/i.test(navigator.userAgent) ? navigator.userAgent.match(/(msie |rv:)(\d+(.\d+)?)/i)[2] : false;
-            },
-            isBlankString: function(str) {
-                return !str || /^\s*$/.test(str);
-            },
-            escapeRegExChars: function(str) {
-                return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-            },
-            isString: function(obj) {
-                return typeof obj === "string";
-            },
-            isNumber: function(obj) {
-                return typeof obj === "number";
-            },
-            isArray: $.isArray,
-            isFunction: $.isFunction,
-            isObject: $.isPlainObject,
-            isUndefined: function(obj) {
-                return typeof obj === "undefined";
-            },
-            isElement: function(obj) {
-                return !!(obj && obj.nodeType === 1);
-            },
-            isJQuery: function(obj) {
-                return obj instanceof $;
-            },
-            toStr: function toStr(s) {
-                return _.isUndefined(s) || s === null ? "" : s + "";
-            },
-            bind: $.proxy,
-            each: function(collection, cb) {
-                $.each(collection, reverseArgs);
-                function reverseArgs(index, value) {
-                    return cb(value, index);
-                }
-            },
-            map: $.map,
-            filter: $.grep,
-            every: function(obj, test) {
-                var result = true;
-                if (!obj) {
-                    return result;
-                }
-                $.each(obj, function(key, val) {
-                    if (!(result = test.call(null, val, key, obj))) {
-                        return false;
-                    }
-                });
-                return !!result;
-            },
-            some: function(obj, test) {
-                var result = false;
-                if (!obj) {
-                    return result;
-                }
-                $.each(obj, function(key, val) {
-                    if (result = test.call(null, val, key, obj)) {
-                        return false;
-                    }
-                });
-                return !!result;
-            },
-            mixin: $.extend,
-            identity: function(x) {
-                return x;
-            },
-            clone: function(obj) {
-                return $.extend(true, {}, obj);
-            },
-            getIdGenerator: function() {
-                var counter = 0;
-                return function() {
-                    return counter++;
-                };
-            },
-            templatify: function templatify(obj) {
-                return $.isFunction(obj) ? obj : template;
-                function template() {
-                    return String(obj);
-                }
-            },
-            defer: function(fn) {
-                setTimeout(fn, 0);
-            },
-            debounce: function(func, wait, immediate) {
-                var timeout, result;
-                return function() {
-                    var context = this, args = arguments, later, callNow;
-                    later = function() {
-                        timeout = null;
-                        if (!immediate) {
-                            result = func.apply(context, args);
-                        }
-                    };
-                    callNow = immediate && !timeout;
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                    if (callNow) {
-                        result = func.apply(context, args);
-                    }
-                    return result;
-                };
-            },
-            throttle: function(func, wait) {
-                var context, args, timeout, result, previous, later;
-                previous = 0;
-                later = function() {
-                    previous = new Date();
-                    timeout = null;
-                    result = func.apply(context, args);
-                };
-                return function() {
-                    var now = new Date(), remaining = wait - (now - previous);
-                    context = this;
-                    args = arguments;
-                    if (remaining <= 0) {
-                        clearTimeout(timeout);
-                        timeout = null;
-                        previous = now;
-                        result = func.apply(context, args);
-                    } else if (!timeout) {
-                        timeout = setTimeout(later, remaining);
-                    }
-                    return result;
-                };
-            },
-            stringify: function(val) {
-                return _.isString(val) ? val : JSON.stringify(val);
-            },
-            noop: function() {}
-        };
-    }();
-    var VERSION = "0.11.1";
-    var tokenizers = function() {
-        "use strict";
-        return {
-            nonword: nonword,
-            whitespace: whitespace,
-            obj: {
-                nonword: getObjTokenizer(nonword),
-                whitespace: getObjTokenizer(whitespace)
-            }
-        };
-        function whitespace(str) {
-            str = _.toStr(str);
-            return str ? str.split(/\s+/) : [];
-        }
-        function nonword(str) {
-            str = _.toStr(str);
-            return str ? str.split(/\W+/) : [];
-        }
-        function getObjTokenizer(tokenizer) {
-            return function setKey(keys) {
-                keys = _.isArray(keys) ? keys : [].slice.call(arguments, 0);
-                return function tokenize(o) {
-                    var tokens = [];
-                    _.each(keys, function(k) {
-                        tokens = tokens.concat(tokenizer(_.toStr(o[k])));
-                    });
-                    return tokens;
-                };
-            };
-        }
-    }();
-    var LruCache = function() {
-        "use strict";
-        function LruCache(maxSize) {
-            this.maxSize = _.isNumber(maxSize) ? maxSize : 100;
-            this.reset();
-            if (this.maxSize <= 0) {
-                this.set = this.get = $.noop;
-            }
-        }
-        _.mixin(LruCache.prototype, {
-            set: function set(key, val) {
-                var tailItem = this.list.tail, node;
-                if (this.size >= this.maxSize) {
-                    this.list.remove(tailItem);
-                    delete this.hash[tailItem.key];
-                    this.size--;
-                }
-                if (node = this.hash[key]) {
-                    node.val = val;
-                    this.list.moveToFront(node);
-                } else {
-                    node = new Node(key, val);
-                    this.list.add(node);
-                    this.hash[key] = node;
-                    this.size++;
-                }
-            },
-            get: function get(key) {
-                var node = this.hash[key];
-                if (node) {
-                    this.list.moveToFront(node);
-                    return node.val;
-                }
-            },
-            reset: function reset() {
-                this.size = 0;
-                this.hash = {};
-                this.list = new List();
-            }
-        });
-        function List() {
-            this.head = this.tail = null;
-        }
-        _.mixin(List.prototype, {
-            add: function add(node) {
-                if (this.head) {
-                    node.next = this.head;
-                    this.head.prev = node;
-                }
-                this.head = node;
-                this.tail = this.tail || node;
-            },
-            remove: function remove(node) {
-                node.prev ? node.prev.next = node.next : this.head = node.next;
-                node.next ? node.next.prev = node.prev : this.tail = node.prev;
-            },
-            moveToFront: function(node) {
-                this.remove(node);
-                this.add(node);
-            }
-        });
-        function Node(key, val) {
-            this.key = key;
-            this.val = val;
-            this.prev = this.next = null;
-        }
-        return LruCache;
-    }();
-    var PersistentStorage = function() {
-        "use strict";
-        var LOCAL_STORAGE;
-        try {
-            LOCAL_STORAGE = window.localStorage;
-            LOCAL_STORAGE.setItem("~~~", "!");
-            LOCAL_STORAGE.removeItem("~~~");
-        } catch (err) {
-            LOCAL_STORAGE = null;
-        }
-        function PersistentStorage(namespace, override) {
-            this.prefix = [ "__", namespace, "__" ].join("");
-            this.ttlKey = "__ttl__";
-            this.keyMatcher = new RegExp("^" + _.escapeRegExChars(this.prefix));
-            this.ls = override || LOCAL_STORAGE;
-            !this.ls && this._noop();
-        }
-        _.mixin(PersistentStorage.prototype, {
-            _prefix: function(key) {
-                return this.prefix + key;
-            },
-            _ttlKey: function(key) {
-                return this._prefix(key) + this.ttlKey;
-            },
-            _noop: function() {
-                this.get = this.set = this.remove = this.clear = this.isExpired = _.noop;
-            },
-            _safeSet: function(key, val) {
-                try {
-                    this.ls.setItem(key, val);
-                } catch (err) {
-                    if (err.name === "QuotaExceededError") {
-                        this.clear();
-                        this._noop();
-                    }
-                }
-            },
-            get: function(key) {
-                if (this.isExpired(key)) {
-                    this.remove(key);
-                }
-                return decode(this.ls.getItem(this._prefix(key)));
-            },
-            set: function(key, val, ttl) {
-                if (_.isNumber(ttl)) {
-                    this._safeSet(this._ttlKey(key), encode(now() + ttl));
-                } else {
-                    this.ls.removeItem(this._ttlKey(key));
-                }
-                return this._safeSet(this._prefix(key), encode(val));
-            },
-            remove: function(key) {
-                this.ls.removeItem(this._ttlKey(key));
-                this.ls.removeItem(this._prefix(key));
-                return this;
-            },
-            clear: function() {
-                var i, keys = gatherMatchingKeys(this.keyMatcher);
-                for (i = keys.length; i--; ) {
-                    this.remove(keys[i]);
-                }
-                return this;
-            },
-            isExpired: function(key) {
-                var ttl = decode(this.ls.getItem(this._ttlKey(key)));
-                return _.isNumber(ttl) && now() > ttl ? true : false;
-            }
-        });
-        return PersistentStorage;
-        function now() {
-            return new Date().getTime();
-        }
-        function encode(val) {
-            return JSON.stringify(_.isUndefined(val) ? null : val);
-        }
-        function decode(val) {
-            return $.parseJSON(val);
-        }
-        function gatherMatchingKeys(keyMatcher) {
-            var i, key, keys = [], len = LOCAL_STORAGE.length;
-            for (i = 0; i < len; i++) {
-                if ((key = LOCAL_STORAGE.key(i)).match(keyMatcher)) {
-                    keys.push(key.replace(keyMatcher, ""));
-                }
-            }
-            return keys;
-        }
-    }();
-    var Transport = function() {
-        "use strict";
-        var pendingRequestsCount = 0, pendingRequests = {}, maxPendingRequests = 6, sharedCache = new LruCache(10);
-        function Transport(o) {
-            o = o || {};
-            this.cancelled = false;
-            this.lastReq = null;
-            this._send = o.transport;
-            this._get = o.limiter ? o.limiter(this._get) : this._get;
-            this._cache = o.cache === false ? new LruCache(0) : sharedCache;
-        }
-        Transport.setMaxPendingRequests = function setMaxPendingRequests(num) {
-            maxPendingRequests = num;
-        };
-        Transport.resetCache = function resetCache() {
-            sharedCache.reset();
-        };
-        _.mixin(Transport.prototype, {
-            _fingerprint: function fingerprint(o) {
-                o = o || {};
-                return o.url + o.type + $.param(o.data || {});
-            },
-            _get: function(o, cb) {
-                var that = this, fingerprint, jqXhr;
-                fingerprint = this._fingerprint(o);
-                if (this.cancelled || fingerprint !== this.lastReq) {
-                    return;
-                }
-                if (jqXhr = pendingRequests[fingerprint]) {
-                    jqXhr.done(done).fail(fail);
-                } else if (pendingRequestsCount < maxPendingRequests) {
-                    pendingRequestsCount++;
-                    pendingRequests[fingerprint] = this._send(o).done(done).fail(fail).always(always);
-                } else {
-                    this.onDeckRequestArgs = [].slice.call(arguments, 0);
-                }
-                function done(resp) {
-                    cb(null, resp);
-                    that._cache.set(fingerprint, resp);
-                }
-                function fail() {
-                    cb(true);
-                }
-                function always() {
-                    pendingRequestsCount--;
-                    delete pendingRequests[fingerprint];
-                    if (that.onDeckRequestArgs) {
-                        that._get.apply(that, that.onDeckRequestArgs);
-                        that.onDeckRequestArgs = null;
-                    }
-                }
-            },
-            get: function(o, cb) {
-                var resp, fingerprint;
-                cb = cb || $.noop;
-                o = _.isString(o) ? {
-                    url: o
-                } : o || {};
-                fingerprint = this._fingerprint(o);
-                this.cancelled = false;
-                this.lastReq = fingerprint;
-                if (resp = this._cache.get(fingerprint)) {
-                    cb(null, resp);
-                } else {
-                    this._get(o, cb);
-                }
-            },
-            cancel: function() {
-                this.cancelled = true;
-            }
-        });
-        return Transport;
-    }();
-    var SearchIndex = window.SearchIndex = function() {
-        "use strict";
-        var CHILDREN = "c", IDS = "i";
-        function SearchIndex(o) {
-            o = o || {};
-            if (!o.datumTokenizer || !o.queryTokenizer) {
-                $.error("datumTokenizer and queryTokenizer are both required");
-            }
-            this.identify = o.identify || _.stringify;
-            this.datumTokenizer = o.datumTokenizer;
-            this.queryTokenizer = o.queryTokenizer;
-            this.reset();
-        }
-        _.mixin(SearchIndex.prototype, {
-            bootstrap: function bootstrap(o) {
-                this.datums = o.datums;
-                this.trie = o.trie;
-            },
-            add: function(data) {
-                var that = this;
-                data = _.isArray(data) ? data : [ data ];
-                _.each(data, function(datum) {
-                    var id, tokens;
-                    that.datums[id = that.identify(datum)] = datum;
-                    tokens = normalizeTokens(that.datumTokenizer(datum));
-                    _.each(tokens, function(token) {
-                        var node, chars, ch;
-                        node = that.trie;
-                        chars = token.split("");
-                        while (ch = chars.shift()) {
-                            node = node[CHILDREN][ch] || (node[CHILDREN][ch] = newNode());
-                            node[IDS].push(id);
-                        }
-                    });
-                });
-            },
-            get: function get(ids) {
-                var that = this;
-                return _.map(ids, function(id) {
-                    return that.datums[id];
-                });
-            },
-            search: function search(query) {
-                var that = this, tokens, matches;
-                tokens = normalizeTokens(this.queryTokenizer(query));
-                _.each(tokens, function(token) {
-                    var node, chars, ch, ids;
-                    if (matches && matches.length === 0) {
-                        return false;
-                    }
-                    node = that.trie;
-                    chars = token.split("");
-                    while (node && (ch = chars.shift())) {
-                        node = node[CHILDREN][ch];
-                    }
-                    if (node && chars.length === 0) {
-                        ids = node[IDS].slice(0);
-                        matches = matches ? getIntersection(matches, ids) : ids;
-                    } else {
-                        matches = [];
-                        return false;
-                    }
-                });
-                return matches ? _.map(unique(matches), function(id) {
-                    return that.datums[id];
-                }) : [];
-            },
-            all: function all() {
-                var values = [];
-                for (var key in this.datums) {
-                    values.push(this.datums[key]);
-                }
-                return values;
-            },
-            reset: function reset() {
-                this.datums = {};
-                this.trie = newNode();
-            },
-            serialize: function serialize() {
-                return {
-                    datums: this.datums,
-                    trie: this.trie
-                };
-            }
-        });
-        return SearchIndex;
-        function normalizeTokens(tokens) {
-            tokens = _.filter(tokens, function(token) {
-                return !!token;
-            });
-            tokens = _.map(tokens, function(token) {
-                return token.toLowerCase();
-            });
-            return tokens;
-        }
-        function newNode() {
-            var node = {};
-            node[IDS] = [];
-            node[CHILDREN] = {};
-            return node;
-        }
-        function unique(array) {
-            var seen = {}, uniques = [];
-            for (var i = 0, len = array.length; i < len; i++) {
-                if (!seen[array[i]]) {
-                    seen[array[i]] = true;
-                    uniques.push(array[i]);
-                }
-            }
-            return uniques;
-        }
-        function getIntersection(arrayA, arrayB) {
-            var ai = 0, bi = 0, intersection = [];
-            arrayA = arrayA.sort();
-            arrayB = arrayB.sort();
-            var lenArrayA = arrayA.length, lenArrayB = arrayB.length;
-            while (ai < lenArrayA && bi < lenArrayB) {
-                if (arrayA[ai] < arrayB[bi]) {
-                    ai++;
-                } else if (arrayA[ai] > arrayB[bi]) {
-                    bi++;
-                } else {
-                    intersection.push(arrayA[ai]);
-                    ai++;
-                    bi++;
-                }
-            }
-            return intersection;
-        }
-    }();
-    var Prefetch = function() {
-        "use strict";
-        var keys;
-        keys = {
-            data: "data",
-            protocol: "protocol",
-            thumbprint: "thumbprint"
-        };
-        function Prefetch(o) {
-            this.url = o.url;
-            this.ttl = o.ttl;
-            this.cache = o.cache;
-            this.prepare = o.prepare;
-            this.transform = o.transform;
-            this.transport = o.transport;
-            this.thumbprint = o.thumbprint;
-            this.storage = new PersistentStorage(o.cacheKey);
-        }
-        _.mixin(Prefetch.prototype, {
-            _settings: function settings() {
-                return {
-                    url: this.url,
-                    type: "GET",
-                    dataType: "json"
-                };
-            },
-            store: function store(data) {
-                if (!this.cache) {
-                    return;
-                }
-                this.storage.set(keys.data, data, this.ttl);
-                this.storage.set(keys.protocol, location.protocol, this.ttl);
-                this.storage.set(keys.thumbprint, this.thumbprint, this.ttl);
-            },
-            fromCache: function fromCache() {
-                var stored = {}, isExpired;
-                if (!this.cache) {
-                    return null;
-                }
-                stored.data = this.storage.get(keys.data);
-                stored.protocol = this.storage.get(keys.protocol);
-                stored.thumbprint = this.storage.get(keys.thumbprint);
-                isExpired = stored.thumbprint !== this.thumbprint || stored.protocol !== location.protocol;
-                return stored.data && !isExpired ? stored.data : null;
-            },
-            fromNetwork: function(cb) {
-                var that = this, settings;
-                if (!cb) {
-                    return;
-                }
-                settings = this.prepare(this._settings());
-                this.transport(settings).fail(onError).done(onResponse);
-                function onError() {
-                    cb(true);
-                }
-                function onResponse(resp) {
-                    cb(null, that.transform(resp));
-                }
-            },
-            clear: function clear() {
-                this.storage.clear();
-                return this;
-            }
-        });
-        return Prefetch;
-    }();
-    var Remote = function() {
-        "use strict";
-        function Remote(o) {
-            this.url = o.url;
-            this.prepare = o.prepare;
-            this.transform = o.transform;
-            this.transport = new Transport({
-                cache: o.cache,
-                limiter: o.limiter,
-                transport: o.transport
-            });
-        }
-        _.mixin(Remote.prototype, {
-            _settings: function settings() {
-                return {
-                    url: this.url,
-                    type: "GET",
-                    dataType: "json"
-                };
-            },
-            get: function get(query, cb) {
-                var that = this, settings;
-                if (!cb) {
-                    return;
-                }
-                query = query || "";
-                settings = this.prepare(query, this._settings());
-                return this.transport.get(settings, onResponse);
-                function onResponse(err, resp) {
-                    err ? cb([]) : cb(that.transform(resp));
-                }
-            },
-            cancelLastRequest: function cancelLastRequest() {
-                this.transport.cancel();
-            }
-        });
-        return Remote;
-    }();
-    var oParser = function() {
-        "use strict";
-        return function parse(o) {
-            var defaults, sorter;
-            defaults = {
-                initialize: true,
-                identify: _.stringify,
-                datumTokenizer: null,
-                queryTokenizer: null,
-                sufficient: 5,
-                sorter: null,
-                local: [],
-                prefetch: null,
-                remote: null
-            };
-            o = _.mixin(defaults, o || {});
-            !o.datumTokenizer && $.error("datumTokenizer is required");
-            !o.queryTokenizer && $.error("queryTokenizer is required");
-            sorter = o.sorter;
-            o.sorter = sorter ? function(x) {
-                return x.sort(sorter);
-            } : _.identity;
-            o.local = _.isFunction(o.local) ? o.local() : o.local;
-            o.prefetch = parsePrefetch(o.prefetch);
-            o.remote = parseRemote(o.remote);
-            return o;
-        };
-        function parsePrefetch(o) {
-            var defaults;
-            if (!o) {
-                return null;
-            }
-            defaults = {
-                url: null,
-                ttl: 24 * 60 * 60 * 1e3,
-                cache: true,
-                cacheKey: null,
-                thumbprint: "",
-                prepare: _.identity,
-                transform: _.identity,
-                transport: null
-            };
-            o = _.isString(o) ? {
-                url: o
-            } : o;
-            o = _.mixin(defaults, o);
-            !o.url && $.error("prefetch requires url to be set");
-            o.transform = o.filter || o.transform;
-            o.cacheKey = o.cacheKey || o.url;
-            o.thumbprint = VERSION + o.thumbprint;
-            o.transport = o.transport ? callbackToDeferred(o.transport) : $.ajax;
-            return o;
-        }
-        function parseRemote(o) {
-            var defaults;
-            if (!o) {
-                return;
-            }
-            defaults = {
-                url: null,
-                cache: true,
-                prepare: null,
-                replace: null,
-                wildcard: null,
-                limiter: null,
-                rateLimitBy: "debounce",
-                rateLimitWait: 300,
-                transform: _.identity,
-                transport: null
-            };
-            o = _.isString(o) ? {
-                url: o
-            } : o;
-            o = _.mixin(defaults, o);
-            !o.url && $.error("remote requires url to be set");
-            o.transform = o.filter || o.transform;
-            o.prepare = toRemotePrepare(o);
-            o.limiter = toLimiter(o);
-            o.transport = o.transport ? callbackToDeferred(o.transport) : $.ajax;
-            delete o.replace;
-            delete o.wildcard;
-            delete o.rateLimitBy;
-            delete o.rateLimitWait;
-            return o;
-        }
-        function toRemotePrepare(o) {
-            var prepare, replace, wildcard;
-            prepare = o.prepare;
-            replace = o.replace;
-            wildcard = o.wildcard;
-            if (prepare) {
-                return prepare;
-            }
-            if (replace) {
-                prepare = prepareByReplace;
-            } else if (o.wildcard) {
-                prepare = prepareByWildcard;
-            } else {
-                prepare = idenityPrepare;
-            }
-            return prepare;
-            function prepareByReplace(query, settings) {
-                settings.url = replace(settings.url, query);
-                return settings;
-            }
-            function prepareByWildcard(query, settings) {
-                settings.url = settings.url.replace(wildcard, encodeURIComponent(query));
-                return settings;
-            }
-            function idenityPrepare(query, settings) {
-                return settings;
-            }
-        }
-        function toLimiter(o) {
-            var limiter, method, wait;
-            limiter = o.limiter;
-            method = o.rateLimitBy;
-            wait = o.rateLimitWait;
-            if (!limiter) {
-                limiter = /^throttle$/i.test(method) ? throttle(wait) : debounce(wait);
-            }
-            return limiter;
-            function debounce(wait) {
-                return function debounce(fn) {
-                    return _.debounce(fn, wait);
-                };
-            }
-            function throttle(wait) {
-                return function throttle(fn) {
-                    return _.throttle(fn, wait);
-                };
-            }
-        }
-        function callbackToDeferred(fn) {
-            return function wrapper(o) {
-                var deferred = $.Deferred();
-                fn(o, onSuccess, onError);
-                return deferred;
-                function onSuccess(resp) {
-                    _.defer(function() {
-                        deferred.resolve(resp);
-                    });
-                }
-                function onError(err) {
-                    _.defer(function() {
-                        deferred.reject(err);
-                    });
-                }
-            };
-        }
-    }();
-    var Bloodhound = function() {
-        "use strict";
-        var old;
-        old = window && window.Bloodhound;
-        function Bloodhound(o) {
-            o = oParser(o);
-            this.sorter = o.sorter;
-            this.identify = o.identify;
-            this.sufficient = o.sufficient;
-            this.local = o.local;
-            this.remote = o.remote ? new Remote(o.remote) : null;
-            this.prefetch = o.prefetch ? new Prefetch(o.prefetch) : null;
-            this.index = new SearchIndex({
-                identify: this.identify,
-                datumTokenizer: o.datumTokenizer,
-                queryTokenizer: o.queryTokenizer
-            });
-            o.initialize !== false && this.initialize();
-        }
-        Bloodhound.noConflict = function noConflict() {
-            window && (window.Bloodhound = old);
-            return Bloodhound;
-        };
-        Bloodhound.tokenizers = tokenizers;
-        _.mixin(Bloodhound.prototype, {
-            __ttAdapter: function ttAdapter() {
-                var that = this;
-                return this.remote ? withAsync : withoutAsync;
-                function withAsync(query, sync, async) {
-                    return that.search(query, sync, async);
-                }
-                function withoutAsync(query, sync) {
-                    return that.search(query, sync);
-                }
-            },
-            _loadPrefetch: function loadPrefetch() {
-                var that = this, deferred, serialized;
-                deferred = $.Deferred();
-                if (!this.prefetch) {
-                    deferred.resolve();
-                } else if (serialized = this.prefetch.fromCache()) {
-                    this.index.bootstrap(serialized);
-                    deferred.resolve();
-                } else {
-                    this.prefetch.fromNetwork(done);
-                }
-                return deferred.promise();
-                function done(err, data) {
-                    if (err) {
-                        return deferred.reject();
-                    }
-                    that.add(data);
-                    that.prefetch.store(that.index.serialize());
-                    deferred.resolve();
-                }
-            },
-            _initialize: function initialize() {
-                var that = this, deferred;
-                this.clear();
-                (this.initPromise = this._loadPrefetch()).done(addLocalToIndex);
-                return this.initPromise;
-                function addLocalToIndex() {
-                    that.add(that.local);
-                }
-            },
-            initialize: function initialize(force) {
-                return !this.initPromise || force ? this._initialize() : this.initPromise;
-            },
-            add: function add(data) {
-                this.index.add(data);
-                return this;
-            },
-            get: function get(ids) {
-                ids = _.isArray(ids) ? ids : [].slice.call(arguments);
-                return this.index.get(ids);
-            },
-            search: function search(query, sync, async) {
-                var that = this, local;
-                local = this.sorter(this.index.search(query));
-                sync(this.remote ? local.slice() : local);
-                if (this.remote && local.length < this.sufficient) {
-                    this.remote.get(query, processRemote);
-                } else if (this.remote) {
-                    this.remote.cancelLastRequest();
-                }
-                return this;
-                function processRemote(remote) {
-                    var nonDuplicates = [];
-                    _.each(remote, function(r) {
-                        !_.some(local, function(l) {
-                            return that.identify(r) === that.identify(l);
-                        }) && nonDuplicates.push(r);
-                    });
-                    async && async(nonDuplicates);
-                }
-            },
-            all: function all() {
-                return this.index.all();
-            },
-            clear: function clear() {
-                this.index.reset();
-                return this;
-            },
-            clearPrefetchCache: function clearPrefetchCache() {
-                this.prefetch && this.prefetch.clear();
-                return this;
-            },
-            clearRemoteCache: function clearRemoteCache() {
-                Transport.resetCache();
-                return this;
-            },
-            ttAdapter: function ttAdapter() {
-                return this.__ttAdapter();
-            }
-        });
-        return Bloodhound;
-    }();
-    return Bloodhound;
-});
-/*!
- * typeahead.js 0.11.1
- * https://github.com/twitter/typeahead.js
- * Copyright 2013-2015 Twitter, Inc. and other contributors; Licensed MIT
- */
-
-(function(root, factory) {
-    if (typeof define === "function" && define.amd) {
-        define("typeahead", [ "jquery" ], function(a0) {
-            return factory(a0);
-        });
-    } else if (typeof exports === "object") {
-        module.exports = factory(require("jquery"));
-    } else {
-        factory(jQuery);
-    }
-})(this, function($) {
-    var _ = function() {
-        "use strict";
-        return {
-            isMsie: function() {
-                return /(msie|trident)/i.test(navigator.userAgent) ? navigator.userAgent.match(/(msie |rv:)(\d+(.\d+)?)/i)[2] : false;
-            },
-            isBlankString: function(str) {
-                return !str || /^\s*$/.test(str);
-            },
-            escapeRegExChars: function(str) {
-                return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-            },
-            isString: function(obj) {
-                return typeof obj === "string";
-            },
-            isNumber: function(obj) {
-                return typeof obj === "number";
-            },
-            isArray: $.isArray,
-            isFunction: $.isFunction,
-            isObject: $.isPlainObject,
-            isUndefined: function(obj) {
-                return typeof obj === "undefined";
-            },
-            isElement: function(obj) {
-                return !!(obj && obj.nodeType === 1);
-            },
-            isJQuery: function(obj) {
-                return obj instanceof $;
-            },
-            toStr: function toStr(s) {
-                return _.isUndefined(s) || s === null ? "" : s + "";
-            },
-            bind: $.proxy,
-            each: function(collection, cb) {
-                $.each(collection, reverseArgs);
-                function reverseArgs(index, value) {
-                    return cb(value, index);
-                }
-            },
-            map: $.map,
-            filter: $.grep,
-            every: function(obj, test) {
-                var result = true;
-                if (!obj) {
-                    return result;
-                }
-                $.each(obj, function(key, val) {
-                    if (!(result = test.call(null, val, key, obj))) {
-                        return false;
-                    }
-                });
-                return !!result;
-            },
-            some: function(obj, test) {
-                var result = false;
-                if (!obj) {
-                    return result;
-                }
-                $.each(obj, function(key, val) {
-                    if (result = test.call(null, val, key, obj)) {
-                        return false;
-                    }
-                });
-                return !!result;
-            },
-            mixin: $.extend,
-            identity: function(x) {
-                return x;
-            },
-            clone: function(obj) {
-                return $.extend(true, {}, obj);
-            },
-            getIdGenerator: function() {
-                var counter = 0;
-                return function() {
-                    return counter++;
-                };
-            },
-            templatify: function templatify(obj) {
-                return $.isFunction(obj) ? obj : template;
-                function template() {
-                    return String(obj);
-                }
-            },
-            defer: function(fn) {
-                setTimeout(fn, 0);
-            },
-            debounce: function(func, wait, immediate) {
-                var timeout, result;
-                return function() {
-                    var context = this, args = arguments, later, callNow;
-                    later = function() {
-                        timeout = null;
-                        if (!immediate) {
-                            result = func.apply(context, args);
-                        }
-                    };
-                    callNow = immediate && !timeout;
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
-                    if (callNow) {
-                        result = func.apply(context, args);
-                    }
-                    return result;
-                };
-            },
-            throttle: function(func, wait) {
-                var context, args, timeout, result, previous, later;
-                previous = 0;
-                later = function() {
-                    previous = new Date();
-                    timeout = null;
-                    result = func.apply(context, args);
-                };
-                return function() {
-                    var now = new Date(), remaining = wait - (now - previous);
-                    context = this;
-                    args = arguments;
-                    if (remaining <= 0) {
-                        clearTimeout(timeout);
-                        timeout = null;
-                        previous = now;
-                        result = func.apply(context, args);
-                    } else if (!timeout) {
-                        timeout = setTimeout(later, remaining);
-                    }
-                    return result;
-                };
-            },
-            stringify: function(val) {
-                return _.isString(val) ? val : JSON.stringify(val);
-            },
-            noop: function() {}
-        };
-    }();
-    var WWW = function() {
-        "use strict";
-        var defaultClassNames = {
-            wrapper: "twitter-typeahead",
-            input: "tt-input",
-            hint: "tt-hint",
-            menu: "tt-menu",
-            dataset: "tt-dataset",
-            suggestion: "tt-suggestion",
-            selectable: "tt-selectable",
-            empty: "tt-empty",
-            open: "tt-open",
-            cursor: "tt-cursor",
-            highlight: "tt-highlight"
-        };
-        return build;
-        function build(o) {
-            var www, classes;
-            classes = _.mixin({}, defaultClassNames, o);
-            www = {
-                css: buildCss(),
-                classes: classes,
-                html: buildHtml(classes),
-                selectors: buildSelectors(classes)
-            };
-            return {
-                css: www.css,
-                html: www.html,
-                classes: www.classes,
-                selectors: www.selectors,
-                mixin: function(o) {
-                    _.mixin(o, www);
-                }
-            };
-        }
-        function buildHtml(c) {
-            return {
-                wrapper: '<span class="' + c.wrapper + '"></span>',
-                menu: '<div class="' + c.menu + '"></div>'
-            };
-        }
-        function buildSelectors(classes) {
-            var selectors = {};
-            _.each(classes, function(v, k) {
-                selectors[k] = "." + v;
-            });
-            return selectors;
-        }
-        function buildCss() {
-            var css = {
-                wrapper: {
-                    position: "relative",
-                    display: "inline-block"
-                },
-                hint: {
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                    borderColor: "transparent",
-                    boxShadow: "none",
-                    opacity: "1"
-                },
-                input: {
-                    position: "relative",
-                    verticalAlign: "top",
-                    backgroundColor: "transparent"
-                },
-                inputWithNoHint: {
-                    position: "relative",
-                    verticalAlign: "top"
-                },
-                menu: {
-                    position: "absolute",
-                    top: "100%",
-                    left: "0",
-                    zIndex: "100",
-                    display: "none"
-                },
-                ltr: {
-                    left: "0",
-                    right: "auto"
-                },
-                rtl: {
-                    left: "auto",
-                    right: " 0"
-                }
-            };
-            if (_.isMsie()) {
-                _.mixin(css.input, {
-                    backgroundImage: "url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)"
-                });
-            }
-            return css;
-        }
-    }();
-    var EventBus = function() {
-        "use strict";
-        var namespace, deprecationMap;
-        namespace = "typeahead:";
-        deprecationMap = {
-            render: "rendered",
-            cursorchange: "cursorchanged",
-            select: "selected",
-            autocomplete: "autocompleted"
-        };
-        function EventBus(o) {
-            if (!o || !o.el) {
-                $.error("EventBus initialized without el");
-            }
-            this.$el = $(o.el);
-        }
-        _.mixin(EventBus.prototype, {
-            _trigger: function(type, args) {
-                var $e;
-                $e = $.Event(namespace + type);
-                (args = args || []).unshift($e);
-                this.$el.trigger.apply(this.$el, args);
-                return $e;
-            },
-            before: function(type) {
-                var args, $e;
-                args = [].slice.call(arguments, 1);
-                $e = this._trigger("before" + type, args);
-                return $e.isDefaultPrevented();
-            },
-            trigger: function(type) {
-                var deprecatedType;
-                this._trigger(type, [].slice.call(arguments, 1));
-                if (deprecatedType = deprecationMap[type]) {
-                    this._trigger(deprecatedType, [].slice.call(arguments, 1));
-                }
-            }
-        });
-        return EventBus;
-    }();
-    var EventEmitter = function() {
-        "use strict";
-        var splitter = /\s+/, nextTick = getNextTick();
-        return {
-            onSync: onSync,
-            onAsync: onAsync,
-            off: off,
-            trigger: trigger
-        };
-        function on(method, types, cb, context) {
-            var type;
-            if (!cb) {
-                return this;
-            }
-            types = types.split(splitter);
-            cb = context ? bindContext(cb, context) : cb;
-            this._callbacks = this._callbacks || {};
-            while (type = types.shift()) {
-                this._callbacks[type] = this._callbacks[type] || {
-                    sync: [],
-                    async: []
-                };
-                this._callbacks[type][method].push(cb);
-            }
-            return this;
-        }
-        function onAsync(types, cb, context) {
-            return on.call(this, "async", types, cb, context);
-        }
-        function onSync(types, cb, context) {
-            return on.call(this, "sync", types, cb, context);
-        }
-        function off(types) {
-            var type;
-            if (!this._callbacks) {
-                return this;
-            }
-            types = types.split(splitter);
-            while (type = types.shift()) {
-                delete this._callbacks[type];
-            }
-            return this;
-        }
-        function trigger(types) {
-            var type, callbacks, args, syncFlush, asyncFlush;
-            if (!this._callbacks) {
-                return this;
-            }
-            types = types.split(splitter);
-            args = [].slice.call(arguments, 1);
-            while ((type = types.shift()) && (callbacks = this._callbacks[type])) {
-                syncFlush = getFlush(callbacks.sync, this, [ type ].concat(args));
-                asyncFlush = getFlush(callbacks.async, this, [ type ].concat(args));
-                syncFlush() && nextTick(asyncFlush);
-            }
-            return this;
-        }
-        function getFlush(callbacks, context, args) {
-            return flush;
-            function flush() {
-                var cancelled;
-                for (var i = 0, len = callbacks.length; !cancelled && i < len; i += 1) {
-                    cancelled = callbacks[i].apply(context, args) === false;
-                }
-                return !cancelled;
-            }
-        }
-        function getNextTick() {
-            var nextTickFn;
-            if (window.setImmediate) {
-                nextTickFn = function nextTickSetImmediate(fn) {
-                    setImmediate(function() {
-                        fn();
-                    });
-                };
-            } else {
-                nextTickFn = function nextTickSetTimeout(fn) {
-                    setTimeout(function() {
-                        fn();
-                    }, 0);
-                };
-            }
-            return nextTickFn;
-        }
-        function bindContext(fn, context) {
-            return fn.bind ? fn.bind(context) : function() {
-                fn.apply(context, [].slice.call(arguments, 0));
-            };
-        }
-    }();
-    var highlight = function(doc) {
-        "use strict";
-        var defaults = {
-            node: null,
-            pattern: null,
-            tagName: "strong",
-            className: null,
-            wordsOnly: false,
-            caseSensitive: false
-        };
-        return function hightlight(o) {
-            var regex;
-            o = _.mixin({}, defaults, o);
-            if (!o.node || !o.pattern) {
-                return;
-            }
-            o.pattern = _.isArray(o.pattern) ? o.pattern : [ o.pattern ];
-            regex = getRegex(o.pattern, o.caseSensitive, o.wordsOnly);
-            traverse(o.node, hightlightTextNode);
-            function hightlightTextNode(textNode) {
-                var match, patternNode, wrapperNode;
-                if (match = regex.exec(textNode.data)) {
-                    wrapperNode = doc.createElement(o.tagName);
-                    o.className && (wrapperNode.className = o.className);
-                    patternNode = textNode.splitText(match.index);
-                    patternNode.splitText(match[0].length);
-                    wrapperNode.appendChild(patternNode.cloneNode(true));
-                    textNode.parentNode.replaceChild(wrapperNode, patternNode);
-                }
-                return !!match;
-            }
-            function traverse(el, hightlightTextNode) {
-                var childNode, TEXT_NODE_TYPE = 3;
-                for (var i = 0; i < el.childNodes.length; i++) {
-                    childNode = el.childNodes[i];
-                    if (childNode.nodeType === TEXT_NODE_TYPE) {
-                        i += hightlightTextNode(childNode) ? 1 : 0;
-                    } else {
-                        traverse(childNode, hightlightTextNode);
-                    }
-                }
-            }
-        };
-        function getRegex(patterns, caseSensitive, wordsOnly) {
-            var escapedPatterns = [], regexStr;
-            for (var i = 0, len = patterns.length; i < len; i++) {
-                escapedPatterns.push(_.escapeRegExChars(patterns[i]));
-            }
-            regexStr = wordsOnly ? "\\b(" + escapedPatterns.join("|") + ")\\b" : "(" + escapedPatterns.join("|") + ")";
-            return caseSensitive ? new RegExp(regexStr) : new RegExp(regexStr, "i");
-        }
-    }(window.document);
-    var Input = function() {
-        "use strict";
-        var specialKeyCodeMap;
-        specialKeyCodeMap = {
-            9: "tab",
-            27: "esc",
-            37: "left",
-            39: "right",
-            13: "enter",
-            38: "up",
-            40: "down"
-        };
-        function Input(o, www) {
-            o = o || {};
-            if (!o.input) {
-                $.error("input is missing");
-            }
-            www.mixin(this);
-            this.$hint = $(o.hint);
-            this.$input = $(o.input);
-            this.query = this.$input.val();
-            this.queryWhenFocused = this.hasFocus() ? this.query : null;
-            this.$overflowHelper = buildOverflowHelper(this.$input);
-            this._checkLanguageDirection();
-            if (this.$hint.length === 0) {
-                this.setHint = this.getHint = this.clearHint = this.clearHintIfInvalid = _.noop;
-            }
-        }
-        Input.normalizeQuery = function(str) {
-            return _.toStr(str).replace(/^\s*/g, "").replace(/\s{2,}/g, " ");
-        };
-        _.mixin(Input.prototype, EventEmitter, {
-            _onBlur: function onBlur() {
-                this.resetInputValue();
-                this.trigger("blurred");
-            },
-            _onFocus: function onFocus() {
-                this.queryWhenFocused = this.query;
-                this.trigger("focused");
-            },
-            _onKeydown: function onKeydown($e) {
-                var keyName = specialKeyCodeMap[$e.which || $e.keyCode];
-                this._managePreventDefault(keyName, $e);
-                if (keyName && this._shouldTrigger(keyName, $e)) {
-                    this.trigger(keyName + "Keyed", $e);
-                }
-            },
-            _onInput: function onInput() {
-                this._setQuery(this.getInputValue());
-                this.clearHintIfInvalid();
-                this._checkLanguageDirection();
-            },
-            _managePreventDefault: function managePreventDefault(keyName, $e) {
-                var preventDefault;
-                switch (keyName) {
-                  case "up":
-                  case "down":
-                    preventDefault = !withModifier($e);
-                    break;
-
-                  default:
-                    preventDefault = false;
-                }
-                preventDefault && $e.preventDefault();
-            },
-            _shouldTrigger: function shouldTrigger(keyName, $e) {
-                var trigger;
-                switch (keyName) {
-                  case "tab":
-                    trigger = !withModifier($e);
-                    break;
-
-                  default:
-                    trigger = true;
-                }
-                return trigger;
-            },
-            _checkLanguageDirection: function checkLanguageDirection() {
-                var dir = (this.$input.css("direction") || "ltr").toLowerCase();
-                if (this.dir !== dir) {
-                    this.dir = dir;
-                    this.$hint.attr("dir", dir);
-                    this.trigger("langDirChanged", dir);
-                }
-            },
-            _setQuery: function setQuery(val, silent) {
-                var areEquivalent, hasDifferentWhitespace;
-                areEquivalent = areQueriesEquivalent(val, this.query);
-                hasDifferentWhitespace = areEquivalent ? this.query.length !== val.length : false;
-                this.query = val;
-                if (!silent && !areEquivalent) {
-                    this.trigger("queryChanged", this.query);
-                } else if (!silent && hasDifferentWhitespace) {
-                    this.trigger("whitespaceChanged", this.query);
-                }
-            },
-            bind: function() {
-                var that = this, onBlur, onFocus, onKeydown, onInput;
-                onBlur = _.bind(this._onBlur, this);
-                onFocus = _.bind(this._onFocus, this);
-                onKeydown = _.bind(this._onKeydown, this);
-                onInput = _.bind(this._onInput, this);
-                this.$input.on("blur.tt", onBlur).on("focus.tt", onFocus).on("keydown.tt", onKeydown);
-                if (!_.isMsie() || _.isMsie() > 9) {
-                    this.$input.on("input.tt", onInput);
-                } else {
-                    this.$input.on("keydown.tt keypress.tt cut.tt paste.tt", function($e) {
-                        if (specialKeyCodeMap[$e.which || $e.keyCode]) {
-                            return;
-                        }
-                        _.defer(_.bind(that._onInput, that, $e));
-                    });
-                }
-                return this;
-            },
-            focus: function focus() {
-                this.$input.focus();
-            },
-            blur: function blur() {
-                this.$input.blur();
-            },
-            getLangDir: function getLangDir() {
-                return this.dir;
-            },
-            getQuery: function getQuery() {
-                return this.query || "";
-            },
-            setQuery: function setQuery(val, silent) {
-                this.setInputValue(val);
-                this._setQuery(val, silent);
-            },
-            hasQueryChangedSinceLastFocus: function hasQueryChangedSinceLastFocus() {
-                return this.query !== this.queryWhenFocused;
-            },
-            getInputValue: function getInputValue() {
-                return this.$input.val();
-            },
-            setInputValue: function setInputValue(value) {
-                this.$input.val(value);
-                this.clearHintIfInvalid();
-                this._checkLanguageDirection();
-            },
-            resetInputValue: function resetInputValue() {
-                this.setInputValue(this.query);
-            },
-            getHint: function getHint() {
-                return this.$hint.val();
-            },
-            setHint: function setHint(value) {
-                this.$hint.val(value);
-            },
-            clearHint: function clearHint() {
-                this.setHint("");
-            },
-            clearHintIfInvalid: function clearHintIfInvalid() {
-                var val, hint, valIsPrefixOfHint, isValid;
-                val = this.getInputValue();
-                hint = this.getHint();
-                valIsPrefixOfHint = val !== hint && hint.indexOf(val) === 0;
-                isValid = val !== "" && valIsPrefixOfHint && !this.hasOverflow();
-                !isValid && this.clearHint();
-            },
-            hasFocus: function hasFocus() {
-                return this.$input.is(":focus");
-            },
-            hasOverflow: function hasOverflow() {
-                var constraint = this.$input.width() - 2;
-                this.$overflowHelper.text(this.getInputValue());
-                return this.$overflowHelper.width() >= constraint;
-            },
-            isCursorAtEnd: function() {
-                var valueLength, selectionStart, range;
-                valueLength = this.$input.val().length;
-                selectionStart = this.$input[0].selectionStart;
-                if (_.isNumber(selectionStart)) {
-                    return selectionStart === valueLength;
-                } else if (document.selection) {
-                    range = document.selection.createRange();
-                    range.moveStart("character", -valueLength);
-                    return valueLength === range.text.length;
-                }
-                return true;
-            },
-            destroy: function destroy() {
-                this.$hint.off(".tt");
-                this.$input.off(".tt");
-                this.$overflowHelper.remove();
-                this.$hint = this.$input = this.$overflowHelper = $("<div>");
-            }
-        });
-        return Input;
-        function buildOverflowHelper($input) {
-            return $('<pre aria-hidden="true"></pre>').css({
-                position: "absolute",
-                visibility: "hidden",
-                whiteSpace: "pre",
-                fontFamily: $input.css("font-family"),
-                fontSize: $input.css("font-size"),
-                fontStyle: $input.css("font-style"),
-                fontVariant: $input.css("font-variant"),
-                fontWeight: $input.css("font-weight"),
-                wordSpacing: $input.css("word-spacing"),
-                letterSpacing: $input.css("letter-spacing"),
-                textIndent: $input.css("text-indent"),
-                textRendering: $input.css("text-rendering"),
-                textTransform: $input.css("text-transform")
-            }).insertAfter($input);
-        }
-        function areQueriesEquivalent(a, b) {
-            return Input.normalizeQuery(a) === Input.normalizeQuery(b);
-        }
-        function withModifier($e) {
-            return $e.altKey || $e.ctrlKey || $e.metaKey || $e.shiftKey;
-        }
-    }();
-    var Dataset = function() {
-        "use strict";
-        var keys, nameGenerator;
-        keys = {
-            val: "tt-selectable-display",
-            obj: "tt-selectable-object"
-        };
-        nameGenerator = _.getIdGenerator();
-        function Dataset(o, www) {
-            o = o || {};
-            o.templates = o.templates || {};
-            o.templates.notFound = o.templates.notFound || o.templates.empty;
-            if (!o.source) {
-                $.error("missing source");
-            }
-            if (!o.node) {
-                $.error("missing node");
-            }
-            if (o.name && !isValidName(o.name)) {
-                $.error("invalid dataset name: " + o.name);
-            }
-            www.mixin(this);
-            this.highlight = !!o.highlight;
-            this.name = o.name || nameGenerator();
-            this.limit = o.limit || 5;
-            this.displayFn = getDisplayFn(o.display || o.displayKey);
-            this.templates = getTemplates(o.templates, this.displayFn);
-            this.source = o.source.__ttAdapter ? o.source.__ttAdapter() : o.source;
-            this.async = _.isUndefined(o.async) ? this.source.length > 2 : !!o.async;
-            this._resetLastSuggestion();
-            this.$el = $(o.node).addClass(this.classes.dataset).addClass(this.classes.dataset + "-" + this.name);
-        }
-        Dataset.extractData = function extractData(el) {
-            var $el = $(el);
-            if ($el.data(keys.obj)) {
-                return {
-                    val: $el.data(keys.val) || "",
-                    obj: $el.data(keys.obj) || null
-                };
-            }
-            return null;
-        };
-        _.mixin(Dataset.prototype, EventEmitter, {
-            _overwrite: function overwrite(query, suggestions) {
-                suggestions = suggestions || [];
-                if (suggestions.length) {
-                    this._renderSuggestions(query, suggestions);
-                } else if (this.async && this.templates.pending) {
-                    this._renderPending(query);
-                } else if (!this.async && this.templates.notFound) {
-                    this._renderNotFound(query);
-                } else {
-                    this._empty();
-                }
-                this.trigger("rendered", this.name, suggestions, false);
-            },
-            _append: function append(query, suggestions) {
-                suggestions = suggestions || [];
-                if (suggestions.length && this.$lastSuggestion.length) {
-                    this._appendSuggestions(query, suggestions);
-                } else if (suggestions.length) {
-                    this._renderSuggestions(query, suggestions);
-                } else if (!this.$lastSuggestion.length && this.templates.notFound) {
-                    this._renderNotFound(query);
-                }
-                this.trigger("rendered", this.name, suggestions, true);
-            },
-            _renderSuggestions: function renderSuggestions(query, suggestions) {
-                var $fragment;
-                $fragment = this._getSuggestionsFragment(query, suggestions);
-                this.$lastSuggestion = $fragment.children().last();
-                this.$el.html($fragment).prepend(this._getHeader(query, suggestions)).append(this._getFooter(query, suggestions));
-            },
-            _appendSuggestions: function appendSuggestions(query, suggestions) {
-                var $fragment, $lastSuggestion;
-                $fragment = this._getSuggestionsFragment(query, suggestions);
-                $lastSuggestion = $fragment.children().last();
-                this.$lastSuggestion.after($fragment);
-                this.$lastSuggestion = $lastSuggestion;
-            },
-            _renderPending: function renderPending(query) {
-                var template = this.templates.pending;
-                this._resetLastSuggestion();
-                template && this.$el.html(template({
-                    query: query,
-                    dataset: this.name
-                }));
-            },
-            _renderNotFound: function renderNotFound(query) {
-                var template = this.templates.notFound;
-                this._resetLastSuggestion();
-                template && this.$el.html(template({
-                    query: query,
-                    dataset: this.name
-                }));
-            },
-            _empty: function empty() {
-                this.$el.empty();
-                this._resetLastSuggestion();
-            },
-            _getSuggestionsFragment: function getSuggestionsFragment(query, suggestions) {
-                var that = this, fragment;
-                fragment = document.createDocumentFragment();
-                _.each(suggestions, function getSuggestionNode(suggestion) {
-                    var $el, context;
-                    context = that._injectQuery(query, suggestion);
-                    $el = $(that.templates.suggestion(context)).data(keys.obj, suggestion).data(keys.val, that.displayFn(suggestion)).addClass(that.classes.suggestion + " " + that.classes.selectable);
-                    fragment.appendChild($el[0]);
-                });
-                this.highlight && highlight({
-                    className: this.classes.highlight,
-                    node: fragment,
-                    pattern: query
-                });
-                return $(fragment);
-            },
-            _getFooter: function getFooter(query, suggestions) {
-                return this.templates.footer ? this.templates.footer({
-                    query: query,
-                    suggestions: suggestions,
-                    dataset: this.name
-                }) : null;
-            },
-            _getHeader: function getHeader(query, suggestions) {
-                return this.templates.header ? this.templates.header({
-                    query: query,
-                    suggestions: suggestions,
-                    dataset: this.name
-                }) : null;
-            },
-            _resetLastSuggestion: function resetLastSuggestion() {
-                this.$lastSuggestion = $();
-            },
-            _injectQuery: function injectQuery(query, obj) {
-                return _.isObject(obj) ? _.mixin({
-                    _query: query
-                }, obj) : obj;
-            },
-            update: function update(query) {
-                var that = this, canceled = false, syncCalled = false, rendered = 0;
-                this.cancel();
-                this.cancel = function cancel() {
-                    canceled = true;
-                    that.cancel = $.noop;
-                    that.async && that.trigger("asyncCanceled", query);
-                };
-                this.source(query, sync, async);
-                !syncCalled && sync([]);
-                function sync(suggestions) {
-                    if (syncCalled) {
-                        return;
-                    }
-                    syncCalled = true;
-                    suggestions = (suggestions || []).slice(0, that.limit);
-                    rendered = suggestions.length;
-                    that._overwrite(query, suggestions);
-                    if (rendered < that.limit && that.async) {
-                        that.trigger("asyncRequested", query);
-                    }
-                }
-                function async(suggestions) {
-                    suggestions = suggestions || [];
-                    if (!canceled && rendered < that.limit) {
-                        that.cancel = $.noop;
-                        rendered += suggestions.length;
-                        that._append(query, suggestions.slice(0, that.limit - rendered));
-                        that.async && that.trigger("asyncReceived", query);
-                    }
-                }
-            },
-            cancel: $.noop,
-            clear: function clear() {
-                this._empty();
-                this.cancel();
-                this.trigger("cleared");
-            },
-            isEmpty: function isEmpty() {
-                return this.$el.is(":empty");
-            },
-            destroy: function destroy() {
-                this.$el = $("<div>");
-            }
-        });
-        return Dataset;
-        function getDisplayFn(display) {
-            display = display || _.stringify;
-            return _.isFunction(display) ? display : displayFn;
-            function displayFn(obj) {
-                return obj[display];
-            }
-        }
-        function getTemplates(templates, displayFn) {
-            return {
-                notFound: templates.notFound && _.templatify(templates.notFound),
-                pending: templates.pending && _.templatify(templates.pending),
-                header: templates.header && _.templatify(templates.header),
-                footer: templates.footer && _.templatify(templates.footer),
-                suggestion: templates.suggestion || suggestionTemplate
-            };
-            function suggestionTemplate(context) {
-                return $("<div>").text(displayFn(context));
-            }
-        }
-        function isValidName(str) {
-            return /^[_a-zA-Z0-9-]+$/.test(str);
-        }
-    }();
-    var Menu = function() {
-        "use strict";
-        function Menu(o, www) {
-            var that = this;
-            o = o || {};
-            if (!o.node) {
-                $.error("node is required");
-            }
-            www.mixin(this);
-            this.$node = $(o.node);
-            this.query = null;
-            this.datasets = _.map(o.datasets, initializeDataset);
-            function initializeDataset(oDataset) {
-                var node = that.$node.find(oDataset.node).first();
-                oDataset.node = node.length ? node : $("<div>").appendTo(that.$node);
-                return new Dataset(oDataset, www);
-            }
-        }
-        _.mixin(Menu.prototype, EventEmitter, {
-            _onSelectableClick: function onSelectableClick($e) {
-                this.trigger("selectableClicked", $($e.currentTarget));
-            },
-            _onRendered: function onRendered(type, dataset, suggestions, async) {
-                this.$node.toggleClass(this.classes.empty, this._allDatasetsEmpty());
-                this.trigger("datasetRendered", dataset, suggestions, async);
-            },
-            _onCleared: function onCleared() {
-                this.$node.toggleClass(this.classes.empty, this._allDatasetsEmpty());
-                this.trigger("datasetCleared");
-            },
-            _propagate: function propagate() {
-                this.trigger.apply(this, arguments);
-            },
-            _allDatasetsEmpty: function allDatasetsEmpty() {
-                return _.every(this.datasets, isDatasetEmpty);
-                function isDatasetEmpty(dataset) {
-                    return dataset.isEmpty();
-                }
-            },
-            _getSelectables: function getSelectables() {
-                return this.$node.find(this.selectors.selectable);
-            },
-            _removeCursor: function _removeCursor() {
-                var $selectable = this.getActiveSelectable();
-                $selectable && $selectable.removeClass(this.classes.cursor);
-            },
-            _ensureVisible: function ensureVisible($el) {
-                var elTop, elBottom, nodeScrollTop, nodeHeight;
-                elTop = $el.position().top;
-                elBottom = elTop + $el.outerHeight(true);
-                nodeScrollTop = this.$node.scrollTop();
-                nodeHeight = this.$node.height() + parseInt(this.$node.css("paddingTop"), 10) + parseInt(this.$node.css("paddingBottom"), 10);
-                if (elTop < 0) {
-                    this.$node.scrollTop(nodeScrollTop + elTop);
-                } else if (nodeHeight < elBottom) {
-                    this.$node.scrollTop(nodeScrollTop + (elBottom - nodeHeight));
-                }
-            },
-            bind: function() {
-                var that = this, onSelectableClick;
-                onSelectableClick = _.bind(this._onSelectableClick, this);
-                this.$node.on("click.tt", this.selectors.selectable, onSelectableClick);
-                _.each(this.datasets, function(dataset) {
-                    dataset.onSync("asyncRequested", that._propagate, that).onSync("asyncCanceled", that._propagate, that).onSync("asyncReceived", that._propagate, that).onSync("rendered", that._onRendered, that).onSync("cleared", that._onCleared, that);
-                });
-                return this;
-            },
-            isOpen: function isOpen() {
-                return this.$node.hasClass(this.classes.open);
-            },
-            open: function open() {
-                this.$node.addClass(this.classes.open);
-            },
-            close: function close() {
-                this.$node.removeClass(this.classes.open);
-                this._removeCursor();
-            },
-            setLanguageDirection: function setLanguageDirection(dir) {
-                this.$node.attr("dir", dir);
-            },
-            selectableRelativeToCursor: function selectableRelativeToCursor(delta) {
-                var $selectables, $oldCursor, oldIndex, newIndex;
-                $oldCursor = this.getActiveSelectable();
-                $selectables = this._getSelectables();
-                oldIndex = $oldCursor ? $selectables.index($oldCursor) : -1;
-                newIndex = oldIndex + delta;
-                newIndex = (newIndex + 1) % ($selectables.length + 1) - 1;
-                newIndex = newIndex < -1 ? $selectables.length - 1 : newIndex;
-                return newIndex === -1 ? null : $selectables.eq(newIndex);
-            },
-            setCursor: function setCursor($selectable) {
-                this._removeCursor();
-                if ($selectable = $selectable && $selectable.first()) {
-                    $selectable.addClass(this.classes.cursor);
-                    this._ensureVisible($selectable);
-                }
-            },
-            getSelectableData: function getSelectableData($el) {
-                return $el && $el.length ? Dataset.extractData($el) : null;
-            },
-            getActiveSelectable: function getActiveSelectable() {
-                var $selectable = this._getSelectables().filter(this.selectors.cursor).first();
-                return $selectable.length ? $selectable : null;
-            },
-            getTopSelectable: function getTopSelectable() {
-                var $selectable = this._getSelectables().first();
-                return $selectable.length ? $selectable : null;
-            },
-            update: function update(query) {
-                var isValidUpdate = query !== this.query;
-                if (isValidUpdate) {
-                    this.query = query;
-                    _.each(this.datasets, updateDataset);
-                }
-                return isValidUpdate;
-                function updateDataset(dataset) {
-                    dataset.update(query);
-                }
-            },
-            empty: function empty() {
-                _.each(this.datasets, clearDataset);
-                this.query = null;
-                this.$node.addClass(this.classes.empty);
-                function clearDataset(dataset) {
-                    dataset.clear();
-                }
-            },
-            destroy: function destroy() {
-                this.$node.off(".tt");
-                this.$node = $("<div>");
-                _.each(this.datasets, destroyDataset);
-                function destroyDataset(dataset) {
-                    dataset.destroy();
-                }
-            }
-        });
-        return Menu;
-    }();
-    var DefaultMenu = function() {
-        "use strict";
-        var s = Menu.prototype;
-        function DefaultMenu() {
-            Menu.apply(this, [].slice.call(arguments, 0));
-        }
-        _.mixin(DefaultMenu.prototype, Menu.prototype, {
-            open: function open() {
-                !this._allDatasetsEmpty() && this._show();
-                return s.open.apply(this, [].slice.call(arguments, 0));
-            },
-            close: function close() {
-                this._hide();
-                return s.close.apply(this, [].slice.call(arguments, 0));
-            },
-            _onRendered: function onRendered() {
-                if (this._allDatasetsEmpty()) {
-                    this._hide();
-                } else {
-                    this.isOpen() && this._show();
-                }
-                return s._onRendered.apply(this, [].slice.call(arguments, 0));
-            },
-            _onCleared: function onCleared() {
-                if (this._allDatasetsEmpty()) {
-                    this._hide();
-                } else {
-                    this.isOpen() && this._show();
-                }
-                return s._onCleared.apply(this, [].slice.call(arguments, 0));
-            },
-            setLanguageDirection: function setLanguageDirection(dir) {
-                this.$node.css(dir === "ltr" ? this.css.ltr : this.css.rtl);
-                return s.setLanguageDirection.apply(this, [].slice.call(arguments, 0));
-            },
-            _hide: function hide() {
-                this.$node.hide();
-            },
-            _show: function show() {
-                this.$node.css("display", "block");
-            }
-        });
-        return DefaultMenu;
-    }();
-    var Typeahead = function() {
-        "use strict";
-        function Typeahead(o, www) {
-            var onFocused, onBlurred, onEnterKeyed, onTabKeyed, onEscKeyed, onUpKeyed, onDownKeyed, onLeftKeyed, onRightKeyed, onQueryChanged, onWhitespaceChanged;
-            o = o || {};
-            if (!o.input) {
-                $.error("missing input");
-            }
-            if (!o.menu) {
-                $.error("missing menu");
-            }
-            if (!o.eventBus) {
-                $.error("missing event bus");
-            }
-            www.mixin(this);
-            this.eventBus = o.eventBus;
-            this.minLength = _.isNumber(o.minLength) ? o.minLength : 1;
-            this.input = o.input;
-            this.menu = o.menu;
-            this.enabled = true;
-            this.active = false;
-            this.input.hasFocus() && this.activate();
-            this.dir = this.input.getLangDir();
-            this._hacks();
-            this.menu.bind().onSync("selectableClicked", this._onSelectableClicked, this).onSync("asyncRequested", this._onAsyncRequested, this).onSync("asyncCanceled", this._onAsyncCanceled, this).onSync("asyncReceived", this._onAsyncReceived, this).onSync("datasetRendered", this._onDatasetRendered, this).onSync("datasetCleared", this._onDatasetCleared, this);
-            onFocused = c(this, "activate", "open", "_onFocused");
-            onBlurred = c(this, "deactivate", "_onBlurred");
-            onEnterKeyed = c(this, "isActive", "isOpen", "_onEnterKeyed");
-            onTabKeyed = c(this, "isActive", "isOpen", "_onTabKeyed");
-            onEscKeyed = c(this, "isActive", "_onEscKeyed");
-            onUpKeyed = c(this, "isActive", "open", "_onUpKeyed");
-            onDownKeyed = c(this, "isActive", "open", "_onDownKeyed");
-            onLeftKeyed = c(this, "isActive", "isOpen", "_onLeftKeyed");
-            onRightKeyed = c(this, "isActive", "isOpen", "_onRightKeyed");
-            onQueryChanged = c(this, "_openIfActive", "_onQueryChanged");
-            onWhitespaceChanged = c(this, "_openIfActive", "_onWhitespaceChanged");
-            this.input.bind().onSync("focused", onFocused, this).onSync("blurred", onBlurred, this).onSync("enterKeyed", onEnterKeyed, this).onSync("tabKeyed", onTabKeyed, this).onSync("escKeyed", onEscKeyed, this).onSync("upKeyed", onUpKeyed, this).onSync("downKeyed", onDownKeyed, this).onSync("leftKeyed", onLeftKeyed, this).onSync("rightKeyed", onRightKeyed, this).onSync("queryChanged", onQueryChanged, this).onSync("whitespaceChanged", onWhitespaceChanged, this).onSync("langDirChanged", this._onLangDirChanged, this);
-        }
-        _.mixin(Typeahead.prototype, {
-            _hacks: function hacks() {
-                var $input, $menu;
-                $input = this.input.$input || $("<div>");
-                $menu = this.menu.$node || $("<div>");
-                $input.on("blur.tt", function($e) {
-                    var active, isActive, hasActive;
-                    active = document.activeElement;
-                    isActive = $menu.is(active);
-                    hasActive = $menu.has(active).length > 0;
-                    if (_.isMsie() && (isActive || hasActive)) {
-                        $e.preventDefault();
-                        $e.stopImmediatePropagation();
-                        _.defer(function() {
-                            $input.focus();
-                        });
-                    }
-                });
-                $menu.on("mousedown.tt", function($e) {
-                    $e.preventDefault();
-                });
-            },
-            _onSelectableClicked: function onSelectableClicked(type, $el) {
-                this.select($el);
-            },
-            _onDatasetCleared: function onDatasetCleared() {
-                this._updateHint();
-            },
-            _onDatasetRendered: function onDatasetRendered(type, dataset, suggestions, async) {
-                this._updateHint();
-                this.eventBus.trigger("render", suggestions, async, dataset);
-            },
-            _onAsyncRequested: function onAsyncRequested(type, dataset, query) {
-                this.eventBus.trigger("asyncrequest", query, dataset);
-            },
-            _onAsyncCanceled: function onAsyncCanceled(type, dataset, query) {
-                this.eventBus.trigger("asynccancel", query, dataset);
-            },
-            _onAsyncReceived: function onAsyncReceived(type, dataset, query) {
-                this.eventBus.trigger("asyncreceive", query, dataset);
-            },
-            _onFocused: function onFocused() {
-                this._minLengthMet() && this.menu.update(this.input.getQuery());
-            },
-            _onBlurred: function onBlurred() {
-                if (this.input.hasQueryChangedSinceLastFocus()) {
-                    this.eventBus.trigger("change", this.input.getQuery());
-                }
-            },
-            _onEnterKeyed: function onEnterKeyed(type, $e) {
-                var $selectable;
-                if ($selectable = this.menu.getActiveSelectable()) {
-                    this.select($selectable) && $e.preventDefault();
-                }
-            },
-            _onTabKeyed: function onTabKeyed(type, $e) {
-                var $selectable;
-                if ($selectable = this.menu.getActiveSelectable()) {
-                    this.select($selectable) && $e.preventDefault();
-                } else if ($selectable = this.menu.getTopSelectable()) {
-                    this.autocomplete($selectable) && $e.preventDefault();
-                }
-            },
-            _onEscKeyed: function onEscKeyed() {
-                this.close();
-            },
-            _onUpKeyed: function onUpKeyed() {
-                this.moveCursor(-1);
-            },
-            _onDownKeyed: function onDownKeyed() {
-                this.moveCursor(+1);
-            },
-            _onLeftKeyed: function onLeftKeyed() {
-                if (this.dir === "rtl" && this.input.isCursorAtEnd()) {
-                    this.autocomplete(this.menu.getTopSelectable());
-                }
-            },
-            _onRightKeyed: function onRightKeyed() {
-                if (this.dir === "ltr" && this.input.isCursorAtEnd()) {
-                    this.autocomplete(this.menu.getTopSelectable());
-                }
-            },
-            _onQueryChanged: function onQueryChanged(e, query) {
-                this._minLengthMet(query) ? this.menu.update(query) : this.menu.empty();
-            },
-            _onWhitespaceChanged: function onWhitespaceChanged() {
-                this._updateHint();
-            },
-            _onLangDirChanged: function onLangDirChanged(e, dir) {
-                if (this.dir !== dir) {
-                    this.dir = dir;
-                    this.menu.setLanguageDirection(dir);
-                }
-            },
-            _openIfActive: function openIfActive() {
-                this.isActive() && this.open();
-            },
-            _minLengthMet: function minLengthMet(query) {
-                query = _.isString(query) ? query : this.input.getQuery() || "";
-                return query.length >= this.minLength;
-            },
-            _updateHint: function updateHint() {
-                var $selectable, data, val, query, escapedQuery, frontMatchRegEx, match;
-                $selectable = this.menu.getTopSelectable();
-                data = this.menu.getSelectableData($selectable);
-                val = this.input.getInputValue();
-                if (data && !_.isBlankString(val) && !this.input.hasOverflow()) {
-                    query = Input.normalizeQuery(val);
-                    escapedQuery = _.escapeRegExChars(query);
-                    frontMatchRegEx = new RegExp("^(?:" + escapedQuery + ")(.+$)", "i");
-                    match = frontMatchRegEx.exec(data.val);
-                    match && this.input.setHint(val + match[1]);
-                } else {
-                    this.input.clearHint();
-                }
-            },
-            isEnabled: function isEnabled() {
-                return this.enabled;
-            },
-            enable: function enable() {
-                this.enabled = true;
-            },
-            disable: function disable() {
-                this.enabled = false;
-            },
-            isActive: function isActive() {
-                return this.active;
-            },
-            activate: function activate() {
-                if (this.isActive()) {
-                    return true;
-                } else if (!this.isEnabled() || this.eventBus.before("active")) {
-                    return false;
-                } else {
-                    this.active = true;
-                    this.eventBus.trigger("active");
-                    return true;
-                }
-            },
-            deactivate: function deactivate() {
-                if (!this.isActive()) {
-                    return true;
-                } else if (this.eventBus.before("idle")) {
-                    return false;
-                } else {
-                    this.active = false;
-                    this.close();
-                    this.eventBus.trigger("idle");
-                    return true;
-                }
-            },
-            isOpen: function isOpen() {
-                return this.menu.isOpen();
-            },
-            open: function open() {
-                if (!this.isOpen() && !this.eventBus.before("open")) {
-                    this.menu.open();
-                    this._updateHint();
-                    this.eventBus.trigger("open");
-                }
-                return this.isOpen();
-            },
-            close: function close() {
-                if (this.isOpen() && !this.eventBus.before("close")) {
-                    this.menu.close();
-                    this.input.clearHint();
-                    this.input.resetInputValue();
-                    this.eventBus.trigger("close");
-                }
-                return !this.isOpen();
-            },
-            setVal: function setVal(val) {
-                this.input.setQuery(_.toStr(val));
-            },
-            getVal: function getVal() {
-                return this.input.getQuery();
-            },
-            select: function select($selectable) {
-                var data = this.menu.getSelectableData($selectable);
-                if (data && !this.eventBus.before("select", data.obj)) {
-                    this.input.setQuery(data.val, true);
-                    this.eventBus.trigger("select", data.obj);
-                    this.close();
-                    return true;
-                }
-                return false;
-            },
-            autocomplete: function autocomplete($selectable) {
-                var query, data, isValid;
-                query = this.input.getQuery();
-                data = this.menu.getSelectableData($selectable);
-                isValid = data && query !== data.val;
-                if (isValid && !this.eventBus.before("autocomplete", data.obj)) {
-                    this.input.setQuery(data.val);
-                    this.eventBus.trigger("autocomplete", data.obj);
-                    return true;
-                }
-                return false;
-            },
-            moveCursor: function moveCursor(delta) {
-                var query, $candidate, data, payload, cancelMove;
-                query = this.input.getQuery();
-                $candidate = this.menu.selectableRelativeToCursor(delta);
-                data = this.menu.getSelectableData($candidate);
-                payload = data ? data.obj : null;
-                cancelMove = this._minLengthMet() && this.menu.update(query);
-                if (!cancelMove && !this.eventBus.before("cursorchange", payload)) {
-                    this.menu.setCursor($candidate);
-                    if (data) {
-                        this.input.setInputValue(data.val);
-                    } else {
-                        this.input.resetInputValue();
-                        this._updateHint();
-                    }
-                    this.eventBus.trigger("cursorchange", payload);
-                    return true;
-                }
-                return false;
-            },
-            destroy: function destroy() {
-                this.input.destroy();
-                this.menu.destroy();
-            }
-        });
-        return Typeahead;
-        function c(ctx) {
-            var methods = [].slice.call(arguments, 1);
-            return function() {
-                var args = [].slice.call(arguments);
-                _.each(methods, function(method) {
-                    return ctx[method].apply(ctx, args);
-                });
-            };
-        }
-    }();
-    (function() {
-        "use strict";
-        var old, keys, methods;
-        old = $.fn.typeahead;
-        keys = {
-            www: "tt-www",
-            attrs: "tt-attrs",
-            typeahead: "tt-typeahead"
-        };
-        methods = {
-            initialize: function initialize(o, datasets) {
-                var www;
-                datasets = _.isArray(datasets) ? datasets : [].slice.call(arguments, 1);
-                o = o || {};
-                www = WWW(o.classNames);
-                return this.each(attach);
-                function attach() {
-                    var $input, $wrapper, $hint, $menu, defaultHint, defaultMenu, eventBus, input, menu, typeahead, MenuConstructor;
-                    _.each(datasets, function(d) {
-                        d.highlight = !!o.highlight;
-                    });
-                    $input = $(this);
-                    $wrapper = $(www.html.wrapper);
-                    $hint = $elOrNull(o.hint);
-                    $menu = $elOrNull(o.menu);
-                    defaultHint = o.hint !== false && !$hint;
-                    defaultMenu = o.menu !== false && !$menu;
-                    defaultHint && ($hint = buildHintFromInput($input, www));
-                    defaultMenu && ($menu = $(www.html.menu).css(www.css.menu));
-                    $hint && $hint.val("");
-                    $input = prepInput($input, www);
-                    if (defaultHint || defaultMenu) {
-                        $wrapper.css(www.css.wrapper);
-                        $input.css(defaultHint ? www.css.input : www.css.inputWithNoHint);
-                        $input.wrap($wrapper).parent().prepend(defaultHint ? $hint : null).append(defaultMenu ? $menu : null);
-                    }
-                    MenuConstructor = defaultMenu ? DefaultMenu : Menu;
-                    eventBus = new EventBus({
-                        el: $input
-                    });
-                    input = new Input({
-                        hint: $hint,
-                        input: $input
-                    }, www);
-                    menu = new MenuConstructor({
-                        node: $menu,
-                        datasets: datasets
-                    }, www);
-                    typeahead = new Typeahead({
-                        input: input,
-                        menu: menu,
-                        eventBus: eventBus,
-                        minLength: o.minLength
-                    }, www);
-                    $input.data(keys.www, www);
-                    $input.data(keys.typeahead, typeahead);
-                }
-            },
-            isEnabled: function isEnabled() {
-                var enabled;
-                ttEach(this.first(), function(t) {
-                    enabled = t.isEnabled();
-                });
-                return enabled;
-            },
-            enable: function enable() {
-                ttEach(this, function(t) {
-                    t.enable();
-                });
-                return this;
-            },
-            disable: function disable() {
-                ttEach(this, function(t) {
-                    t.disable();
-                });
-                return this;
-            },
-            isActive: function isActive() {
-                var active;
-                ttEach(this.first(), function(t) {
-                    active = t.isActive();
-                });
-                return active;
-            },
-            activate: function activate() {
-                ttEach(this, function(t) {
-                    t.activate();
-                });
-                return this;
-            },
-            deactivate: function deactivate() {
-                ttEach(this, function(t) {
-                    t.deactivate();
-                });
-                return this;
-            },
-            isOpen: function isOpen() {
-                var open;
-                ttEach(this.first(), function(t) {
-                    open = t.isOpen();
-                });
-                return open;
-            },
-            open: function open() {
-                ttEach(this, function(t) {
-                    t.open();
-                });
-                return this;
-            },
-            close: function close() {
-                ttEach(this, function(t) {
-                    t.close();
-                });
-                return this;
-            },
-            select: function select(el) {
-                var success = false, $el = $(el);
-                ttEach(this.first(), function(t) {
-                    success = t.select($el);
-                });
-                return success;
-            },
-            autocomplete: function autocomplete(el) {
-                var success = false, $el = $(el);
-                ttEach(this.first(), function(t) {
-                    success = t.autocomplete($el);
-                });
-                return success;
-            },
-            moveCursor: function moveCursoe(delta) {
-                var success = false;
-                ttEach(this.first(), function(t) {
-                    success = t.moveCursor(delta);
-                });
-                return success;
-            },
-            val: function val(newVal) {
-                var query;
-                if (!arguments.length) {
-                    ttEach(this.first(), function(t) {
-                        query = t.getVal();
-                    });
-                    return query;
-                } else {
-                    ttEach(this, function(t) {
-                        t.setVal(newVal);
-                    });
-                    return this;
-                }
-            },
-            destroy: function destroy() {
-                ttEach(this, function(typeahead, $input) {
-                    revert($input);
-                    typeahead.destroy();
-                });
-                return this;
-            }
-        };
-        $.fn.typeahead = function(method) {
-            if (methods[method]) {
-                return methods[method].apply(this, [].slice.call(arguments, 1));
-            } else {
-                return methods.initialize.apply(this, arguments);
-            }
-        };
-        $.fn.typeahead.noConflict = function noConflict() {
-            $.fn.typeahead = old;
-            return this;
-        };
-        function ttEach($els, fn) {
-            $els.each(function() {
-                var $input = $(this), typeahead;
-                (typeahead = $input.data(keys.typeahead)) && fn(typeahead, $input);
-            });
-        }
-        function buildHintFromInput($input, www) {
-            return $input.clone().addClass(www.classes.hint).removeData().css(www.css.hint).css(getBackgroundStyles($input)).prop("readonly", true).removeAttr("id name placeholder required").attr({
-                autocomplete: "off",
-                spellcheck: "false",
-                tabindex: -1
-            });
-        }
-        function prepInput($input, www) {
-            $input.data(keys.attrs, {
-                dir: $input.attr("dir"),
-                autocomplete: $input.attr("autocomplete"),
-                spellcheck: $input.attr("spellcheck"),
-                style: $input.attr("style")
-            });
-            $input.addClass(www.classes.input).attr({
-                autocomplete: "off",
-                spellcheck: false
-            });
-            try {
-                !$input.attr("dir") && $input.attr("dir", "auto");
-            } catch (e) {}
-            return $input;
-        }
-        function getBackgroundStyles($el) {
-            return {
-                backgroundAttachment: $el.css("background-attachment"),
-                backgroundClip: $el.css("background-clip"),
-                backgroundColor: $el.css("background-color"),
-                backgroundImage: $el.css("background-image"),
-                backgroundOrigin: $el.css("background-origin"),
-                backgroundPosition: $el.css("background-position"),
-                backgroundRepeat: $el.css("background-repeat"),
-                backgroundSize: $el.css("background-size")
-            };
-        }
-        function revert($input) {
-            var www, $wrapper;
-            www = $input.data(keys.www);
-            $wrapper = $input.parent().filter(www.selectors.wrapper);
-            _.each($input.data(keys.attrs), function(val, key) {
-                _.isUndefined(val) ? $input.removeAttr(key) : $input.attr(key, val);
-            });
-            $input.removeData(keys.typeahead).removeData(keys.www).removeData(keys.attr).removeClass(www.classes.input);
-            if ($wrapper.length) {
-                $input.detach().insertAfter($wrapper);
-                $wrapper.remove();
-            }
-        }
-        function $elOrNull(obj) {
-            var isValid, $el;
-            isValid = _.isJQuery(obj) || _.isElement(obj);
-            $el = isValid ? $(obj).first() : [];
-            return $el.length ? $el : null;
-        }
-    })();
-});
-
-define('text!templates/public/tplMain.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n      <div class="main-box">\n        <div class="panel panel-default">\n          <div class="panel-body">\n            <div class="row">\n              <div class="col-lg-4">\n\n              </div>\n              <div class="col-lg-4">\n                <div class="input-group">\n                  <input id="sel-torneo" type="text" class="form-control" placeholder="Escribe el nombre del torneo...">\n                  <span class="input-group-btn">\n                    <button id="go-torneo" class="btn btn-default" type="button">Ir</button>\n                  </span>\n                </div>\n              </div>\n              <div class="col-lg-4">\n\n              </div>\n            </div>\n          </div>\n        </div>\n\n      </div>\n    </div>\n</div>\n';});
-
-define('views/public/MainView',[
-	'jquery',
-	'bootstrap',
-	'bloodhound',
-	'typeahead',
-	'core/BaseView',
-	'collections/TorneosCollection',
-	'text!templates/public/tplMain.html'
-], function($, bootstrap, bloodhound, typeahead, BaseView, TorneosCollection, tplMain){
-
-	var MainView = BaseView.extend({
-        template: _.template(tplMain),
-
-        events: {
-            'typeahead:select #sel-torneo': 'selToreno',
-            'click #go-torneo': 'goTorneo'
-        },
-
-        initialize: function() {
-            this.torneos = new TorneosCollection();
-            this.listenTo(this.torneos, 'add', this.agregarTorneo);
-            this.listenTo(this.torneos, 'sync', this.syncTorneos);
-
-            this.torneosDesc = [];
-            this.torneo = null;
-
-            this.torneos.fetch();
-        },
-
-        render: function() {
-            this.$el.html(this.template());
-            return this;
-        },
-
-        agregarTorneo: function(modelo) {
-            this.torneosDesc.push({clave: modelo.get('clave'), descripcion: modelo.get('descripcion')});
-        },
-
-        syncTorneos: function() {
-            this.setUp();
-        },
-
-        setUp: function() {
-            var numbers = new Bloodhound({
-                datumTokenizer: function(d) {
-                    return Bloodhound.tokenizers.whitespace(d.descripcion);
-                },
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: this.torneosDesc
-            });
-
-            // initialize the bloodhound suggestion engine
-            numbers.initialize();
-
-            // instantiate the typeahead UI
-            $('#sel-torneo').typeahead(null, {
-                displayKey: 'descripcion',
-                source: numbers.ttAdapter()
-            });
-        },
-
-        selToreno: function(ev, suggestion) {
-            this.torneo = suggestion;
-        },
-
-        goTorneo: function() {
-            if (this.torneo){
-                Backbone.history.navigate('torneo/' + this.torneo.clave, { trigger : true });
-            }
-        }
-	});
-
-	return MainView;
-
-});
-
-define('text!templates/public/tplMainNav.html',[],function () { return '<div class="row">\n  <div class="col-md-12">\n    <div class="container">\n      <div class="navbar-header">\n        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">\n          <span class="sr-only">Toggle navigation</span>\n          <span class="icon-bar"></span>\n        </button>\n        <a id="home" class="navbar-brand title-entuliga" href="#">entuliga</a>\n      </div>\n      <div id="navbar" class="collapse navbar-collapse">\n        <ul class="minus-right nav navbar-nav navbar-right">\n          <button id="signup" type="button" class="btn btn-default navbar-btn">Registrar</button>\n          <button id="signin" type="button" class="btn btn-success navbar-btn">Ingresar</button>\n        </ul>\n      </div>\n    </div>\n    \n  </div>\n</div>\n\n';});
+define('text!templates/public/tplMainNav.html',[],function () { return '<nav id="header-general" class="navbar navbar-default navbar-fixed-top" role="navigation">\n\n  <div class="row">\n  <div class="col-md-12">\n    <div class="container">\n      <div class="navbar-header">\n        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">\n          <span class="sr-only">Toggle navigation</span>\n          <span class="icon-bar"></span>\n        </button>\n        <a id="home" class="navbar-brand title-entuliga" href="#">entuliga</a>\n      </div>\n      <div id="navbar" class="collapse navbar-collapse">\n        <ul class="minus-right nav navbar-nav navbar-right">\n          <button id="signup" type="button" class="btn btn-default navbar-btn">Registrar</button>\n          <button id="signin" type="button" class="btn btn-success navbar-btn">Ingresar</button>\n        </ul>\n      </div>\n    </div>\n\n  </div>\n</div>\n</nav>\n';});
 
 define('views/public/MainNavView',[
 	'jquery',
+	'backbone',
+	'marionette',
 	'core/BaseView',
 	'text!templates/public/tplMainNav.html',
 	'Session'
-], function($, BaseView, tplMainNav, Session){
+], function($, Backbone, Mn, BaseView, tplMainNav, Session) {
 
-	var MainNavView = BaseView.extend({
-	    el: $("#hotel-nav"),
+	var MainNavView = Mn.View.extend({
+		// el: $("#header-general"),
 
-        template: _.template(tplMainNav),
+		template: _.template(tplMainNav),
 
-        events: {
-            'click #signin'         : 'signin',
-            'click #signup'         : 'signup',
-            'click #home'           : 'home'
-        },
+		events: {
+			'click #signin': 'signin',
+			'click #signup': 'signup',
+			'click #home': 'home'
+		},
 
-        initialize: function() {
-            this.render();
-        },
+		initialize: function() {},
 
-        render: function() {
-            this.$el.html(this.template());
-            return this;
-        },
+		onBeforeRender: function() {},
 
-        signin: function(){
-            Backbone.history.navigate('admin', { trigger : true });
-        },
+		onRender: function() {},
 
-        signup: function(){
-            Backbone.history.navigate('signup', { trigger : true });
-        },
+		signin: function() {
+			Backbone.history.navigate('login', { trigger: true });
+		},
 
-        home: function(){
-            Backbone.history.navigate('#', { trigger : true });
-        }
+		signup: function() {
+			Backbone.history.navigate('signup', { trigger: true });
+		},
+
+		home: function() {
+			Backbone.history.navigate('', { trigger: true });
+		}
 	});
 
 	return MainNavView;
@@ -32092,392 +32338,1226 @@ define('views/public/torneo/TorneoLideresView',[
 define('text!templates/public/torneo/tplTorneoLanding.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n      <div class="main-box">\n        <div class="panel panel-info">\n            <div class="panel-body">\n                <div class="row">\n                    <div class="col-md-6">\n                        <div class="panel panel-default">\n                            <div id="liga-detail" class="panel-body">\n                                <h4 class="list-group-item-heading"><%= nombre %></h4>\n                                <p class="list-group-item-text"><%= descripcion %></p>\n                                <p class="list-group-item-text"><%= fechaInicioDes %> - <%= fechaFinDes %></p>\n                                <p class="list-group-item-text"><%= status %></p>\n                            </div>\n                        </div>\n                        <div class="panel panel-default">\n                            <div class="panel-heading">\n                                <h3 class="panel-title">Lideres</h3>\n                            </div>\n                            <div id="torneo-lideres" class="panel-body">\n                            </div>\n                        </div>\n                    </div>\n                    <div class="col-md-6">\n                        <div class="panel panel-default">\n                            <div class="panel-heading">\n                                <h3 class="panel-title">Posiciones</h3>\n                            </div>\n                            <div id="torneo-posiciones" class="panel-body">\n                            </div>\n                        </div>\n                        <div class="panel panel-default">\n                            <div class="panel-heading">\n                                <h3 class="panel-title">Jornada</h3>\n                            </div>\n                            <div id="torneo-jornadas" class="panel-body">\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n      </div>\n    </div>\n</div>\n';});
 
 define('views/public/torneo/TorneoLandingView',[
+  'jquery',
+  'bootstrap',
+  'core/BaseView',
+  'models/TorneoModel',
+  'views/public/torneo/TorneoJornadaView',
+  'views/public/torneo/TorneoPosicionesView',
+  'views/public/torneo/TorneoLideresView',
+  'text!templates/public/torneo/tplTorneoLanding.html'
+], function($, bootstrap, BaseView, TorneoModel,
+  TorneoJornadaView, TorneoPosicionesView,
+  TorneoLideresView, tplTorneoLanding) {
+
+  var TorneoLandingView = BaseView.extend({
+    template: _.template(tplTorneoLanding),
+
+    events: {},
+
+    initialize: function(opts) {
+      this.model = new TorneoModel();
+      this.model.set({ id: opts.clave });
+      this.listenTo(this.model, 'sync', this.syncTorneoSuccess);
+      this.model.fetch();
+    },
+
+    render: function() {
+      return this;
+    },
+
+    syncTorneoSuccess: function() {
+      this.$el.html(this.template(this.model.toJSON()));
+      new TorneoJornadaView(this.model);
+      new TorneoLideresView(this.model);
+      new TorneoPosicionesView(this.model);
+    }
+  });
+
+  return TorneoLandingView;
+
+});
+
+!function(a){"function"==typeof define&&define.amd?define('subroute',["underscore","backbone"],a):"object"==typeof exports?module.exports=a(require("underscore"),require("backbone")):a(_,Backbone)}(function(a,b){return b.SubRoute=b.Router.extend({constructor:function(c,d){this.routes=a.clone(this.routes)||{},this.prefix=c=c||"",this.separator="/"===c.slice(-1)?"":"/",this.createTrailingSlashRoutes=d&&d.createTrailingSlashRoutes,b.Router.prototype.constructor.call(this,d);var e;e=b.history.fragment?b.history.getFragment(b.history.fragment):b.history.getHash(),a.every(this.routes,function(a,c){return e.match(b.Router.prototype._routeToRegExp(c))?(b.history.loadUrl(e),!1):!0},this),this.postInitialize&&this.postInitialize(d)},navigate:function(a,c){"/"!=a.substr(0,1)&&0!==a.indexOf(this.prefix.substr(0,this.prefix.length-1))&&(a=this.prefix+(a?this.separator:"")+a),b.Router.prototype.navigate.call(this,a,c)},route:function(a,c,d){"/"===a.substr(0)&&(a=a.substr(1,a.length));var e=this.prefix;return a&&a.length>0&&(this.prefix.length>0&&(e+=this.separator),e+=a),this.createTrailingSlashRoutes&&(this.routes[e+"/"]=c,b.Router.prototype.route.call(this,e+"/",c,d)),delete this.routes[a],this.routes[e]=c,b.Router.prototype.route.call(this,e,c,d)}}),b.SubRoute});
+define('core/Transition',[
+  'jquery',
+  'backbone',
+  'marionette',
+], function($, Backbone, Mn) {
+
+  var Transition = Mn.Object.extend({
+    duration: 700,
+
+    apply: function(el, type, callback) {
+      var transitionClass = 'animated ' + type;
+      el.addClass(transitionClass);
+      setTimeout(callback, this.duration);
+    },
+
+    initialize: function() {},
+
+
+  });
+
+  return Transition;
+});
+
+define('core/ViewManager',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'subroute',
+  'core/Transition'
+], function($, Backbone, Mn, Subroute, Transition) {
+
+  var currentView;
+  // var transitionType = $('#container-body').data('transition');
+
+  var ViewManager = Mn.Object.extend({
+    initialize: function() {
+      console.log("initialize View Manager");
+      this.transitionType = $('#container-body').data('transition');
+    },
+
+    showView: function(view) {
+      this.transitionType = $('#container-body').data('transition');
+
+      var that = this;
+      this.disposeView(currentView, function() {
+        that.renderView(view);
+      });
+    },
+
+
+    disposeView: function(view, callback) {
+      console.log("disposeView");
+      if(!view) {
+        return callback();
+      }
+
+      return applyTransition(view.$el, this.transitionType, function() {
+        _disposeView(view);
+        return callback();
+      });
+
+      function applyTransition(el, name, callback) {
+        if(!name) {
+          return callback();
+        }
+        var trans = new Transition();
+        return trans.apply(el, name, callback);
+      }
+
+      function _disposeView(view) {
+        view.subviews && view.subviews.forEach(function(subview) {
+          _disposeView(subview);
+        });
+        view.remove();
+      }
+    },
+
+    renderView: function(view) {
+      currentView = view;
+      $("#container-body").html(currentView.render().$el);
+    }
+
+  });
+
+  return ViewManager;
+});
+
+
+define('text!templates/private/tplMainAdmin.html',[],function () { return '<div class="row">\n    <div class="col-md-12">\n      no manches\n    </div>\n</div>\n';});
+
+define('views/private/MainAdminView',[
 	'jquery',
 	'bootstrap',
 	'core/BaseView',
-	'models/TorneoModel',
-	'views/public/torneo/TorneoJornadaView',
-	'views/public/torneo/TorneoPosicionesView',
-	'views/public/torneo/TorneoLideresView',
-	'text!templates/public/torneo/tplTorneoLanding.html'
-], function($, bootstrap, BaseView, TorneoModel,
-            TorneoJornadaView, TorneoPosicionesView,
-            TorneoLideresView, tplTorneoLanding){
+	'text!templates/private/tplMainAdmin.html'
+], function($, bootstrap, BaseView, tplMainAdmin){
 
-	var TorneoLandingView = BaseView.extend({
-        template: _.template(tplTorneoLanding),
+	var MainAdminView = BaseView.extend({
+        template: _.template(tplMainAdmin),
 
         events: {
         },
 
-        initialize: function(opts) {
-            console.log(opts);
-
-            this.model = new TorneoModel();
-            this.model.set({id: opts.clave});
-            this.listenTo(this.model, 'sync', this.syncTorneoSuccess);
-            this.model.fetch();
+        initialize: function() {
+          console.log("initialize MainAdminView");
         },
 
         render: function() {
+            this.$el.html(this.template());
+            $('nav').show();
             return this;
-        },
-
-        syncTorneoSuccess: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-
-            new TorneoJornadaView(this.model);
-            new TorneoLideresView(this.model);
-            new TorneoPosicionesView(this.model);
         }
 	});
 
-	return TorneoLandingView;
+	return MainAdminView;
 
 });
+
+
+define('text!templates/private/dashboard/tplLigasList.html',[],function () { return '<h1>ligas list</h1>\n\n<div id="list-ligas" class="">\n\n</div>\n\n<div class="add-cl">\n\n</div>\n';});
+
+define('views/private/dashboard/LigasListView',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'bootstrap',
+  'selecter',
+  'core/BaseView',
+  'collections/LigasCollection',
+  'views/private/LigaDetailView',
+  'views/private/LigaEditView',
+  'views/private/util/ModalGenericView',
+  'text!templates/private/tplLigaAdmin.html',
+  'text!templates/private/dashboard/tplLigasList.html'
+
+], function($, Backbone, Mn, bootstrap, selecter, BaseView, LigasCollection,
+  LigaDetailView, LigaEditView, ModalGenericView, tplLigaAdmin, tplLigasList) {
+
+  var LigasListView = Mn.View.extend({
+    template: _.template(tplLigasList),
+
+    regions: {
+      listLigas: '#list-ligas',
+    },
+
+    initialize: function() {
+      this.ligas = new LigasCollection();
+      this.listenTo(this.ligas, 'add', this.agregarLiga);
+      this.listenTo(this.ligas, 'sync', this.syncLigas);
+      this.ligas.fetch();
+    },
+
+    agregarLiga: function(modelo) {
+    },
+
+    syncLigas: function(collection) {
+      for(var i = 0; i < collection.length; i++) {
+        $('.add-cl').append(collection.models[i].get('nombre'));
+      }
+    },
+
+    onBeforeDestroy: function() {
+      console.log('before:destroy');
+    },
+    onDestroy: function(){
+      console.log("destroy");
+    },
+
+    onDomRemove: function() {
+      console.log('dom:remove');
+    },
+
+    onBeforeDetach: function() {
+      console.log('before:detach');
+    },
+
+    onBeforeRender: function() {
+      console.log('before:render');
+    },
+
+    onRender: function() {
+      console.log('render');
+    },
+
+    onDetach: function() {
+      console.log('detach');
+    },
+
+
+
+
+  });
+
+  return LigasListView;
+
+});
+
+define('routers/DashboardRoute',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'subroute',
+  'core/ViewManager',
+  'views/private/MainAdminView',
+  'views/private/LigaAdminView',
+  'views/private/dashboard/LigasListView'
+], function($, Backbone, Mn, Subroute, ViewManager, MainAdminView, LigaAdminView, LigasListView) {
+
+  var DashBoardRoute = Backbone.SubRoute.extend({
+    routes : {
+      '' : 'dashboard',
+      'config': 'configDashboard'
+    },
+
+    dashboard : function (opt) {
+
+      this.viewMana.showView(new LigaAdminView());
+    },
+
+    configDashboard: function(){
+      this.viewMana.showView(new LigasListView());
+    },
+
+    initialize: function() {
+      this.viewMana = new ViewManager();
+    },
+  });
+
+  return DashBoardRoute;
+});
+
+define('routers/AdminRoute',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'subroute',
+  'core/ViewManager',
+  'views/private/perfil/PerfilAdminView',
+  'views/private/LigaAdminView',
+  'views/private/TorneoAdminView',
+  'views/private/EquipoAdminView',
+  'views/private/JugadorAdminView',
+  'views/private/ArbitroAdminView',
+  'views/private/CanchaAdminView'
+], function($, Backbone, Mn, Subroute, ViewManager, PerfilAdminView, LigaAdminView, TorneoAdminView, EquipoAdminView, JugadorAdminView, ArbitroAdminView, CanchaAdminView) {
+
+  var AdminRoute = Backbone.SubRoute.extend({
+    routes : {
+      '': 'admin',
+      'perfil': 'adminPerfil',
+      'ligas': 'adminLigas',
+      'torneos': 'adminTorneos',
+      'torneos/:liga': 'adminTorneos',
+      'equipos': 'adminEquipos',
+      'jugadores': 'adminJugadores',
+      'arbitros': 'adminArbitros',
+      'canchas': 'adminCanchas',
+      'partido/:partido': 'adminPartido',
+    },
+
+    initialize: function() {
+      console.log("initialize router admin");
+      this.viewMana = new ViewManager();
+    },
+
+
+    admin : function (opt) {
+      this.viewMana.showView(new PerfilAdminView());
+    },
+
+    adminPerfil: function(){
+      this.viewMana.showView(new PerfilAdminView());
+    },
+
+    adminLigas: function(){
+      var liga = new LigaAdminView();
+      this.viewMana.showView(liga);
+    },
+    adminTorneos: function(){
+      this.viewMana.showView(new TorneoAdminView());
+    },
+    adminEquipos: function(){
+      this.viewMana.showView(new EquipoAdminView());
+    },
+    adminJugadores:  function(){
+      this.viewMana.showView(new JugadorAdminView());
+    },
+    adminArbitros: function(){
+      this.viewMana.showView(new ArbitroAdminView());
+    },
+    adminCanchas: function(){
+      this.viewMana.showView(new CanchaAdminView());
+    }
+  });
+
+  return AdminRoute;
+});
+
 define('router',[
-	'jquery',
-	'underscore',
-	'backbone',
-	'core/BaseRouter',
-	'views/LoginView',
-	'views/SignupView',
-    'views/TokenValidateView',
-    'views/TokenChangePassView',
-	'views/private/perfil/PerfilAdminView',
-	'views/private/MainAdminNavView',
-	'views/private/LigaAdminView',
-	'views/private/TorneoAdminView',
-	'views/private/EquipoAdminView',
-	'views/private/JugadorAdminView',
-	'views/private/ArbitroAdminView',
-	'views/private/CanchaAdminView',
-	'views/private/partido/PartidoAdminView',
-    'views/public/MainView',
-    'views/public/MainNavView',
-	'views/public/torneo/TorneoLandingView',
-	'Session'
+  'jquery',
+  'underscore',
+  'backbone',
+  'core/BaseRouter',
+  'views/LoginView',
+  'views/SignupView',
+  'views/TokenValidateView',
+  'views/TokenChangePassView',
+  'views/private/perfil/PerfilAdminView',
+  'views/private/MainAdminNavView',
+  'views/private/LigaAdminView',
+  'views/private/TorneoAdminView',
+  'views/private/EquipoAdminView',
+  'views/private/JugadorAdminView',
+  'views/private/ArbitroAdminView',
+  'views/private/CanchaAdminView',
+  'views/private/partido/PartidoAdminView',
+  'views/public/MainView',
+  'views/public/MainNavView',
+  'views/public/torneo/TorneoLandingView',
+  'routers/DashboardRoute',
+  'routers/AdminRoute',
+  'views/private/dashboard/LigasListView'
 ], function($, _, Backbone, BaseRouter, LoginView, SignupView,
-            TokenValidateView, TokenChangePassView, PerfilAdminView,
-            MainAdminNavView, LigaAdminView, TorneoAdminView,
-            EquipoAdminView, JugadorAdminView,ArbitroAdminView,
-            CanchaAdminView, PartidoAdminView, MainView, MainNavView,
-            TorneoLandingView, Session){
-        var Router = BaseRouter.extend({
+  TokenValidateView, TokenChangePassView, PerfilAdminView,
+  MainAdminNavView, LigaAdminView, TorneoAdminView,
+  EquipoAdminView, JugadorAdminView, ArbitroAdminView,
+  CanchaAdminView, PartidoAdminView, MainView, MainNavView,
+  TorneoLandingView, DashboardRoute, AdminRoute, LigasListView) {
+  var Router = BaseRouter.extend({
 
-        routes: {
-            '':                             'main',
-            '/':                            'main',
-            '/#':                           'main',
-            'login':                        'login',
-            'signup':                       'signup',
-            'token/:token':                 'token',
-            'change/:token':                'changeToken',
-            'admin':                        'admin',
-            'admin/perfil':                 'adminPerfil',
-            'admin/ligas':                  'adminLigas',
-            'admin/torneos':                'adminTorneos',
-            'admin/torneos/:liga':          'adminTorneos',
-            'admin/equipos':                'adminEquipos',
-            'admin/jugadores':              'adminJugadores',
-            'admin/arbitros':               'adminArbitros',
-            'admin/canchas':                'adminCanchas',
-            'admin/partido/:partido':       'adminPartido',
+    routes: {
+      '': 'main',
+      '/': 'main',
+      '/#': 'main',
+      'login': 'login',
+      'signup': 'signup',
+      'token/:token': 'token',
+      'change/:token': 'changeToken',
+      'admin': 'admin',
+      'admin/perfil': 'adminPerfil',
+      'admin/ligas': 'adminLigas',
+      'admin/torneos': 'adminTorneos',
+      'admin/torneos/:liga': 'adminTorneos',
+      'admin/equipos': 'adminEquipos',
+      'admin/jugadores': 'adminJugadores',
+      'admin/arbitros': 'adminArbitros',
+      'admin/canchas': 'adminCanchas',
+      'admin/partido/:partido': 'adminPartido',
+      // 'admin*subroute': 'showAdminView',
+      'torneo/:clave': 'publicTorneo',
+      'dashboard': 'showDashboard',
+      'dashboard/config': 'showDashboardConfig'
+      // 'dashboard*subroute': 'showDashboard'
+    },
 
-            'torneo/:clave':                'publicTorneo'
-        },
+    requresAuth: ['#admin'],
 
-        requresAuth : ['#admin'],
+    preventAccessWhenAuth: ['#login'],
 
-        preventAccessWhenAuth : ['#login'],
+    initialize: function() {},
 
-        before : function(params, next) {
-            //Checking if user is authenticated or not
-            //then check the path if the path requires authentication
-            var isAuth = Session.get('authenticated');
-            var path = Backbone.history.location.hash;
-            var needAuth = path.indexOf(this.requresAuth) > -1;
-            var cancleAccess = _.contains(this.preventAccessWhenAuth, path);
+    before: function(params, next) {
+      console.log("BEFORE ROUTER");
+      //Checking if user is authenticated or not
+      //then check the path if the path requires authentication
+      var isAuth = Backbone.Radio.channel('app').request('session').get('logged_in');
+      var path = Backbone.history.location.hash;
+      var needAuth = path.indexOf(this.requresAuth) > -1;
+      var cancleAccess = _.contains(this.preventAccessWhenAuth, path);
 
-            if(needAuth && !isAuth){
-              //If user gets redirect to login because wanted to access
-              // to a route that requires login, save the path in session
-              // to redirect the user back to path after successful login
-              Backbone.history.navigate('login', { trigger : true });
-            }else if(isAuth && cancleAccess){
-              //User is authenticated and tries to go to login, register ...
-              // so redirect the user to home page
-              Backbone.history.navigate('', { trigger : true });
-            }else{
-              //No problem, handle the route!!
-              return next();
+
+      if(needAuth && !isAuth) {
+        //If user gets redirect to login because wanted to access
+        // to a route that requires login, save the path in session
+        // to redirect the user back to path after successful login
+        Backbone.history.navigate('login', { trigger: true });
+      } else if(isAuth && cancleAccess) {
+        //User is authenticated and tries to go to login, register ...
+        // so redirect the user to home page
+        Backbone.history.navigate('', { trigger: true });
+      } else {
+        //No problem, handle the route!!
+
+        // return next();
+      }
+    },
+
+    after: function() {
+      console.log('AFTER ROUTER');
+    },
+
+    changeView: function(view) {
+      function setView(view) {
+        if(this.currentView) {
+          if(typeof this.currentView.close === "function") {
+            this.currentView.close();
+          }else{
+            if(typeof this.currentView.destroy === "function") {
+              this.currentView.destroy(); //cerrar vistas de marionette
             }
-        },
-
-        after : function() {
-
-            console.log('after router');
-        },
-
-        changeView : function(view) {
-            function setView(view){
-                if(this.currentView){
-                    this.currentView.close();
-                }
-                this.currentView = view;
-                $('#container-body').html(view.render().$el);
-            }
-
-            setView(view);
-        },
-
-        initialize: function () {
-        },
-
-        main: function() {
-            var view = new MainView();
-            this.changeView(view);
-            new MainNavView();
-        },
-
-        login: function() {
-            var view = new LoginView();
-            this.changeView(view);
-        },
-
-        signup: function() {
-            var view = new SignupView();
-            this.changeView(view);
-        },
-
-        token: function(token) {
-            new MainNavView();
-            var view = new TokenValidateView({token: token});
-            this.changeView(view);
-        },
-
-        changeToken: function(token) {
-            new MainNavView();
-            var view = new TokenChangePassView({token: token});
-            this.changeView(view);
-        },
-
-        admin: function() {
-            var view = new PerfilAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminPerfil: function() {
-            var view = new PerfilAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminLigas: function() {
-            var view = new LigaAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminTorneos: function() {
-            var view = new TorneoAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminEquipos: function() {
-            var view = new EquipoAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminJugadores: function() {
-            var view = new JugadorAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminArbitros: function() {
-            var view = new ArbitroAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminCanchas: function() {
-            var view = new CanchaAdminView();
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        adminPartido: function(partido) {
-            var view = new PartidoAdminView();
-            view.setIdPartido(partido);
-            this.changeView(view);
-            new MainAdminNavView();
-        },
-
-        publicTorneo: function(clave) {
-            console.log('Selection: ' + clave);
-            var view = new TorneoLandingView({clave : clave});
-            this.changeView(view);
+          }
         }
-	});
+        this.currentView = view;
+        $('#container-body').html(view.render().$el);
+      }
+      setView(view);
+    },
 
-	return Router;
 
+    // showDashboard: function(subroute) {
+    //   new DashboardRoute('dashboard');
+    // },
+
+    showAdminView: function(subroute) {
+      new AdminRoute('admin');
+    },
+
+
+    main: function() {
+      var view = new MainView();
+      this.changeView(view);
+
+    },
+
+    login: function() {
+      var view = new LoginView();
+      this.changeView(view);
+    },
+
+    signup: function() {
+      var view = new SignupView();
+      this.changeView(view);
+    },
+
+    token: function(token) {
+      new MainNavView();
+      var view = new TokenValidateView({ token: token });
+      this.changeView(view);
+    },
+
+    changeToken: function(token) {
+      new MainNavView();
+      var view = new TokenChangePassView({ token: token });
+      this.changeView(view);
+    },
+
+    admin: function() {
+      var view = new PerfilAdminView();
+      this.changeView(view);
+    },
+
+    adminPerfil: function() {
+      var view = new PerfilAdminView();
+      this.changeView(view);
+    },
+
+    adminLigas: function() {
+      var view = new LigaAdminView();
+      this.changeView(view);
+    },
+
+    adminTorneos: function() {
+      var view = new TorneoAdminView();
+      this.changeView(view);
+    },
+
+    adminEquipos: function() {
+      var view = new EquipoAdminView();
+      this.changeView(view);
+    },
+
+    adminJugadores: function() {
+      var view = new JugadorAdminView();
+      this.changeView(view);
+    },
+
+    adminArbitros: function() {
+      var view = new ArbitroAdminView();
+      this.changeView(view);
+    },
+
+    adminCanchas: function() {
+      var view = new CanchaAdminView();
+      this.changeView(view);
+    },
+
+    adminPartido: function(partido) {
+      var view = new PartidoAdminView();
+      view.setIdPartido(partido);
+      this.changeView(view);
+    },
+
+    publicTorneo: function(clave) {
+      var view = new TorneoLandingView({ clave: clave });
+      this.changeView(view);
+    },
+
+    //dashboard
+
+    showDashboard: function(clave) {
+      var view = new LigaAdminView();
+      this.changeView(view);
+    },
+
+    showDashboardConfig: function(clave) {
+      var view = new LigasListView();
+      this.changeView(view);
+    }
+  });
+
+  return Router;
+
+});
+
+
+define('text!templates/tplRoot.html',[],function () { return '<div id="header-region">\n  <nav id="header-general" class="navbar navbar-default navbar-fixed-top" role="navigation">\n\n  </nav>\n</div>\n<div id="container-region">\n  <div class="container">\n    <div class="starter-template">\n      <div id="container-body">\n\n      </div>\n    </div>\n  </div>\n\n</div>\n<div id="footer-region">\n  <footer class="footer">\n    <div class="container">\n        <div class="row">\n          <div class="span3 pull-right">\n          </div>\n          <div class="span6 pull-left">\n            <span class="small">\n              Design by CodigoArtesanal | Copyright © 2017 entuliga. All Rights Reserved.\n            </span>\n          </div>\n        </div>\n    </div>\n  </footer>\n\n  <div id="modal-generic">\n  </div>\n</div>\n';});
+
+define('views/RootView',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'bootstrap',
+  'text!templates/tplRoot.html',
+  'views/public/MainNavView'
+], function($, Backbone, Mn, bootstrap, tplRoot, MainNavView){
+
+  var RootView = Mn.View.extend({
+
+    template: _.template(tplRoot),
+
+    regions: {
+      headerWrap: '#header-region',
+      containerWrap: '#container-region',
+      footerWrap: '#footer-region'
+    },
+
+    onRender : function () {
+      this.showChildView('headerWrap', new MainNavView());
+    },
+
+  });
+
+  return RootView;
+
+});
+
+define('core/SessionModel',[
+  'jquery',
+  'backbone',
+  'views/private/util/ModalGenericView',
+  'jscookie',
+  'models/UserModel'
+], function($, Backbone, ModalGenericView, Cookies, UserModel) {
+
+  var SessionModel = Backbone.Model.extend({
+    url: 'session',
+
+    defaults: {
+      username: '',
+      password: '',
+      logged_in: false,
+      user_id: ''
+
+    },
+
+    initialize() {
+      // Singleton user object
+      // Access or listen on this throughout any module with app.session.user
+      this.user = new UserModel();
+    },
+
+    // Fxn to update user attributes after recieving API response
+    updateSessionUser(userData) {
+      this.user.set(_.pick(userData, _.keys(this.user.attributes)));
+    },
+
+    /*
+     * Check for session from API
+     * The API will parse client cookies using its secret token
+     * and return a user object if authenticated
+     */
+    checkAuth(opts,callback, args) {
+      var token = opts.token
+      var self = this;
+      // this.set('id', token);
+      this.url = 'session/valid/' + token;
+      this.fetch({
+        success: function(mod, res) {
+          if(res.token) {
+            self.set({ logged_in: true });
+            if('success' in callback) callback.success(mod, res);
+          } else {
+            self.set({ logged_in: false });
+            if('error' in callback) callback.error(mod, res);
+          }
+        },
+        error: function(mod, res) {
+          self.set({ logged_in: false });
+          if('error' in callback) callback.error(mod, res);
+        }
+      }).done(function(mod, res) {
+        if('complete' in callback) callback.complete();
+      });
+    },
+
+    /*
+     * Abstracted fxn to make a POST request to the auth endpoint
+     * This takes care of the CSRF header for security, as well as
+     * updating the user and session after receiving an API response
+     */
+    postAuth(opts, callback, args) {
+      this.url = 'session'
+      var self = this;
+      var postData = _.omit(opts, 'method');
+      var urlroot = Backbone.Radio.channel('app').request('configval').urlRoot
+      $.ajax({
+        url: urlroot + this.url + '/' + opts.method,
+        contentType: 'application/json',
+        dataType: 'json',
+        type: 'POST',
+        beforeSend: function(xhr) {
+          // Set the CSRF Token in the header for security
+          // var token = $('meta[name="csrf-token"]').attr('content');
+          // if(token) xhr.setRequestHeader('X-CSRF-Token', token);
+        },
+        data: JSON.stringify(_.omit(opts, 'method')),
+        success: function(res) {
+          if(!res.error) {
+            if(_.indexOf(['login', 'signup'], opts.method) !== -1) {
+              self.updateSessionUser(res || {});
+              self.set({ user_id: res.id, username: res.username, logged_in: true });
+            } else {
+              self.set({ logged_in: false });
+            }
+
+            if(callback && 'success' in callback) callback.success(res);
+          } else {
+            if(callback && 'error' in callback) callback.error(res);
+          }
+        },
+        error: function(mod, res) {
+          if(callback && 'error' in callback) callback.error(res);
+        }
+      }).done(function() {
+        if(callback && 'complete' in callback) callback.complete();
+      });
+    },
+
+    login(opts, callback, args) {
+      this.postAuth(_.extend(opts, { method: 'login' }), callback);
+    },
+
+    logout(opts, callback, args) {
+      this.postAuth(_.extend(opts, { method: 'logout' }), callback);
+    },
+
+    signup(opts, callback, args) {
+      this.postAuth(_.extend(opts, { method: 'signup' }), callback);
+    },
+
+    removeAccount(opts, callback, args) {
+      this.postAuth(_.extend(opts, { method: 'remove_account' }), callback);
+    },
+
+  });
+
+  return SessionModel;
+});
+
+define('controllers/BaseRouterController',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'jscookie',
+], function($, Backbone, Mn, Cookie) {
+
+  var BaseRouterController = Mn.Object.extend({
+
+    initialize: function(opts) {
+      //debemos de recuperar el username
+      // console.log(opts.that.session.get('username'));
+      this.session = opts.that.session;
+    },
+
+    defaultAdminList: function() {
+      return [];
+    },
+
+    defaultAnonUserUrl: function() {
+      return [];
+    },
+
+
+
+
+    filterurl: function(filter) {
+      filter = filter || '#';
+      let options = {};
+
+      var arrayAdmin = this.defaultAdminUrl();
+      var arrayUser = this.defaultAnonUserUrl();
+
+
+      if(_.where(this.defaultAdminUrl(), { 'url': filter }).length) {
+        options = _.extend(options, { requiresAuth: true });
+      }
+
+      if(_.where(this.defaultAnonUserUrl(), { 'url': filter }).length) {
+        options = _.extend(options, { preventAccessWhenAuth: true });
+      }
+
+      if(options.requiresAuth) {
+        var urlAdmin = arrayAdmin.filter(function(obj) {
+          return obj.url == filter;
+        });
+
+        if(urlAdmin.length > 0) {
+          this.checkAccess(urlAdmin[0].method, options, () => this[urlAdmin[0].method](options)); //llamar a esta linea solo cuando alla alguna cookie
+
+        } else {
+          Backbone.history.navigate('', { trigger: true });
+          console.log("algo no esta definido en array admin");
+        }
+
+      } else if(options.preventAccessWhenAuth) {
+        var urlUser = arrayUser.filter(function(obj) {
+          return obj.url == filter;
+        });
+
+        if(urlUser.length > 0) {
+          this.checkAccess(urlUser[0].method, options, () => this[urlUser[0].method](options)); //llamar a esta linea solo cuando alla alguna cookie
+        } else {
+          //se podria llamar a alguna pagina de error
+          Backbone.history.navigate('', { trigger: true });
+          console.log("algo no esta definido en array user");
+        }
+
+      } else {
+        Backbone.history.navigate('', { trigger: true });
+        console.log("no hay match de esta url");
+      }
+    },
+
+
+    checkAccess: function(filter, opt = {}, callback) {
+      var that = this;
+      // Need to be authenticated before rendering view.
+      // For cases like a user's settings page where we need to double check against the server.
+
+      //verificar en la session principal
+      if(opt.preventAccessWhenAuth) {
+
+        // console.log("hay que verificar si esta logueado ");
+        if(Cookie.get('auth_token') !== undefined) {
+          var user = JSON.parse(Cookie.get('auth_token'));
+
+          this.session.checkAuth({ token: user.token }, {
+            success: (res => {
+
+              callback();
+            }),
+            error: (res => {
+              console.log("error app session");
+              Cookies.remove('auth_token');
+              Backbone.history.navigate('login', { trigger: true });
+              // callback();
+            })
+          });
+
+        } else {
+          callback(); //dejamos que pase el route
+        }
+      } else if(opt.requiresAuth) {
+        //requiere autenticacion
+        if(Cookie.get('auth_token') !== undefined) {
+          var user = JSON.parse(Cookie.get('auth_token'));
+
+          this.session.checkAuth({ token: user.token }, {
+            success: (res => {
+              callback(); //dejamos pasar la url
+            }),
+            error: (res => {
+              //regresamos al login
+              console.log("error en base route");
+              Backbone.history.navigate('login', { trigger: true });
+            })
+          });
+
+        } else {
+          //no esta definido en los arrays
+          Backbone.history.navigate('', { trigger: true });
+          // callback(); //dejamos que pase el route
+        }
+
+      } else {
+        console.log("no entra en filter");
+        callback(); //dejamos pasar el callback
+      }
+
+    },
+
+    changeView: function(view) {
+      function setView(view) {
+        if(this.currentView) {
+          if(typeof this.currentView.close === "function") {
+            this.currentView.close();
+          } else {
+            if(typeof this.currentView.destroy === "function") {
+              this.currentView.destroy(); //cerrar vistas de marionette
+            }
+          }
+        }
+        this.currentView = view;
+        $('#container-body').html(view.render().$el);
+      }
+      setView(view);
+    },
+
+
+  });
+
+  return BaseRouterController;
+});
+
+define('ControllerRoute',[
+  'jquery',
+  'backbone',
+  'marionette',
+  'subroute',
+  'controllers/BaseRouterController',
+  'views/public/MainView',
+  'views/LoginView',
+  'views/public/torneo/TorneoLandingView',
+  'views/SignupView',
+  'views/private/LigaAdminView',
+  'views/private/TorneoAdminView',
+  'views/private/EquipoAdminView',
+  'views/private/JugadorAdminView',
+  'views/private/ArbitroAdminView',
+  'views/private/CanchaAdminView',
+  'views/private/partido/PartidoAdminView',
+  'views/private/perfil/PerfilAdminView',
+  'views/private/dashboard/LigasListView'
+
+
+
+], function($, Backbone, Mn, Subroute, BaseRouterController, MainView, LoginView, TorneoLandingView, SignupView, LigaAdminView, TorneoAdminView, EquipoAdminView, JugadorAdminView, ArbitroAdminView, CanchaAdminView, PartidoAdminView, PerfilAdminView, LigasListView) {
+
+  var ControllerRoute = BaseRouterController.extend({
+
+    start: function() {
+
+    },
+
+    // Action that need authentication and if user is not authenticated
+    // gets redirect to login page
+    requresAuth: function() {
+      return [
+        'admin',
+        'logout',
+        'admin/perfil'
+      ];
+    },
+
+    // Routes that should not be accessible if user is authenticated
+    // for example, login, register, forgetpasword ...
+    preventAccessWhenAuth: function() {
+      return [
+        'login',
+        'signup'
+      ];
+    },
+
+    defaultAdminUrl: function(){
+      return [
+        {url:'admin/perfil', method:'adminPerfil'},
+        {url:'admin', method:'admin'},
+        {url:'admin/torneos', method:'adminTorneos'},
+        {url:'admin/ligas', method:'adminLigas'},
+        {url:'admin/equipos', method:'adminEquipos'},
+        {url:'admin/jugadores', method:'adminJugadores'},
+        {url:'admin/arbitros', method:'adminArbitros'},
+        {url:'admin/canchas', method:'adminCanchas'},
+      ];
+
+    },
+
+    defaultAnonUserUrl: function(){
+      return [
+        // {url:'#', method:'main'},
+        // {url:"/", method:"main"},
+        {url:"signup", method:"signup"},
+        {url:"login", method:"login"},
+      ];
+    },
+
+
+    main() {
+      this.changeView(new MainView());
+    },
+
+    publicTorneo: function(clave) {
+      var view = new TorneoLandingView({ clave: clave });
+      this.changeView(view);
+    },
+
+
+    login: function() {
+      this.changeView(new LoginView());
+    },
+
+    signup: function() {
+      this.changeView(new SignupView());
+    },
+
+
+    admin: function() {
+      var view = new PerfilAdminView();
+      this.changeView(view);
+    },
+
+    adminPerfil: function() {
+      var view = new PerfilAdminView();
+      this.changeView(view);
+    },
+
+    adminLigas: function() {
+      var view = new LigaAdminView();
+      this.changeView(view);
+    },
+
+    adminTorneos: function() {
+      var view = new TorneoAdminView();
+      this.changeView(view);
+    },
+
+    adminEquipos: function() {
+      var view = new EquipoAdminView();
+      this.changeView(view);
+    },
+
+    adminJugadores: function() {
+      var view = new JugadorAdminView();
+      this.changeView(view);
+    },
+
+    adminArbitros: function() {
+      var view = new ArbitroAdminView();
+      this.changeView(view);
+    },
+
+    adminCanchas: function() {
+      var view = new CanchaAdminView();
+      this.changeView(view);
+    },
+
+    showDashboard: function(clave) {
+      var view = new LigaAdminView();
+      this.changeView(view);
+    },
+
+    showDashboardConfig: function(clave) {
+      var view = new LigasListView();
+      this.changeView(view);
+    },
+
+    adminPartido: function(partido) {
+      var view = new PartidoAdminView();
+      view.setIdPartido(partido);
+      this.changeView(view);
+    },
+
+    // login action
+    logout: function() {
+      // No callbacks needed b/c of session event listening
+      Backbone.Radio.channel('app').request('session').login({ logout: 'logout' }, {
+        success: () => {
+          Backbone.history.navigate('', { trigger: true });
+        },
+        complete: () => {}
+      });
+    }
+
+  });
+
+  return ControllerRoute;
+});
+
+define('core/CoreRouterMn',[
+  'jquery',
+  'backbone',
+  'marionette',
+], function($, Backbone, Mn) {
+
+  var CoreRouterMn = Mn.AppRouter.extend({
+
+    // initialize: function() {
+    //   console.log("initialize MARIONETTE core router");
+    // },
+
+    appRoutes: {
+      '': 'main',
+      '/#': 'main',
+      'torneo/:clave': 'publicTorneo',
+      'admin/partido/:partido': 'adminPartido',
+
+      // 'login': 'login',
+      // 'admin': 'admin',
+      // 'admin/perfil': 'adminPerfil',
+      // 'admin/ligas': 'adminLigas',
+      // 'admin/torneos': 'adminTorneos',
+      // 'admin/torneos/:liga': 'adminTorneos',
+      // 'admin/equipos': 'adminEquipos',
+      // 'admin/jugadores': 'adminJugadores',
+      // 'admin/arbitros': 'adminArbitros',
+      // 'admin/canchas': 'adminCanchas',
+      // 'dashboard/config': 'showDashboardConfig',
+      '*action': 'filterurl',
+    }
+
+  });
+
+  return CoreRouterMn;
 });
 
 define('app',[
-    'jquery',
-    'backbone',
-    'marionette',
-    'backboneValidation',
-    'jquerycookie',
-    'jquerySerializeObject',
-    'router',
-    'Session',
-    'models/UserTokenModel',
-    'views/public/MainNavView'
-], function ($, Backbone, Mn, backboneValidation, jquerycookie, jquerySerializeObject, Router, Session, UserTokenModel, MainNavView) {
+  'jquery',
+  'backbone',
+  'marionette',
+  'backboneValidation',
+  'jquerySerializeObject',
+  'router',
+  'views/public/MainNavView',
+  'views/RootView',
+  'views/RootAdminView',
+  'jscookie',
+  'core/SessionModel',
+  'backbone.radio',
+  'ControllerRoute',
+  'core/CoreRouterMn'
+], function($, Backbone, Mn, backboneValidation, jquerySerializeObject, Router, MainNavView, RootView, RootAdminView, Cookie, SessionModel, Radio, ControllerRoute, CoreRouterMn) {
 
-    var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" height="150px" width="150px" style="display: block; margin: auto;"/></div></div>');
-    var callServers = 0;
+  var pleaseWaitDiv = $('<div class="modal fade" data-keyboard="false" tabindex="-1"><div class="modal-base"><img src="img/basket.gif" height="150px" width="150px" style="display: block; margin: auto;"/></div></div>');
+  var callServers = 0;
 
-    var ApplicationModel = Mn.Application.extend({
+  var ApplicationModel = Mn.Application.extend({
 
-        // regions: {
-        //     main: '#container',
-        //     header: '#hotel-nav',
-        //     // sidebar: '.sidebar',
-        // },
-        
-        initialize: function() {
-            console.log('initialize marionette');
+    region: '#app',
+
+    urlRoot: 'http://localhost:8090/', //CORS mientras
+
+    initialize: function() {},
+
+    onBeforeStart: function() {
+      // console.log('onBeforeStart marionette');
+      var that = this;
+
+      $.ajaxSetup({
+        cache: false,
+        beforeSend: function() {
+          pleaseWaitDiv.modal('show');
+          callServers = callServers + 1;
         },
-
-        onBeforeStart: function() {
-            console.log('onBeforeStart marionette');            
+        complete: function() {
+          if(callServers <= 1) {
+            pleaseWaitDiv.modal('hide');
+          }
+          callServers = callServers - 1;
         },
+        statusCode: {
+          401: function() {
+            console.log("ERROR 401");
 
-        syncUserToken: function(){
-            console.log("syncUserToken");
-        },
+          },
+          403: function() {
+            console.log("ERROR 403");
+          }
 
-        errorUserToken: function(){
-            Session.set('authenticated', false);
-            Session.set('username', '');
-            $.cookie("auth_token", null, { path: '/' });
-            if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
-                delete $.ajaxSettings.headers["X-Auth-Token"];
-            }
-            Backbone.history.navigate('login', {trigger: true});
-        },
-
-        onStart: function() {
-            console.log('onStart marionette');
-            if ($.cookie('auth_token') === undefined) { // this line is the problem
-                $.ajaxSettings.headers = [];
-                Session.set('authenticated', false);
-                $.cookie("auth_token", null, { path: '/' }); 
-            } else {
-                var user = JSON.parse($.cookie('auth_token'));
-                if(user != null){
-                    this.modeltoken = new UserTokenModel();
-                    this.listenTo(this.modeltoken, 'sync', this.syncUserToken);
-                    this.listenTo(this.modeltoken, 'error', this.errorUserToken);
-
-                    this.modeltoken.set({token: user.token});
-                    this.modeltoken.fetch();
-                    
-                    $.ajaxSetup({
-                        headers: {
-                            "X-Auth-Token": user.token
-                        }
-                    });
-
-                    Session.set('authenticated', true);
-                    Session.set('username', user.username);
-                }
-
-            }
-
-
-            var router = new Router();
-            Backbone.history.start();
-            
-
-            $.ajaxSetup({
-                cache: false,
-                beforeSend: function () {
-                    pleaseWaitDiv.modal('show');
-                    callServers = callServers + 1;
-                },
-                complete: function () {
-                    if (callServers <= 1) {
-                        pleaseWaitDiv.modal('hide');
-                    }
-                    callServers = callServers - 1;
-                },
-                statusCode: {
-                    401: function () {
-                        // Redirec the to the login page.
-                        Session.set('authenticated', false);
-                        Session.set('username', '');
-                        $.cookie("auth_token", null, { path: '/' });
-                        if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
-                            delete $.ajaxSettings.headers["X-Auth-Token"];
-                        }
-                        Backbone.history.navigate('login', {trigger: true});
-
-                    },
-                    403: function () {
-                        // 403 -- Access denied
-                        Session.set('authenticated', false);
-                        Session.set('username', '');
-                        $.cookie("auth_token", null, { path: '/' });
-                        if ($.ajaxSettings.headers["X-Auth-Token"] !== 'undefined') {
-                            delete $.ajaxSettings.headers["X-Auth-Token"];
-                        }
-                        Backbone.history.navigate('login', {trigger: true});
-                    }
-                }
-            });
-
-            // var router = new Router();
-
-            // Extend the callbacks to work with Bootstrap, as used in this example
-            // See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks
-            _.extend(Backbone.Validation.callbacks, {
-                valid: function (view, attr, selector) {
-                    var $el = view.$('[name=' + attr + ']'),
-                        $group = $el.closest('.form-group');
-
-                    $group.removeClass('has-error');
-                    $group.find('.help-block').html('').addClass('hidden');
-                },
-                invalid: function (view, attr, error, selector) {
-                    var $el = view.$('[name=' + attr + ']'),
-                        $group = $el.closest('.form-group');
-
-                    $group.addClass('has-error');
-                    $group.find('.help-block').html(error).removeClass('hidden');
-                }
-            });
-
-            $.fn.serializeObject = function () {
-                "use strict";
-                var a = {}, b = function (b, c) {
-                    var d = a[c.name];
-                    "undefined" != typeof d && d !== null ? $.isArray(d) ? d.push(c.value) : a[c.name] = [d, c.value] : a[c.name] = c.value
-                };
-                return $.each(this.serializeArray(), b), a
-            };
         }
-    });
+      });
+
+      // Extend the callbacks to work with Bootstrap, as used in this example
+      // See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks
+      _.extend(Backbone.Validation.callbacks, {
+        valid: function(view, attr, selector) {
+          var $el = view.$('[name=' + attr + ']'),
+            $group = $el.closest('.form-group');
+
+          $group.removeClass('has-error');
+          $group.find('.help-block').html('').addClass('hidden');
+        },
+        invalid: function(view, attr, error, selector) {
+          var $el = view.$('[name=' + attr + ']'),
+            $group = $el.closest('.form-group');
+
+          $group.addClass('has-error');
+          $group.find('.help-block').html(error).removeClass('hidden');
+        }
+      });
+
+      $.fn.serializeObject = function() {
+        "use strict";
+        var a = {},
+          b = function(b, c) {
+            var d = a[c.name];
+            "undefined" != typeof d && d !== null ? $.isArray(d) ? d.push(c.value) : a[c.name] = [d, c.value] : a[c.name] = c.value
+          };
+        return $.each(this.serializeArray(), b), a
+      };
+
+      //REST URL
+//      var sync = Backbone.sync;
+//      Backbone.sync = function(method, model, options) {
+//        options.beforeSend = function() {
+//          this.url = that.urlRoot + this.url;
+//        };
+//        return sync.call(this, method, model, options);
+//      };
+
+      this.rootLayout = new RootView();
+      this.session = new SessionModel();
+      this.controlllerRoute = new ControllerRoute({ that: this });
+
+      this.channel = Backbone.Radio.channel('app');
+      this.channel.reply('session', this.session);
+      this.channel.reply('configval', { urlRoot: this.urlRoot });
+      this.channel.reply('rootLayout', this.rootLayout);
+      this.channel.reply('controllerRoute', this.controlllerRoute);
+      this.channel.reply('appMn', this);
+    },
+
+    onStart: function() {
+      console.log('onStart marionette');
+      var that = this;
+
+      if(Cookie.get('auth_token') !== undefined) {
+        var user = JSON.parse(Cookie.get('auth_token'));
+
+        if(user != null) {
+          this.session.set('username', user.username);
+          this.session.checkAuth({ token: user.token }, {
+            //la respuesta al verificar el token deben venir el username, roles, token y los roles, por que se esta recuperando del la cookie
+            // Start the backbone routing once we have captured a user's auth status
+            success: function(mod, res) {
+              console.log("seccess al verificar el token");
+
+              $.ajaxSetup({
+                headers: {
+                  "X-Auth-Token": user.token
+                }
+              });
+              that.rootLayout = new RootAdminView();
+              that.showView(that.rootLayout);
+            },
+            error: function(mod, res) {
+              console.log("Error al verificar el token");
+            },
+            complete: function(mod, res) {
+              console.log("complete checkaut");
+            }
+          });
+        }
+      } else {
+        this.showView(this.rootLayout);
+      }
+
+      // var router = new Router();
+      // Backbone.history.start();
+      this.controlllerRoute.router = new CoreRouterMn({
+        controller: this.controlllerRoute
+      });
+
+      this.controlllerRoute.start();
+      Backbone.history.start();
 
 
-    return ApplicationModel;
+    }
+  });
+  return ApplicationModel;
 });
 
 require.config({
@@ -32506,7 +33586,7 @@ require.config({
             deps : ['jquery', 'underscore', 'backbone'],
             exports : 'Mn'
         },
-                                        
+
         bootstrap: {
             deps: [
                 'jquery'
@@ -32555,7 +33635,9 @@ require.config({
         'underscore': 'vendor/underscore/underscore-min',
         'marionette': 'vendor/backbone/backbone-marionette/backbone.marionette',
         'backbone.radio': 'vendor/backbone/backbone-radio/backbone.radio.min',
+        'subroute': 'vendor/backbone/backbone-subroute/backbone.subroute.min',
         'jquerycookie': 'vendor/jquery/cookie/jquery.cookie',
+        'jscookie': 'vendor/js-cookie/js.cookie',
         'jquerySerializeObject': 'vendor/jquery/serializeObject/jquery.serializeObject.min',
         'backboneValidation': 'vendor/backbone/backbone-validation/backbone-validation-amd-min',
         'text' : 'vendor/requirejs-text/text',
@@ -32572,7 +33654,7 @@ require.config({
 
 
 require([
-    'app'
+    'app',
 ], function (App) {
     var app = new App();
     app.start();
