@@ -5,8 +5,8 @@ server:
 security.basic.enabled: false
 endpoints.shutdown.enabled: true
 
-spring.profiles.active: devbd
-spring.profiles.include: security,localhomestorage,devmail
+spring.profiles.active: preprobd
+spring.profiles.include: security,localhomestorage,mailchimp
 
 ---
 spring:
@@ -121,7 +121,7 @@ entuliga.web.pathPhoto: /Users/betuzo/opt/photo/
 
 ---
 spring:
-  profiles: devmail
+  profiles: mailchimp
 
 mail:
   key: vqe5VUPLJLMpzJI-EYD63A
