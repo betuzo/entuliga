@@ -93,6 +93,7 @@ public class EncesteServiceImpl implements EncesteService {
         enceste.setTipo(TipoEnceste.valueOf(encesteMap.get(PROPERTY_TIPO)));
         enceste.setValor(enceste.getTipo().getValor());
         enceste.setOrigen(OrigenEstadistica.valueOf(encesteMap.get(PROPERTY_ORIGEN)));
+        enceste.setSuccess(Boolean.valueOf(encesteMap.get(PROPERTY_SUCCESS)));
         return enceste;
     }
 
@@ -108,6 +109,7 @@ public class EncesteServiceImpl implements EncesteService {
         map.put(PROPERTY_ORIGEN, enceste.getOrigen());
         map.put(PROPERTY_JUGADOR_ID, enceste.getTirador().getId());
         map.put(PROPERTY_JUGADOR_NOMBRE, enceste.getTirador().getJugador().getNombreCompleto());
+        map.put(PROPERTY_SUCCESS, enceste.isSuccess());
         return map;
     }
 }

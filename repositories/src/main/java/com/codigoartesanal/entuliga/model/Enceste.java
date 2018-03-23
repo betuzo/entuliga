@@ -91,6 +91,14 @@ public class Enceste {
         this.valor = valor;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
     public String getTiempoDescripcion(){
         return " " + minuto + " : " + segundo;
     }
