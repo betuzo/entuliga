@@ -36,4 +36,4 @@ ENV JAR_NAME web-0.0.1.jar
 COPY web/build/libs/$JAR_NAME $APP_DIR/bin/
 
 # Command to execute
-CMD ["java", "${JAVA_OPTIONS}", "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", "-Dspring.profiles.include=${SPRING_PROFILES_INCLUDE}", "-Djava.security.egd=file:/dev/./urandom", "-jar", "${APP_DIR}/bin/${JAR_NAME}.jar"]
+CMD ["java", "${JAVA_OPTIONS}", "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", "-Dspring.profiles.include=${SPRING_PROFILES_INCLUDE}", "-Djava.security.egd=file:/dev/./urandom", "-jar", "${APP_DIR}/bin/${JAR_NAME}"]
