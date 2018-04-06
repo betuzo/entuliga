@@ -109,15 +109,11 @@ entuliga:
 
 ---
 spring:
-  profiles: localbmvstorage
-
-entuliga.web.pathPhoto: /home/betuzo/opt/photo/
-
----
-spring:
   profiles: localhomestorage
 
-entuliga.web.pathPhoto: /Users/betuzo/opt/photo/
+entuliga.web:
+  pathPhoto: /Users/betuzo/opt/photo/
+  pathBase: http://localhost:8090/
 
 ---
 spring:

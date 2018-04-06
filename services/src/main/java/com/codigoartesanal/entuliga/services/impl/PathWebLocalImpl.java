@@ -18,11 +18,14 @@ import java.io.File;
 @Profile({"localbmvstorage", "localhomestorage", "test"})
 public class PathWebLocalImpl implements PathWebService {
 
+    private static final String PROPERTY_STATIC_LOCAL_BASE_WEB = "entuliga.web.pathBase";
+
     @Resource
     Environment env;
 
     @Override
     public String getValidPathWebFoto(String path, OriginPhoto originPhoto) {
+        String pathWeb = env.getRequiredProperty(PROPERTY_STATIC_LOCAL_BASE_WEB);
         String pathBase = PathPhoto.JUGADOR_BASE.getPath();
         String pathDefault = PathPhoto.JUGADOR_DEFAULT.getPath();
         if (originPhoto == OriginPhoto.ARBITRO) {
@@ -31,35 +34,36 @@ public class PathWebLocalImpl implements PathWebService {
         }
 
         if (path == null || path.isEmpty()) {
-            return pathDefault;
+            return pathWeb + pathDefault;
         }
 
         String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO);
         pathFull = pathFull + pathBase + path;
         File file = new File(pathFull);
         if (file == null || !file.exists()) {
-            return pathDefault;
+            return pathWeb + pathDefault;
         }
-        return PathPhoto.PHOTO_BASE.getPath() + pathBase + path;
+        return pathWeb + PathPhoto.PHOTO_BASE.getPath() + pathBase + path;
     }
 
     @Override
     public String getValidPathWebLogo(String path, OrigenEstadistica origenEstadistica) {
+        String pathWeb = env.getRequiredProperty(PROPERTY_STATIC_LOCAL_BASE_WEB);
         String pathDefault = PathPhoto.EQUIPO_DEFAULT.getPath();
         if (origenEstadistica != null) {
             pathDefault = origenEstadistica == OrigenEstadistica.VISITA ?
                     PathPhoto.EQUIPO_DEFAULT_VISITA.getPath() : PathPhoto.EQUIPO_DEFAULT_LOCAL.getPath();
         }
         if (path == null || path.isEmpty()) {
-            return pathDefault;
+            return pathWeb + pathDefault;
         }
 
         String pathFull = env.getRequiredProperty(PathWebService.PROPERTY_STATIC_FILE_PHOTO);
         pathFull = pathFull + PathPhoto.EQUIPO_BASE.getPath() + path;
         File file = new File(pathFull);
         if (file == null || !file.exists()) {
-            return pathDefault;
+            return pathWeb + pathDefault;
         }
-        return PathPhoto.PHOTO_BASE.getPath() + PathPhoto.EQUIPO_BASE.getPath() + path;
+        return pathWeb + PathPhoto.PHOTO_BASE.getPath() + PathPhoto.EQUIPO_BASE.getPath() + path;
     }
 }
