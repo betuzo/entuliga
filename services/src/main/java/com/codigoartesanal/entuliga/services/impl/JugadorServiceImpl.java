@@ -150,6 +150,7 @@ public class JugadorServiceImpl implements JugadorService {
         }
         Colonia colonia = new Colonia();
         colonia.setId(Long.valueOf(ligaMap.get(PROPERTY_COLONIA_ID)));
+        colonia.setCodigoPostal(ligaMap.get(PROPERTY_CODIGO_POSTAL));
         geoLocation.setColonia(colonia);
         jugador.setGeoLocation(geoLocation);
         return jugador;
