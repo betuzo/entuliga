@@ -90,7 +90,7 @@ public class JugadorServiceImpl implements JugadorService {
         map.put(PROPERTY_RUTA_LOGO_JUGADOR, pathWebFull);
         map.put(PROPERTY_HAS_LOGO_JUGADOR, !pathWebFull.contains(PathPhoto.JUGADOR_DEFAULT.getPath()));
         map.put(PROPERTY_SEXO, jugador.getSexo());
-        map.put(PROPERTY_FECHA_REGISTRO, jugador.getFechaRegistro());
+        map.put(PROPERTY_FECHA_REGISTRO, jugador.getFechaRegistro().getTime());
         if (jugador.getGeoLocation() == null)
             return map;
         map.put(PROPERTY_GEO_LOCATION_ID, jugador.getGeoLocation().getId());
