@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.controller;
 
 import com.codigoartesanal.entuliga.services.*;
+import com.codigoartesanal.entuliga.util.ImageUtil;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class FileUploadController {
         Map<String, String> result = new HashMap<>();
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
+                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes());
 
                 String nameLogo = getValidNameLogo(file.getOriginalFilename(), id);
 
@@ -93,7 +94,7 @@ public class FileUploadController {
         Map<String, String> result = new HashMap<>();
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
+                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes());
 
                 String nameLogo = getValidNameLogo(file.getOriginalFilename(), id);
 
