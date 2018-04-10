@@ -57,9 +57,9 @@ public class FileUploadController {
         Map<String, String> result = new HashMap<>();
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes());
+                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes(), getExtensionLogo(file.getOriginalFilename()));
 
-                String nameLogo = getValidNameLogo(file.getOriginalFilename(), id);
+                String nameLogo = id + getExtensionLogo(file.getOriginalFilename());
 
                 storageImageServices.writeImage(bytes, nameLogo, OriginPhoto.EQUIPO);
                 equipoService.updateLogoByEquipo(nameLogo, id);
@@ -94,9 +94,9 @@ public class FileUploadController {
         Map<String, String> result = new HashMap<>();
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes());
+                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes(), getExtensionLogo(file.getOriginalFilename()));
 
-                String nameLogo = getValidNameLogo(file.getOriginalFilename(), id);
+                String nameLogo = id + getExtensionLogo(file.getOriginalFilename());
 
                 OriginPhoto originPhoto = OriginPhoto.valueOf(origin);
                 storageImageServices.writeImage(bytes, nameLogo, originPhoto);
@@ -153,8 +153,7 @@ public class FileUploadController {
         return result;
     }
 
-    private String getValidNameLogo(String path, Long idEquipo) {
-        String extension=path.substring(path.lastIndexOf("."));
-        return idEquipo + extension;
+    private String getExtensionLogo(String path) {
+        return path.substring(path.lastIndexOf("."));
     }
 }

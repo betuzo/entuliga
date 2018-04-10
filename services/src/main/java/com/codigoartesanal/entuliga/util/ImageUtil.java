@@ -12,7 +12,7 @@ public class ImageUtil {
     private static final int IMG_WIDTH = 125;
     private static final int IMG_HEIGHT = 125;
 
-    public static byte[] resizeImageDefault(byte[] originalImage) throws IOException {
+    public static byte[] resizeImageDefault(byte[] originalImage, String ext) throws IOException {
         byte[] resultImage = null;
         InputStream in = new ByteArrayInputStream(originalImage);
         BufferedImage bImageFromConvert = ImageIO.read(in);
@@ -20,7 +20,7 @@ public class ImageUtil {
         bImageFromConvert = resizeImage(bImageFromConvert, bImageFromConvert.getType());
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(bImageFromConvert, "jpg", baos);
+        ImageIO.write(bImageFromConvert, ext, baos);
         baos.flush();
         resultImage = baos.toByteArray();
         baos.close();
