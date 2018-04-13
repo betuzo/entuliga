@@ -57,10 +57,10 @@ public class FileUploadController {
         Map<String, String> result = new HashMap<>();
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes(), getExtensionLogo(file.getOriginalFilename()));
+                String ext = getExtensionLogo(file.getOriginalFilename());
+                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes(), ext.replace(".", ""));
 
-                String nameLogo = id + getExtensionLogo(file.getOriginalFilename());
-
+                String nameLogo = id + ext;
                 storageImageServices.writeImage(bytes, nameLogo, OriginPhoto.EQUIPO);
                 equipoService.updateLogoByEquipo(nameLogo, id);
 
@@ -94,10 +94,10 @@ public class FileUploadController {
         Map<String, String> result = new HashMap<>();
         if (!file.isEmpty()) {
             try {
-                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes(), getExtensionLogo(file.getOriginalFilename()));
+                String ext = getExtensionLogo(file.getOriginalFilename());
+                byte[] bytes = ImageUtil.resizeImageDefault(file.getBytes(), ext.replace(".", ""));
 
-                String nameLogo = id + getExtensionLogo(file.getOriginalFilename());
-
+                String nameLogo = id + ext;
                 OriginPhoto originPhoto = OriginPhoto.valueOf(origin);
                 storageImageServices.writeImage(bytes, nameLogo, originPhoto);
                 if (originPhoto == OriginPhoto.JUGADOR) {
