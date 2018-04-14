@@ -1,6 +1,7 @@
 package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.*;
+import com.codigoartesanal.entuliga.repositories.ColoniaRepository;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.repositories.JugadorRepository;
 import com.codigoartesanal.entuliga.services.JugadorService;
@@ -27,6 +28,9 @@ public class JugadorServiceImpl implements JugadorService {
     GeoLocationRepository geoLocationRepository;
 
     @Autowired
+    ColoniaRepository coloniaRepository;
+
+    @Autowired
     PathWebService pathWebService;
 
     @Override
@@ -34,7 +38,12 @@ public class JugadorServiceImpl implements JugadorService {
         Jugador jugador = convertMapToJugador(jugadorMap);
         jugador.setAdmin(admin);
         geoLocationRepository.save(jugador.getGeoLocation());
-        return convertJugadorToMap(jugadorRepository.save(jugador));
+        jugador = jugadorRepository.save(jugador);
+        Optional<Colonia> colonia = coloniaRepository.findById(jugador.getGeoLocation().getColonia().getId());
+        if (colonia.isPresent()){
+            jugador.getGeoLocation().setColonia(colonia.get());
+        }
+        return convertJugadorToMap(jugador);
     }
 
     @Override
