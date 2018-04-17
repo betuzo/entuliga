@@ -98,7 +98,7 @@ public class ArbitroServiceImpl implements ArbitroService {
         map.put(PROPERTY_RUTA_FOTO_ARBITRO, pathWebFull);
         map.put(PROPERTY_HAS_FOTO_ARBITRO, !pathWebFull.contains(PathPhoto.ARBITRO_DEFAULT.getPath()));
         map.put(PROPERTY_SEXO, arbitro.getSexo());
-        map.put(PROPERTY_FECHA_REGISTRO, arbitro.getFechaRegistro());
+        map.put(PROPERTY_FECHA_REGISTRO, arbitro.getFechaRegistro().getTime());
         if (arbitro.getGeoLocation() == null)
             return map;
         map.put(PROPERTY_GEO_LOCATION_ID, arbitro.getGeoLocation().getId());
