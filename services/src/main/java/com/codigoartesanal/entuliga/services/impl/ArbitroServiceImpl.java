@@ -2,6 +2,7 @@ package com.codigoartesanal.entuliga.services.impl;
 
 import com.codigoartesanal.entuliga.model.*;
 import com.codigoartesanal.entuliga.repositories.ArbitroRepository;
+import com.codigoartesanal.entuliga.repositories.ColoniaRepository;
 import com.codigoartesanal.entuliga.repositories.GeoLocationRepository;
 import com.codigoartesanal.entuliga.services.ArbitroService;
 import com.codigoartesanal.entuliga.services.OriginPhoto;
@@ -27,6 +28,9 @@ public class ArbitroServiceImpl implements ArbitroService {
     GeoLocationRepository geoLocationRepository;
 
     @Autowired
+    ColoniaRepository coloniaRepository;
+
+    @Autowired
     PathWebService pathWebService;
 
     @Override
@@ -34,7 +38,12 @@ public class ArbitroServiceImpl implements ArbitroService {
         Arbitro arbitro = convertMapToArbitro(arbitroMap);
         arbitro.setAdmin(admin);
         geoLocationRepository.save(arbitro.getGeoLocation());
-        return convertArbitroToMap(arbitroRepository.save(arbitro));
+        arbitro = arbitroRepository.save(arbitro);
+        Optional<Colonia> colonia = coloniaRepository.findById(arbitro.getGeoLocation().getColonia().getId());
+        if (colonia.isPresent()){
+            arbitro.getGeoLocation().setColonia(colonia.get());
+        }
+        return convertArbitroToMap(arbitro);
     }
 
     @Override
