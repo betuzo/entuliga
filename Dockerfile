@@ -1,25 +1,25 @@
 FROM openjdk:8-jre-alpine
 
-ENV JAVA_OPTIONS "" \
-		LOGS_DIR /var/log/app \
-		APP_DIR /usr/share/app \
-		PORT 8090 \
-		SERVER_PORT $PORT \
-		JAR_NAME web-0.0.1.jar
+ENV JAVA_OPTIONS ""
+ENV LOGS_DIR /var/log/app
+ENV APP_DIR /usr/share/app
 
 # Create User java for
+RUN adduser -D java
+
 # Update apk
+RUN /bin/sh -c "apk add --no-cache bash"
+
 # Create directories for logs and for our java binaries
-RUN adduser -D java && \
-    /bin/sh -c "apk add --no-cache bash"
-RUN mkdir -p $LOGS_DIR
-RUN mkdir -p $APP_DIR
-RUN chown -R java $LOGS_DIR $APP_DIR
+RUN mkdir -p $LOGS_DIR $APP_DIR && \
+chown -R java $LOGS_DIR $APP_DIR
 
 # Specify that Logs directory can be mounted
 VOLUME $LOGS_DIR
 
 # Exposed Ports
+ENV PORT 8090
+ENV SERVER_PORT $PORT
 EXPOSE $PORT
 
 # Add an entrypoint
@@ -32,6 +32,7 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 USER java
 
 # Add generated binaries
+ENV JAR_NAME web-0.0.1.jar
 COPY web/build/libs/$JAR_NAME $APP_DIR/bin/
 
 # Command to execute
