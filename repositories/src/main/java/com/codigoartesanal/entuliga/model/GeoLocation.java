@@ -85,7 +85,7 @@ public class GeoLocation {
                 ", calle='" + calle + '\'' +
                 ", noExterior='" + noExterior + '\'' +
                 ", noInterior='" + noInterior + '\'' +
-                ", colonia=" + colonia +
+                ", town=" + colonia +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
                 '}';

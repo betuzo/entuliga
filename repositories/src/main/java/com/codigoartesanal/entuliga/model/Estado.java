@@ -66,7 +66,7 @@ public class Estado {
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", abreviatura='" + abreviatura + '\'' +
-                ", pais=" + pais +
+                ", country=" + pais +
                 '}';
     }
 }

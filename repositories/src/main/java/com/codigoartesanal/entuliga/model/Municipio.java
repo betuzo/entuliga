@@ -67,7 +67,7 @@ public class Municipio {
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", nombreOficial='" + nombreOficial + '\'' +
-                ", estado=" + estado +
+                ", province=" + estado +
                 '}';
     }
 }

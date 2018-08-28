@@ -56,7 +56,7 @@ public class Colonia {
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", codigoPostal='" + codigoPostal + '\'' +
-                ", municipio=" + municipio +
+                ", municipality=" + municipio +
                 '}';
     }
 }

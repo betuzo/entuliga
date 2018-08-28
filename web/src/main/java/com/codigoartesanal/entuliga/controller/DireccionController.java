@@ -32,7 +32,7 @@ public class DireccionController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/pais" },
+            value = { "/country" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
     public List<Map<String, Object>> listPais() {
@@ -41,28 +41,28 @@ public class DireccionController {
 
     @ResponseBody
     @RequestMapping(
-            value = { "/pais/{pais}/estado" },
+            value = { "/country/{country}/province" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
-    public List<Map<String, Object>> listEstadoByPais(@PathVariable(value = "pais") Long idPais) {
+    public List<Map<String, Object>> listEstadoByPais(@PathVariable(value = "country") Long idPais) {
         return estadoService.listEstadoByPais(idPais);
     }
 
     @ResponseBody
     @RequestMapping(
-            value = { "/estado/{estado}/municipio" },
+            value = { "/province/{province}/municipality" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
-    public List<Map<String, Object>> listMunicipioByEstado(@PathVariable(value = "estado") Long idEstado) {
+    public List<Map<String, Object>> listMunicipioByEstado(@PathVariable(value = "province") Long idEstado) {
         return municipioService.listMunicipioByEstado(idEstado);
     }
 
     @ResponseBody
     @RequestMapping(
-            value = { "/municipio/{municipio}/colonia" },
+            value = { "/municipality/{municipality}/town" },
             method = {RequestMethod.GET},
             produces = {"application/json;charset=UTF-8"})
-    public List<Map<String, Object>> listColoniaByMunicipio(@PathVariable(value = "municipio") Long idMunicipio) {
+    public List<Map<String, Object>> listColoniaByMunicipio(@PathVariable(value = "municipality") Long idMunicipio) {
         return coloniaService.listColoniaByMunicipio(idMunicipio);
     }
 }
