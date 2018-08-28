@@ -12,7 +12,8 @@ ENV JAVA_OPTIONS "" \
 # Create directories for logs and for our java binaries
 RUN adduser -D java && \
     /bin/sh -c "apk add --no-cache bash"
-RUN mkdir $LOGS_DIR $APP_DIR
+RUN mkdir -p $LOGS_DIR
+RUN mkdir -p $APP_DIR
 RUN chown -R java $LOGS_DIR $APP_DIR
 
 # Specify that Logs directory can be mounted
